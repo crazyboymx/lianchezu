@@ -1,0 +1,19 @@
+#
+# 集成UCenter的方法.txt
+# 
+# 重要: UCenter和ThinkSNS在用户机制等方面差异很大, 两者的集成不是完美集成, 请谨慎用于正式环境!
+# 改进: ThinkSNS 2.5版本对Ucenter集成进行了改进 1）支持同步登录、注册。2）开始支持GBK环境的Ucenter（但并未充分测试）
+# 
+
+1, 最好安装UTF-8编码版本的UCenter, 并已成功安装，GBK版本从ThinkSNS 2.5以后开始支持（但并未充分测试）
+2, 在UCenter上创建应用(登录UCenter用户管理中心 -> 应用管理 -> 添加新应用), 需填写的信息包括:
+   - 应用名称: 您的ThinkSNS站点名称
+   - 应用的主URL: http://您的ThinkSNS域名
+   - 应用类型: 其他
+   - 应用接口文件名称: uc.php
+   - 是否开启同步登录: 是
+   - 是否接受通知: 是
+   填写完毕后点击提交，然后复制“应用的UCenter配置信息”
+3, 将第2步中复制的“应用的UCenter配置信息”粘贴在TS/api/uc_client/uc_config.inc.php文件中，并保存
+4, 修改TS/api/uc_client/uc_sync.php的第7行, 将0修改为1, 即将 define('UC_SYNC', 0); 修改为 define('UC_SYNC', 1);
+5, 更新您在TS站点和其他UCenter站点的缓存

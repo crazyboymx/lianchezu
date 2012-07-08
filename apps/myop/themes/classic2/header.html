@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+<?php
+if(!empty($_SITE_CONFIG['page_title'])) {
+    echo "{$_SITE_CONFIG['page_title']} - ";
+}
+echo "漫游平台 - {$_SITE_CONFIG['site_name']}";
+?>
+</title>
+<link rel="shortcut icon" href="<?php echo THEME_URL;?>/favicon.ico" />
+<meta name="keywords" content="=<?php echo $_SITE_CONFIG['site_header_keywords'];?>" />
+<meta name="description" content="<?php echo $_SITE_CONFIG['site_header_description'];?>" />
+<!-- 全局风格CSS -->
+<link href="<?php echo THEME_URL;?>/layout.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo PUBLIC_URL;?>/js/tbox/box.css" rel="stylesheet" type="text/css" />
+
+<!-- 核心JS加载 -->
+<script type="text/javascript" src="<?php echo PUBLIC_URL;?>/js/jquery.js"></script>
+<script type="text/javascript" src="<?php echo PUBLIC_URL;?>/js/common.js"></script>
+<script type="text/javascript" src="<?php echo PUBLIC_URL;?>/js/tbox/box.js"></script>
+
+</head>
+<body class="body_bg">
+
+<div class="div_body">
+<div class="header_bg">
+ <div class="header"><!-- 头部 begin -->
+    <div class="logo"><a href="<?php echo U('home'); ?>" >&nbsp;</a></div>
+    <div class="nav_sub br3" onmouseover="this.className='nav_sub nav_sub_hover br3'" onmouseout="this.className='nav_sub br3'">
+     <dl>
+		<dt><a class="username" href="<?php echo U('home/Space/index',array('uid'=>$_SITE_CONFIG['uid'])); ?>"><?php echo $_SITE_CONFIG['userInfo']['uname']; ?></a></dt>
+      <dd><a href="<?php echo U('home/User/findfriend'); ?>">找人</a></dd>
+      <dd><a href="<?php echo U('home/Account'); ?>">设置</a></dd>
+	  <dd><a href="<?php echo U('home/Account/invite'); ?>">邀请</a></dd>
+	 <?php foreach ($_SITE_CONFIG['ucenter']['app'] as $uc_app) { ?>
+	    <?php if($uc_app['appid'] == $_SITE_CONFIG['ucenter']['current_appid']) continue; ?>
+	   <dd><a href="<?php echo $uc_app['url']; ?>" target="_blank"><?php echo $uc_app['name']; ?></a>
+	  <?php } ?>
+      <dd><a href="<?php echo U('home/Public/logout'); ?>">退出</a> </dd>
+	  </dl>
+    </div>
+    <div class="nav">
+      <ul>
+        <li><a href="<?php echo U('home/User'); ?>" class="fb14">首页</a></li>
+        
+		<li><a href="<?php echo U('home/Square/index'); ?>" class="fb14">微博广场</a></li>
+		
+        <li class="on" onMouseOut="this.className='on'" onmouseover="this.className='hover'"><a href="<?php echo U('home/Index/addapp'); ?>" class="ico_arrow fb14 ">应用</a>
+          <div class="dropmenu">
+            <dl class="app_list">
+                <?php $myop_app = getUserApp($_SITE_CONFIG['uid']);?>
+                <?php foreach ($myop_app as $type => $apps) { ?>
+		        <?php foreach ($apps as $app) { ?>
+		            <dd>
+		                <?php if($type == 'local_app' || $type == 'local_default_app') { ?>
+		                <a href="<?php echo $app['app_entry'];?>" class="a14">
+		                    <img class="app_ico" src="<?php echo $app['icon_url'];?>" />
+		                    <?php echo $app['app_alias'];?>
+		                </a>
+		                <?php }else { ?>
+		                <a href="<?php echo MYOP_URL;?>/userapp.php?id=<?php echo $app['app_id'];?>" class="a14">
+		                    <img class="app_ico" src="http://appicon.manyou.com/icons/<?php echo $app['app_id'];?>" />
+		                    <?php echo $app['app_alias'];?>
+		                </a>
+		                <?php }?>
+		            </dd>
+		        <?php } ?>
+		        <?php } ?>
+		    </dl>
+		    <dl class="app_list">
+                <dd style=" border-bottom:0px;">
+                    <a href="<?php echo MYOP_URL;?>/myop.php?my_suffix=%2Fapp%2Flist"><span class="app_ico ico_app_add"></span>添加应用</a>
+                </dd>
+                <dd style=" border-bottom:0px;">
+                    <a href="<?php echo MYOP_URL;?>/cp.php?op=menu"><span class="app_ico ico_manage"></span>管理应用</a>
+                </dd>
+            </dl>
+          </div>
+        </li>  
+        <li onMouseOut="this.className='#'" onmouseover="this.className='hover'"><a href="<?php echo U('home/Message/index'); ?>" class="ico_arrow fb14 ">消息</a>
+            <div class="dropmenu"> 
+              <a href="<?php echo U('home/Message/index'); ?>">
+                短消息
+                <span class="cRed fB" ><?php if($_SITE_CONFIG['userCount']['message'] > 0) echo "({$_SITE_CONFIG['userCount']['message']})"; ?></span>
+              </a> 
+    		  <a href="<?php echo U('home/Message/notify');?>">
+    			系统通知
+                <span class="cRed fB"><?php if($_SITE_CONFIG['userCount']['notify'] > 0) echo "({$_SITE_CONFIG['userCount']['notify']})"; ?></span>
+              </a> 
+              <a href="<?php echo U('home/Message/appmessage');?>">
+                应用消息
+                <span class="cRed fB"><?php if($_SITE_CONFIG['userCount']['appmessage'] > 0) echo "({$_SITE_CONFIG['userCount']['appmessage']})"; ?></span>
+              </a> 
+              <a href="<?php echo U('home/User/atme');?>">
+                @提到我的
+                <span class="cRed fB"><?php if($_SITE_CONFIG['userCount']['atme'] > 0) echo "({$_SITE_CONFIG['userCount']['atme']})"; ?></span>
+              </a> 
+    		  <a href="<?php echo U('home/User/comments'); ?>">
+    			我的评论
+                <span class="cRed fB"><?php if($_SITE_CONFIG['userCount']['comment'] > 0) echo "({$_SITE_CONFIG['userCount']['comment']})"; ?></span>
+              </a> 
+            </div>
+            <?php if($_SITE_CONFIG['userCount']['total'] > 0) { ?>
+            <div class="msg_top" id='msg_top' style='display:'><a href="" id='msg_top_href'><?php echo $_SITE_CONFIG['userCount']['total'];?></a></div>
+            <?php } ?>
+        </li>
+      </ul>
+    </div>
+	<form action="<?php echo U('home/User/search'); ?>" id="quick_search_form" method="post">
+			<div class="soso">
+				<label id="_header_search_label" style="display: block;" onclick="$(this).hide();$('#_header_search_text').focus();">搜名字/标签/微博</label><input type="text" class="so_text" value="" name="k" id="_header_search_text" onblur="if($(this).val()=='') $('#_header_search_label').show();" /><input name="" type="button" onclick="$('#quick_search_form').submit()" class="so_btn hand"/></div>
+			<script>
+			if($('#_header_search_text').val()=='')
+				$('#_header_search_label').show();
+			else
+				$('#_header_search_label').hide();
+			</script>
+		</form>
+  </div>
+</div>
+<?php foreach($_SITE_CONFIG['ad']['header'] as $v) { ?>
+<div class="ad_header"><?php echo $v['content']; ?></div>
+<?php } ?>

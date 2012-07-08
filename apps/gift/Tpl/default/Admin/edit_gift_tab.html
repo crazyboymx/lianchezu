@@ -1,0 +1,61 @@
+<form action="{:U('/Admin/edit_gift')}" enctype="multipart/form-data" method="post">
+    <table cellpadding=3 cellspacing=3>
+    <if condition="$gift">
+    <tr>
+        <td align="right">图片：</td>
+        <td align="left">
+        	<img src="{$gift.img|realityImageURL}">
+        	<input name="id" value="{$gift.id}" type="hidden">
+        </td>
+    </tr>
+    </if>    
+    <tr>
+        <td align="right">上传：</td>
+        <td align="left">
+        <input name="files[]" id="face" type="file"><br />
+        <span style="color:#666;font-size:10px;">大小：70像素x70像素</span>
+        </td>
+    </tr>    
+    <tr>
+        <td align="right">分类：</td>
+        <td align="left">
+          <select name="categoryId" id="categoryId">
+          <volist name='categorys' key='cId' id='cName'>
+          <php>if($gift['categoryId']==$key) { </php>
+            <option value="{$key}" selected="selected">{$cName}</option>
+          <php> } else { </php>	
+            <option value="{$key}">{$cName}</option>
+          <php> }</php>	
+          </volist>	  
+          </select>	
+        </td>
+    </tr>    
+    <tr>
+        <td align="right">名称：</td>
+        <td align="left"><input type="text" name="name"  value="{$gift.name}">
+        </td>
+    </tr>    
+    <tr>
+        <td align="right">价格：</td>
+        <td align="left"><input type="text" name="price" value="{$gift.price}"></td>
+    </tr>    
+    <tr>
+        <td align="right">数量：</td>
+        <td align="left"><input type="text" name="num"  value="{$gift.num}">
+        </td>
+    </tr>
+    <tr>
+        <td align="right">状态：</td>
+        <td align="left">
+        <select name="status">
+            <option value="1" <eq name="gift.status" value="1">selected="selected"</eq>>启用</option>
+            <option value="0" <eq name="gift.status" value="0">selected="selected"</eq>>禁用</option>
+        </select>
+    	</td>
+    </tr>
+    </table>
+    <div >
+        <input type="submit" class="btn_b" value="确定">
+        <input type="reset" class="btn_b" value="重置">
+    </div>
+</form>

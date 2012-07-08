@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>幻灯播放 - ThinkSNS - 个性化你的社交网络</title>
+<meta name="keywords" content="sns,think" />
+<meta name="description" content="ThinkSNS|网站|SNS|" />
+<script type="text/javascript" src="../Public/js/swfobject.js"></script>
+<style type="text/css">	
+	/* hide from ie on mac \*/
+	html {
+		height: 100%;
+		overflow: hidden;
+	}	
+	#flashcontent {
+		height: 100%;
+	}
+	/* end hide */
+	body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		background-color: #181818;
+		color:#ffffff;
+		font-family:sans-serif;
+		font-size:40;
+	}	
+	a {	
+		color:#cccccc;
+	}
+</style>
+</head>
+<body>
+	<div id="flashcontent">AutoViewer requires JavaScript and the Flash Player. <a href="http://www.macromedia.com/go/getflashplayer/">Get Flash here.</a> </div>
+	<script type="text/javascript">
+		var fo = new SWFObject("../Public/js/autoviewer.swf", "autoviewer", "100%", "100%", "8", "#181818");			
+		//Optional Configuration
+		//fo.addVariable("langOpenImage", "Open Image in New Window");
+		//fo.addVariable("langAbout", "About");
+		fo.addVariable("xmlURL","{:U('/Index/photo_xml',array('id'=>$_GET['id'],'aid'=>$_GET['aid'],'uid'=>$uid,'type'=>$_GET['type']))}");
+		fo.write("flashcontent");	
+	</script>
+</body>
+</html>

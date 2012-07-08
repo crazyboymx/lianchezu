@@ -1,0 +1,148 @@
+<include file="__THEME__/header" />
+<link href="../Public/account.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../Public/js/avatar/avatar.js"></script>
+<script type="text/javascript" src="../Public/js/account.js"></script>
+<div class="content"><!-- 内容 begin  --> 
+  <include file="__THEME__/apps" />
+  <div class="main"> <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_C no_r">
+     <include file="_tab" />
+    <div class="mainbox_C_C">
+    <div class="mainbox_R">
+    <div class="right_box">
+    完善您的个人资料以便您的朋友快速的找到您！！
+    </div>
+    </div>
+		<div class="feedBox">
+		  <!-- 修改密码 -->
+          <div class="setItems">
+            <div class="setFold setUnfold" rel="verified" >
+              <h2>认证资料<span id="verified_tips" class="cRed" style="font-weight:normal;"><php>
+              	  if ('1' == $verified['verified']) {</php>(认证成功)</span><php>
+              	  } else if ('0' === $verified['verified']) {
+              	  </php>(认证中……)<php>}</php></span></h2>
+            </div>
+            <div style="display: block;" class="setItemsInfo">
+		      <div class="data"><!-- 修改密码 begin  -->
+		            <form action="{:U('home/Account/doVerified')}" method="post" id="form_verified" class="form_validator">
+		                <ul>
+		                <li>
+		                    <div class="left alR" style="width: 15%;">真实姓名：<span class="cRed pr5">*</span></div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5">
+		                          <input name="realname" type="text" value="{$verified.realname}" class="text" style="width:200px;" onfocus="this.className='text2'" onblur="this.className='text'" /><br />
+		                          不会公开显示
+		                      </div>
+		                    </div>
+		                </li>
+		                <li>
+		                    <div class="left alR" style="width: 15%;">手机号：<span class="cRed pr5">*</span></div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5">
+		                          <input name="phone" type="text" value="{$verified.phone}" class="text" style="width:200px;" onfocus="this.className='text2'" onblur="this.className='text'" /><br />
+		                          不会公开显示
+		                      </div>
+		                    </div>
+		                </li>
+		                <li>
+		                    <div class="left alR" style="width: 15%;">认证资料：<span class="cRed pr5">*</span></div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5"><textarea name="reason" cols="40" rows="3" onfocus="this.className='text2'" onblur="this.className='text'">{$verified.reason}</textarea></div>
+		                    </div>
+		                </li>
+		                <li>
+		                	<div class="left alR" style="width: 15%;">&nbsp;</div>
+		                	<div class="left" style="width: 50%;">
+		                		<input type="hidden" name="id" value="{$verified.id}" />
+		                		<input type="button" id="btn_submit" class="btn_b" value="保存" onclick="return modifyVerified();" />
+		                	</div>
+		                	<div class="left" style="width: 20%;">&nbsp;</div>
+		                	<div class="left" style="width: 15%;">&nbsp;</div>
+		                </li>
+		                </ul>
+		            </form>
+		        </div><!-- 修改密码 end  -->
+            </div>
+          </div>
+        <div class="c"></div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" />
+
+<script>
+	$(document).ready(function(){
+		var hs = document.location.hash;
+		changeModel( hs.replace('#','') );
+		$('.setFold').click(function(){
+			if( $(this).attr('class')=='setFold' ){
+				changeModel( $(this).attr('rel') );
+			}else{
+				$(this).removeClass('setUnfold');
+				$(this).next('.setItemsInfo').hide();
+			}
+			location.href='#'+$(this).attr('rel');
+		})
+	});
+	
+	//切换操作模块
+	function changeModel( type ){
+		var t = type || 'verified';
+		$('.setFold').removeClass('setUnfold');
+		$('.setItemsInfo').hide();
+		var handle = $('div[rel="'+t+'"]');
+		handle.addClass('setUnfold');
+		handle.next('.setItemsInfo').show();
+	}
+
+	function modifyVerified(o)
+	{
+
+		var $btn_submit = $('#btn_submit');
+		var $realname = $('input[name="realname"]');
+		var $phone = $('input[name="phone"]');
+		var $reason = $('textarea[name="reason"]');
+		var realname = $realname.val();
+		var phone = $phone.val();
+		var reason = $reason.val();
+		var id = $('input[name="id"]').val();
+
+		if (!realname.match(/^[\u4e00-\u9fa5]+$|^[a-zA-Z\.·]+$/)) {
+			ui.error('请输入真实姓名');
+			$realname.focus();
+			return false;
+		} else if (!phone.match(/^[\d]{11}$/)) {
+			ui.error('请输入手机号');
+			$phone.focus();
+			return false;
+		} else if (reason.length <= 0) {
+			ui.error('请输入认证原因');
+			$reason.focus();
+			return false;
+		}
+
+		<if condition="$verified['verified'] eq 1">
+		if (!confirm('确定重新申请认证？申请后您原有的认证标识将被收回，通过后即可恢复。')) {
+			return false;
+		}
+		</if>
+
+		$btn_submit.attr('disabled','true');
+		$.post( U('home/Account/doVerified'),{realname:realname,phone:phone,reason:reason,id:id},function(txt){
+			if( 1 == txt ){
+				$("#verified_tips").html('(成功提交资料，请等待认证。)');
+				ui.success('操作成功');
+			}else{
+				ui.error('操作失败');
+			}
+			$btn_submit.removeAttr('disabled');			
+		});
+	}
+</script>

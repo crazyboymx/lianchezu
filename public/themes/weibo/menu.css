@@ -1,0 +1,82 @@
+@charset "utf-8";
+/*-----------网站菜单样式-------------------------------------------
+ 说明: 
+------------------------------------------------------------ */
+
+/* TAB */
+.tab-menu{background:url(images/tab_line_bg.gif) repeat-x 0 bottom;height:28px;*zoom:1}
+.myop .tab-menu{width:99%;margin-left:5px}
+.tab-menu ul{height:27px;*zoom:1}
+.tab-menu li{float:left;*zoom:1}
+.tab-menu li a{height:18px;line-height:18px;padding:4px 10px;float:left;text-decoration:none;display:block}
+.tab-menu li a span{display:block;float:left;cursor:pointer;text-decoration:none}
+.tab-menu li a span.ico_arrow{background:url(images/ico_arrow.gif) no-repeat right center;padding-right:15px}
+.tab-menu li a:hover{background-position:left top;text-decoration:none}
+.tab-menu li a:hover span{cursor:pointer;display:block;text-decoration:none}
+.tab-menu li a.on,.tab-menu li a.on:hover{display:block;height:18px;line-height:18px;padding:4px 10px;text-decoration:none;border:#ddd solid 1px;border-bottom:#fff solid 1px;color:#333;font-weight:bold}
+.tab-menu .tab_group{position:relative}
+.tab-menu .tab_group .Inc_new{display:none}
+.tab-menu .tab_group_hover{position:relative}
+.tab-menu .tab_group_hover .Inc_new{background-color:#FFFFFF;border:1px solid #D2DBEA;padding:5px;position:absolute;top:27px;border-top:3px solid #D2DBEA;left:0px}
+.tab-menu .tab_group_hover .Inc_new a{height:25px;line-height:25px;float:none;padding:3px;text-decoration:none;display:block;font-size:14px}
+.tab-menu .tab_group_hover .Inc_new a:hover{background-color:#F5F5F5}
+.MenuSub{height:18px;line-height:18px;padding:6px 0;margin:10px 0 0;color:#000;*zoom:1}
+.MenuSub_2{ line-height:30px; margin-bottom: 10px; background:url(images/MenuSub.gif) repeat-x 0 bottom; color:#E0E8EA;overflow:hidden; width:auto; _width:98%; }
+.MenuSub a,.MenuSub_2 a {font-size: 12px;padding:3px 8px}
+.MenuSub a.on:hover,.MenuSub_2 a.on:hover {text-decoration:none}
+.MenuSub .vline{margin:0 5px;color:#999;font-style:normal;display:inline}
+.MenuSub_2 a:hover{color:#fff;font-size:12px;background-color:#7198B4;padding: 3px 8px;text-decoration:none;}
+
+
+.tab-menu .tab_group{position:relative}
+.tab-menu .tab_group .Inc_new{display:none}
+.tab-menu .tab_group_hover{position:relative}
+.tab-menu .tab_group_hover .Inc_new{background-color:#fff;border:1px solid #D2DBEA;padding:5px;position:absolute;top:27px;border-top:3px solid #D2DBEA;left:0px}
+.tab-menu .tab_group_hover .Inc_new a{height:25px;line-height:25px;float: none;padding:3px;text-decoration:none;display:block;font-size: 14px}
+.tab-menu .tab_group_hover .Inc_new a:hover{background-color:#F5F5F5}
+.tabMenu{height:28px;line-height:26px;background:url(images/tab_line_bg.gif) repeat-x 0 bottom}
+.tabMenu li a{border:#fff solid 1px;border-bottom:none 0;display:block;float:left;padding:0 10px;margin:-1px 2px 0 0;height:18px;line-height:18px;padding:5px 10px 4px;}
+.tabMenu li.hover a.on{background-color:#fff}
+.tabMenu li a.on{background-color:#fff;height:18px;line-height:18px;padding:5px 10px;border:#ddd solid 1px;border-bottom:none}
+.tabMenu li a.on:hover{height:18px;line-height:18px;padding:5px 10px;}
+.tabMenu li a:hover{height:18px;line-height:18px;padding:5px 10px;text-decoration:none;background-color:#fff;border:#7198B4 solid 1px;border-bottom:none}
+.tabMneu li.hover{background-color:000}
+.tabMenu li a.application{color:#666;position:relative;z-index:9999}
+.tabMenu li.hover a.application{background-color:#fff;position:relative;z-index:9999;border:#7198B4 solid 1px;border-bottom:none;height:18px;line-height:18px;padding:5px 10px;}
+.tabMenu li.hover a.application:hover{background-color:#fff;height:18px;line-height:18px;padding:5px 10px;text-decoration:none;border:#7198B4 solid 1px;border-bottom:none}
+.tabMenu .ico_show_on,.tabMenu .ico_show_off{margin:10px 10px 0 0;width:11px;height:7px}
+.tabMenu .ico_show_off{background-position:0 -13px}
+
+.tabMenu li .dropmenu{display: none;position:absolute;left:0;top: 25px;z-index: 9000}
+.tabMenu li{position:relative;z-index:99;display:block;float:left}
+.tabMenu li.hover .dropmenu{background-color: #fff;z-index: 9000;top: 27px;left:0;position: absolute;text-align: left; display: block;font-size: 12px;border: 1px solid #7198B4;white-space:nowrap;min-width:100px;*width:100px}
+.tabMenu .Att_list{padding:0;overflow:hidden;*width:100%}
+.tabMenu .Att_list dd {overflow:hidden}
+.tabMenu .Att_list dd a:link, .tabMenu .Att_list dd a:visited{border:none 0;background:none;font-size:12px;color:#333;line-height:30px;height:30px;padding:0 10px;margin:0;overflow:hidden;white-space:nowrap;float:none;border:none}
+.tabMenu .Att_list dd a:hover{background:#D5E5F1;font-size:12px;color:#333;line-height:30px;height:30px;padding:0 10px;margin:0;border-radius:0 0 0 0}
+.tab_square{padding:20px 0 0;margin:0 20px;overflow:hidden;*zoom:1}
+.tab_square .square_menu{float:left}
+.tab_square .square_menu .on{font-weight:bold}
+.tab_square .square_menu .ico_side{display:none}
+.tab_square .tab_square_bg{background-color:#eee;overflow:hidden;*zoom:1}
+.square_menu li{display:inline;height:30px;line-height:30px;font-size:14px;margin:0 20px}
+.square_menu li a:link,.square_menu li a:visited{color:#333}
+
+/*---共用tab样式---*/
+.MenuSub a.on,.MenuSub_2 a.on {color:#fff;font-size:12px;background-color:#7198B4;padding: 3px 8px}
+.talkBox .cntBox textarea:hover{border:solid 1px #7BD6F6}
+.talkBox .cntBox textarea{background: #fff url(images/cnBot_text_bg.gif) repeat-x 0 top; border:solid 1px; border-color:#95C3D8;-moz-border-radius: 3px;-khtml-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px}
+
+/*---应用下tab样式---*/
+.page_tit .tit_tab a{height:31px;_height:23px;width:98px;line-height:31px;_line-height:23px;padding:0px; _padding:5px 0px;display:block;color:#fff;text-align:center;border:transparent solid 1px;border-bottom:none 0}
+.page_tit .tit_tab a .more{border-color:#fff transparent transparent}
+.page_tit .tit_tab a.on{background-color:#fff;color:#333}
+
+.page_tit .tit_tab a.on:hover{color:#333}
+.page_tit .tit_tab a:hover{background-color:#679CAB;color:#333}
+.page_tit .tit_tab a:hover .more, .page_tit .tit_tab a.on .more{border-color:#333 transparent transparent}
+.page_tit .tit_tab a:hover,.page_tit .tit_tab a.on:hover{text-decoration:none}
+/*群组右侧菜单*/
+.group_left_menu{}
+.group_left_menu a{display:block; height:37px; line-height:37px;padding-left:30px; font-size:14px;}
+.group_left_menu a.on{background-color: #f3f3f3;  border:1px solid #D7D7D7;color: #333; font-weight: bold;}

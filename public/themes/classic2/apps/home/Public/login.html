@@ -1,0 +1,198 @@
+<include file="__THEME__/header" />
+<link href="../Public/login.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="../Public/js/jquery.sohu.tw.min.0.0.4.js"></script>
+<script type="text/javascript" src="../Public/js/tw.new.index.min.0.0.10.js"></script>
+<script type="text/javascript" src="../Public/js/slides.min.jquery.js"></script>
+<script>
+$(document).ready(function(){
+	setInterval(function(){
+		if('' != $('#email').val())$('#_login_email_label').hide();
+		if('' != $('#password').val())$('#_login_password_label').hide();
+	}, 100);
+});
+</script>
+<div class="M_login">
+<div class="slogan"  style="background:url({$ts['site']['banner_logo']})">
+  <php>if (!empty($hot_topic)) {</php>
+  <div class="talking"> <strong>正在热议：</strong>
+    <volist name="hot_topic" id="vo"><a href="{:U('home/User/topics', array('k'=>$vo['name']))}" target="_blank">{$vo.name}</a></volist>
+  </div>
+  <php>}</php>
+  <div class="login">
+    <div id="ppcontid" class="logform">
+      <form action="{:U('home/Public/doLogin')}" method="post">
+        <div class="regbtn2"  style="height:46px;*height:auto; position:relative"><a href="{:U('home/Public/register')}" title="立即注册"> &nbsp;</a></div>
+        <div class="frm" style="height:29px;*height:auto; position:relative">
+          <label id="_login_email_label" class="form_label" style="display:block;" onclick="$(this).hide();$('#email').focus();">邮箱</label>
+          <input type="text" id="email" name="email" class="text" title="邮箱" autocomplete="off" value="" onblur="if($(this).val()=='') $('#_login_email_label').show();" onfocus="$('#_login_email_label').hide();" />
+        </div>
+        <div class="frm" style="height:29px;*height:auto; position:relative">
+          <label id="_login_password_label" class="form_label" style="display:block;" onclick="$(this).hide();$('#password').focus();" >密码</label>
+          <input type="password" title="密码" value="" id="password" name="password" class="text" style="display: inline;" onblur="if($(this).val()=='') $('#_login_password_label').show();" onfocus="$('#_login_password_label').hide();" />
+        </div>
+        <eq name="login_verify_on" value="1">
+          <div class="frm" style="height:29px;*height:auto;">
+            <input name="verify" type="text" class="text alM" title="验证码" id="verify" style="width:50px;height:22px;padding:0 3px;" value="" />
+            &nbsp;<a href="javascript:void(0);" onclick="changeverify()"><img src="{:U('home/Public/verify')}" id="verifyimg" alt="换一张" class="alM" /></a></div>
+        </eq>
+        <div class="frm">
+          <label>
+            <input name="remember" type="checkbox" value="1" />
+            记住登录状态</label>
+          <a class="fuc0" href="{:U('home/Public/sendPassword')}">忘记密码？</a> </div>
+        <div class="frm" style="margin:0px auto; padding:0px; width:85px">
+          <input type="submit" value="登 录" class="logbtn hand" />
+        </div>
+      </form>
+    <php>if($regInfo['register_type']=='open' && !empty($platforms)){</php>
+        <div class="frm alC lh35" style="border-top:1px solid #C9C9C9; margin: 20px 0 0;">
+        	你也可以通过站外账号进行登录！
+            <volist name="platforms" id="vo">
+        	<a href="{:U('home/Public/tryOtherLogin',array('type'=>$vo))}">
+        		<img src="__THEME__/images/btn_{$vo}.gif" style="cursor: pointer;">
+        	</a>
+        	</volist>
+        </div>
+        <php>}</php>
+    </div>
+  </div>
+</div>
+<div class="login_main">
+  <div class="colL">
+    <div class="tit">
+      <h3>图片微博</h3>
+    </div>
+    <div class="imgrot" id="tw_img_scroll">
+      <div id="slides">
+		<div class="imgb">
+		<volist name="pic_weibo" id="vo">
+			<div class="imgInt">
+				<a href="{:U('home/Space/detail',array('id'=>$vo['weibo_id']))}" target="_blank">
+                  <php>$img_src = SITE_URL . '/thumb.php?w=234&h=221&url=./data/uploads/' . $vo['type_data']['picurl'];</php>
+				  <img src="__UPLOAD__/{$vo.type_data.picurl}" width="234" height="221">
+				</a>
+				<div class="imgfnt" style="bottom:0">
+					<p>{$vo.uid|getUserName}：{$vo.content|getShort=10}</p>
+				</div>
+			</div>
+		</volist>
+		</div>
+	  </div>
+    </div>
+   
+    <dl class="mobi">
+      <dt>用手机上微博</dt>
+      <dd><a href="http://www.thinksns.com/iPhone.html" target="_blank" title="用iPhone客户端"><img src="../Public/images/apple.gif" /></a><a href="http://www.thinksns.com/Android.html " target="_blank" title="用Android客户端"><img src="../Public/images/android.gif" /></a><a href="{:U('w3g')}" target="_blank" title="用3G版登录"><img src="../Public/images/3G.gif" /></a><a href="{:U('wap')}" target="_blank" title="用Wap版登录"><img src="../Public/images/wap.gif" /></a></dd>
+    </dl>
+  </div>
+  <div class="colC">
+    <div class="tit">
+      <h3>正在发生</h3>
+    </div>
+    <!--微博列表-->
+    <div class="twis" id="tw_content">
+    <volist name="lastest_weibo" id="vo">
+      <dl class="list_weibo">
+        <dt class="userPic"><space uid="vo['uid']" target="_blank">{uavatar=m}</space></dt>
+        <dd style="margin-left:70px;">
+        <div style="min-height: 33px; _height:33px; _overflow:visible;">
+            <strong style="vertical-align:top"><space uid="vo['uid']" target="_blank">{uname}</space>: </strong>
+            <span class="ugc" style="vertical-align:top;display:inline">{$vo.content|getShort=60|login_emot_format}</span>
+        </div>
+        <div class="mt10"><em title="{$vo.ctime|date='Y-m-d H:i',###}">{$vo.ctime|friendlyDate}</em></div>
+        </dd>
+      </dl>
+    </volist>
+    </div>
+    <!--/微博列表-->
+    <div class="mask"></div>
+  </div>
+  <div class="colR">
+    <div class="tit">
+      <div class="opt">粉丝数</div>
+      <h3>人气推荐</h3>
+    </div>
+    <ul class="tpl">
+      <volist name="hot_user" id="vo">
+        <li class="lineD_btm"> 
+        	<a target="_blank" href="{:U('home/Space/index',array('uid'=>$vo['uid']))}"> 
+        	<i class="num">{$vo.count}</i> 
+        	<strong class="nm">{$vo.uid|getUserName}</strong> 
+        	<var><php>echo $key + 1;</php></var> 
+        	<span class="avt"> <img alt="{$vo.uid|getUserName}" src="{$vo.uid|getUserFace}"> <i class="png"></i> </span> 
+        	</a> 
+        </li>
+      </volist>
+    </ul>
+  </div>
+</div>
+</div>
+<include file="__THEME__/footer" />
+ 
+<script type="text/javascript">
+var since_id = "{$since_id}";
+
+$(function(){
+	init();
+});
+
+function init() {
+	$("ul.tpl").find("li").hover(function(){
+		$(this).addClass("hover");
+	},function(){
+		$(this).removeClass("hover");
+	});
+	
+	$('#slides').slides({
+		preload: true,
+		//preloadImage: '../Public/images/loading.gif',
+		play: 5000,
+		pause: 2500,
+		hoverPause: true,
+		container: "imgb",
+		animationStart: function(current){
+			$('.caption').animate({
+				bottom:-35
+			},100);
+		},
+		animationComplete: function(current){
+			$('.caption').animate({
+				bottom:0
+			},200);
+		},
+		slidesLoaded: function() {
+			$('.caption').animate({
+				bottom:0
+			},200);
+		}
+	});
+}
+
+setInterval("showRecent()",60000);
+
+function changeverify() {
+    var date = new Date();
+    var ttime = date.getTime();
+    var url = "{:U('home/Public/verify')}";
+    $('#verifyimg').attr('src',url+'&'+ttime);
+}
+
+function showRecent() {
+	$.post("{:U('home/Public/fetchNew')}", {since_id:since_id}, function(txt){
+		if (txt != 0) {
+			var obj = eval('(' + txt + ')');
+			var html = '';
+			html += '<div class="lineD_btm pm10 mt10 pb5" id="weibo_'+obj.weibo_id+'">';
+	        html += '<div class="userPic">'+obj.user_pic+'</div>';
+	        html += '<div style="margin-left:70px"><div style="min-height: 33px;_height:33px; _overflow:visible;"><strong>'+obj.uname+': </strong><span class="ugc">'+obj.content+'</span></div>';
+	        html += '<div class="mt10">';
+	        html += '<em title="'+obj.friendly_date+'" class="tm">'+obj.friendly_date+'</em>';
+	        html += '</div>';
+	        $('#tw_content').prepend(html);
+	        
+	        since_id = obj.weibo_id;
+		}
+	});
+}
+</script>

@@ -1,0 +1,145 @@
+  <script type="text/javascript" src="{:SITE_URL}/addons/plugins/ChangeStyle/html/jqcolor.js"></script>        
+  <script type="text/javascript">
+    $(function(){ 
+        $.showcolor('diybgcolor','diybgcolor');//第一参数：按钮ID，第二参数： 文本框ID
+    })
+</script>
+<div class="setupBox OverH">
+    <div class="setItems">
+        <div class="setFold setUnfold" rel="autstyle" ><h2>系统主题<span id="verified_tips" class="cRed" style="font-weight:normal;"></h2></div>
+        <div style="display: block;" class="setItemsInfo">
+            <div class="data">
+                <ul>
+                    <li>
+                        <input type="hidden" id="classname" name="classname" value="0">
+                        <volist name="defaultStyle" id="vo">
+                        <span class="{$vo}" onclick="change('{$key}',$(this));" ></span>
+                        </volist>
+                    </li>
+                </ul>
+            </div> 
+		</div> 
+    </div>
+    <div class="setItems">
+        <div class="setFold setUnfold" rel="diystyle" ><h2>自定义主题<span id="verified_tips" class="cRed" style="font-weight:normal;"></h2></div>
+        <div style="display: block;" class="setItemsInfo">
+            <div class="data">
+                <ul>
+                    <li>
+                        <dd>背景图片：<input id="diybg" name="diybg" value="none" onfocus="if($('#diybg').val()=='none') $('#diybg').val('');" onblur="if($('#diybg').val()=='') $('#diybg').val('none');"   /> 如：http://www.fakesay.com/1.gif</dd> 
+                        <dd>背景颜色：<input  maxlength="7"  id="diybgcolor" name="diybgcolor" value="none" onfocus="if($('#diybgcolor').val()=='none') $('#diybgcolor').val('');" onblur="if($('#diybgcolor').val()=='') $('#diybgcolor').val('none');" /> 如：可以直接选择，或者填写#ff0000</dd> 
+                        <dt><a href="javascript:;" onclick="diy()" style="color:#ff0000">保存</a></dt> 
+                    </li>
+                </ul>
+            </div> 
+        </div> 
+    </div>
+<script>
+var defaultStyle = <?php echo json_encode($defaultStyle); ?>;
+	$(document).ready(function(){
+		var hs = document.location.hash;
+		changeModel( hs.replace('#','') );
+		$('.setFold').click(function(){
+			if( $(this).attr('class')=='setFold' ){
+				changeModel( $(this).attr('rel') );
+			}else{
+				$(this).removeClass('setUnfold');
+				$(this).next('.setItemsInfo').hide();
+			}
+			location.href='#'+$(this).attr('rel');
+		})
+	});
+	
+	//切换操作模块
+	function changeModel( type ){
+		var t = type || 'autstyle';
+		$('.setFold').removeClass('setUnfold');
+		$('.setItemsInfo').hide();
+		var handle = $('div[rel="'+t+'"]');
+		handle.addClass('setUnfold');
+		handle.next('.setItemsInfo').show();
+	} 
+   function change(type,obj){
+        
+        for(var one in defaultStyle){
+            if(one == type){
+                obj.addClass('isborder');
+                $('.page_home').addClass('page_home'+type);
+                $('.header_holder').addClass('header_holder'+type);
+            }else{
+                $("."+defaultStyle[one]).removeClass('isborder');
+                $('.page_home').removeClass('page_home'+one);
+                $('.header_holder').removeClass('header_holder'+one);
+            }
+        }
+        $('#classname').val(type);
+        savestyle(type);
+        return true;
+    }
+    
+      
+//保存风格
+function savestyle(classname){
+  $.post( U('home/Widget/addonsRequest'),{'addon':'ChangeStyle','hook':'savestyle','classname':classname},function(txt){
+      if(txt == 1){
+          ui.success('添加成功');
+      
+      }else{
+      //location.reload();
+        ui.success('保存成功1');
+      }
+      });
+}
+ 
+  //自定义风格
+function diy(){
+    
+  var classname=0;
+  var diybg=$('#diybg').val();
+  var diybgcolor=$('#diybgcolor').val();
+  
+   if(diybg == '' && diybgcolor == ''){
+       
+        ui.error('既然选择了DIY。那么必须二选一。');
+          return false;
+   }
+ 
+   if(diybg == ''){
+         
+         diybg = 'none';
+          //alert( '你没有填写自定义背景地址，或者格式错误' );
+         //  ui.error('你没有填写自定义背景地址，或者格式错误！');
+          
+      //  return false;
+      
+     }
+      
+       if(diybgcolor == ''){
+        
+        diybgcolor = 'none';
+       // ui.error('你没有填写自定义背景颜色代码，或者格式错误！');
+         
+       //  return false;
+      
+      }   
+      
+ 
+  /* if (!diybgcolor.match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/)) {
+			ui.error('颜色代码格式不对');
+			$diybgcolor.focus();
+			return false;
+		}  
+  */
+ 
+ 		
+   $.post('{:Addons::createAddonUrl('ChangeStyle', 'savestyle')}',{classname:classname,diybg:diybg,diybgcolor:diybgcolor},function(txt){
+      if(txt == 1){
+          ui.success('添加成功');
+      
+      }else{
+      //location.reload();
+        ui.success('保存成功1');
+      }
+      });
+}
+</script>

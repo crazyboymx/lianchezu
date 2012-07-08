@@ -1,0 +1,17 @@
+.projectlist {
+	background: #E8EFD2;
+	border: 1px solid #C5D39F;
+	height: 80px;
+	margin: 0px 10px 10px 0px;
+	overflow: hidden;
+	padding: 10px;
+	word-wrap: break-word;
+}
+	
+.iconItemClose{
+	background: url(images/del.gif) no-repeat;
+	height: 12px;
+	width: 12px; display:block;
+}
+
+.M_weibo_s{padding:15px;overflow:hidden;*zoom:1}

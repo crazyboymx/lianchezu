@@ -1,0 +1,68 @@
+<include file="__THEME__/header" />
+<link href="../Public/css/photo.css" rel="stylesheet" type="text/css" />
+
+
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+	
+	<div class="main"> <!-- 右侧内容 begin  -->
+
+	
+	<div class=page_title> <!-- page_title begin -->
+  	<div class="left" style="width:80px;">
+    	<span class="headpic50"><a href="__APP__/Group/index/gid/{$groupinfo['id']}"><img src="__ROOT__/thumb.php?w=50&h=50&url={$groupinfo['logo']|get_photo_url}"/></a></span>
+    </div>
+    <div class="left" style="width:583px;">
+    	<h2><a href="__APP__/Group/index/gid/{$groupinfo['id']}">{$groupinfo['name']}</a> &gt; <a href="__APP__/Album/index/gid/{$groupinfo['id']}">相册</a> &gt; {$album.name}</h2>
+
+      </div>
+    <div class="left alR lh30" style="width:170px;">
+        <a href="JavaScript:window.history.back()">&lt;&lt;返回上一页</a></div>
+    <div class="c"></div>
+</div><!-- page_title end -->
+  
+	<!-- 切换标签 end  -->
+	<div class="MenuSub"> 共{$album.photoCount}张┊ 
+		<a href="__APP__/Photo/upload/gid/{$gid}/albumId/{$album.id}">添加新照片</a> ┊
+		<php>if($isadmin || $album['userId'] == $mid){</php>
+		 
+		<a href="javaScript:editAlbum({$gid},{$album.id});">编辑该专辑</a> ┊  
+        <a href="__APP__/Album/index/gid/{$groupinfo['id']}">返回群组全部专辑</a> ┊  
+		<span id="more_operation" style="display:none;">
+		<a href="javascript:delAlbum()">删除该专辑</a>
+        </span>
+		<a href="Javascript:;" onclick="$('#more_operation').show(); $(this).remove()">更多操作</a>
+		<php>} else {</php>
+        <a href="__APP__/Album/index/gid/{$groupinfo['id']}">返回全部专辑</a>
+        <php>}</php>
+	</div>
+  
+	<div class="photoBox">
+    <ul class="piclist">
+    <volist name="thumbPhoto.data" id="photo">
+        <li>
+        <a href="__APP__/Photo/getPhoto/gid/{$gid}/albumId/{$photo.albumId}/photoId/{$photo.id}" class="preview" rel="{$photo.savepath|get_photo_url}" title="{$photo.name}">
+			<img src="__ROOT__/thumb.php?w=120&h=100&t=f&url={$photo.savepath|get_photo_url}" />
+		</a>
+        <br />
+        <a href="__APP__/Photo/getPhoto/gid/{$gid}/albumId/{$photo.albumId}/photoId/{$photo.id}/">{$photo.name}</a></li>
+    </volist>
+    </ul>
+	<!-- photoBox end  -->
+  	</div>
+  <div class="lh30"><span class="right cGray2">{:date('Y年m月d日',$album['cTime'])}创建</span>该专辑里有：<volist name="albumMember" id="member"><a href="__TS__/space/{$member.userId}">{$member.userId|getUserName}</a>, </volist> </div>
+  <div class="page">{$photos.html}</div><!-- 右侧内容 end  -->
+
+
+<div class="c"></div>
+</div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />
+<script src="../Public/js/preview.js" type="text/javascript"></script>
+<script>
+	var gid = {$gid};
+	var albumId = {$album.id};
+</script>
+<script type="text/javascript" src="../Public/js/album.js"></script>

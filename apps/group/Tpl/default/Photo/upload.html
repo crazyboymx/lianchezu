@@ -1,0 +1,82 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/Common.js"></script>
+<link  href="../Public/group.css" rel="stylesheet" type="text/css"/>
+<link href="../Public/css/photo.css" rel="stylesheet" type="text/css" />
+<include file="../Public/_mainNav" />
+<div class="content"><!-- 内容 begin  -->
+<div class="content no_bg">
+  <div class="main no_l">
+    <div class="mainbox"> 
+      <include file="../Public/_groupInfo" />
+      <div class="mainbox_C">
+		<!--  简单头部 -->
+  <include file="../Public/top" />
+ <!--  简单头部结束  -->
+		
+		<div class="photoBox">
+        	<form method="post" action="__APP__/Photo/doUpload" enctype="multipart/form-data" name="upload_single_pic" id="upload_single_pic" onsubmit='return start_upload(this);'>
+			<div class="upload">
+			<ul>
+        	<li>
+            	<div class="c1">选择照片专辑：</div>
+              	<div class="c2">
+				{:W('AlbumList',array( 'gid'=>$gid , 'form_name'=>'albumId' , 'selected'=>intval($_GET['albumId']) ) )}
+                <a href="JavaScript:void(0);" onclick="create_album({$gid})">[创建专辑]</a>
+            	</div>
+        	</li>
+            <li>
+            	<div class="c1">照片1：</div>
+                <div class="c2"><input type="file" name="fileField[]" id="fileField_1" /></div>
+        	</li>
+            <li>
+              	<div class="c1">照片2：</div>
+                <div class="c2"><input type="file" name="fileField[]" id="fileField_2" /></div>
+        	</li>
+            <li>
+             	<div class="c1">照片3：</div>
+                <div class="c2"><input type="file" name="fileField[]" id="fileField_3" /></div>
+        	</li>
+            <li>
+              	<div class="c1">照片4：</div>
+                <div class="c2"><input type="file" name="fileField[]" id="fileField_4" /></div>
+        	</li>
+            <li>
+              	<div class="c1">照片5：</div>
+                <div class="c2"><input type="file" name="fileField[]" id="fileField_5" /></div>
+        	</li>
+            <li>
+              	<div class="c1">照片6：</div>
+                <div class="c2"><input type="file" name="fileField[]" id="fileField_6" /></div>
+        	</li>
+            <li>
+              	<div class="c1">&nbsp;</div>
+              	<input type="hidden" name="gid" value="{$gid}">
+                <div class="c2"><input type="submit" id="submit_button" class="btn5" value="上传照片" />
+                </div>
+        	</li>
+<!--             <li>
+              	<div class="c1">&nbsp;</div>
+                <div class="c2"><input name="" type="checkbox" value="" /> 添加到专辑后面 </div>
+        	</li> -->
+        	</ul>
+       		<div class="clue">
+          		<p>严禁上传色情、暴力、恐怖、反动等违法照片，永葆ThinkSNS网美好！</p>
+       			<span class="clue_btm"></span>
+     		</div>
+    		</div>
+   			</form>
+        </div>  
+         </div>  
+		 <div class="c"></div>
+		</div>
+        
+        </div><!-- 右侧内容 end  -->
+</div><!-- 内容 end -->
+<include file="__THEME__/footer" />
+<script src="../Public/js/album.js" type="text/javascript"></script>
+<script type="text/javascript">
+function start_upload(obj) {
+	$('#submit_button').attr('disabled',true).removeClass('btn5').val("上传中，请稍后...");
+	return true;
+}
+</script>

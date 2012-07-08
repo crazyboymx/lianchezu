@@ -1,0 +1,28 @@
+<include file="__THEME__/header" />
+<link href="../Public/account.css" rel="stylesheet" type="text/css" />
+<link href="../Public/js/setavatar/css/imgareaselect-default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/setavatar/jquery.imgareaselect.min.js"></script>
+<script type="text/javascript" src="../Public/js/account.js"></script>
+
+<div class="content"><!-- 内容 begin  --> 
+  <include file="__THEME__/apps" />
+  <div class="main"> <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_C no_r">
+     <include file="_tab" />
+    <div class="mainbox_C_C">
+    <div class="mainbox_R">
+    </div>
+		<div style="width:75%;float:left">
+       {:Addons::addonsHook($_GET['addon'], $_GET['hook'])}
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" />

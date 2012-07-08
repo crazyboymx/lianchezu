@@ -1,0 +1,49 @@
+<<<<<<< HEAD
+=======
+<div class="right" style="padding-bottom:5px; cursor:hand;width:80px; cursor:pointer"  onclick='weibo.showAndHideMenu("Sync", this, "", "");'>
+    同步<a href="#" class="ico_sync_on"></a>
+</div>
+<div id="Sync" style="display:none;position:absolute;right:23px;top:30px;">
+    <div class="topic_app"></div>
+    <div class="pop_inner">
+>>>>>>> 将登陆同步整个html放入插件中执行。并在插件中的div放一个钩子，让其他插件可以进行扩展
+        <volist name="sync" id="v">
+            <label>
+                <input type='checkbox' name='sync[]' value='{$v}' style="vertical-align:middle;" <php>if($login_bind[$v]){</php>checked=true<php>}</php> id='{$v}_sync' onclick='loginSelectSync(this)' />
+                <span>{$alias[$v]}</span>
+            </label>
+        </volist>
+<<<<<<< HEAD
+=======
+        {:Addons::hook('login_sync_publish')}
+    </div>
+</div>
+>>>>>>> 将登陆同步整个html放入插件中执行。并在插件中的div放一个钩子，让其他插件可以进行扩展
+
+<script>
+    //同步设置
+    function loginSelectSync(o) {
+        if(o.checked) {
+            $(o).removeAttr('checked');
+            $.get( U('home/public/displayAddons') ,{addon:"Login",hook:"login_ajax_bind_publish_weibo",type:$(o).val(),do:'ajax_bind'},function(txt) {
+                if(txt == '1') {
+                    $(o).attr('checked', 'true');
+                } else {
+                    ui.box.show(txt, {
+                        title : '绑定帐号'
+                    });
+                }
+            });
+        } else {
+            $(o).attr('checked', true);
+
+            $.post(U('home/Widget/addonsRequest'), {
+                addon : "Login",
+                hook : "login_unbind_publish_weibo",
+                type : $(o).val()
+            }, function(txt) {
+                $(o).removeAttr('checked');
+            });
+        }
+    }
+</script>

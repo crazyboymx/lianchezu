@@ -1,0 +1,8 @@
+<div class="topic_tab"><a
+	href="{:U('home/Square/index')}" <if condition="ACTION_NAME eq 'index'">class="on"</if>>广场首页</a><a
+	href="{:U('home/Square/hot_topics')}" <if condition="ACTION_NAME eq 'hot_topics'">class="on"</if>>热门话题</a><a
+	href="{:U('home/Square/star')}" <if condition="ACTION_NAME eq 'star'">class="on"</if>>名人堂</a>
+	<volist name="apps_list" id="vo"><if condition="$vo['status'] && $square_config[$vo['app_name']]"><a
+	href="{:U('home/Square/app', array('app_show'=>$vo['app_name']))}" <if
+	condition="ACTION_NAME eq 'app' && $app_show eq $vo['app_name']">class="on"</if>>{$vo['app_alias']}</a></if></volist>
+</div>

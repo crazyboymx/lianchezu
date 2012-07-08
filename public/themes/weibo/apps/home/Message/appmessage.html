@@ -1,0 +1,102 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<div class="content_holder">
+<!-- 内容 begin  --> 
+<div class="content no_bg">
+  <!--wrap_index_r-->
+  <div class="wrap_index_r">
+  <include file="__THEME__/apps" />
+      <div class="Box_content">
+          {:Addons::hook('home_index_right_top')}
+          {:W('RelatedUser',array('async'=>1))}
+        <div class="right_box lineS_btm">
+          <h2><a href="javascript:void(0)" onclick="$('.quick_win').show()" class="right" style="font-weight:400;font-size:12px">添加</a>关注的话题</h2>
+          <dl style="display:none;" class="quick_win">
+          	<dt></dt>
+            <dd>
+            <a href="javascript:void(0)" onclick="$('.quick_win').hide()" class="del" title="关闭"></a>
+            <p>
+              <input type="text" class="text" name="quick_name" style=" width:130px;display:block;margin:0 0 5px 0"/>
+              <input type="button" onclick="addFollowTopic()" value="保存" class="btn_b" />
+            </p>
+            <p class="cGray2">请添加想关注的话题</p>
+            </dd>
+          </dl>
+          <ul class="topic_list" rel="followTopicArea">
+            <volist id="vo" name="followTopic">
+              <li onmouseover="$(this).find('.del').show()" onmouseout="$(this).find('.del').hide()"><a class="del right" style="display:none" title="删除" href="javascript:void(0)" onclick="deleteFollowTopic(this,'{$vo.topic_id}')"></a><a href="{:U('home/user/topics',array('k'=>urlencode($vo['name'])))}" title="{$vo.name}">{$vo.name}</a></li>
+            </volist>
+          </ul>
+        </div>
+        <div class="right_box">
+          {:W('HotTopic', array('type'=>'recommend','limit'=>5))}
+          {:W('HotTopic', array('type'=>'auto','limit'=>5))}
+          
+          
+      </div>
+          {:Addons::hook('home_index_right_bottom')}
+        <php>if (Addons::requireHooks('home_index_right_advert')) {</php>
+        	{:Addons::hook('home_index_right_advert', array($ts['ad']['right']))}
+        <php>} else {</php>
+			<volist name="ts['ad']['right']" id="vo">
+			<div class="ad_right"><div class="ke-post">{$vo.content}</div></div>
+			</volist>
+		<php>}</php>
+      </div>
+  </div>
+  <!--wrap_index_r end-->
+  <div class="wrap_index_l">
+      <div class="tab-menu">
+       	  <a href="javascript:void(0)" onclick="ui.sendmessage();" class="btn_b right">发私信</a>
+		  <include file="_tab" />
+      </div>
+      <div class="lh30" style="overflow:hidden">
+        <php>if (empty($data)) {</php>
+            暂无应用消息
+        <php>}</php>
+        <!--
+          <div class="app_message_clew"><span class="right"><a href="#">忽略该应用的所有邀请</a></span>您有 1 个 忍者村 邀请</div>
+          -->
+        <ul class="feed_list">
+       	  <volist id="vo" name="data">
+            <li class="lineD_btm" id="myinvite_{$vo.hash}">
+                <div class="userPic">
+                    <a href="{:U('home/space/index',array('uid'=>$vo['fromuid']))}" title="">
+                        <img card="1" src="{$vo.fromuid|getUserFace}">
+                    </a>
+                </div>
+                <div style="margin-left:70px;">{$vo.myml}</div>
+            </li>
+		  </volist>
+        </ul>
+        <div class="c"></div>
+      </div>
+  </div>
+  <div class="clear"></div>
+</div>
+</div>
+<!-- 内容 end --> 
+<script>
+	function manyou_add_userapp(hash, url){
+        if (url) {
+            ui.success('正在跳转至应用...');
+        }
+        setTimeout(function(){
+	        $.post( "{:U('home/Message/deleteMyInvite')}", {hash:hash}, function(res){
+	            if (res == '1') {
+	                if (url) {
+	                    //同意
+	                    self.location.href = url;
+	                }else {
+	                    //忽略
+	                    ui.success('忽略成功');
+	                    $('#myinvite_'+hash).remove();
+	                }
+	            }else {
+	                ui.error('操作失败');
+	            }
+	        });
+        }, 1500);
+	}
+</script>	
+<include file="__THEME__/footer" /> 

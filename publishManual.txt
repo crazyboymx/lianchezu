@@ -1,0 +1,4 @@
+1，需要将services/SystemService.class.php 中的升级地址修改为 http://t.thinksns.com/version.php
+2，删除文档插件.
+3，删除不发布的应用.
+4，删除字体文件.

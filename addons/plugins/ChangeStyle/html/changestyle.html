@@ -1,0 +1,131 @@
+  <script type="text/javascript" src="{:SITE_URL}/addons/plugins/ChangeStyle/html/jqcolor.js"></script>        
+
+  <script type="text/javascript">
+    $(function(){ 
+        $.showcolor('diybgcolor','diybgcolor');//第一参数：按钮ID，第二参数： 文本框ID
+    })
+</script>
+ 
+<a class="templete_enter" href="javascript:;"  onclick="$('.changestylepop').toggleClass('isdisplay');"  title="模板偏好设置"></a>
+
+<div class="changestylepop">
+        <div class="openok">
+    <a class="templete_enter" href="javascript:;" onclick="$('.changestylepop').toggleClass('isdisplay');"  title="模板偏好设置"></a>
+            
+      <input type="hidden" id="classname" name="classname" value="0">
+     
+     <volist name="defaultStyle" id="vo">
+        <span class="{$vo}" onclick="change('{$key}',$(this));" ></span>
+     </volist>
+      <A class="stylemore" href="{:U('home/Account/changestyle','addon=ChangeStyle&hook=home_account_show')}">更多</a>
+
+      <div class="diy">
+          <dt>自定义皮肤</dt> 
+          <dd><input id="diybg" name="diybg" value="自定义背景图片URL" onfocus="if($('#diybg').val()=='自定义背景图片URL') $('#diybg').val('');" onblur="if($('#diybg').val()=='') $('#diybg').val('none');" style="width:180px" /></dd> 
+          <dd><input  maxlength="7" id="diybgcolor" name="diybgcolor" value="自定义背景颜色＃000" onfocus="if($('#diybgcolor').val()=='自定义背景颜色＃000') $('#diybgcolor').val('');" onblur="if($('#diybgcolor').val()=='') $('#diybgcolor').val('none');" style="width:180px" /></dd>
+          <dd><a href="javascript:;" onclick="diy()" class="btn_b mr5">保存</a><a href="javascript:;" onclick="$('.changestylepop').toggleClass('isdisplay');" class="btn_w">取消</a></dd>
+      </div> 
+        
+        
+        </div>
+        </div>
+      
+<script>
+var defaultStyle = <?php echo json_encode($defaultStyle); ?>;
+    function change(type,obj){
+        
+        for(var one in defaultStyle){
+            if(one == type){
+                obj.addClass('isborder');
+            }else{
+                $("."+defaultStyle[one]).removeClass('isborder');
+            }
+        }
+		var styleTag = document.createElement("link");
+		styleTag.setAttribute('type', 'text/css');
+	    styleTag.setAttribute('rel', 'stylesheet');
+	    styleTag.setAttribute('href', "<?php echo SITE_URL.'/addons/plugins/ChangeStyle//html/'; ?>"+type+".css");
+	    $("head")[0].appendChild(styleTag);
+        $('#classname').val(type);
+		
+        savestyle(type);
+        return true;
+    }
+    
+      
+//保存风格
+function savestyle(classname){
+  $.post( U('home/Widget/addonsRequest'),{'addon':'ChangeStyle','hook':'savestyle','classname':classname},function(txt){
+      if(txt == 1){
+          ui.success('换肤成功！');
+      
+      }else{
+      //location.reload();
+        ui.success('保存成功！');
+      }
+      });
+}
+ 
+  //自定义风格
+function diy(){
+    
+  var classname=0;
+  var diybg=$('#diybg').val();
+  var diybgcolor=$('#diybgcolor').val();
+ 
+    if( (diybg == '' && diybgcolor == '') || (diybg == '自定义背景图片URL' && diybgcolor == '自定义背景颜色＃000') ){
+       
+        //ui.error('既然选择了DIY。那么必须二选一。');
+		$('.changestylepop').toggleClass('isdisplay');
+        return true;
+     }
+ 
+   if(diybg == '' || diybg =='自定义背景图片URL'){
+         
+         diybg='none';
+         
+          //alert( '你没有填写自定义背景地址，或者格式错误' );
+         // ui.error('你没有填写自定义背景地址，或者格式错误！');
+          
+         // return false;
+      
+      }
+      
+      if(diybgcolor == '' || diybgcolor =='自定义背景颜色＃000' ){
+        
+          diybgcolor='none';
+        
+       // alert( '你没有填写自定义背景颜色代码，或者格式错误' );
+        
+       // ui.error('你没有填写自定义背景颜色代码，或者格式错误！');
+         
+       //  return false;
+      
+      }   
+      
+ 
+  /* if (!diybgcolor.match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/)) {
+			ui.error('颜色代码格式不对');
+			$diybgcolor.focus();
+			return false;
+		}  
+ 
+ 
+ */
+ 
+ 		
+      $.post( U('home/Widget/addonsRequest'),{'addon':'ChangeStyle','hook':'savestyle','classname':classname,'diybg':diybg,'diybgcolor':diybgcolor},function(txt){
+      if(txt == 1){
+          ui.success('添加成功');
+           location.reload();
+      
+      }else{
+     
+        ui.success('保存成功1');
+        
+      }
+      });
+}
+   
+ 
+</script>

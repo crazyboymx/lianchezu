@@ -1,0 +1,97 @@
+<include file="__THEME__/header" />
+<link href="../Public/css/photo.css" rel="stylesheet" type="text/css" />
+<div class="content_holder">
+<!-- 头部 end -->
+<div class="content"><!-- 内容 begin  -->
+	<div class="main"> <!-- 右侧内容 begin  -->
+<div class=page_title> <!-- page_title begin -->
+  	<div class="left" style="width:80px;">
+    	<span class="headpic50"><a href="__APP__/Group/index/gid/{$groupinfo['id']}"><img src="__ROOT__/thumb.php?w=50&h=50&url={$groupinfo['logo']|get_photo_url}"/></a></span>
+    </div>
+    <div class="left" style="width:583px;">
+    	<h2><a href="__APP__/Group/index/gid/{$groupinfo['id']}">{$groupinfo['name']}</a> &gt; <a href="__APP__/Album/index/gid/{$groupinfo['id']}">相册</a> &gt; <a href="__APP__/Album/getAlbum/gid/{$gid}/albumId/{$album.id}">{$album.name}</a></h2>
+
+      </div>
+    <div class="left alR lh30" style="width:170px;">
+        <a href="JavaScript:window.history.back()">&lt;&lt;返回上一页</a></div>
+    <div class="c"></div>
+</div><!-- page_title end -->
+
+	<!-- 切换标签 end  -->
+	<div class="lh30">
+		<div>
+			<div class="btmline">
+				<span class="right" style="margin:0px 30px;">
+					<a href="__APP__/Photo/getPhoto/gid/{$gid}/albumId/{$album.id}/photoId/{$pre.id}">上一张</a>　
+					<a href="__APP__/Photo/getPhoto/gid/{$gid}/albumId/{$album.id}/photoId/{$next.id}">下一张</a>
+				</span>
+			第 <span id="totaldiv">{$now}/{$photoCount}</span> 张 ┊ 
+			<a href="__APP__/Album/getAlbum/gid/{$gid}/albumId/{$photo.albumId}" title="返回该专辑">返回该专辑</a>
+			</div>
+		</div>
+	</div>
+	<div class="photoBox">
+		<div class="view">
+			<div class="c1">
+				<!-- 主图 -->
+				<div class="alC" id="big_photo"><img src="__ROOT__/thumb.php?t=f&w=700&h=700&url={$photo.savepath|get_photo_url}" /></div>
+				<div class="info" id="photo_info">
+					<div><strong>{$photo.name}</strong></div>
+					<div>专辑：<a href="__APP__/Album/getAlbum/gid/{$gid}/albumId/{$album.id}">{$album.name}</a>({$album.photoCount})</div>
+					<div>上传者：<a href="__TS__/space/{$photo.userId}">{$photo.userId|getUserName}</a></div>
+					<div>&nbsp;时间:{$photo.cTime|friendlyDate}</div>
+				</div>
+			</div>
+
+			<!-- 滚动小图 -->
+            
+			<div class="c2">
+            	
+                <div style="overflow:hidden;height:300px;">
+				<volist name="photos" id="p">
+				<li><a onclick='showImage({$aid})' href="__APP__/Photo/getPhoto/gid/{$gid}/albumId/{$p.albumId}/photoId/{$p.id}"   ><img src="__ROOT__/thumb.php?w=50&h=50&url={$p.savepath|get_photo_url}"  <php> if($p['id'] == intval($_GET['photoId'])){ </php> style="border:solid 2px #0000ff;" <php> } </php> /></a></li>
+				</volist>
+                </div>
+              
+			</div>
+             
+		</div>
+		<div class="viewRC">
+		<div class="c1">
+			{:W('Comment',array( 'type'=>'photo','appid'=>$photo['id'],'mid'=>$uid,"face"=>getUserFace($mid),'role'=>1))}
+		</div>
+		<div class="c2">
+			<div><a href="{$photo.savepath|get_photo_url}" target="_blank">查看原图</a></div>
+			
+			<php>if($photo['userId']==$mid || $isadmin){</php>
+		
+			<div><a href="javascript:editphoto({$gid},{$photo.id});">修改标题和属性</a></div>
+			
+			<div id="divdelphoto"><a href="javascript:delphoto({$gid},{$photo.id});">删除该照片</a></div>
+			
+			<div><a href="JavaScript:setcover({$gid},{$photo.id});">设为专辑封面</a></div>
+			<php>}else{</php>
+			<div>{:W('Report',array( 'type'=>'相片举报','appid'=>$APPINFO['APP_ID'],'url'=>'/Photo/getPhoto/gid/'.$gid.'/albumId/'.$p['id'].'/photoId/'.$photo['id'],'title'=>$photo['name'],'recordId'=>$photo['id']))}    </div>
+			<php>}</php>
+		</div>
+      </div>
+	</div>  </div><!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />
+<script type="text/javascript">
+var gid 			=   {$gid};
+var photo_id		=	{$photo.id};
+var photo_name		=	'{$photo.name}';
+var album_id		=	{$album.id};
+var now_index_id	=	{$now};
+var uid				=	{$uid};
+
+function refresh_url(albumId){
+	alert(albumId);
+	//window.location.href = APP+'/Index/photo/id/'+photo_id+'aid/'+albumId+'/uid/'+uid;
+}
+</script>
+<script type="text/javascript" src="../Public/js/photo.js"></script>

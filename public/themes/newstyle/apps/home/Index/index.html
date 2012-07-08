@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$site_opts.site_name}</title>
+<link rel="shortcut icon" href="__THEME__/favicon.ico" />
+<meta name="keywords" content="{$site_opts.site_keyword}" />
+<meta name="description" content="{$site_opts.site_header}" />
+<!-- 全局风格CSS -->
+<link href="__THEME__/main.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="login_bg">
+<script>
+</script>
+<php>if($ad["header"]){</php>
+<div class="ad_top">{$ad.header}</div>
+<php>}</php>
+<div class="login_top">
+	<div class="header"><!-- 头部 begin -->
+  <div class="logo"><a href="{:U('home')}">&nbsp;</a></div>
+  <div class="nav_sub"> 
+  	<a href="{:U('home/Public/register')}">注册</a>&nbsp;┆&nbsp;
+  	<gt name="mid" value="0">
+  		<a href="{:U('home/Public/logout')}">登出</a>&nbsp;┆&nbsp;
+  	<else/>
+  		<a href="{:U('home/Public/login')}">登录</a>&nbsp;┆&nbsp;
+  	</gt>
+  	<a href="__TS__/Information/help">帮助</a> 
+  </div>
+  <div class="nav"><ul><li style="font-size:12px; color:#DEE4ED; padding-left:10px;"> 员工协作社区，提升企业群体智慧</li></ul></div>
+</div>
+</div>
+<!-- 头部 end -->
+<div class="login_con"><!-- 内容 begin  --> 
+<div class="login_boxR">
+
+	  <php>if( !isset($mid) || $mid <= 0) {</php>
+		<script>
+			function changeverify(){
+				var date = new Date();
+				var ttime = date.getTime();
+				$('#verifyimg').attr('src',TS+'/Index/verify/time/'+ttime);
+			}
+		</script>
+	
+			<div class="login_box">
+			<h2>用户登录</h2>
+			<form action="{:U('home/Public/doLogin')}" method="post">
+	        <ul>
+	        <li>
+			<div class="c1">Email：</div><div class="c2"><input name="email" type="text" class="text" id="textfield3" style="width:200px;"/>
+			</div>
+	        </li>
+	        <li style="display:none;">
+			<div class="c1" style="padding:0">&nbsp;</div><div class="c2 cGray2" style="padding:0">帐号/邮箱地址</div>
+	        </li>
+	        <li>
+			<div class="c1">密码：</div><div class="c2"><input name="password" type="password" class="text" id="textfield3" style="width:200px;"/> <a href="{:U('home/Public/sendPassword')}">忘了密码？</a></div></li>
+			
+			<php>	
+			    $verify_allow = unserialize($site_opts["verify"]);
+				$login_verify_allow = $verify_allow['login'];
+			</php>
+	 		<eq name="register_verify_on" value="1">
+			<li><div class="c1">验证码：</div>
+	        <div class="c2">
+	        <div class="left"><input name="verify" type="text alM" class="text" id="textfield3" onfocus="this.className='text2'" onblur="this.className='text'" style="width:50px;" /></div>
+			 <a href="###" onclick="changeverify()"><img src="__TS__/Index/verify" id="verifyimg" alt="换一张" /></a>
+			</div></li>
+	 		</eq>
+	
+			<li><div class="c1">&nbsp;</div><div class="c2"><input name="remember" type="checkbox" value="1" />下次自动登录</div></li>
+			 <li><div class="c1">&nbsp;</div><div class="c2"><input name="button" type="submit" class="btn_login hand" id="button" value="登 录" /></div></li>
+	         </ul>
+	         
+			</form>
+		</div>
+		<php>if($ad["leftmenu"]){</php>
+	    	<div class="ad_app">{$ad["leftmenu"]}</div>
+		<php>}</php>
+	    
+	<php>}else{</php>
+		<div class="user_app"><!-- 用户组件列表 begin -->
+			<div class="user_app_top"></div>
+			<div class="user_app_list">
+				<ul>
+					<volist name="APPMENUS_LEFT" id="app">
+						<li>
+							<a href="{$app.url}" class="a14"><img src="{$app.icon}" />{$app.name}</a>
+							<php>if($app["add_name"]){</php>
+								<span><a href="{$app.add_url}">{$app.add_name}</a></span>
+							<php>}</php>
+						</li>
+					</volist>			
+				</ul>
+			</div>
+			<div class="app_add"><a href="__TS__/App/">添加或删除组件</a></div>
+			<php>if($ad["leftmenu"]){</php>
+		    <div class="ad_app">{$ad["leftmenu"]}</div>
+			<php>}</php>
+			<div class="user_app_btm"></div>
+		</div><!-- 用户组件列表 end -->
+	<php>}</php>
+
+</div>
+<div class="login_boxL">&nbsp;</div>
+
+</div>
+<!-- 内容 end -->
+<php>if($ad["contentbottom"]){</php>
+<div class="ad_footer" style="display:none;">{$ad.contentbottom}</div>
+<php>}</php>
+<div class="login_btm">
+  <div class="footer">
+    <div class="menu"> <a href="__TS__/Information/index/cid/2">关于我们</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="__TS__/Information/index/cid/3">联系方式</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="__TS__/Information/index/flink/1">友情链接</a></div>
+    Copyright © {$site_opts.site_name} <a href="http://www.thinksns.com" target="_blank">Powered by Sociax Enterprise</a> </div>
+  <div style="height:30px;" >&nbsp;</div>
+</div>
+<php>if($ad["footer"]){</php>
+<div class="ad_footer" style="display:none;">{$ad.footer}</div>
+<php>}</php>
+<div style="display:none;">
+  <php>if($site_opts['cnzz_id']){</php>
+  <script src="http://s87.cnzz.com/stat.php?id={$site_opts['cnzz_id']}&web_id={$site_opts['cnzz_id']}" language="JavaScript" charset="gb2312"></script>
+  <php>}</php>
+</div>
+</body>
+</html>

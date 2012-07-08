@@ -1,0 +1,54 @@
+<include file="__THEME__/header" />
+<link href="../Public/css/photo.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../Public/Js/Common.js"></script>
+<link  href="../Public/group.css" rel="stylesheet" type="text/css"/>
+<script src="../Public/Js/album.js" type="text/javascript"></script>
+<include file="../Public/_mainNav" />
+<div class="content_holder">
+<div class="content">
+  <!-- 内容 begin  -->
+  <div class="main no_l">
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox"> 
+    <include file="../Public/_groupInfo" />
+      <div class="mainbox_C">
+        <!--  简单头部 -->
+        <include file="../Public/top" />
+        <!--  简单头部结束  -->
+        <div class="photoBox">
+          <div class="MenuSub"> <a href="__APP__/Photo/index/gid/{$gid}">全部照片</a>|<a href="#" class="on">照片专辑</a> </div>
+          <div class="albumlist">
+            <ul>
+              <volist name="albumList.data" id="album">
+                <li class="bg04">
+                  <div class="box">
+                    <div class="c1"><span class="photo140"><a href="__APP__/Album/getAlbum/gid/{$gid}/albumId/{$album.id}"><img src="{$album.id|get_album_cover}" alt="{$album.name}" /></a></span></div>
+                    <div class="c2">
+                      <dl>
+                        <dt><a href="__APP__/Album/getAlbum/gid/{$gid}/albumId/{$album.id}/" class="U"><strong>{$album.name}</strong></a></dt>
+                        <dd><a href="__TS__/space/{$album.userId}">{$user.name}</a></dd>
+                        <dd>共{$album.photoCount}张</dd>
+                        <dd>{$album.mTime|friendlyDate}更新</dd>
+                        <dd>&nbsp;<em>{:date('Y年m月d日',$album['cTime'])}创建</em></dd>
+                        <php>if($isadmin || $album['userId'] == $mid){</php>
+                        <dd><a href="javascript:editAlbum({$gid},{$album.id});">编辑该专辑</a></dd>
+                        <php>}</php>
+                      </dl>
+                    </div>
+                  </div>
+                </li>
+              </volist>
+            </ul>
+          </div>
+        </div>
+        <div class="page">{$albumList.html}</div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />
+<script src="../Public/js/preview.js" type="text/javascript"></script>

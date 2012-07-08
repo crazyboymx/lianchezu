@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>创建新相册</title>
+<link href="__THEME__/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+//指定当前组模块URL地址
+var	URL		=	'__URL__';
+var	APP		=	'__APP__';
+var	PUBLIC	=	'__PUBLIC__';
+var	ROOT	=	'__ROOT__';
+var TS		=	'__TS__';
+</script>
+<script src="__PUBLIC__/js/jquery.js" type="text/javascript"></script>
+<script src="../Public/js/album.js" type="text/javascript"></script>
+<style type="text/css">
+<!--
+.pop {
+	text-align: left;
+	width: 100%;
+}
+.pop .tit {
+	background-image: url(images/pop_tit.jpg);
+	background-repeat: repeat-x;
+	line-height: 27px;
+	border: 1px solid #3a84c3;
+	margin: 1px;
+	font-weight: bold;
+	color: #FFFFFF;
+	padding-left: 5px;
+}
+.pop .con{
+	padding: 5px;
+	margin-bottom: 5px;
+}
+.pop .con th {
+	float: left;
+	width: 70px;
+	text-align: right;
+	font-size: 12px;
+	font-weight: normal;
+}
+.pop .con td { font-size: 12px; }
+.pop .con .msg {
+	background-color: #fffff5;
+	border: 1px solid #ffe361;
+	color: #FF0000;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+.pop .btm{
+	background-color: #eeeeee;
+	text-align: right;
+	padding: 5px;
+	clear: both;
+}
+-->
+</style>
+</head>
+<body>
+<form method="post" action="__URL__/do_update_photo" name="update_photo" id="update_photo" onsubmit="return false;">
+<div class="pop">
+  <div class="con">
+  <table width="100%" border="0" cellspacing="2" cellpadding="0">
+  <tr>
+    <th>照片标题：</th>
+    <td><input type="text" name="name" id="name" value="{$photo.name}" /></td>
+  </tr>
+  <tr>
+    <th>所属相册：</th>
+    <td>
+		{:W('AlbumList',array('gid'=>$gid,'selected'=>intval($_GET['albumId']),'form_name'=>'albumId'))}
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+</div>
+<div class="btm">
+	<input type="hidden" name="photoId" id="photoId" value="{$photo.id}" />
+	<input type="hidden" name="gid" id="uid" value="{$photo.gid}" />
+	<input type="button" class="btn_b" value="确 定" onclick="ajax_submit_update_photo()" />
+	<input type="button" class="btn_w" onclick="parent.ymPrompt.close();" value="取 消" />
+</div>
+</div>
+</form>
+<script type="text/javascript" src="../Public/js/photo.js"></script>
+</body>
+</html>

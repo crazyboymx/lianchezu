@@ -1,0 +1,253 @@
+<include file="__THEME__/header" />
+<link href="../Public/account.css" rel="stylesheet" type="text/css" />
+<link href="../Public/js/setavatar/css/imgareaselect-default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/setavatar/jquery.imgareaselect.min.js"></script>
+<script type="text/javascript" src="../Public/js/account.js"></script>
+
+<div class="content"><!-- 内容 begin  --> 
+  <include file="__THEME__/apps" />
+  <div class="main"> <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_C no_r">
+    <include file="_tab" />
+    <div class="mainbox_C_C">
+    <div class="mainbox_R">
+    
+    </div>
+		<div class="feedBox" style="width:100%">
+   
+	
+		  
+          <div class="setItems">
+		    
+            <div class="setFold" rel="face" >
+			<div style="float:left;margin-right:10px;border:1px solid #8098A8;height:30px;padding:1px;width:30px;"><img src="{$mid|getUserFace='s'}" width="30"></div>
+              <h2>上传头像</h2>
+             <div class="setStep">
+			  	<span class="txt1" id="avatarInfo">
+				<php>if( isSetAvatar($mid) ){</php>
+					已设置头像
+				<php>}else{</php>
+					未设置头像
+				<php>}</php>
+				</span>
+              </div>
+            </div>
+            <div   class="setItemsInfo"> 
+				<div style="padding:10px 0;color:#666;"> 
+					选择上传一张本地头像
+				</div> 
+				<form enctype="multipart/form-data" method="post" name="upform" dotype="ajax" target="upload_target" action="{:U('home/Account/avatar',array('t'=>'upload'))}">
+				<input type="file" name="Filedata" id="Filedata"/> 
+				<input style="margin-right:20px;" type="submit" name="" value="上传形象照" /><span style="visibility:hidden;" id="loading_gif"><img src="../Public/js/avatar/loading.gif" align="absmiddle" />上传中，请稍侯......</span> 
+				</form> 
+				<div id="avatar_editor">
+					<img id="photo">
+				</div> 
+				<div style=" position: relative; overflow-x: hidden; overflow-y: hidden; width: 150px; height: 150px; "><img src="" id="photo_middle" style="position: relative; width: 40000px; height: 30000px; margin-left: -22200px; margin-top: -3800px; "></div>
+				
+				<div style=" position: relative; overflow-x: hidden; overflow-y: hidden; width: 50px; height: 50px; "><img src="" id="photo_small" style="position: relative; width: 40000px; height: 30000px; margin-left: -22200px; margin-top: -3800px; "></div>
+				<form enctype="multipart/form-data" method="post" name="upform" target="upload_target" action="{:U('home/Account/avatar',array('t'=>'save'))}">
+				<input type="text" name="picurl" value="">
+				<input type="text" name="x1">
+				<input type="text" name="y1">
+				<input type="text" name="x2">
+				<input type="text" name="y2">
+				<input type="text" name="h">
+				<input type="text" name="w">
+				<input type="submit" value="确定">
+				</form>
+			</div>
+          </div>		  
+        <div class="c"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" />
+<include file="__THEME__/header" />
+<link href="../Public/account.css" rel="stylesheet" type="text/css" />
+<link href="../Public/js/setavatar/css/imgareaselect-default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/setavatar/jquery.imgareaselect.min.js"></script>
+<script type="text/javascript" src="../Public/js/account.js"></script>
+
+<div class="content"><!-- 内容 begin  --> 
+  <include file="__THEME__/apps" />
+  <div class="main"> <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_C no_r">
+      <div class=page_title> <!-- page_title begin -->
+      <h2><img src="../Public/images/applications.gif" />帐号管理</h2>
+    </div>
+      <div class="tab-menu"><!-- 切换标签 begin  -->
+      <ul>
+        <li><a href="###" class="on"><span>个人资料</span></a></li>
+        <li><a href="###"><span>隐私设置</span></a></li>
+        <li><a href="{:U('home/Account/security')}"><span>帐号安全</span></a></li>
+        <li><a href="{:U('home/Account/bind')}"><span>外部绑定</span></a></li>
+      </ul>
+    </div>
+    <!-- 切换标签 end  -->
+    <div class="mainbox_C_C">
+    <div class="mainbox_R">
+    
+    </div>
+		<div class="feedBox" style="width:100%">
+   
+	
+		  
+          <div class="setItems">
+		    
+            <div class="setFold" rel="face" >
+			<div style="float:left;margin-right:10px;border:1px solid #8098A8;height:30px;padding:1px;width:30px;"><img src="{$mid|getUserFace='s'}" width="30"></div>
+              <h2>上传头像</h2>
+             <div class="setStep">
+			  	<span class="txt1" id="avatarInfo">
+				<php>if( isSetAvatar($mid) ){</php>
+					已设置头像
+				<php>}else{</php>
+					未设置头像
+				<php>}</php>
+				</span>
+              </div>
+            </div>
+            <div   class="setItemsInfo"> 
+				<div style="padding:10px 0;color:#666;"> 
+					选择上传一张本地头像
+				</div> 
+				<form enctype="multipart/form-data" method="post" name="upform" dotype="ajax" target="upload_target" action="{:U('home/Account/avatar',array('t'=>'upload'))}">
+				<input type="file" name="Filedata" id="Filedata"/> 
+				<input style="margin-right:20px;" type="submit" name="" value="上传形象照" /><span style="visibility:hidden;" id="loading_gif"><img src="../Public/js/avatar/loading.gif" align="absmiddle" />上传中，请稍侯......</span> 
+				</form> 
+				<div id="avatar_editor">
+					<img id="photo">
+				</div> 
+				<div style=" position: relative; overflow-x: hidden; overflow-y: hidden; width: 150px; height: 150px; "><img src="" id="photo_middle" style="position: relative; width: 40000px; height: 30000px; margin-left: -22200px; margin-top: -3800px; "></div>
+				
+				<div style=" position: relative; overflow-x: hidden; overflow-y: hidden; width: 50px; height: 50px; "><img src="" id="photo_small" style="position: relative; width: 40000px; height: 30000px; margin-left: -22200px; margin-top: -3800px; "></div>
+				<form enctype="multipart/form-data" method="post" name="upform" target="upload_target" action="{:U('home/Account/avatar',array('t'=>'save'))}">
+				<input type="text" name="picurl" value="">
+				<input type="text" name="x1">
+				<input type="text" name="y1">
+				<input type="text" name="x2">
+				<input type="text" name="y2">
+				<input type="text" name="h">
+				<input type="text" name="w">
+				<input type="submit" value="确定">
+				</form>
+			</div>
+          </div>		  
+        <div class="c"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" />
+
+<script>
+	$(document).ready(function(){
+		var up_pic_width =50;
+		var up_pic_height =50;
+		
+		var hs = document.location.hash;
+		changeModel( hs.replace('#','') );
+		$('.setFold').click(function(){
+			if( $(this).attr('class')=='setFold' ){
+				changeModel( $(this).attr('rel') );
+			}else{
+				$(this).removeClass('setUnfold');
+				$(this).next('.setItemsInfo').hide();
+			}
+			location.href='#'+$(this).attr('rel');
+		})
+		
+		//监听 form 表单提交
+	  	$("form[dotype='ajax']").bind('submit', function() {
+			var expend = $(this).attr('expend');
+			var type   = $(this).attr('type');
+			var options = {
+			    success: function(txt) {
+					 txt = eval('('+txt+')');
+					 if(txt.code==1){
+						set_UP_W_H(txt.data['picwidth'],txt.data['picheight']);
+						$("#photo").attr('src',txt.data['picurl']);
+						$("input[name=picurl]").attr('value',txt.data['picurl']);
+					 	$("#photo_middle").attr('src',txt.data['picurl']);
+					 	$("#photo_small").attr('src',txt.data['picurl']);
+					 	$('#photo').imgAreaSelect({ 
+            x1: 0, y1: 0, x2: 150, y2: 150, handles: true,onInit:preview,onSelectChange:preview,onSelectEnd:onSelectEnd});
+					 	
+					 	
+					 }else{
+					 	alert(txt.message);
+					 }
+			    }
+			};		
+	         $(this).ajaxSubmit(options);
+			 return false;
+	    });
+	
+	});
+	
+function set_UP_W_H(w,h){
+	up_pic_width = w;
+	up_pic_height = h;
+}	
+	
+function onSelectEnd(img,selection){
+    $('input[name=x1]').val(selection.x1);
+    $('input[name=y1]').val(selection.y1);
+    $('input[name=x2]').val(selection.x2);
+    $('input[name=y2]').val(selection.y2); 
+	$('input[name=w]').val(selection.width);
+	$('input[name=h]').val(selection.height)	           
+}
+	
+function preview(img, selection) {
+	onSelectEnd(img,selection);
+    var middle_scaleX = 150 / (selection.width || 1);
+    var middle_scaleY = 150 / (selection.height || 1);
+  
+    var small_scaleX = 50 / (selection.width || 1);
+    var small_scaleY = 50 / (selection.height || 1);
+	
+    $('#photo_middle').css({
+        width: Math.round(middle_scaleX * up_pic_width) + 'px',
+        height: Math.round(middle_scaleY * up_pic_height) + 'px',
+        marginLeft: '-' + Math.round(middle_scaleX * selection.x1) + 'px',
+        marginTop: '-' + Math.round(middle_scaleY * selection.y1) + 'px'
+    });
+	
+	$('#photo_small').css({
+        width: Math.round(small_scaleX * up_pic_width) + 'px',
+        height: Math.round(small_scaleY * up_pic_height) + 'px',
+        marginLeft: '-' + Math.round(small_scaleX * selection.x1) + 'px',
+        marginTop: '-' + Math.round(small_scaleY * selection.y1) + 'px'
+    });
+}	
+	
+	//切换操作模块
+	function changeModel( type ){
+		var t = type || 'base';
+		$('.setFold').removeClass('setUnfold');
+		$('.setItemsInfo').hide();
+		var handle = $('div[rel="'+t+'"]');
+		handle.addClass('setUnfold');
+		handle.next('.setItemsInfo').show();
+	}
+	
+	
+	
+</script>

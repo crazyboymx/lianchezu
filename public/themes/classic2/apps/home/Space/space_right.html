@@ -1,0 +1,24 @@
+   <if condition="$verified['verified'] eq 1">
+   	<div class="certif">
+	    <a href="{:U('home/Account/verified')}"><img src="__THEME__/images/v24x24.png" /></a><a href="{:U('home/Account/verified')}"><h2>身份认证</h2></a>
+	    <p>{$verified['info']}</p>
+    </div>
+   </if>
+  <!-- certif -->
+        <div class="right_box" style="padding-bottom:0;">
+          <div class="user_follow_detail lineD_btm">
+  	<span class="lineR"><a href="{:U('home/space/follow',array('uid'=>$uid,'type'=>'following'))}"><strong>{$spaceCount.following|intval}</strong><br>关注</a></span>
+    <span class="lineR"><a href="{:U('home/space/follow',array('uid'=>$uid,'type'=>'follower'))}"><strong>{$spaceCount.follower|intval}</strong><br>粉丝</a></span>
+    <span><a href="{:U('home/Space/index',array('uid'=>$uid))}"><strong>{$spaceCount.miniblog|intval}</strong><br>微博</a></span>
+  </div>
+        </div>
+{:Addons::hook('home_space_right_middle', array('uid'=>$uid))}
+        <div class="right_box" style="padding-top:0px;">
+          <h2>{$uid|getUserName}的标签</h2>
+           <p class="tags">
+           	<volist id="vo" name="usertags">
+           	<a tagid="{$vo.tag_id}" weight="423" href="{:U('home/user/searchtag',array('k'=>urlencode($vo['tag_name'])))}" class="fB">{$vo.tag_name}</a>&nbsp;
+           	</volist>
+           </p>
+        </div>
+{:W('Visitor', array('id'=>$uid, 'title'=>'这些人也刚刚来过...'))}

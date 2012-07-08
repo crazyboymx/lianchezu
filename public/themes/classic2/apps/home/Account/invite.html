@@ -1,0 +1,66 @@
+<include file="__THEME__/header" />
+<link href="../Public/account.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/avatar/avatar.js"></script>
+<script type="text/javascript" src="../Public/js/account.js"></script>
+
+<div class="content W_bg"><!-- 内容 begin  --> 
+  <include file="__THEME__/apps" />
+<div class="wrap_index_r">
+  <div class="main"> <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_C no_r">
+      <div class=page_title> <!-- page_title begin -->
+      <h2><img src="../Public/images/applications.gif" />邀请管理</h2>
+    </div>
+
+    <!-- 切换标签 end  -->
+    <div class="mainbox_C_C">
+		<div style=" margin-left:30px;">
+    
+          <div class="setItems">
+
+				 <div class="data"><!-- 邀请码 begin  -->
+                 <div class="f18px mb10">邀请好友加入</div>
+                 
+				 <php>if(!$list && !$receivecount){</php>
+				暂无新的邀请链接
+				<php>}</php>
+                 <php>if($receivecount){</php>
+				 <form act="{:U('home/Account/invite')}" method="post">
+				 	<div class="lh30">
+				 	<input type="submit" value="领取邀请码" class="btn_green_w121 hand" />   您目前拥有<span class="cRed">{$receivecount}个</span>邀请码，每个邀请码可以邀请1个朋友
+					</div>
+				</form>
+				<php>}</php>
+				
+				<php>if($list){</php>
+                 <div class="lh30">可以发送的邀请：<span class="cGray2"><if condition="$list[0]['code'] neq $mid">（被邀请人成功注册后，该邀请链接将不再显示）</if></span></div>
+					<input type="hidden" name="dotype" value="upintro">
+<ul>
+					        <volist name="list" id="vo">
+					          <li>
+						          <div class="left alR"><input type="text"  class="text" style="width:450px;" onfocus="this.className='text2'" onblur="this.className='text'"  name="intro[{$vo.field}]" value="{:SITE_URL}/index.php?invite={$vo.code}"/></div><div class="left ml5 pb5"><embed width="62" height="24" align="middle" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" allowscriptaccess="sameDomain" wmode="transparent" quality="high" src="__PUBLIC__/js/copy.swf" flashvars="txt={:SITE_URL}/index.php?invite={$vo.code}"></div>
+						            
+					            </li>
+					        </volist>
+					</ul>
+                 <div class="line_box" style="width:555px; *width:560px; margin-top:10px;">  当你的朋友成功注册后，你们会自动互相关注。</span></div>
+				<php>}</php>
+					
+			</div>
+          </div>
+		  
+        
+      </div>
+      
+      </div><div class="c"></div>
+    </div>
+  </div>
+</div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" />

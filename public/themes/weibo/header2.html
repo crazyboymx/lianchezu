@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+<neq name="ts['site']['page_title']" value="">
+    {$ts['site']['page_title']} <neq name="ts['app']['app_alias']" value="">- {$ts['app']['app_alias']} </neq>- {$ts['site']['site_name']}
+<else/>
+    {$ts['site']['site_name']} <neq name="ts['site']['site_slogan']" value=""> - {$ts['site']['site_slogan']}</neq>
+</neq>    
+</title>
+<link rel="shortcut icon" href="__THEME__/favicon.ico" />
+<meta name="keywords" content="{$ts['site']['site_header_keywords']}" />
+<meta name="description" content="{$ts['site']['site_header_description']}" />
+<script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$uid}';
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+</script>
+<!-- 全局风格CSS -->
+<link href="__THEME__/main.css?20110429" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/js/tbox/box.css" rel="stylesheet" type="text/css" />
+<!-- 核心JS加载 -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tbox/box.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/scrolltopcontrol.js"></script>
+<script src="__PUBLIC__/js/jquery.jgrow.min.js"></script>
+
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+
+</head>
+<body class="body_bg">
+<div class="div_body">
+<session name="userInfo">
+<div class="header_bg">
+ <div class="header"><!-- 头部 begin -->
+    <div class="logo"><a href="{:U('home/Index')}" >&nbsp;</a></div>
+    <div class="nav_sub">
+      <space uid="mid">{uname}</space><a href="{:U('home/user/findfriend')}">找人</a><a href="{:U('home/Account')}">设置</a><a href="{:U('home/Account/invite')}">邀请</a>|
+	  <volist name="ts['ucenter']['app']" id="uc_app">
+	  	<php>
+	  	if ($uc_app['appid'] == $ts['ucenter']['current_appid'])
+	  		continue;
+	  	</php>
+	  	<a href="{$uc_app['url']}" target="_blank">{$uc_app['name']}</a> |
+	  </volist>
+	  <a href="{:U('home/Public/logout')}">退出</a>
+	</div>
+    <div class="nav">
+<form action="{:U('home/user/search')}" id="quick_search_form" method="post">
+    <div class="soso"><label id="_header_search_label" style="display: block;" onclick="$(this).hide();$('#_header_search_text').focus();">搜名字/标签/微博</label><input type="text" class="so_text" value="" name="k" id="_header_search_text" onblur="if($(this).val()=='') $('#_header_search_label').show();"/><input name="" type="button" onclick="$('#quick_search_form').submit()" class="so_btn hand"/></div>
+	<script>
+	if($('#_header_search_text').val()=='')
+		$('#_header_search_label').show();
+	else
+		$('#_header_search_label').hide();
+	</script>
+</form>
+      <ul>
+        <li class="on"><a href="{:U('home')}" class="fb14">首页</a></li>
+        
+        <li class="on"><a href="{:U('home/Square/index')}" class="fb14">微博广场</a></li>
+        
+        <li id="header_dropdown_app"><a href="{:U('home/Index/addapp')}" class="ico_arrow fb14 ">应用</a>
+          <div class="dropmenu">
+            <dl class="app_list">
+                <?php foreach ($ts['user_app'] as $_temp_type => $_temp_apps) { ?>
+                <?php foreach ($_temp_apps as $_temp_app) { ?>
+                    <dd>
+                        <?php if($_temp_type == 'local_app' || $_temp_type == 'local_default_app') { ?>
+                        <a href="<?php echo $_temp_app['app_entry'];?>" class="a14">
+                            <img class="app_ico" src="<?php echo $_temp_app['icon_url'];?>" />
+                            <?php echo $_temp_app['app_alias'];?>
+                        </a>
+                        <?php }else { ?>
+                        <a href="__ROOT__/apps/myop/userapp.php?id=<?php echo $_temp_app['app_id'];?>" class="a14">
+                            <img class="app_ico" src="http://appicon.manyou.com/icons/<?php echo $_temp_app['app_id'];?>" />
+                            <?php echo $_temp_app['app_alias'];?>
+                        </a>
+                        <?php }?>
+                    </dd>
+                <?php } // end of foreach?>
+                <?php } // end of foreach?>
+                </dl>
+                <dl class="app_list">
+                <dd style=" border-bottom:0px;">
+                    <a href="{:U('home/Index/addapp')}"><span class="app_ico ico_app_add"></span>添加应用</a>
+                </dd>
+                <dd style=" border-bottom:0px;">
+                    <a href="{:U('home/Index/editapp')}"><span class="app_ico ico_manage"></span>管理应用</a>
+                </dd>
+            </dl>
+          </div>
+        </li>
+        <li id="header_dropdown_message"><a href="{:U('home/message/index')}" class="ico_arrow fb14 ">消息</a>
+          <div class="dropmenu"> 
+            <a href="{:U('home/message/index')}">
+              短消息
+              <span class="cRed fB" id="count_message"><gt name="userCount['message']" value="0">({$userCount.message})</gt></span>
+            </a> 
+			<a href="{:U('home/message/notify')}">
+			        系统通知
+              <span class="cRed fB" id="count_notify"><gt name="userCount['notify']" value="0">({$userCount.notify})</gt></span>
+            </a>
+            <a href="{:U('home/message/appmessage')}">
+              应用消息
+              <span class="cRed fB" id="count_appmessage"><gt name="userCount['appmessage']" value="0">({$userCount.appmessage})</gt></span>
+            </a> 
+			<a href="{:U('home/user/atme')}">
+			        @提到我的
+              <span class="cRed fB" id='count_atme'><gt name="userCount['atme']" value="0">({$userCount.atme})</gt></span>
+            </a> 
+			<a href="{:U('home/user/comments')}">
+			        我的评论
+              <span class="cRed fB" id='count_comment'><gt name="userCount['comment']" value="0">({$userCount.comment})</gt></span>
+            </a>
+          </div>
+          	<div class="msg_top" id='count_total_div' style='display:<elt name="userCount['total']" value="0">none</elt>'>
+          		<a href="" id='count_total'>{$userCount['total']}</a>
+          	</div>
+          </neq>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</session>
+
+<nosession name="userInfo">
+<div class="header_bg">
+    <div class="header" style="width:960px;">
+      <div class="logo"><a href="{:U('home')}">&nbsp;</a></div>
+      <div class="nav_sub">
+      	<eq name="ts['site']['site_anonymous_square']" value="1">
+      	  <a href="{:U('home/Square')}">微博广场</a>&nbsp;|&nbsp;
+      	</eq>
+      	<a href="{:U('home/Public/register')}">注册</a>&nbsp;|&nbsp;
+      	<a href="{:U('home/Public/login')}">登录</a>
+      </div>
+  </div>
+</div>
+</nosession>
+
+<volist name="ts['ad']['header']" id="vo">
+<div class="ad_header"><div class="ke-post">{$vo['content']}</div></div>
+</volist>
+<script>
+$(document).ready(function(){
+	$("#header_dropdown_friend").hover(
+		function(){ $(this).addClass("hover"); },
+		function(){ $(this).removeClass("hover"); }
+	);
+	$("#header_dropdown_app").hover(
+	    function(){ $(this).addClass("hover"); },
+	    function(){ $(this).removeClass("hover"); }
+	);
+	$("#header_dropdown_message").hover(
+	    function(){ $(this).addClass("hover"); },
+	    function(){ $(this).removeClass("hover"); }
+    );
+	
+	<php>if($mid > 0) {</php>
+		ui.countNew();
+		setInterval("ui.countNew()",100000);
+	<php>}</php>
+});
+</script>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gallery frameColor="0xFFFFFF" frameWidth="15" imagePadding="20" displayTime="6" enableRightClickOpen="true">
+
+<volist name="photos" id="li">
+
+<image>
+   <url>{$li.savepath|get_photo_url}</url>
+   <caption><![CDATA[<font size="50">{$li.name|t}</font>]]></caption>
+   <width>800</width>
+   <height>600</height>
+</image>
+
+</volist>
+
+</gallery>

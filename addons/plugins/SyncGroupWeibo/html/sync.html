@@ -1,0 +1,31 @@
+<volist name="user_group_list" id="v">
+  <label>
+    <input type='checkbox' name="sync[]" value='group_{$v.id}' style="vertical-align:middle;" <php>if(in_array($v['id'], $user_group_sync)){</php>checked=true<php>}</php> onclick='groupSelectSync(this)' />
+    <span title="{$v.name}">{$v.name|getShort=###,4}</span>
+  </label>
+</volist>
+<script>
+//同步设置
+function groupSelectSync(o){
+	if( o.checked ){
+		$(o).removeAttr('checked');
+		$.get( "{:Addons::createAddonUrl('SyncGroupWeibo', 'sync_group_weibo')}",{group:$(o).val()},function(txt){
+			if(txt=='1'){
+				$(o).attr('checked','true');
+			}else{
+				ui.error(txt);
+			}
+		});		
+	}else{
+		$(o).attr('checked',true);
+
+		$.get( "{:Addons::createAddonUrl('SyncGroupWeibo', 'unset_sync_group_weibo')}",{group:$(o).val()},function(txt){
+			if(txt=='1'){
+				$(o).removeAttr('checked');
+			}else{
+				ui.error(txt);
+			}
+		});	
+	} 
+}
+</script>

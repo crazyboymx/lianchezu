@@ -1,0 +1,72 @@
+@charset "utf-8";
+/*-----------超链接样式-------------------------------------------
+ 说明: 伪类:link :visited :hover分别代表超链接的通常、被访问后、和鼠标接触链接是的样式
+ a标签代表通用超链接样式
+------------------------------------------------------------ */
+/*---链接样式---*/
+a:link {color:#3B7096;text-decoration:none}
+a:visited {color:#3B7096;text-decoration:none}
+a:hover {color:#BA2636;text-decoration:underline}
+a:active {color:#3B7096}
+
+.cWhite, .cWhite:visited, a.cWhite { }
+.cYellow, .cYellow:visited { color:#ff0 }
+.cGray, .cGray:visited, a.cGray { color:#7F7F7F }
+.cGray2, .cGray2:visited, a.cGray2 { color:#999 }
+.cBlack, .cBlack:visited, a.cBlack { color:#000 }
+.cBlue, .cBlue:visited, a.cBlue { color:#3488AD }
+.cRed, .cRed:visited, a.cRed { color:Red }
+.cGreen, a.cGreen:link, a.cGreen:visited { color:#008000; }
+.user_app a,.user_app a:visited,.user_app a:active{}
+
+.footer a{}
+.moreFoot a{display:block;line-height:30px;border:1px solid #d7d7d7;background:url(images/bg_gengduo.gif);text-align:center}
+.user_app .userinfo .user_name h2 a{font-size:14px;font-weight:bold;margin-bottom:5px;color:#fff}
+.nav ul li .msg_top a{display:block;background:url(images/msg.gif) no-repeat right 0px;height:20px;padding-right:6px;text-decoration:none;line-height:20px;float:left;color:#F00;white-space:nowrap}
+.nav_sub a,.nav_sub:visited{margin:0 5px}
+
+.medal_list .li a{display:inline-block}
+
+.feeds_sift a.ico,.feeds_sift_hover a.ico,.feeds_sift_hover a.ico:hover{background:url(images/feeds_sift_ico.gif) no-repeat center center;width:13px;height:13px;overflow:hidden;display:block;padding:3px}
+.feeds_sift_hover a.ico,.feeds_sift_hover a.ico:hover{background:url(images/feeds_sift_ico.gif) no-repeat center center;width:13px;height:13px;overflow:hidden;display:block;padding:2px;border:1px solid #CCCCCC}
+.feeds_sift .feeds_sift_box a,.feeds_sift_hover .feeds_sift_box a{color:#5C5C5C;line-height:18px;display:block;padding-left:3px;margin:0}
+.feeds_sift .feeds_sift_box a:hover,.feeds_sift_hover .feeds_sift_box a:hover{background-color:#F5F5F5;padding-left:3px;margin:0}
+.photo135 a{height:100px;width:120px;overflow:hidden;text-align:center;display:block}
+.html_clew_box_close a{background:url(images/pop_ico_x.gif) no-repeat 0 0;width:8px;height:8px;overflow:hidden;text-indent:10px;display:block;float:right}
+.Prompt_con a.a{color:#fff;padding:0 15px;line-height:30px;background-color:#307ba0;display:inline-block;font-size:14px;margin:20px 0px}
+.mainbox_R a,.mainbox_R a:visited{}
+/*个人标签*/
+.setupTag_list01 a{display:inline-block;line-height:20px;padding:2px 5px}
+.setupTag_list01 a em{color:#CCCCCC;font-family:Arial;font-size:17px;margin-right:2px;vertical-align:-2px}
+.setupTag_list01 a:hover{background-color:#548CC8;text-decoration:none}
+.setupTag_list01 a:hover em{cursor:pointer;font-size:17px;font-weight:bold}
+
+.tagList li a.a1{line-height:20px;padding:0 7px;vertical-align:5px;_float:left;_display:inline}
+.tagList li a.a1 .del,.tagList li a.a2 .del{margin-bottom:3px;margin-right:3px}
+
+.tagList li.bg a.a1{line-height:20px;padding:0 7px;vertical-align:5px;color:#fff}
+.tagList li.bg a.a1 .del,.tagList li.bg a.a2 .del{margin-bottom:3px;margin-right:3px}
+
+/*翻页*/
+.page a{background-color:#EDF1F4;color:#333;margin:0 4px;padding:4px 8px;text-decoration:none}
+.page a:hover{margin:0 4px;color:#fff;background:#7198B4;padding:4px 8px;text-decoration:none}
+.page a:active{margin-right:2px;padding:2px 5px}
+
+.faces_box a{background-color:#FFFFFF;border:1px solid #EEEEEE;height:20px;margin:0 1px 1px 0;padding:1px;width:20px;display:block;float:left;*display:inline-block;*float:none}
+.faces_box a:hover{background-color:#FFF9EC;border:1px solid #FCE0C3;display:block;float:left;height:20px;margin:0 1px 1px 0;padding:1px;width:20px;*display:inline-block;*float:none}
+
+a.faceicon1:link,a.faceicon1:visited{display:block;float:left;height:20px;margin-right:4px;margin-top:2px;width:20px;background-position:0 -268px}
+.close a.del{display: block;position: absolute;right:5px;top:7px}
+.FollwGroup .group_a{overflow:hidden;white-space:nowrap}
+.FollwGroup .group_a .span{width:90px;overflow:hidden}
+
+.iine_warning a,.iine_warning a:visited{}
+.iine_warning a:hover{text-decoration:none}
+
+.right_list_on a,.right_list_on a:visited{ color:#3488AD}
+/*---右侧菜单样式---*/
+.user_app .celerity_menu a{display:block;padding:0 15px;line-height:18px;height:18px;padding:6px 10px;font-size:14px;color:#333}
+.user_app .celerity_menu a:hover{background-color:#D5E5F1;text-decoration:none}
+.user_app .celerity_menu a.on{background:#B6D5EB;color:#333;;font-weight:bold;border-radius:3px}
+.user_app .app_line{border-bottom:1px solid #ddd;padding:0 0 15px;margin:0 0 12px;clear:left}
+.lineS_btm{border-bottom:1px solid #DADADA;overflow:hidden}

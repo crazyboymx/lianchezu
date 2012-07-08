@@ -1,0 +1,77 @@
+<ul id="followGroupSelector" class="group_list">
+	<volist name="group_list" id="g">
+		<li>
+        <a href="###"><label><input type="checkbox" name="gids[]" value="{$g.follow_group_id}" class="ck" onclick="setFollowGroup(this.value)" /></label>
+        {$g.title}</a>
+        </li>
+	</volist>
+</ul>
+<div id="createFollowGroup" style="padding:3px 12px 5px">
+	<a href="javascript:void(0);" onclick="createFollowGroupTab('')" class="openTab">+创建分组</a>
+	<input type="text" name="followGroupTitle" value="" class="text mb5" style="display:none; width:144px">
+	<input type="button" onclick="createFollowGroup()" class="btn_b" value="保存" style="display:none;">
+	<a href="javascript:void(0);" onclick="createFollowGroupTab('close')" class="cancelTab" style="display:none;">取消</a>
+</div>
+<script>
+var fid = '{$fid}';
+$(document).ready(function(){
+	<volist name="f_group_status" id="gs">
+    	$( "input[name='gids[]'][value='{$gs.gid}']" ).attr( 'checked',true );
+	</volist>
+});
+
+function setFollowGroup(gid){
+	$.post(U('weibo/FollowGroup/setFollowGroup'),{gid:gid,fid:fid},function(res){
+		$('.followGroup'+fid).html(res);
+	});
+}
+
+function createFollowGroupTab(action){
+	if(action == 'close'){
+		$("input[name='followGroupTitle']").val(' ');
+		$('#createFollowGroup input').css('display','none');
+		$('#createFollowGroup .cancelTab').css('display','none');
+		$('#createFollowGroup .openTab').css('display','inline');
+	}else{
+		$('#createFollowGroup input').css('display','inline');
+		$('#createFollowGroup .cancelTab').css('display','inline');
+		$('#createFollowGroup .openTab').css('display','none');
+	}
+}
+
+function createFollowGroup(){
+	var title = $("input[name='followGroupTitle']").val();
+	if(title == ''){
+		ui.error('请输入分组标题！');
+		return false;
+	}else if(title.length>8){
+		ui.error('分组标题字数不能超过8个字符');
+		return false;
+	}
+	$.post(U('weibo/FollowGroup/setGroup'),{title:title},function(gid){
+		if(gid != 0){
+			createFollowGroupTab('close');
+			$('#followGroup').append('<a href="'+U('home/space/follow')+'&uid='+_UID_+'&type=following&gid='+gid+'">'+title+'</a>');
+			$('#followGroupSelector').append('<input type="checkbox" name="gids[]" value="'+gid+'" onclick="setFollowGroup(this.value)" checked />'+title+'<br />');
+			setFollowGroup(gid);
+		}else{
+			ui.error('此分组名已存在');
+		}
+	});
+}
+
+//单击空白区域隐藏分组选择
+var isOut{$fid} = true;
+$('.followGroupStatus'+fid).mouseleave(function() {
+	isOut{$fid} = true;
+});
+$('.followGroupStatus'+fid).mouseover(function() {
+	isOut{$fid} = false;
+});
+$(document).click(function(){
+	if(isOut{$fid}){
+		followGroupSelectorClose(fid);
+		isOut{$fid} = false;
+	}
+});
+</script>

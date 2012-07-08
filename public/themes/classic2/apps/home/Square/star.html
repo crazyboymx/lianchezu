@@ -1,0 +1,93 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" type="text/css" href="../Public/css/square.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="{:U('weibo/plugins/init')}"></script>
+<script type="text/javascript" src="../Public/js/slides.min.jquery.js"></script>
+<script type="text/javascript" src="../Public/js/square.js"></script>
+
+<script>
+$(document).ready(function(){
+	$(".checkall").click(function(){
+		var div = '#star_box_'+$(this).attr("cid");
+		if( this.checked == true ){
+			$(div+" input[name='followuid[]']").attr('checked',true);
+		}else{
+			$(div+" input[name='followuid[]']").removeAttr('checked');
+		}
+	});
+});
+</script>
+<div class="content no_bg" style=" background-image:none;background-color:#fff"><!-- 内容 begin  -->
+  <div class="main no_l">
+    <div class="mainbox">
+      <div class="mainbox_C"  style="margin:0">
+        <include file="_left" />
+        <div class="squareStar">
+        <div style="padding:15px 0 0 5px;">
+        <if condition="$user_list">
+        分类：
+          <php>$j = 0;</php>
+          <volist name="user_list" id="g">
+            <php>++$j;</php>
+            <php>if($j>1){</php>&nbsp;|&nbsp;<php>};</php><a href="#star_box_{$g.star_group_id}">{$g.title}</a>
+            <volist name="g.son_list" id="s">
+              <php>if($i>1)</php>&nbsp;|&nbsp;<php>;</php><a href="#star_box_{$s.star_group_id}">{$s.title}</a>
+            </volist>
+          </volist>
+          </if>
+          </div>
+          <volist name="user_list" id="g">
+          <a name="star_box_{$g.star_group_id}"></a>
+          <div id="star_box_{$g.star_group_id}" class="Share_box">
+          <form action="{:U('home/public/followuser')}" method="post">
+            <input type="hidden" name="doajax" value="1">
+            <div class="topic_tit2">
+              <gt name="mid" value="0">
+              <span class="right">
+              <label>
+                <input type="checkbox" class="checkall checkbox1" cid="{$g.star_group_id}" value="b{$g.star_group_id}">
+                全选</label>
+              <input type="button" value="关注已选" class="btn_b" onclick="dofollow('#star_box_{$g.star_group_id}')" />
+              </span>
+              </gt>
+              <strong>{$g.title}</strong>
+            </div>
+            <dl class="list_star_all">
+              <volist name="g.user_list" id="u">
+	              <dd>
+	                <div class="userPic">
+                    <gt name="mid" value="0">
+	                  <input name="followuid[]" type="checkbox" value="{$u.uid}" class="ck" />
+	                </gt>
+                    <space uid="u.uid">{uavatar}</space></div>
+	                <h4 id="star_{$u.uid}">
+	                  
+	                  <space uid="u.uid">{uname}</space>
+	                </h4>
+	              </dd>
+              </volist>
+              <volist name="g.son_list" id="s">
+	              <volist name="s.user_list" id="u">  
+		              <dd>
+		                <div class="userPic">
+		                  <gt name="mid" value="0">
+		                  <input name="followuid[]" type="checkbox" value="{$u.uid}" class="ck"/>
+		                  </gt>
+                        <space uid="u.uid">{uavatar}</space></div>
+		                <h4>
+		                  <space uid="u.uid">{uname}</space>
+		                </h4>
+		              </dd>
+	              </volist>
+              </volist>
+              <div class="c"></div>
+            </dl>
+          </form>
+          </div>
+		  </volist>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<include file="__THEME__/footer" /> 

@@ -1,0 +1,65 @@
+<include file="_header" />
+<div class="so_main">
+	<include file="_tab" />
+  <div class="form2">
+  	<form method="post" action="{:U('weibo/Admin/doEditTopics')}" enctype="multipart/form-data">
+    <div style="background-color:#E6E9ED;padding:10px 0px">
+    <dl class="">
+      <dt><span>*</span>话题：</dt>
+      <dd>
+        <input type="text" name="name" value="{$name}" />
+      </dd>
+    </dl>
+
+    <dl class="">
+      <dt><span>*</span>注释：</dt>
+      <dd>
+        <textarea name="note" cols="40" rows="2">{$note}</textarea>
+      </dd>
+    </dl>
+    </div>
+    <dl class="">
+      <dt>图片：</dt>
+      <dd>
+        <if condition="$pic"><img alt="{$name}" src="{:SITE_URL}/data/uploads/{$pic}" />        
+        <label><input name="nopic" type="checkbox" value="1" />删除图片</label><br /><br /></if>
+        <input name="pic" type="file" /> 建议图片宽度为770px，高度不限
+      </dd>
+    </dl>
+    <dl class="">
+      <dt>专题域名：</dt>
+      <dd>
+        {:SITE_URL}/topics/<input name="domain" type="text" value="{$domain}" />
+      </dd>
+    </dl>
+
+    <dl>
+      <dt>内容：</dt>
+      <dd>
+        <textarea name="content" cols="40" rows="4">{$content}</textarea>
+      </dd>
+    </dl>
+
+    <dl class="">
+      <dt>外链：</dt>
+      <dd>
+        <input name="link" type="text" value="{$link}" />
+      </dd>
+    </dl>
+
+    <dl class="">
+      <dt>设为推荐：</dt>
+      <dd>
+        <label><input name="recommend" type="radio" value="1" <eq name="recommend" value="1">checked</eq> >是</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label><input name="recommend" type="radio" value="0" <eq name="recommend" value="0">checked</eq> >否</label>
+      </dd>
+    </dl>
+
+    <div class="page_btm">
+      <input type="hidden" name="topics_id" value="{$topics_id}" />
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+    </form>
+  </div>
+</div>
+<include file="_footer" />

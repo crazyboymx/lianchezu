@@ -1,0 +1,69 @@
+@charset "utf-8";
+/*-----------网站表单和按钮样式-------------------------------------------
+ 说明:
+------------------------------------------------------------ */
+.published:link, .published:active, .published:visited { background-image: url(images/btn_add.gif); background-repeat: no-repeat; background-position: 0px top; line-height: 21px; font-size: 12px; height: 21px; width: 60px; color: #005fab; font-weight: bold; display: block; float: right; overflow: hidden; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 20px; margin: 0; }
+
+.BtnShare, a.BtnShare { font-size: 12px; background: url(images/bg_Share.gif) no-repeat 0px center; width: 54px; display: inline-block; color:#339900; height: 21px; line-height:21px; border: 0px none;text-align: left; padding-left: 5px;cursor:pointer; }
+#TS_report a { font-size: 12px; color:#f00; line-height:21px; }
+
+.btn_b,.btn_w,.btn_big,.btn_big:hover,.btn_big_disable,.btn_big_after,.add_atn,.btn_relation,.btn_relation2,.add_atn_small,.btn_relation_small,.btn_relation span,.btn_relation2 span,btn_b_disable,.btn_green,.btn_green_w121,.btn_reg,.btn_b_disable,.btn_upload_file,.btn_group,.btn_search_big,.btn_group,.btn_download,.N_but{background: url(images/btn.gif) no-repeat 0 0; display: inline-block}
+
+.btn_b,a.btn_b,a.btn_b:hover,a.btn_b:visited{ font-size: 12px; height: 24px; width:60px; border:0 none; line-height: 24px;line-height:27px\0;text-align:center; padding:0; text-decoration:none; color:#fff;cursor:pointer;vertical-align:middle;*line-height:27px}
+.btn_w,a.btn_w,a.btn_w:hover{font-size:12px;height:24px;width:60px;border:0 none;line-height:24px;text-align:center;padding:0;text-decoration:none;color:#333;cursor:pointer;vertical-align:middle}
+.btn_big{ background-position:0 -50px; height:28px; width:80px; margin-right:4px; border:0;vertical-align:middle}
+.btn_big:hover{background-position:0 -79px;vertical-align:middle}
+.btn_big_disable{background-position:-255px -78px;height:26px; width:70px;border:0;font-size:14px;color:#fff;vertical-align:middle}
+.btn_big_after:hover{background-position:-255px -78px;height:26px; width:70px;border:0;font-size:14px;color:#fff;vertical-align:middle}
+.btn_big_after{background-position:-85px -78px;height:26px; line-height:26px; width:70px;border:0;font-size:14px;color:#fff;cursor:pointer;vertical-align:middle}
+
+.btn_upload_file{background-position:0 -348px;height:24px; width:138px;border:0;color:#fff}
+.btn_b {color: #fff; vertical-align:middle }
+.btn_transpond{background-position:0 -78px}
+.btn_transpond:hover{background-position:-255px -119px}
+.btn_b_disable{ color:#7d7d7e;background-position:-61px 0;font-size: 12px; height: 24px; width:60px; border:0 none; line-height: 24px;  text-align:center}
+.btn_w { color:#333;background-position:0 -39px; margin-left:5px; _margin-top:3px; vertical-align:middle}
+.btn_green{color:#fff;background-position:0 -348px; height:24px;width:138px; display:inline-block; overflow:hidden; line-height:24px; border:0px}
+.btn_green_w121{color:#fff;background-position:0 -348px; height:24px; display:inline-block; overflow:hidden; line-height:24px; border:0px; width:138px}
+.btn_reg,a.btn_reg,a.btn_reg:visited{ color:#FFF; width:110px; height:36px;background-position:0 -540px; text-align:center; line-height:36px; font-size:14px}
+a.btn_reg:hover{ background-position:0 -540px; text-decoration: none; }
+.btn_relation{background-position:right -592px;height:24px;  line-height:24px; padding-right:10px;_padding_right:5px;_margin-left:11px;_width:120px; font-size:12px}
+.btn_relation a{vertical-align:middle}
+.btn_relation span{background-position:right -592px;height:24px; display:inline-block; line-height:24px; padding-left:23px; color:#999; font-size:12px}
+.btn_relation2{background-position:right -592px;_margin-left:9px; font-size:12px}
+.btn_relation2 span{background-position:0 -592px}
+.btn_search_big {background-position: left -387px;border: 0 none;height: 36px;width: 80px;cursor:pointer;color:#fff;font-size:14px}
+.btn_group {background-position: left -438px;border: 0 none;height: 36px;width: 80px;cursor:pointer;color:#fff;font-size:14px}
+.btn_download {background-position: left -489px;height: 36px;width: 160px}
+.btn_s{background-position: left -632px;height: 15px;width:15px;border:none 0}
+.N_but{}
+.add_atn{background-position:0 -78px;height:26px;width:70px; display:inline-block; line-height:26px;text-align:center}
+a.add_atn,a.add_atn:visited{text-decoration:none; color:#fff; font-size:12px}
+a.add_atn,a.add_atn:hover{text-decoration:none}
+.btn_blog_c,.btn_blog_s,.btn_photo_c,.btn_photo_s,.btn_group_c,.btn_group_s,.btn_vote_c,.btn_event_c,.btn_poster_c,.btn_faq_c{background:url(images/create_btn.png) no-repeat left top;display:block;}
+.btn_blog_c{background-position:0 -343px;width:220px;height:52px}
+.btn_blog_s{background-position:0 -343px;width:220px;height:52px}
+.btn_photo_c{background-position:0 -400px;width:220px;height:52px}
+.btn_photo_s{background-position:0 -400px;width:220px;height:52px}
+.btn_group_c{background-position:0 -457px;width:220px;height:52px}
+.btn_group_s{background-position:0 -457px;width:220px;height:52px}
+.btn_vote_c{background-position:0 -514px;width:220px;height:52px}
+.btn_event_c{background-position:0 -628px;width:220px;height:52px}
+.btn_poster_c{background-position:0 -571px;width:220px;height:52px}
+.btn_faq_c{background-position:0 -685px;width:220px;height:52px}
+
+/*输入框样式*/
+.contentObj{width:608px;_width:605px; height:75px;padding:5px; margin:0; _padding:5;overflow: hidden;overflow-x:hidden;overflow-y:auto;line-height:18px}
+.contentGrp{width:98%;_width:97%; height:55px;padding:5px; margin:0; _padding:5;overflow: hidden;overflow-x:hidden;overflow-y:auto;line-height:18px}
+.searchBox {background-color:#eee;padding:10px; color:#666; overflow:hidden; height:auto; *zoom:1;margin:0 0 10px 0}
+.text { border:1px solid #BDC7D8; font-size:12px; font-family: Arial, Helvetica, sans-serif; padding:4px 5px}
+.text22 { border:1px solid #BDC7D8; font-size:12px; font-family: Arial, Helvetica, sans-serif; padding:4px 5px}
+.text2 { border:1px solid ; border-color:#90ad54 #d8edaf #d8edaf #90ad54; background-color:#f4ffd4; font-size:12px; font-family: Arial, Helvetica, sans-serif; padding:4px 5px}
+.text35 {border:1px solid #ddd;font-family:Arial,Helvetica,sans-serif;font-size:18px; height:33px; line-height:30px}/* 高为35的输入框 */
+.text35on {border:1px solid #666;font-family:Arial,Helvetica,sans-serif;font-size:18px; height:33px;line-height:30px}/* 高为35的输入框 选中时的样式 */
+.text_findUser {border:1px solid #ccc;color:#ccc;font-size:14px;margin:0 5px 0 0;padding:9px 10px;}
+.text_group{color:#ccc;padding:9px 10px;border:#ccc solid 1px;font-size:14px;width:490px;_width:485px;margin:0 5px 0 0}
+.text_group_s{color:#ccc;padding:9px 10px;border:#ccc solid 1px;font-size:14px;width:490px;margin:0 5px 0 0}
+.txt_blog_s{width:120px;border:1px solid #BDC7D8; font-size:12px; font-family: Arial, Helvetica, sans-serif; padding:4px 5px}
+.txt_group{color:#ccc;padding:9px 10px;border:#ccc solid 1px;font-size:14px;width:455px;*width:450px;margin:0 5px 0 0}
+.textSearch{background-color: #F6F6F6;border: 1px solid #CCCCCC;border-radius: 3px 3px 3px 3px;height: 21px;line-height: 21px;padding: 0 20px 0 5px}

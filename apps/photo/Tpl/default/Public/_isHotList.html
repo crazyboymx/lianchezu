@@ -1,0 +1,23 @@
+<div class="mainbox_appR">
+  <div class="box_create"><a href="{:U('photo/Upload/flash')}" class="btn_photo_c"></a></div>
+  <div class="right_box">
+    <h2>推荐{$ts['app']['app_alias']}</h2>
+    <ul class="list_topalbums">
+    <div class="tit"><a href="#" class="ico_down"></a></div>
+      <volist name="IsHotList" id="li"> 
+   	    <li>
+          <div class="albums_img"><a href="{:U('/Index/album',array(uid=>$li['userId'],id=>$li['id']))}"><img src="{$li.id|get_album_cover=###,$li,66,66}"/></a></div>
+          <div class="albums_info">
+            <dl>
+              <dt><a href="{:U('/Index/album',array(uid=>$li['userId'],id=>$li['id']))}" class="OverH" style="width:8em; display:block;"><strong>{$li.name}</strong></a></dt>
+              <dd>图片：({$li.photoCount})</dd>
+              <dd><a href="{:U('home/Space/index',array(uid=>$li[userId]))}">{$li.userId|getUserName}</a></dd>
+              <dd>时间:{$li.cTime|date='Y-m-d',###}</dd>
+            </dl>
+          </div>
+        </li>
+	  </volist>
+    <div class="btm"><a href="#" class="ico_up"></a></div>
+    </ul>
+  </div>
+</div>

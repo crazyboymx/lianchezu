@@ -1,0 +1,67 @@
+<include file="__THEME__/header" />
+
+<div class="content"><!-- 内容 begin  --> 
+  <include file="__THEME__/apps" />
+  <div class="main">
+    <div class="mainbox">
+      <div class="mainbox_C no_r">
+        <div class="page_title"> <!-- page_title begin -->
+          <h2>好友</h2>
+        </div>
+        <div class="tab-menu">
+          <ul>
+            <li><a class="feed_item on"  href="{:U('home/Friend/index')}" ><span>我的好友</span></a></li>
+            <li><a class="feed_item" href="{:U('home/Friend/ping')}"><span>好友屏蔽</span></a></li>
+            <li><a class="feed_item" href="{:U('home/Friend/track')}"><span>访问脚印</span></a></li>
+            <li><a class="feed_item" href="{:U('home/Friend/find')}"><span>查找朋友</span></a></li>
+            <li><a class="feed_item" href="{:U('home/Friend/myinvite')}"><span>邀请好友</span></a></li>
+          </ul>
+        </div>
+        <div class="mainbox_C_C">
+          <div class="mainbox_R">
+            <div class="right_box">
+              <h2>好友分组</h2>
+              <ul class="topic_list">
+                <li><a title="bug" href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=user&amp;act=search&amp;k=bug">所有好友(176)</a></li>
+                <li><a title="所有好友(176)" href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=user&amp;act=search&amp;k=用户体验">用户体验(2)</a></li>
+                <li><a title="ts2.0" href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=user&amp;act=search&amp;k=ts2.0">ts2.0(2)</a></li>
+                <li><a title="忍者村" href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=user&amp;act=search&amp;k=忍者村">忍者村(1)</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="feedBox">
+            <ul class="feed_list">
+              <li class="lineD_btm">
+                <div class="userPic"><a href="{:U('home/space/index',array('uid'=>$vo['from']))}" title=""><img card="1" src="{$vo.from|getUserFace}"></a></div>
+                <div class="feed_c">
+                  <div class="lh20"><a href="###" class="right del" title="解除关系"></a><a id="fname_10002" href="/index.php?s=/space/10002">刘晓庆</a></div>
+                  <div class="cGray2 lh20">分组：<a href="javascript:set_group(10002)">同事</a></div>
+                  <div class="cGray2 lh20"><span class="wn">微博：</span>TS2，已经完成了大部分预期功能的开发，但离用户见面还相去甚远。剩下的几个月时间里，再思考、再精简、再优化、再重构。期待与大家一起的揭开谜底的日子。<img src="http://i.thinksns.com/public/images/biaoqing/mini/time.gif"></div>
+                </div>
+              </li>
+              <li class="lineD_btm">
+                <div class="userPic"><a href="{:U('home/space/index',array('uid'=>$vo['from']))}" title=""><img card="1" src="{$vo.from|getUserFace}"></a></div>
+                <div class="feed_c">
+                  <div class="lh20"><a href="###" class="right del" title="解除关系"></a><a id="fname_10002" href="/index.php?s=/space/10002">刘晓庆</a></div>
+                  <div class="cGray2 lh20">分组：<a href="javascript:set_group(10002)">同事</a></div>
+                  <div class="cGray2 lh20"><span class="wn">微博：</span>TS2，已经完成了大部分预期功能的开发，但离用户见面还相去甚远。剩下的几个月时间里，再思考、再精简、再优化、再重构。期待与大家一起的揭开谜底的日子。<img src="http://i.thinksns.com/public/images/biaoqing/mini/time.gif"></div>
+                </div>
+              </li>
+              <li class="lineD_btm">
+                <div class="userPic"><a href="{:U('home/space/index',array('uid'=>$vo['from']))}" title=""><img card="1" src="{$vo.from|getUserFace}"></a></div>
+                <div class="feed_c">
+                  <div class="lh20"><a href="###" class="right del" title="解除关系"></a><a id="fname_10002" href="/index.php?s=/space/10002">刘晓庆</a></div>
+                  <div class="cGray2 lh20">分组：<a href="javascript:set_group(10002)">同事</a></div>
+                  <div class="cGray2 lh20"><span class="wn">微博：</span>TS2，已经完成了大部分预期功能的开发，但离用户见面还相去甚远。剩下的几个月时间里，再思考、再精简、再优化、再重构。期待与大家一起的揭开谜底的日子。<img src="http://i.thinksns.com/public/images/biaoqing/mini/time.gif"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="c"></div>
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<include file="__THEME__/footer" /> 

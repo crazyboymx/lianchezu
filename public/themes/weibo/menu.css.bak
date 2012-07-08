@@ -1,0 +1,49 @@
+@charset "utf-8";
+/*-----------网站菜单样式-------------------------------------------
+ 说明: 
+------------------------------------------------------------ */
+
+.nav{width:535px;padding-left:7px;clear:right;float:right}
+.nav ul{list-style-type:none;margin:0;padding:3px 0 0;height:30px}
+.nav ul li{font-size:14px;color:#FFF;float:left;position:relative;height:30px;display:block;margin:0;padding:0;list-style-type:none;z-index:9}
+.nav ul li.on{}
+.nav ul li.on a.fb14{color:#fff}
+.nav ul li.hover{background:url(images/nav_on.gif) no-repeat bottom center}
+.nav ul li.hover a.fb14{color:#fff}
+.nav ul li .ico_new{position:absolute;top:-10px;right:0;z-index:10}
+.nav ul li .ico_arrow{background-image:url(images/ico_arrow_1.gif);background-repeat:no-repeat;background-position:47px center}
+.nav ul li a.fb14{color:#fff;white-space:nowrap;padding:0 14px 0 16px;display:block;font-weight:bold}
+.nav ul li .dropmenu{display:none;z-index:9000;top:30px;left:-2px;position:absolute}
+.nav ul li.hover .dropmenu{background-color:#FFF;z-index:9000;top:30px;left:-1px;position:absolute;text-align:left;display:block;font-size:12px;border:2px solid #1F2124;white-space:nowrap}
+.nav ul li.hover .dropmenu a{line-height:25px;font-size:12px;background-color:#fff;font-weight:normal;display:block;padding:0px 7px}
+.nav ul li.hover .dropmenu a:hover{background-color:#F2F2F2;text-decoration:none}
+/*应用列表*/
+.nav ul li.hover .dropmenu .app_list{color:#999999;padding:2px;width:220px;clear:both}
+.nav ul li.hover .dropmenu .app_list dt{padding:5px}
+.nav ul li.hover .dropmenu .app_list dd{border-bottom:1px dotted #D9D9D9;float:left;width:50%;position:relative;overflow:hidden;height:30px}
+.nav ul li.hover .dropmenu .app_list dd a{margin:2px 0;line-height:25px;text-indent:20px;display:block;white-space:nowrap;overflow:hidden}
+.nav_sub{white-space:nowrap;color:#B2B3B2;height:40px;padding-top:5px;float:right}
+.nav ul li .msg_top{background:url(images/msg.gif) no-repeat 0px 0px;display:block;height:20px;text-align:center;padding-left:5px;text-decoration:none;position:absolute;top:1px; _top:-3px;left:50px;float:left;font-weight:bold}
+.nav ul li.hover .msg_top{background:url(images/msg.gif) no-repeat 0px 0px;display:block;height:20px;text-align:center;line-height:20px;padding-left:5px;color:#fff;text-decoration:none;position:absolute;top:1px;; _top:-3px;left:50px;float:left}
+
+/* TAB */
+.tab-menu{height:35px;overflow:visible;white-space:nowrap;border-bottom:3px solid #D2DBEA}
+.myop .tab-menu{width:99%;margin-left:5px}
+.tab-menu ul{margin-left:10px;height:27px;padding-top:8px}
+.tab-menu li{float:left}
+.tab-menu li a{height:27px;line-height:27px;float:left;padding-left:10px;text-decoration:none;display:block;font-size:14px}
+.tab-menu li a span{height:27px;display:block;font-size:14px;padding-right:10px;float:left;cursor:pointer;text-decoration:none;line-height:27px}
+.tab-menu li a span.ico_arrow{background:url(images/ico_arrow.gif) no-repeat right center;padding-right:15px}
+.tab-menu li a:hover{background-position:left top;text-decoration:none}
+.tab-menu li a:hover span{cursor:pointer;display:block;height:27px;text-decoration:none}
+.tab-menu li a.on,.tab-menu li a.on:hover{display:block;height:27px;text-decoration:none;background:#D2DBEA url(images/tab_menu.gif) no-repeat 0 0}
+.tab-menu li a.on span,.tab-menu li a.on:hover span{cursor:pointer;line-height:27px;height:27px;display:block;font-weight:bold;background-color:#D2DBEA;background-image:url(images/tab_menu.gif);background-repeat:no-repeat;background-position:right 0}
+.tab-menu .tab_group{position:relative}
+.tab-menu .tab_group .Inc_new{display:none}
+.tab-menu .tab_group_hover{position:relative}
+.tab-menu .tab_group_hover .Inc_new{background-color:#FFFFFF;border:1px solid #D2DBEA;padding:5px;position:absolute;top:27px;border-top:3px solid #D2DBEA;left:0px}
+.tab-menu .tab_group_hover .Inc_new a{height:25px;line-height:25px;float:none;padding:3px;text-decoration:none;display:block;font-size:14px}
+.tab-menu .tab_group_hover .Inc_new a:hover{background-color:#F5F5F5}
+.MenuSub{height:30px;line-height:30px;margin-bottom:10px;background-color:#E9EDF4;color:#000}
+.MenuSub a{font-size:12px;margin-right:5px;margin-left:5px;padding:3px 8px}
+.MenuSub a.on{font-weight:bold;color:#333333;font-size:12px;border:1px solid #D9DEE8;background-color:#fff}

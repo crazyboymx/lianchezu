@@ -1,0 +1,76 @@
+<include file="_header" />
+
+<script type="text/javascript">
+function check(){
+	if(!confirm('确认修改？如果删除某分类项，现有分类将处于无分类状态。')){
+		   return false;
+	}
+	return true;
+}
+function deleteSmallTypeItem(id){
+	if(check()){
+		$.post( '__URL__&act=doEditSmallTypeItem',{id:id},function(result){
+		    if(result == -1){
+		    	 ui.error('删除失败');
+		    	 return ;
+			}
+			if(result == 1){
+				ui.success('删除成功');
+                $('#type'+id).remove();
+			}
+		});
+	}
+}
+var i = 0;
+function addItem(){
+	 var item = '<div id="more'+i+'">\
+	              <input name="more[]"/><input type="button" onclick="deleteMoreItem('+i+')" class="button" value="删除" />\
+	            </div>';
+	 i++;
+	 $('#item').append(item);
+}
+function deleteMoreItem(id){
+	$('#more'+id).remove();
+	i--;
+}
+</script>
+
+  <div id="container" class="so_main">
+    <include file="_tab" />
+
+      <div class="Toolbar_inbox">
+        <span>{$ts['app']['app_alias']}小分类编辑</span>
+      </div>         
+      <form action = "__URL__&act=doEditSmallType" method="post" onsubmit="if(!confirm('确认修改？'))return false;">
+        <div class="form2 no_line">
+          <dl class="lineD">
+            <dt>
+                                      小分类集合名：
+            </dt>
+            <dd>              
+              <input name="name" class="txt" value="{$label}" />
+              <input type="button" class="btn_b" onclick="addItem();" value="添加子项" />
+            </dd>
+          </dl>
+          <dl>
+            <dt>
+                                      小分类项：
+            </dt>
+            <dd>
+              <div id="item">
+              <volist name="smallType" id="vo">
+                <div id="type{$vo.id}">
+                  <input name="type[{$vo.id}]" value={$vo.name} /><input type="button" onclick="deleteSmallTypeItem({$vo.id})" class="button" value="删除" />
+                </div>
+              </volist>
+              </div>
+              <p>选项留空则为删除该选项，注意，相应分类下的信息将处于无分类状态。</p>
+            </dd>
+          </dl>
+          <div class="page_btm">
+            <input type="submit" class="btn_b" value="确定" />
+          </div>
+        </div>
+      </form>
+  </div>
+<include file="_footer" />

@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+<?php
+if(!empty($_SITE_CONFIG['page_title'])) {
+    echo "{$_SITE_CONFIG['page_title']} - ";
+}
+echo "漫游平台 - {$_SITE_CONFIG['site_name']}";
+?>
+</title>
+<link rel="shortcut icon" href="<?php echo THEME_URL;?>/favicon.ico" />
+<meta name="keywords" content="=<?php echo $_SITE_CONFIG['site_header_keywords'];?>" />
+<meta name="description" content="<?php echo $_SITE_CONFIG['site_header_description'];?>" />
+<!-- 全局风格CSS -->
+<link href="<?php echo THEME_URL;?>/layout.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo PUBLIC_URL;?>/js/tbox/box.css" rel="stylesheet" type="text/css" />
+
+<!-- 全局风格CSS -->
+<link href="<?php echo THEME_URL;?>/main.css?20110429" rel="stylesheet" type="text/css" />
+<link href="<?php echo PUBLIC_URL;?>/js/tbox/box.css" rel="stylesheet" type="text/css" />
+<!-- 核心JS加载 -->
+<script type="text/javascript" src="<?php echo PUBLIC_URL;?>/js/jquery.js"></script>
+<script type="text/javascript" src="<?php echo PUBLIC_URL;?>/js/common.js"></script>
+<script type="text/javascript" src="<?php echo PUBLIC_URL;?>/js/tbox/box.js"></script>
+<script type="text/javascript" src="<?php echo PUBLIC_URL;?>/js/scrolltopcontrol.js"></script>
+<script src="<?php echo PUBLIC_URL;?>/js/jquery.jgrow.min.js"></script>
+<script src="<?php echo PUBLIC_URL;?>/js/jquery.isotope.min.js"></script>
+
+
+<!-- 编辑器样式文件 -->
+<link href="<?php echo PUBLIC_URL;?>/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]><!-->
+<link href="<?php echo PUBLIC_URL;?>/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<!--<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="<?php echo PUBLIC_URL;?>/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+
+</head>
+<body class="body_bg">
+
+<div class="div_body">
+<div class="header_bg">
+ <div class="header"><!-- 头部 begin -->
+		<ul class="person" style="_position:absolute;_right:0;_top:0;_width:200px">
+		<li>{:getUserSpace($mid,'fb14','','',false)}</li>
+		<li class="header_dropdown"><a href="{:U('home/message/index')}" class="application">消息<span class="ico_arrow"></span></a>
+          <div class="dropmenu">
+                <ul class="message_list_container message_list_new">
+                </ul>
+                <dl class="message_list">
+					<dd><a href="{:U('home/message/index')}">查看私信<gt name="userCount['message']" value="0">({$userCount.message})</gt></a></dd> 
+					<dd><a href="{:U('home/user/atme')}">查看@我<gt name="userCount['atme']" value="0">({$userCount.atme})</gt></a></dd> 
+					<dd><a href="{:U('home/user/comments')}">查看评论<gt name="userCount['comment']" value="0">({$userCount.comment})</gt></a></dd> 
+					<dd><a href="{:U('home/message/notify')}">系统通知<gt name="userCount['notify']" value="0">({$userCount.notify})</gt></a></dd> 
+					<dd><a href="{:U('home/message/appmessage')}">应用消息<gt name="userCount['appmessage']" value="0">({$userCount.appmessage})</gt></a></dd> 
+                </dl>
+                <dl class="square_list_add">
+                <dd><a href="javascript:ui.sendmessage(0)">写私信</a></dd>
+                </dl>
+          </div>
+        </li>
+		<li class="header_dropdown"><a href="{:U('home/Account')}" class="application">帐号<span class="ico_arrow"></span></a>
+          <div class="dropmenu">
+                <dl class="user_list">
+                <dd><a href="{:U('home/User/findfriend')}"><span class="ico_pub ico_pub_find"></span>找人</a></dd>
+                <dd><a href="{:U('home/Account')}"><span class="ico_pub ico_pub_set"></span>设置</a></dd>
+                <dd><a href="{:U('home/Account/invite')}"><span class="ico_pub ico_pub_invitation"></span>邀请</a></dd>
+                <dd><a href="{:U('home/Account/weiboshare')}"><span class="ico_pub ico_pub_invitation"></span>小工具</a></dd>
+                <!--<dd><a href="{:U('home/Index/editapp')}"><span class="ico_pub ico_pub_skin"></span>更换皮肤</a></dd>-->
+                </dl>
+                <dl class="square_list_add">
+                <dd><a href="{:U('home/Public/logout')}"><span class="ico_pub ico_pub_signout"></span>退出</a></dd>
+                </dl>
+          </div>
+        </li>
+        </ul>
+    <div class="logo"><a href="{:U('home/Index')}" >&nbsp;</a></div>
+    <div class="head_area" style="width:620px;*width:610px">
+    <div class="nav">
+      <ul>
+        <li><a href="{:U('home')}" class="fb14">首页</a></li>
+		<li class="header_dropdown"><a href="{:U('home/Square/index')}" class="application">广场<span class="ico_arrow"></span></a>
+          <div class="dropmenu">
+                <dl class="square_list">
+                <dd><a href="{:U('home/Square/top')}"><span class="ico_pub ico_pub_billboard"></span>风云榜</a></dd>
+                <dd><a href="{:U('home/Square/star')}"><span class="ico_pub ico_pub_hall"></span>名人堂</a></dd>
+                <dd><a href="{:U('screen/Index/index')}"><span class="ico_pub ico_pub_screen"></span>大屏幕</a></dd>
+                {:Addons::hook('header_square_tab', array('menu' => & $header_square_expend_menu))}
+				<volist name="header_square_expend_menu" id="vo">
+                	<dd><a href="{:U('home/Square/' . $vo['act'], $vo['param'])}"><span class="ico_pub ico_pub_{$vo['act']}"></span>{$vo['name']}</a></dd>  
+				</volist>
+                <!--
+				<dd><a href="{:U('home/Square/blog')}"><span class="ico_pub ico_pub_journal"></span>日志</a></dd>
+                <dd><a href="{:U('home/Square/photo')}"><span class="ico_pub ico_pub_album"></span>相册</a></dd>
+                <dd><a href="{:U('home/Square/group')}"><span class="ico_pub ico_pub_group"></span>群组</a></dd>
+				-->
+            </dl>
+          </div>
+        </li>
+        <?php if(!empty($my_group_list)){ ?>
+		<li class="header_dropdown"><a href="{:U('home/Square/index')}" class="application">群组<span class="ico_arrow"></span></a>
+          <div class="dropmenu">
+                <dl class="group_list">
+                            <?php foreach($my_group_list as $key=>$value){ ?>
+                                <dd><a href="{:U('Group/group/index',array('gid'=>$value['id']))}">{$value['name']}</a></dd>
+                            <?php } ?>
+                </dl>
+                <dl class="group_list_add">
+                <dd><a href="{:U('group/Index/add')}">创建/管理群组</a></dd>
+                </dl>
+          </div>
+        </li>
+        <?php } ?>
+        <li class="header_dropdown"><a href="{:U('home/Index/addapp')}" class="application">应用<span class="ico_arrow"></span></a>
+          <div class="dropmenu">
+            <dl class="app_list">
+                <?php foreach ($ts['user_app'] as $_temp_type => $_temp_apps) { ?>
+                <?php foreach ($_temp_apps as $_temp_app) { ?>
+                    <dd>
+                        <?php if($_temp_type == 'local_app' || $_temp_type == 'local_default_app') { ?>
+                        <a href="<?php echo $_temp_app['app_entry'];?>" class="a14">
+                            <img class="app_ico" src="<?php echo $_temp_app['icon_url'];?>" />
+                            <?php echo $_temp_app['app_alias'];?>
+                        </a>
+                        <?php }else { ?>
+                        <a href="__ROOT__/apps/myop/userapp.php?id=<?php echo $_temp_app['app_id'];?>" class="a14">
+                            <img class="app_ico" src="http://appicon.manyou.com/icons/<?php echo $_temp_app['app_id'];?>" />
+                            <?php echo $_temp_app['app_alias'];?>
+                        </a>
+                        <?php }?>
+                    </dd>
+                <?php } // end of foreach?>
+                <?php } // end of foreach?>
+                </dl>
+                <dl class="app_list_add">
+                <dd><a href="{:U('home/Index/addapp')}"><span class="ico_app_add"></span>添加更多应用</a></dd>
+                </dl>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <form action="{:U('home/user/search')}" id="quick_search_form" method="post">
+    <div class="soso br3"><label id="_header_search_label" style="display: block;" onclick="$(this).hide();$('#_header_search_text').focus();">搜名字/标签/微博</label><input type="text" class="so_text" value="" name="k" id="_header_search_text" onblur="if($(this).val()=='') $('#_header_search_label').show();"/><input name="" type="button" onclick="$('#quick_search_form').submit()" class="so_btn hand br3"/></div>
+	<script>
+	if($('#_header_search_text').val()=='')
+		$('#_header_search_label').show();
+	else
+		$('#_header_search_label').hide();
+	</script>
+</form>
+	</div>
+    <div id="message_list_container" class="layer_massage_box" style="display:none;">
+    	<ul class="message_list_container">
+        </ul>
+        <a href="javascript:void(0)" onclick="ui.closeCountList(this)" class="del"></a>
+    </div>
+  </div>
+</div>
+<?php foreach($_SITE_CONFIG['ad']['header'] as $v) { ?>
+<div class="ad_header"><?php echo $v['content']; ?></div>
+<?php } ?>

@@ -1,0 +1,29 @@
+#
+# 开启URL伪静态的方法.txt
+#
+
+1. 请确认您服务器的类型。 ThinkSNS的伪静态规则支持Apache、IIS、Nginx.
+
+2. 请确认您的服务器支持URL Rewrite（可从服务器提供商处获知）。下面以Apache为例介绍如何开启URL Rewrite扩展：
+   #
+   # 为了正常启用URL Rewrite，请将apache配置文件中“LoadModule rewrite_module modules/mod_rewrite.so”
+   # 前的注释去掉，并将apache的DocumentRoot开启AllowOverride
+   # 
+   # 如下所示为apache下httpd.conf的代码片段：
+   # <Directory "YourDocumentRoot">
+   #      Options Indexes FollowSymLinks ExecCGI Includes
+   #   AllowOverride All
+   #   Order allow,deny
+   #   Allow from all
+   # </Directory>
+   #
+
+3. 如果您的服务器为Apache，请将/URLRewrite/下的.htaccess文件拷贝至站点根目录下;
+   如果您的服务器为IIS，请将/URLRewrite/下的httpd.ini文件拷贝至站点根目录下;
+   如果您的服务器为Nginx，请将/URLRewrite/下的Nginx.txt文件拷贝至站点根目录下;
+   
+4. 修改config.inc.php文件, 将 "'URL_ROUTER_ON' => false," 修改为 "'URL_ROUTER_ON' => true," 即将false改为true
+
+5. Enjoy
+
+注意事项: 如果您的服务器不支持URL Rewrite, 请勿将.htaccess/httpd.ini/Nginx.txt文件置于根目录下, 否则可能产生500错误.

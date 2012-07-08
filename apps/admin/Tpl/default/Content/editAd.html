@@ -1,0 +1,78 @@
+<include file="../Public/_header" />
+
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+
+<include file="__THEME__/editor" />
+
+<div class="so_main">
+  <div id="editTpl_div">
+  	<div class="page_tit"><eq name="type" value="edit">编辑<else/>添加</eq>广告</div>
+	
+	<div class="form2">
+	<form method="post" action="{:U('admin/Content/doEditAd')}">
+	<eq name="type" value="edit"><input type="hidden" name="ad_id" value="{$ad_id}"></eq>
+    <dl class="lineD">
+      <dt>标题：</dt>
+      <dd>
+        <input name="title" type="text" value="{$title}"> *
+	  </dd>
+    </dl>
+	
+	<dl class="lineD">
+      <dt>位置：</dt>
+      <dd>
+        <select name="place">
+			<php>if(!in_array($place,array(0,1,2,3,4,5))) $place = 0;</php>
+			<option value="0" <eq name="place" value="0">selected</eq>>中部</option>
+			<option value="1" <eq name="place" value="1">selected</eq>>头部</option>
+			<option value="4" <eq name="place" value="4">selected</eq>>底部</option>
+			<option value="2" <eq name="place" value="2">selected</eq>>左下</option>
+			<option value="3" <eq name="place" value="3">selected</eq>>右下</option>
+			<option value="5" <eq name="place" value="4">selected</eq>>右上</option>
+		</select>
+	  </dd>
+    </dl>
+	
+    <dl class="lineD">
+      <dt>是否有效：</dt>
+      <dd>
+        <input type="radio" name="is_active" value="0" <neq name="is_active" value="1">checked</neq>>否<br />
+		<input type="radio" name="is_active" value="1" <eq name="is_active" value="1">checked</eq>>是
+	  </dd>
+    </dl>
+<!--
+	<dl class="lineD">
+      <dt>是否可关闭：</dt>
+      <dd>
+        <input type="radio" name="is_closable" value="0" <neq name="is_closable" value="1">checked</neq>>否<br />
+		<input type="radio" name="is_closable" value="1" <eq name="is_closable" value="1">checked</eq>>是
+	  </dd>
+    </dl>
+-->	
+    <dl class="">
+      <dt>内容：</dt>
+      <dd>
+      	<textarea name="content" id="content" style="width:650px;height:200px">{$content}</textarea>
+	  </dd>
+    </dl>
+	
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+	</form>
+  </div>
+  </div>
+</div>
+<script>
+$(document).ready(function(){
+	loadEditor("content");
+});
+</script>
+<include file="../Public/_footer" />
