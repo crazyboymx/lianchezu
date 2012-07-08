@@ -1,6 +1,6 @@
 #
 # 开启URL伪静态的方法.txt
-#
+# abc
 
 1. 请确认您服务器的类型。 ThinkSNS的伪静态规则支持Apache、IIS、Nginx.
 
