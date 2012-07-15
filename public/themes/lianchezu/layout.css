@@ -51,11 +51,16 @@
     color: #fff;
     line-height: 16px;
     margin: 0 2px;
+	font-size:14px;
 }
 .navi_list .import {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     margin: 0 3px;
+	position:relative;
+}
+.navi_list .import:link,.navi_list .import:visited {
+    font-size: 16px;
 }
 .navi_list .search {
     background: url("images/nav_dongtai_02_v3.png") no-repeat scroll 0 -319px transparent;
@@ -64,6 +69,7 @@
 .navi_list .split {
     background: url("images/mogu_nav_icon_v3.png") no-repeat scroll -653px 11px transparent;
     padding: 0 12px;
+	*padding: 0px 5px;
 }
 .navi_list .split {
     position: relative;
@@ -295,7 +301,7 @@ div[class="mainbox_C no_r myop"]{padding:0}
 .medal_list .li a{display:inline-block}
 .medal_list .li{float:left;margin-right:3px;width: 32px;padding:10px 0 0 10px}
 
-.user_app_right{width:auto;}
+.user_app_right{width:auto;float:none;}
 
 /*广告样式*/
 .banner_sitelist{background:url(images/banner_sitelist.png) no-repeat left top;width:960px;height:363px;display:block}/*掌上微博*/
