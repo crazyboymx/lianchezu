@@ -10,7 +10,7 @@
 			<a class="pic" href="{:U('home/account/index')}#face">上传头像</a>
 		</div>
   		<div class="user_name">
-        	<h2>{$userInfoCache['uname']}<php>Addons::hook('user_name_end', array('uid'=>$mid, 'html'=>&$user_name_end));echo $user_name_end;</php>{$mid|getUserGroupIcon}</h2>
+        	<h2><a href="index.php?app=home&mod=Space&act=index&uid=<php> echo $mid;</php>">{$userInfoCache['uname']}<php>Addons::hook('user_name_end', array('uid'=>$mid, 'html'=>&$user_name_end));echo $user_name_end;</php>{$mid|getUserGroupIcon}</a></h2>
             <php>
             	$user_credit = $userInfoCache['credit'];
             	foreach($user_credit as $k => $v) {
