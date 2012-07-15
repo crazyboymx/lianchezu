@@ -1,0 +1,31 @@
+<volist name="groups" id="vo">
+	<input type="checkbox" name="group" value="{$vo['id']}" />{$vo['name']} <br />
+</volist>
+<br />
+<eq name="require_authorization" value="1">
+	<textarea id="message" rows="5" cols="20"></textarea>
+	<br />
+</eq>
+<input type="button" onclick="doSelect();" value="确定" />
+
+<script type="text/javascript">
+function doSelect() {
+	var fuid = {$fuid};
+	var gid = '';
+	var message = $('#message').val();
+	
+	$("input:checked").each(function(i) {
+		gid = $(this).val() + ',' + gid;
+	});
+	$.post("{:U('home/Friend/doAddFriend')}", {fuid:fuid,gid:gid,message:message}, function(res) {
+		if(res == '1') {
+			$.UI.success('添加完毕');
+		}else if(res == '-1') {
+			$.UI.success('已经是好友');
+		}else {
+			$.UI.success('添加失败');
+		}
+		$.UI.tbox.close();
+	});
+}
+</script>

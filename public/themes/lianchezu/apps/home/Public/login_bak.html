@@ -1,0 +1,113 @@
+<include file="__THEME__/header" />
+
+<script>
+function changeverify(){
+    var date = new Date();
+    var ttime = date.getTime();
+    var url = "{:U('home/Public/verify')}";
+    $('#verifyimg').attr('src',url+'&'+ttime);
+}
+</script>
+<php>
+if($_GET["t"]==1){
+</php>
+<div class="LoginBox_msg"><font color="red">email或密码错误!</font></div>
+<php>}elseif($_GET["t"]==2){</php>
+<div class="LoginBox_msg"><font color="red">该账号尚未完成注册步骤，请点击注册确认邮件的确认链接！<a href="__URL__/reSendEmail/email/{.email}/uid/{.uid}">点击这里</a>重新发送确认邮件。</font></div>
+<php>}elseif( $_GET['t'] == 3 ){</php>
+<div class="LoginBox_msg"><font color="red">验证码错误!</font></div>
+<php>}</php>
+<div class="login_con"><!-- 内容 begin  -->
+  <div class="login_boxR">
+    <div class="login_box">
+      <h2>登录{$ts['site']['site_name']}</h2>
+      <form action="{:U('home/Public/doLogin')}" method="post">
+        <ul>
+          <li>
+            <div class="c1">Email：</div>
+            <div class="c2">
+
+<php>if($_GET['t']=='unactive'){</php>
+            <div class="clew_bg" style="position:absolute; margin-top:-80px; width:230px">
+    <div class="clew_bg_arrow_b"></div>
+    	<div class="clew_bg_top"><div></div></div>
+        <div class="clew_bg_con lh18"><div><span class="right"><a href="javascript:void(0)" onclick="$('.clew_bg').hide()" class="del" title="关闭"></a></span><span class="ico_cue_no"></span><strong class="cRed">该账户尚未激活</strong></div>
+        <div>到注册确认邮件中激活账户，或者，<a href="{:U('home/Public/resendEmail',array('uid'=>$uid,'email'=>$email))}">重发确认邮件</a></div></div>
+        <div class="clew_bg_btm"><div></div></div>
+    </div>
+<php>}</php>
+	
+              <input name="email" type="text" class="text" id="textfield3" style="width:200px;"/>
+            </div>
+          </li>
+          <li style="display:none;">
+            <div class="c1" style="padding:0">&nbsp;</div>
+            <div class="c2 cGray2" style="padding:0">帐号/邮箱地址</div>
+          </li>
+          <li>
+            <div class="c1">密码：</div>
+            <div class="c2">
+              <input name="password" type="password" class="text" id="textfield3"  style="width:200px;"/>
+            </div>
+          </li>
+          <php> $verify_allow = unserialize($site_opts["verify"]);
+            $login_verify_allow = $verify_allow['login']; </php>
+          <eq name="register_verify_on" value="1">
+            <li>
+              <div class="c1">验证码：</div>
+              <div class="c2">
+                <div class="left">
+                  <input name="verify" type="text" class="text" id="textfield3" onfocus="this.className='text2'" onblur="this.className='text'" style="width:50px;" />
+                </div>&nbsp;
+                <a href="javascript:void(0);" onclick="changeverify()"><img src="{:U('home/Public/verify')}" id="verifyimg" alt="换一张" /></a> </div>
+            </li>
+          </eq>
+          <li>
+            <div class="c1">&nbsp;</div>
+            <div class="c2">
+            <a href="{:U('home/Public/sendPassword')}" class="right">忘了密码？</a>
+              <label><input name="remember" type="checkbox" value="1" />下次自动登录</label>
+            </div>
+          </li>
+          <li>
+            <div class="c1">&nbsp;</div>
+            <div class="c2">
+              <input name="button" type="submit" class="btn_b hand" id="button" value="登 录" />
+              &nbsp;<a href="{:U('home/public/register')}"  class="f14px">立即注册</a> </div>
+          </li>
+        </ul>
+      </form>
+      <div class="c"></div>
+	  <php>if($regInfo['register_type']=='open'){</php>
+      <div class="login_top mt10 alC" style=" padding-top:10px;" >
+        <p class="pb10">你也可以通过站外账号进行登录！</p>
+        <p>
+        <volist name="platforms" id="vo">
+        	<a href="{:U('home/Public/tryOtherLogin',array('type'=>$vo))}">
+        		<img src="__THEME__/images/btn_{$vo}.gif" style="cursor: pointer;">
+        	</a>
+        </volist>
+        </p>
+      </div>
+	  <php>}</php>
+    </div>
+  </div>
+  <div class="login_boxL" style="display:none">
+  <h2><span class="icoWrite"></span><strong>大家正在说</strong></h2>
+    <ul class="feed_list">
+<volist id="vo" name="list">
+      <li class="lineD_btm">
+        <div class="userPic"><a href="{:U('home/space/index',array('uid'=>$vo['uid']))}" title=""><img card="1" src="{$vo.uid|getUserFace}"></a></div>
+        <div class="feed_c">
+          <div class="msgCnt"><a href="{:U('home/space/index',array('uid'=>$vo['uid']))}"><strong>{$vo.uid|getUserName}</strong></a>：{$vo.content}</div>
+          <div class="feed_c_btm"> <cite> <a href="{:U('home/space/detail',array('id'=>$vo['weibo_id']))}">{$vo.ctime|friendlyDate='mohu'}</a></cite></div>
+          <div style="" id="comment_list_418"></div>
+        </div>
+      </li>
+</volist>
+    </ul>
+    <div class="c"></div>
+  </div>
+</div>
+</div>
+<include file="__THEME__/footer" /> 
