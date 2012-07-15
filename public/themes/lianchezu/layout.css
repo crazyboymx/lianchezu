@@ -13,7 +13,7 @@
 .user_follow strong{font-size:16px;font-family:Arial, Helvetica, sans-serif;line-height:20px;}
 .user_app .userinfo .user_name p{line-height:20px;margin:0;color:#507FA5}
  body {font:12px Arial,Helvetica,sans-serif,Simsun;text-align:center;color:#666}
-.page_home{padding:57px 0 0 0;_padding:0;background-color: #F2F2F2;background-image: url("images/bg-v3.png");}
+.page_home{padding-top:57px;*padding-top:87px;_padding-top:47px;background-color: #F2F2F2;background-image: url("images/bg-v3.png");}
 .header_holder{z-index:9999999;position:fixed;_position:absolute;width:100%;min-width:1000px;background:url(images/nav_bg_v3.png) repeat-x 0 0 transparent;left:0;top:0;}
 .body_bg{background:#BEE3FD url(images/body_bg.jpg) repeat-x center top;padding:57px 0 0 0;_padding:0}
 .div_body {}
