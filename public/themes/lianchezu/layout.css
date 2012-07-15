@@ -10,16 +10,17 @@
 .no_bg{background:none}
 .user_app a{color:#507FA5}
 .user_app a:hover{text-decoration:none}
-.user_app .user_follow strong{font-size:12px;font-family:Arial, Helvetica, sans-serif;color:#fff}
+.user_follow strong{font-size:16px;font-family:Arial, Helvetica, sans-serif;line-height:20px;}
 .user_app .userinfo .user_name p{line-height:20px;margin:0;color:#507FA5}
  body {font:12px Arial,Helvetica,sans-serif,Simsun;text-align:center;color:#666}
 .page_home{padding:57px 0 0 0;_padding:0;background-color: #F2F2F2;background-image: url("images/bg-v3.png");}
 .header_holder{z-index:9999999;position:fixed;_position:absolute;width:100%;min-width:1000px;background:url(images/nav_bg_v3.png) repeat-x 0 0 transparent;left:0;top:0;}
 .body_bg{background:#BEE3FD url(images/body_bg.jpg) repeat-x center top;padding:57px 0 0 0;_padding:0}
 .div_body {}
-.content {background-color:#193E5C;text-align: left;clear: both;margin:0 auto;border-radius:3px 3px 3px 3px;}
+.content {background-color:#f96;text-align: left;clear: both;margin:0 auto;border-radius:3px 3px 3px 3px;}
 .content_share{background-color:#193E5C;text-align: left;clear: both;margin: 0 auto;border-radius:3px 3px 3px 3px}
 .main {margin-left:150px;background-color:#fff;*overflow:hidden}
+.iine_warning{padding:10px 0px 0px 0px;}
 .mainbox{background-color:#fff;border-radius:2px;*zoom:1} 
 .mainbox_C{margin-right:220px;background-color:#fff;min-height:580px;border-radius:0 3px 3px 0}
 .mainbox_appC{margin-right:280px;_margin-right:280px;background-color:#fff;border-radius:2px 3px 3px 2px;padding:20px}
@@ -275,11 +276,11 @@ div[class="mainbox_C no_r myop"]{padding:0}
 
 /* 组件部分样式 */
 .user_app{width:150px;float:left;*zoom:1}
-.user_app .app_line, .tab_square .app_line {background-image: url("images/app_line.jpg");background-position: left top;background-repeat: repeat-x;clear: left}
+.user_app .app_line, .tab_square .app_line {/*background-image: url("images/app_line.jpg");*/background-image:none;background-position: left top;background-repeat: repeat-x;clear: left}
 .user_app_top{height:10px;overflow:hidden;background-color: #fff;background-image: url(images/user_app_top.gif);background-repeat: no-repeat;background-position: right 0;display:none}
-.user_app_box {padding:10px 0 0 0}
+.user_app_box {padding:10px 0 0 0;background-color:#F96;}
 .user_app_box .box_Medal{padding:0}
-.user_app_box .app_line_w{background-image: url(images/app_line.jpg);background-repeat: repeat-x;background-position: left top;clear:left}
+.user_app_box .app_line_w{background-image:none;/*background-repeat: repeat-x;background-position: left top;*/clear:left}
 .user_app .userinfo{padding:0 0 10px 10px;overflow:hidden;*zoom:1}
 .user_app .userinfo .userpic{width:50px;height:50px;float:left;position:relative}
 .user_app .userinfo .userpic span {}
@@ -294,6 +295,8 @@ div[class="mainbox_C no_r myop"]{padding:0}
 .medal_list .li a{display:inline-block}
 .medal_list .li{float:left;margin-right:3px;width: 32px;padding:10px 0 0 10px}
 
+.user_app_right{width:auto;}
+
 /*广告样式*/
 .banner_sitelist{background:url(images/banner_sitelist.png) no-repeat left top;width:960px;height:363px;display:block}/*掌上微博*/
 
@@ -306,27 +309,27 @@ div[class="mainbox_C no_r myop"]{padding:0}
 .comment_list dd .info{padding: 0;line-height: 15px;overflow: hidden}
 
 /*关注*/
-.user_app .user_follow{padding:0}
-.user_app .user_follow span{display:inline-block;width:45px;*width:45px;text-align:center;padding:5px 0;margin:1px 0 0 0}
-.user_app .user_follow span.lineR{border-right:1px solid #c8cfda;padding:5px 0}
+.user_follow{padding:0;margin-top:-8px;}
+.user_follow span{display:inline-block;width:55px;*width:45px;text-align:center;padding:5px 0;margin:1px 0 0 0}
+.user_follow span.lineR{border-right:1px solid #c8cfda;padding:5px 0}
 
-.user_app .celerity_menu {padding:10px 0 10px 10px}
-.user_app .celerity_menu ul{}
-.user_app .celerity_menu li{height:30px}
+ .celerity_menu {padding:10px 0 10px 10px}
+ .celerity_menu ul{}
+ .celerity_menu li{height:30px}
 
-.user_app .celerity_menu a.on:hover{text-decoration:none}
-.user_app .celerity_menu b {float:right;font-size:12px;font-weight:400;visibility:hidden;color:#193E5C;cursor:pointer}
-.user_app .celerity_menu a:hover b {visibility: visible}
-.user_app .celerity_menu .hover:hover{background-color:#507FA5;border-radius: 3px 0 0 3px;visibility:visible}
-.user_app .celerity_menu .user_app_link span.user_app_entry{font-size:12px;visibility:hidden;float:right}
-.user_app .celerity_menu .user_app_link:hover span.user_app_entry{font-size:12px;visibility: visible;cursor:pointer}
-.user_app .celerity_menu a:link,.user_app .celerity_menu a:visited {color:#fff;display:block;padding:0 10px 0 15px;height:18px;line-height:18px;padding:6px 10px;_padding:5px 15px 5px 10px;font-size:14px}
+ .celerity_menu a.on:hover{text-decoration:none}
+ .celerity_menu b {float:right;font-size:12px;font-weight:400;color:#193E5C;cursor:pointer}
+ .celerity_menu a:hover b {}
+ .celerity_menu .hover:hover{background-color:#507FA5;border-radius: 3px 0 0 3px;}
+ .celerity_menu .user_app_link span.user_app_entry{font-size:12px;float:right}
+ .celerity_menu .user_app_link:hover span.user_app_entry{font-size:12px;cursor:pointer}
+ .celerity_menu a:link,.celerity_menu a:visited {color:#000;display:block;padding:0 10px 0 15px;height:18px;line-height:18px;padding:6px 10px;_padding:5px 15px 5px 10px;font-size:14px}
 
 
 .userPic img{width:50px;height:50px;border:solid 1px #ccc;padding:1px}
 .headpic50 img{height: 50px;width: 50px;background-color: #fff;padding:1px;border:#ccc solid 1px}
 
-.user_app .celerity_menu a:hover {background-color:#507FA5;border-radius: 3px 0 0 3px;color:#fff}
+.user_app .celerity_menu a:hover {background-color:#f8f8f8;border-radius: 3px 0 0 3px;color:#000}
 .user_app .celerity_menu a.on,.user_app .celerity_menu a.on:visited {background-color:#fff;border-radius: 3px 0 0 3px;color: #193E5C}
 .user_app .user_app_list{overflow:hidden;padding:5px 0 0 10px}
 .user_app .user_app_list ul{margin:0px;padding:0px}
@@ -588,13 +591,13 @@ a.faceicon1:link, a.faceicon1:visited{display:block;float:left;height:17px;margi
 .feed_list .hover:hover .del{visibility:visible}
 
 /*弹出表情*/
-.talkBox{padding:0}
+.talkBox{padding:0;margin-top:-8px;}
 .talkPop{clear:left;margin-top:20px;*margin-top:0px;position:absolute !important;z-index:999999 !important;}
 .talkPop_arrow{background-position: -143px -4px;height:8px;width:15px;overflow:hidden}
 .talkPop_box{background-color:#F8FAFC;border:solid 1px #666;margin-bottom:5px;-moz-border-radius: 3px;-khtml-border-radius: 3px;-webkit-border-radius: 3px;border-radius:3px;box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3);width:440px}
 .talkPop_box #weibo_close_handle{margin:0}
 .talkPop_box #publish_type_content{}
-.talkBox h2 {height:37px;overflow:hidden;margin-bottom:8px}
+.talkBox h2 {height:37px;overflow:hidden;}
 .talkBox h2 span{font-size: 18px;line-height: 42px;float:left}
 .talkPop_box .pop_tit{background-color:#eee;padding:0 10px;border-radius:3px 3px 0 0;position:relative}
 .wordNum{float:right;font-size:12px;color:#999}
@@ -995,7 +998,7 @@ top:53px}
 .list_send_vote dd span{width:80px;padding:0 10px 0 0;text-align:right;display:block;float:left}
 
 /*发布框*/
-.send_weibo .title{height:40px;width:300px;overflow:hidden}
+.send_weibo .title{height:40px;width:450px;overflow:hidden;}
 .send_weibo .kind{float:left;}
 /*微薄分享框样式*/
 .wrap_share{width:560px;margin:60px auto 0;text-align:left}

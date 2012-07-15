@@ -11,13 +11,48 @@
   <div class="main">
     <div class="mainbox">
       <div class="mainbox_R">
+       <div class="user_app user_app_right">
+        <!--关注-->
+  <div class="user_follow">
+  	<span><a href="{:U('home/space/follow',array('type'=>'following', 'uid'=>$mid))}"><strong>{$userInfoCache['following']}</strong><br />关注</a></span>
+    <span class="app_lineL"><a href="{:U('home/space/follow',array('type'=>'follower', 'uid'=>$mid))}"><strong>{$userInfoCache['follower']}</strong><br />粉丝</a></span>
+    <span class="app_lineL"><a href="{:U('home/space/index',array('uid'=>$uid))}"><strong id="miniblog_count">{$userInfoCache['miniNum']}</strong><br />微博</a></span>
+  </div>
+  <!--关注 end-->
+  
+  <div class="celerity_menu ">
+  	<ul>
+        <li><a href="{:U('home/user/index')}" ><span class="ico_side ico_home"></span>我的首页</a></li>
+        <li><a href="{:U('home/user/atme')}"><span class="ico_side ico_atme"></span>提到我的 
+        <span id="app_left_count_atme"><gt name="userCount['atme']" value="0">(<font color="red">{$userCount.atme}</font>)</gt></span>
+        </a>
+        </li>
+        <li><a href="{:U('home/user/collection')}" ><span class="ico_side ico_favorites"></span>我的收藏</a></li>
+        <li><a href="{:U('home/user/comments')}"><span class="ico_side ico_comment"></span>我的评论 
+        <span id="app_left_count_comment"><gt name="userCount['comment']" value="0">(<font color="red">{$userCount.comment}</font>)</gt></span>
+        </a>
+        </li>
+        <if condition="Addons::requireHooks('home_index_left_tab')">
+            {:Addons::hook('home_index_left_tab', array(&$menu))}
+            <volist name="menu" id="vo">
+                <li><a href="{:U('home/user/' . $vo['act'])}" {:getMenuState('user/' . $key)}>{$vo['name']}</a></li>
+            </volist>
+        </if>
+  	</ul>
+  </div>
+  
+       
+       </div>
+       
 		<volist name="ts['ad']['right_top']" id="vo">
 		<div class="setskinbox lineS_btm">
 			{$vo['content']}
 		</div>
 		</volist>
 		{:Addons::hook('home_index_right_top')}
+        
 		{:W('RelatedUser',array('async'=>1))}
+       
         <div class="right_box lineS_btm">
           <h2><a href="javascript:void(0)" onclick="$('.quick_win').show()" class="right" style="font-weight:400;font-size:12px">添加</a>关注的话题</h2>
           <div style="display:none;" class="quick_win">
@@ -36,9 +71,6 @@
         </div>
         <div class="right_box">
           {:W('HotTopic', array('type'=>'recommend','limit'=>5))}
-          <php>if(ACTION_NAME == "index"){</php>
-          {:W('HotTopic', array('type'=>'auto','limit'=>5))}
-          <php>}</php>
           
       </div>
           {:Addons::hook('home_index_right_bottom')}
@@ -52,9 +84,7 @@
       </div>
       <div class="mainbox_C main_pad" style="padding-top:10px">
       <div class="clearfix">
-        <php>if ($announcement['is_open'] && !empty($announcement['content'])) {</php>
-        <div class="iine_warning" id="announcement"><a class="del right hover" href="javascript:void(0);" onclick="close_announcement();"></a><b class="ico_speaker"></b><a href="javascript:void(0)">{$announcement['content']}</a></div>
-        <php>}</php>
+        
         <switch name="ACTION_NAME">
 
           <case value="index">
@@ -65,7 +95,12 @@
 	            <h2>
 	              <div class="wordNum numObj">你还可以输入<strong id="strconunt">{$GLOBALS['ts']['site']['length']}</strong>字</div>
 	              <!--<span>快来说点什么吧……</span>-->
-	              <div class="title"><img src="../Public/images/show_img.jpg" /></div>
+	              <div class="title">
+                  <php>if ($announcement['is_open'] && !empty($announcement['content'])) {</php>
+        <div class="iine_warning" id="announcement"><a class="del right hover" href="javascript:void(0);" onclick="close_announcement();"></a><b class="ico_speaker"></b><a href="javascript:void(0)">{$announcement['content']}</a></div>
+        <php>}</php>
+                  </div>
+                  
 	            </h2>
 	            <div class="cntBox">
 	              <input type="button" disabled="true" error="发布失败" class="btn_big_disable hand buttonObj" value="&nbsp;" id="publish_handle"  />

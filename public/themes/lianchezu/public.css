@@ -161,25 +161,24 @@ a:hover .imgSmall{cursor:url(http://timg.sjs.sinajs.cn/t3/style/images/common/sm
 .ico_pub_signout{background-position:0 -190px}/*退出*/
 
 /*左边菜单图标 */
-.ico_square,.ico_billboard,.ico_hall,.ico_screen,.ico_journal,.ico_album,.ico_group,.ico_home,.ico_atme,.ico_favorites,.ico_comment,.ico_voting,.ico_gift,.ico_activity,.ico_board,.ico_square_on,.user_app .celerity_menu a.on .ico_billboard,.ico_hall_on,.ico_screen_on,.ico_journal_on,.ico_album_on,.ico_group_on,.user_app .celerity_menu a.on .ico_voting_on,.user_app .celerity_menu a.on .ico_gift_on,.user_app .celerity_menu a.on .ico_activity_on,.user_app .celerity_menu a.on .ico_board_on,.user_app .celerity_menu a.on .ico_home,.user_app .celerity_menu a.on .ico_atme,
-.user_app .celerity_menu a.on .ico_favorites,.user_app .celerity_menu a.on .ico_comment
+.ico_square,.ico_billboard,.ico_hall,.ico_screen,.ico_journal,.ico_album,.ico_group,.ico_home,.ico_atme,.ico_favorites,.ico_comment,.ico_voting,.ico_gift,.ico_activity,.ico_board,.ico_square_on,.celerity_menu a.on .ico_billboard,.ico_hall_on,.ico_screen_on,.ico_journal_on,.ico_album_on,.ico_group_on, .celerity_menu a.on .ico_voting_on, .celerity_menu a.on .ico_gift_on, .celerity_menu a.on .ico_activity_on, .celerity_menu a.on .ico_board_on, .celerity_menu a.on .ico_home, .celerity_menu a.on .ico_atme, .celerity_menu a.on .ico_favorites, .celerity_menu a.on .ico_comment
 {background: transparent url(images/ico_sidebar.png) no-repeat;display:inline-block}
 .ico_side{width:16px;height:16px;margin-right:5px;vertical-align: middle}
 .ico_square{background-position:0 -208px}.ico_square_on{background-position:-26px -208px}/*广场首页*/
-.ico_billboard{background-position:0 -227px}.user_app .celerity_menu a.on .ico_billboard{background-position:-26px -227px}/*风云榜*/
+.ico_billboard{background-position:0 -227px} .celerity_menu a.on .ico_billboard{background-position:-26px -227px}/*风云榜*/
 .ico_hall{background-position:0 -265px}.ico_hall_on{background-position:-26px -265px}/*名人堂*/
 .ico_screen{background-position:0 -246px}.ico_screen_on{background-position:-26px -246px}/*大屏幕*/
 .ico_journal{background-position:0 -95px}.ico_journal_on{background-position:-26px -95px}/*日志*/
 .ico_album{background-position:0 -114px}.ico_album_on{background-position:-26px -114px}/*相册*/
 .ico_group{background-position:0 -190px}.ico_group_on{background-position:-26px -190px}/*群组*/
-.ico_home{background-position:0 0}.user_app .celerity_menu a.on .ico_home{background-position:-26px 0}/*首页*/
-.ico_atme{background-position:0 -19px}.user_app .celerity_menu a.on .ico_atme{background-position:-26px -19px}/*atme*/
-.ico_favorites{background-position:0 -38px}.user_app .celerity_menu a.on .ico_favorites{background-position:-26px -38px}/*收藏*/
-.ico_comment{background-position:0 -57px}.user_app .celerity_menu a.on .ico_comment{background-position:-26px -57px}/*评论*/
-.ico_voting{background-position:0 -152px}.user_app .celerity_menu a.on .ico_voting{background-position:-26px -152px}/*投票*/
-.ico_gift{background-position:0 -171px}.user_app .celerity_menu a.on .ico_gift{background-position:-26px -171px}/*礼物*/
-.ico_activity{background-position:0 -133px}.user_app .celerity_menu a.on .ico_activity{background-position:-26px -133px}/*活动*/
-.ico_board{background-position:0 -76px}.user_app .celerity_menu a.on .ico_board{background-position:-26px -76px}/*招帖板*/
+.ico_home{background-position:-26px 0} .celerity_menu a.on .ico_home{background-position:-26px 0}/*首页*/
+.ico_atme{background-position:-26px -19px}.celerity_menu a.on .ico_atme{background-position:-26px -19px}/*atme*/
+.ico_favorites{background-position:-26px -38px} .celerity_menu a.on .ico_favorites{background-position:-26px -38px}/*收藏*/
+.ico_comment{background-position:-26px -57px} .celerity_menu a.on .ico_comment{background-position:-26px -57px}/*评论*/
+.ico_voting{background-position:0 -152px} .celerity_menu a.on .ico_voting{background-position:-26px -152px}/*投票*/
+.ico_gift{background-position:0 -171px} .celerity_menu a.on .ico_gift{background-position:-26px -171px}/*礼物*/
+.ico_activity{background-position:0 -133px} .celerity_menu a.on .ico_activity{background-position:-26px -133px}/*活动*/
+.ico_board{background-position:0 -76px} .celerity_menu a.on .ico_board{background-position:-26px -76px}/*招帖板*/
 
 /*关闭按钮*/
 .ico_close,.ico_close_send,.a.ico_close:hover,.ico_show_on,.ico_show_off,.ico_sync_on,.ico_sync_off,.del,.del:hover{background: transparent url(images/close.gif) no-repeat;display:inline-block}
