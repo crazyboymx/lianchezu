@@ -1,35 +1,19 @@
 <?php
-/**
- * IndexAction
- * 活动
- * @uses Action
- * @package
- * @version $id$
- * @copyright 2009-2011 SamPeng
- * @author SamPeng <sampeng87@gmail.com>
- * @license PHP Version 5.2 {@link www.sampeng.cn}
- */
 class IndexAction extends Action {
-	private $appName;
+    private $appName;
     private $showfee;
 
-    /**
-     * __initialize
-     * 初始化
-     * @access public
-     * @return void
-     */
     public function _initialize() {
-		//应用名称
-		global $ts;
-		$this->appName = $ts['app']['app_alias'];
+        //应用名称
+        global $ts;
+        $this->appName = $ts['app']['app_alias'];
         //设置活动的数据处理层
         $this->showfee = D( 'Showfee' );
         //读取推荐列表
         $is_hot_list = $this->showfee->getHotList();
         $this->assign('is_hot_list',$is_hot_list);
         // 费用分类
-        $cate = D( 'ShowfeeFeeType' )->getType();
+        $cate = D( 'ShowfeeCarBrand' )->getAllCarBrand();
         $this->assign( 'category',$cate );
     }
 
@@ -40,134 +24,88 @@ class IndexAction extends Action {
      * @return void
      */
     public function index() {
-		$order = NULL;
+        $order = NULL;
         switch( $_GET['order'] ) {
-        	case 'new':    //最新排行
-       			$order = 'cTime DESC';
-       			$this->setTitle('最新' . $this->appName);
-                break;
-            case 'following':    //关注的人的
-				$following = M('weibo_follow')->field('fid')->where("uid={$this->mid} AND type=0")->findAll();
-				foreach($following as $v) {
-					$in_arr[] = $v['fid'];
-				}
-                $map['uid'] = array('in',$in_arr);
-                $this->setTitle('我关注的人的' . $this->appName);
-                break;
-	         default:      //默认热门排行
-                $order = 'attentionCount DESC, cTime DESC';
-                $this->setTitle('热门' . $this->appName);
+        case 'new':    //最新排行
+            $order = 'cTime DESC';
+            $this->setTitle('最新' . $this->appName);
+            break;
+        case 'following':    //关注的人的
+            $following = M('weibo_follow')->field('fid')->where("uid={$this->mid} AND type=0")->findAll();
+            foreach($following as $v) {
+                $in_arr[] = $v['fid'];
+            }
+            $map['uid'] = array('in',$in_arr);
+            $this->setTitle('我关注的人的' . $this->appName);
+            break;
+        default:      //默认热门排行
+            $order = 'attentionCount DESC, cTime DESC';
+            $this->setTitle('热门' . $this->appName);
         }
 
         //查询
         $title = t($_POST['title']);
         if ($_POST['title']) {
-        	$map['title'] = array( 'like',"%".t($_POST['title'])."%" );
-        	$this->setTitle('搜索' . $this->appName);
+            $map['title'] = array( 'like',"%".t($_POST['title'])."%" );
+            $this->setTitle('搜索' . $this->appName);
         }
         if ($_GET['cid']) {
-        	$map['type']  = intval($_GET['cid']);
-        	$this->setTitle('分类浏览');
+            $map['carBrand']  = intval($_GET['cid']);
+            $this->setTitle('分类浏览');
         }
         $result  = $this->showfee->getShowfeeList($map,$order,$this->mid);
 
-		$this->assign($result);
+        $this->assign($result);
         $this->display();
     }
 
-    /**
-     * personal
-     * 个人列表
-     * @access public
-     * @return void
-     */
     public function personal() {
-    	if ($this->uid == $this->mid)
-    		$name = '我';
-    	else
-    		$name = getUserName($this->uid);
+        if ($this->uid == $this->mid)
+            $name = '我';
+        else
+            $name = getUserName($this->uid);
 
         switch( $_GET['action'] ) {
-            case 'join':    //参与的
-                $map_join['action'] = 'joinIn';
-                $map_join['status'] = 1;
-                $map_join['uid']    = $this->uid;
-                $eventIds  = D('EventUser')->field('eventId')->where($map_join)->findAll();
-                foreach($eventIds as $v) {
-                    $in_arr[] = $v['eventId'];
-                }
-                $map['id'] = array('in',$in_arr);
-                $this->setTitle("{$name}参与的{$this->appName}");
-                break;
-            case 'att':    //关注的
-                $map_att['action'] = 'attention';
-                $map_att['status'] = 1;
-                $map_att['uid']    = $this->uid;
-                $eventIds  = D('EventUser')->field('eventId')->where($map_att)->findAll();
-                foreach($eventIds as $v) {
-                    $in_arr[] = $v['eventId'];
-                }
-                $map['id'] = array('in',$in_arr);
-                $this->setTitle("{$name}关注的{$this->appName}");
-                break;
-         	default:      //发起的
-                $map['uid'] = $this->uid;
-                $this->setTitle("{$name}发起的{$this->appName}");
+        default:      //发起的
+            $map['uid'] = $this->uid;
+            $this->setTitle("{$name}的{$this->appName}");
         }
-        $result  = $this->event->getEventList($map,'id DESC',$this->mid);
+        $result = $this->showfee->getShowfeeList($map,'id DESC',$this->mid);
         $this->assign($result);
         $this->assign('name', $name);
         $this->display();
     }
 
-    /**
-     * addEvent
-     * 发起活动
-     * @access public
-     * @return void
-     */
-    public function addEvent() {
+    public function addShowfee() {
         $this->_createLimit($this->mid);
 
-        $typeDao = D( 'EventType' );
-        $this->assign('type',$typeDao->getType());
-        $this->setTitle('发起' . $this->appName);
+        $this->setTitle('添加' . $this->appName);
         $this->display();
     }
-	/**
-     * _creatLimit
-     * 条件限制判断
-     * @access public
-     * @return void
-     */
+
     private function _createLimit($uid){
-		$config = getConfig();
+        $config = getConfig();
 
-		if(!$config['canCreate']){
-			$this->error('禁止发起'.$this->appName);
-		}
-    	if($config['credit']){
-			$userCredit = X('Credit')->getUserCredit($uid);
-    		if($userCredit[$config['credit_type']]['credit']<$config['credit']){
-    			$this->error($userCredit[$config['credit_type']]['alias'].'小于'.$config['credit'].'，不允许发起'.$this->appName);
-    		}
-    	}
-    	if( $timeLimit = $config['limittime'] ){
-    	   $regTime = M('user')->getField('ctime',"uid={$uid}");
-    	   $difference = (time()-$regTime)/3600;
+        if(!$config['canCreate']){
+            $this->error('禁止发起'.$this->appName);
+        }
+        if($config['credit']){
+            $userCredit = X('Credit')->getUserCredit($uid);
+            if($userCredit[$config['credit_type']]['credit']<$config['credit']){
+                $this->error($userCredit[$config['credit_type']]['alias'].'小于'.$config['credit'].'，不允许发起'.$this->appName);
+            }
+        }
+        if( $timeLimit = $config['limittime'] ){
+            $regTime = M('user')->getField('ctime',"uid={$uid}");
+            $difference = (time()-$regTime)/3600;
 
-    	   if($difference<$timeLimit){
-    	       $this->error('账户创建时间小于'.$timeLimit.'小时，不允许发起'.$this->appName);
-    	   }
-    	}
+            if($difference<$timeLimit){
+                $this->error('账户创建时间小于'.$timeLimit.'小时，不允许发起'.$this->appName);
+            }
+        }
     }
-    /**
-     * doAddEvent
-     * 添加活动
-     * @access public
-     * @return void
-     */
-    public function doAddEvent() {
+
+    public function doAddShowfee() {
         $this->_createLimit($this->mid);
 
         $map['title']      = t($_POST['title']);
@@ -185,29 +123,29 @@ class IndexAction extends Action {
         if( $map['sTime'] > $map['eTime'] ) {
             $this->error( "结束时间不得早于开始时间" );
         }
-		if( $map['sTime'] < mktime(0, 0, 0, date('M'), date('D'), date('Y')) ) {
+        if( $map['sTime'] < mktime(0, 0, 0, date('M'), date('D'), date('Y')) ) {
             $this->error( "开始时间不得早于当前时间" );
         }
         if( $map['deadline'] < time() ) {
             $this->error( "报名截止时间不得早于当前时间" );
         }
         if( $map['deadline'] > $map['eTime'] ) {
-        	$this->error('报名截止时间不能晚于结束时间');
+            $this->error('报名截止时间不能晚于结束时间');
         }
-		
+
         if(strlen(text($map['explain'])) < 10){
-        	
-        	$this->error('介绍不得小于10个字符');
+
+            $this->error('介绍不得小于10个字符');
         }
-        	
+
         //处理省份，市，区
         list( $opts['province'],$opts['city'],$opts['area'] ) = explode(" ",$_POST['city']);
 
         //得到上传的图片
         $config     =   getConfig();
- 		$options['userId']		=	$this->mid;
-		$options['max_size']    =   $config['photo_max_size'];
-		$options['allow_exts']	=	$config['photo_file_ext'];
+        $options['userId']		=	$this->mid;
+        $options['max_size']    =   $config['photo_max_size'];
+        $options['allow_exts']	=	$config['photo_file_ext'];
         $cover	=	X('Xattach')->upload('event',$options);
 
         //处理选项
@@ -218,11 +156,11 @@ class IndexAction extends Action {
         $opts['opts']        = array( 'friend'=>$friend,'allow'=>$allow );
         if( $addId = $this->event->doAddEvent( $map,$opts,$cover )) {
             X('Credit')->setUserCredit($this->mid,'add_event');
-			$this->assign('jumpUrl',U('/Index/eventDetail',array('id'=>$addId,'uid'=>$this->mid)));
+            $this->assign('jumpUrl',U('/Index/eventDetail',array('id'=>$addId,'uid'=>$this->mid)));
             $this->success($this->appName.'添加成功');
         }else{
-			$this->error($this->appName.'添加失败');
-		}
+            $this->error($this->appName.'添加失败');
+        }
     }
 
     /**
@@ -283,9 +221,9 @@ class IndexAction extends Action {
 
         $this->event->setMid( $this->mid );
         if($result = $this->event->getEventContent( $id,$uid )) {
-        	//计算待审核人数
-	        if( $this->mid == $result['uid'] )
-	            $result['verifyCount'] = D( 'EventUser' )->where( "status = 0 AND action='joinIn' AND eventId ={$result['id']}" )->count();
+            //计算待审核人数
+            if( $this->mid == $result['uid'] )
+                $result['verifyCount'] = D( 'EventUser' )->where( "status = 0 AND action='joinIn' AND eventId ={$result['id']}" )->count();
             $this->assign($result);
             $this->assign('event', $result);
             $this->setTitle($result['title'].' - '.$result['time'].' - '.$result['city'].' - '.$result['address'].' - '.$result['type']);
@@ -321,21 +259,21 @@ class IndexAction extends Action {
 
         //获得action对应的成员
         switch( $_GET['action'] ) {
-            case "att":
-                $map['action'] = 'attention';
-                $map['status'] = 1;
-                break;
-            case "join":
-                $map['action'] = 'joinIn';
-                $map['status'] = 1;
-                break;
-            case 'verify':
-                $map['action'] ='joinIn';
-                $map['status'] = 0;
-                break;
-            default:
-                $map['action'] = array( 'in',"'admin','attention','joinIn'" );
-                $map['status'] = 1;
+        case "att":
+            $map['action'] = 'attention';
+            $map['status'] = 1;
+            break;
+        case "join":
+            $map['action'] = 'joinIn';
+            $map['status'] = 1;
+            break;
+        case 'verify':
+            $map['action'] ='joinIn';
+            $map['status'] = 0;
+            break;
+        default:
+            $map['action'] = array( 'in',"'admin','attention','joinIn'" );
+            $map['status'] = 1;
         }
         $map['eventId'] = $event['id'];
         //取得成员列表
@@ -404,9 +342,9 @@ class IndexAction extends Action {
 
         //得到上传的图片
         $config     =   getConfig();
- 		$options['userId']		=	$this->mid;
-		$options['max_size']    =   $config['photo_max_size'];
-		$options['allow_exts']	=	$config['photo_file_ext'];
+        $options['userId']		=	$this->mid;
+        $options['max_size']    =   $config['photo_max_size'];
+        $options['allow_exts']	=	$config['photo_file_ext'];
         $cover = $_FILES['cover']['size']>0?X('Xattach')->upload('event',$options):$old_cover;
 
         //处理选项
@@ -416,7 +354,7 @@ class IndexAction extends Action {
         $allow                = isset( $_POST['allow'] )?1:0;
         $opts['opts']        = array( 'friend'=>$friend,'allow'=>$allow );
         if( $this->event->doEditEvent( $map,$opts,$cover,$id )) {
-        	$this->assign('jumpUrl',U('//eventDetail',array('id'=>$id['id'],'uid'=>$this->mid)));
+            $this->assign('jumpUrl',U('//eventDetail',array('id'=>$id['id'],'uid'=>$this->mid)));
             $this->success($this->appName.'修改成功！');
         }
     }
@@ -472,8 +410,8 @@ class IndexAction extends Action {
 
         //检查操作权限
         if( $this->mid != D('Event')->getField('uid',"id={$data['id']}") ){
-        	echo  -4;
-        	return;
+            echo  -4;
+            return;
         }
 
         //检查链接合法性
@@ -482,32 +420,32 @@ class IndexAction extends Action {
             return;
         }
         switch ( $admin ) {
-            case 'user':   //成员管理
-                echo $this->event->doDelUser( $data );
-                return;
-                break;
-            default:
-        //TODO 更多的操作
+        case 'user':   //成员管理
+            echo $this->event->doDelUser( $data );
+            return;
+            break;
+        default:
+            //TODO 更多的操作
         }
 
     }
 
-        /**
-         * doDeleteEvent
-         * 删除活动
-         * @access public
-         * @return void
-         */
-        public function doDeleteEvent(){
-            $eventid['id']  = intval($_REQUEST['id']);    //要删除的id.
-            $eventid['uid'] = $this->mid;
-            $result         = $this->event->doDeleteEvent($eventid);
-            if( false != $result){
-                echo 1;
-            }else{
-                echo 0;               //删除失败
-            }
+    /**
+     * doDeleteEvent
+     * 删除活动
+     * @access public
+     * @return void
+     */
+    public function doDeleteEvent(){
+        $eventid['id']  = intval($_REQUEST['id']);    //要删除的id.
+        $eventid['uid'] = $this->mid;
+        $result         = $this->event->doDeleteEvent($eventid);
+        if( false != $result){
+            echo 1;
+        }else{
+            echo 0;               //删除失败
         }
+    }
 
     /**
      * _paramDate
@@ -662,7 +600,7 @@ class IndexAction extends Action {
             echo "There was a problem with the upload";
             exit(0);
         }
-    }*/
+   }*/
 
     /**
      * photos

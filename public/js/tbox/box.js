@@ -94,12 +94,12 @@ jQuery.extend(ui.box, {
 	   }
 	   this.init(option);
 	   var ajaxType = type || "GET";
-       var ajax = {
+       var ajax = $.extend({
                url: data, type: type,data:requestData, dataType: 'html', cache: false, success: function(html) {
                    ui.box.setcontent(html);
                    ui.box.center();
                }
-           };
+           },option||{});
        ui.box.setcontent('<div style="width:150px;height:70px;text-align:center"><div class="load">&nbsp;</div></div>');
        this.center();
        jQuery.ajax(ajax);

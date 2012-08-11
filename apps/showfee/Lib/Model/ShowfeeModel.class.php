@@ -30,7 +30,34 @@ class ShowfeeModel extends BaseModel{
 	 * @access public
 	 * @return void
 	 */
-	public function appendContent( $data ){
+    public function appendContent( $data ){
+        $carBrandM = self::factoryModel( 'CarBrand' );
+        $carTypeM = self::factoryModel( 'CarType' );
+        $feeRecordM = self::factoryModel('FeeRecord');
+        $carbrand = $carBrandM->getCarBrand($data['carBrand']);
+        if ($carbrand != null) {
+            $data['carBrandName'] = $carbrand['name'];
+            $data['carBrandIcon'] = $carbrand['filepath'] . $carbrand['filename'];
+        }
+        else {
+            $data['carBrandName'] = ''; // 给个默认值
+            $data['carBrandIcon'] = ''; // 给默认车图片url
+        }
+        $cartype = $carTypeM->getCarType($data['carType']);
+        if ($cartype != null) {
+            $data['carTypeName'] = $cartype['name'];
+            $data['carTypeIcon'] = $cartype['filepath'] . $cartype['filename'];
+        }
+        else {
+            $data['carTypeName'] = ''; // 给个默认值
+            $data['carTypeIcon'] = ''; // 给默认车图片url
+        }
+        $feerecord = $feeRecordM->getFeeRecord($data['id']);
+        $data['totalFee'] = 0;
+        foreach ($feerecord as $r) {
+            $data['totalFee'] += $r['fee'];
+        }
+        $data['cover'] = getCover($data['coverId']);
 		return $data;
 	}
 	/**

@@ -13,9 +13,9 @@
         <div class="tab-menu">
           <!-- 切换标签 begin  -->
           <ul>
-            <li><a href="{:U('//personal', array('action'=>'launch'))}" <php>if(!in_array($_GET['action'],array('join','att'))){echo 'class="on"';}</php>><span>{$name}发起的活动</span></a></li>
-            <li><a href="{:U('//personal', array('action'=>'join'))}" <if condition="$_GET['action'] eq 'join'"> class="on"</if>><span>{$name}参与的活动</span></a></li>
-            <li><a href="{:U('//personal', array('action'=>'att'))}" <if condition="$_GET['action'] eq 'att'"> class="on"</if>><span>{$name}关注的活动</span></a></li>
+              <li><a href="{:U('//personal', array('action'=>'launch'))}" <php>if(!in_array($_GET['action'],array('join','att'))){echo 'class="on"';}</php>><span>{$name}发起的{$ts['app']['app_alias']}</span></a></li>
+              <li><a href="{:U('//personal', array('action'=>'join'))}" <if condition="$_GET['action'] eq 'join'"> class="on"</if>><span>{$name}参与的{$ts['app']['app_alias']}</span></a></li>
+              <li><a href="{:U('//personal', array('action'=>'att'))}" <if condition="$_GET['action'] eq 'att'"> class="on"</if>><span>{$name}关注的{$ts['app']['app_alias']}</span></a></li>
           </ul>
         </div>
         <!-- 切换标签 end  -->
