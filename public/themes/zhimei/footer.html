@@ -1,0 +1,22 @@
+
+<div class="footer_bg">
+<div class="footer wrap">
+	<div class="menu">
+	</div>
+	<div>
+		Powered by <a href="http://www.thinksns.com/" target="_blank">ThinkSNS</a>&nbsp;&nbsp; {$ts['site']['site_icp']} 
+		<php>if(isMobile()) {</php>
+			<a href="{:U('home/Public/toWap')}">访问WAP版</a>
+		<php>}</php>
+	</div>
+</div>
+</div>
+</div>
+<php>if (!empty($ts['cnzz'])) {</php>
+<div style="display:none;">
+<script src="http://s87.cnzz.com/stat.php?id={$ts['cnzz']['cnzz_id']}&web_id={$ts['cnzz']['cnzz_id']}" language="JavaScript" charset="gb2312"></script>
+</div>
+<php>}</php>
+
+</body>
+</html>

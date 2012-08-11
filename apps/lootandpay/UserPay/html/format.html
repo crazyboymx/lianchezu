@@ -1,0 +1,26 @@
+<table id="backup_list" width="100%" border="1" cellspacing="0" cellpadding="0">
+  <tr>
+    <th class="line_l">ID</th>
+    <th class="line_l">订单号</th>
+    <th class="line_l">订单日期</th>
+    <th class="line_l">UID / 用户名</th>
+    <th class="line_l">充值金额</th>
+    <th class="line_l">充值方式</th>
+    <th class="line_l">是否付款</th>
+    <th class="line_l">是否到账</th>
+    <th class="line_l">IPS订单号</th>
+  </tr>
+  <volist id="vo" name="res">
+    <tr overstyle='on' id="backup_{$filename}">
+      <td>{$vo.id}</td>
+      <td>{$vo.billno}</td>
+      <td>{$vo.date}</td>
+      <td>{$vo.uid}  / {$vo.uid|getUserName}</td>
+      <td>{$vo.amount}元</td>
+      <td>{$vo.gateway}</td>
+      <td>{$vo.issucess}</td>
+      <td>{$vo.tosucess}</td>
+      <td>{$vo.ipsbillno}</td>
+    </tr>
+  </volist>
+</table>

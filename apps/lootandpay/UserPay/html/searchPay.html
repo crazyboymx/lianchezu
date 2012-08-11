@@ -1,0 +1,95 @@
+<include file="../Public/_header" />
+<div class="so_main"> 
+  <!-- 充值查询选项 -->
+  <div id="begin_backup" style="display:none">
+    <div class="page_tit">充值查询选项 [ <a href="javascript:void(0);" onclick="$('#begin_backup').slideUp();">隐藏</a> ]</div>
+    <div class="form2">
+      <form method="post" action="{:Addons::adminPage('searchPay')}">
+        <dl class="lineD">
+          <dt>选项: </dt>
+          <dd>
+            <input name="sucess_is" type="radio" value="all" checked="checked">
+            全部（不包括未付款）<br/>
+            <input name="sucess_is" type="radio" value="0">
+            还未到账（已经付款）<br/>
+            <input name="sucess_is" type="radio" value="1">
+            已经到账<br/>
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dl class="lineD">
+            <dt>订单时间: </dt>
+            <dd>从
+              <input type="text" name="st" value="">
+              到
+              <input type="text" name="sj" value="">
+              <br />
+              如：20081225到20090125，二者必须，且后者大于前者，否则条件无效</dd>
+          </dl>
+          <dt>订单号: </dt>
+          <dd>
+            <input type="text" name="billno" value="">
+          </dd>
+        </dl>
+        <dl class="" id="backup_size">
+          <dt>用户ID: </dt>
+          <dd>
+            <input type="text" name="uid" value="">
+          </dd>
+        </dl>
+        <div class="page_btm">
+          <input type="submit" class="btn_b" value="确定" />
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="page_tit">充值详情</div>
+  <div class="Toolbar_inbox">
+    <div class="page right">{$res['html']}</div>
+    <a href="javascript:void(0);" class="btn_a" onclick="$('#begin_backup').slideDown();"><span>充值查询</span></a> <a href="{:Addons::adminPage('payexport',$paymap)}" class="btn_a"><span>下载备份</span></a> </div>
+  <div class="list">
+    <table id="backup_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th class="line_l">ID</th>
+        <th class="line_l">订单号</th>
+        <th class="line_l">订单日期</th>
+        <th class="line_l">UID/用户名</th>
+        <th class="line_l">充值金额</th>
+        <th class="line_l">充值方式</th>
+        <th class="line_l">是否付款</th>
+        <th class="line_l">是否到账</th>
+        <th class="line_l">IPS订单号</th>
+      </tr>
+      <volist id="vo" name="res['data']">
+        <tr overstyle='on' id="backup_{$filename}">
+          <td>{$vo.id}</td>
+          <td>{$vo.billno}</td>
+          <td>{$vo.date}</td>
+          <td>{$vo.uid} / {$vo.uid|getUserName}</td>
+          <td>{$vo.amount}元</td>
+          <td>{$vo.gateway}</td>
+          <td>{$vo.issucess}</td>
+          <td>{$vo.tosucess}</td>
+          <td>{$vo.ipsbillno}</td>
+        </tr>
+      </volist>
+    </table>
+  </div>
+  <div class="Toolbar_inbox">
+    <div class="page right">{$res['html']}</div>
+    <a href="javascript:void(0);" class="btn_a" onclick="$('#begin_backup').slideDown();"><span>充值查询</span></a> <a href="{:Addons::adminPage('payexport',$paymap)}" class="btn_a"><span>下载备份</span></a> </div>
+</div>
+<script>
+  //鼠标移动表格效果
+    $(document).ready(function(){
+        $("tr[overstyle='on']").hover(
+          function () {
+            $(this).addClass("bg_hover");
+          },
+          function () {
+            $(this).removeClass("bg_hover");
+          }
+        );
+    });
+</script> 
+<include file="../Public/_footer" />

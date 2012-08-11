@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$communityname} 地图位置</title>
+<!-- 全局风格CSS -->
+<link href="__THEME__/main.css?20110429" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/js/tbox/box.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{:SITE_URL}/addons/plugins/CcUserInMap/html/jquery.js"></script>
+<script type="text/javascript" src="{:SITE_URL}/addons/plugins/CcUserInMap/html/jquery.floatDiv.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tbox/box.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#search_bar").floatdiv("rightbottom");
+		$("input[rel=jsinput]").focusin(function(){
+			var _this= $(this);
+			if(_this.val() == _this.attr('dfvalue')){
+				_this.val('');
+			}
+			if(_this.attr('incolor')){
+				_this.attr('style','color:'+_this.attr('incolor'));
+			}
+		});
+		$("input[rel=jsinput]").focusout(function(){
+			var _this= $(this);
+			if(_this.val() == ''){
+				_this.val(_this.attr('dfvalue'));
+			}
+			_this.attr('style','');
+		});
+	});
+</script>
+<style type="text/css">
+html {
+	height: 100%;
+}
+body {
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+#map_canvas {
+	width:100%;
+	height:100%
+}
+ @media print {
+#map_canvas {
+	height: 950px;
+}
+}
+</style>
+<script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$uid}';
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+</script>
+<script type="text/javascript">
+	
+  var marker;
+  var myPoint;
+  var map;
+  /*************************************
+   *  MarkerShape  对象规范 示例         *
+   *************************************/
+  //shape定义点击的图标区域
+  //图片即使透明也是矩形的
+  //设置shape后，可以看到鼠标放在旗杆旁的右侧是不变小手的
+  var shape={
+      coord: [1,1,1,20,18,20,18 ,1],
+      type:'poly'
+  };
+  var image;
+  
+   var sRender;//搜索
+  function initMarker(){
+	  /*************************************
+     *      MarkerImage 类 示例             *
+     *************************************/
+	 var face = "http://api.go2map.com/maps/images/v2.0/flag.png";
+	 <if condition="$type eq 'show' ">
+	 var face = "{:getUserFace($uid,'s')}";
+	 <elseif condition="$type eq 'set' " />
+	 face = "http://api.go2map.com/maps/images/v2.0/flag.png";
+	 </if>
+    image = new sogou.maps.MarkerImage(face,
+        // 标记图标宽20像素，高32像素
+        new sogou.maps.Size(26, 27),
+        // 原点在图片左上角，设为(0,0)
+        new sogou.maps.Point(0,0),
+        // 锚点在小旗的旗杆脚上，相对图标左上角位置为(0,32)
+        new sogou.maps.Point(13, 13),
+        // 如果是合并的图片，必须设置此项，指定图片大小
+        // 如果是一张图片一个图标，此项可缺省。
+        new sogou.maps.Size(26, 27));
+    /*************************************
+     *  MarkerShape  对象规范 示例         *
+     *************************************/
+	 
+	
+	
+  }
+  function dragMarker(mymarker){
+	 /****************************************
+     *事件 示例 (侦听要放在创建marker对象后)*
+     ****************************************/
+     //当用户停止拖动标记时会触发此事件。
+    /* sogou.maps.event.addListener(mymarker,"dragend",function(mouseEvent){
+            //mouseEvent为MouseEvent对象事，会有point属性，即事件发生位置的地图坐标
+            window.opener.document.getElementById("mapposition").value=mouseEvent.point;
+     });*/
+     //点击标记图标后会触发此事件。
+     sogou.maps.event.addListener(mymarker,"click",function(event){
+            //event是浏览器的event对象
+            var r=confirm("是否将新位置设置为您要的默认位置?");
+            if(r==true){
+            	window.opener.document.getElementById("mapposition").value=getPosition();
+            	window.close();
+            }
+     });
+  }
+  
+  function setpostion(){
+	sogou.maps.event.addListener(map, 'click', function(event) {
+    //获取点击位置的坐标
+		setMap();
+		placeMarker(event.point);
+	});  
+  }
+  function placeMarker(myPoint){
+	 /*************************************
+     *      MarkerOptions 对象规范 示例    *
+     *************************************/
+    var markerOptions={
+        //设置是否在鼠标悬停时显示Label
+        disableLabel:false,
+        //如果为 true，则可拖动标记。默认值为 false。
+        draggable:true,
+        //前景的默认图标 icon和icons使用其中一个即可
+        //如果同时存在，优先使用icons
+        //取值类型 String|MarkerImage|MarkerStyle
+        //可以是一个图片地址，也可以是MarkerImage或者MarkerStyle对象
+        icon:image,
+        //0 前景的默认图标，1 前景鼠标悬停时的图标
+        //icons:[],
+        //Marker的编号标识。
+        id:"ID00001",
+        //设置Label对象的参数。
+        //设置成初始即可见，相对于Marker居下对齐，
+        //align 取值：TOP|RIGHT|BOTTOM|LEFT ，对应标记上、右、下、左的位置。
+        label:{
+			   visible:true,
+			   align:"BOTTOM"
+			  },
+        //显示标记的地图。
+        map: map,
+        //标记位置。必填。
+        position: myPoint,
+        //阴影图像。shadow和shadows使用其中一个即可
+        //如果同时存在，优先使用shadows
+        //取值类型 String|MarkerImage|MarkerStyle
+        //可以是一个图片地址，也可以是MarkerImage或者MarkerStyle对象
+        shadow:0,
+        //0 阴影默认图像，1 阴影鼠标悬停时图像。
+        //shadows:[],
+        //用于拖动/点击的图像地图区域定义。
+        shape:shape,
+        //Label文本或者鼠标悬停时显示的tip。
+        title:"在你的地盘插上你的旗帜，点击确定",
+        //如果为 true，则显示标记。默认为true
+        visible:true,
+        //叠加顺序
+        zIndex:0
+    };
+    marker = new sogou.maps.Marker(markerOptions);
+    
+	
+	<if condition="$type eq 'show' ">
+	setDraggable();
+	<elseif condition="$type eq 'set' " />
+	dragMarker(marker);
+	</if>
+	
+  }
+  function initialize() {
+	var position = '{$mapposition}';
+	var pos=position.split(",");
+	sRender=new sogou.maps.SearchRenderer();//搜索
+	if(position){
+		myPoint = new sogou.maps.Point(pos[0],pos[1]);
+	}else{
+		myPoint = new sogou.maps.Point(13532093,3466187);
+	}
+	var myOptions = {
+      zoom: 14,
+      center: myPoint,
+	  mapTypeId: sogou.maps.MapTypeId.ROADMAP
+    }
+    map = new sogou.maps.Map(document.getElementById("map_canvas"),myOptions);
+	initMarker();
+	placeMarker(myPoint)
+	<if condition="$type eq 'show' ">
+	setTitle('{$name}');
+	markderClick()
+	<elseif condition="$type eq 'set' " />
+	setpostion();
+	</if>
+  }
+   
+  function loadScript() {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.onGo2mapApiLoad=initialize;
+    script.src = "http://api.go2map.com/maps/js/api_v2.0.js";
+    document.body.appendChild(script);
+  }
+  
+  //设置标记可被拖拽。
+  function setDraggable()
+  {
+    marker.setDraggable(false)
+  }
+  function setTitle(str)
+  {
+    marker.setTitle(str)
+  }
+   //在指定地图上渲染标记。如果地图设置为 Null，则会删除此标记。
+	function setMap()
+	{
+		if(marker){
+	  		marker.setMap(null);
+		}
+	}
+	//获取显示所在的Map对象。
+	function getPosition()
+	{
+	  return marker.getPosition();
+	}
+  //点击头像显示内容
+  function markderClick(){
+	  
+	var content = "<?php echo getUserSpace($uid,"userface","_blank","{uavatar=b}") ?>";
+	var infowindow = new sogou.maps.InfoWindow();
+	infowindow.setContent(content);
+	
+	//infowindow.open(map, marker);
+	sogou.maps.event.addListener(marker,"click",function(event){
+			 
+		infowindow.open(map, marker);
+	}); 
+  }
+  // 当前视野搜索
+  
+  function map_search(k){
+	  var search=new sogou.maps.Search();//创建搜索实例
+	 
+	sRender.clearResultFeatures()
+	var request={
+	   'map':map,
+	   'what':{
+	   'keyword':k
+	   },
+	   'range':{
+	   'boundFlag':2   //当前视野搜索
+	   }
+	};
+	search.search(request);
+	
+	search.setRenderer(sRender);
+  }
+  window.onload = loadScript;
+</script>
+</head>
+<body>
+<div id="map_canvas"></div>
+<div  id="search_bar">
+  <div class="search_bar">
+    <input type="text" value="在当前视野内搜索" rel="jsinput" dfvalue="在当前视野内搜索" name="k" id="k" />
+    <input type="button"  value="搜索" onclick="map_search(document.getElementById('k').value);" />
+  </div>
+</div>
+{:Addons::hook('public_footer')}
+</body>
+</html>

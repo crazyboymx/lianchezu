@@ -1,0 +1,69 @@
+<dl style="margin:10px 10px 5px; height:22px" class="clear">
+  <dt class="left alR " style="width:70px;">分类名称：</dt>
+  <dd class="left alL">
+    <input type="text" id="title" value="{$lootc['title']}">
+  </dd>
+</dl>
+<div style="background:#F8F8F8; border-top:1px solid #E6E6E6; padding:5px;" class="alR">
+  <php>if (isset($lootc)) {</php>
+  <input type="button" class="btn_b" onclick="editC()" value="确定" />
+  <php>}else {</php>
+  <input type="button" class="btn_b" onclick="addC()" value="确定" />
+  <php>}</php>
+  <input type="button" class="btn_w" onclick="cancel()" value="取消" />
+</div>
+<script type="text/javascript">
+
+//添加分类
+function addC() {
+	var title = $('#title').val();
+	if(title=='') {
+		ui.error('请输入分类名称');
+		return ;
+	}
+
+	//提交修改
+	$.post("{:U('loot/Admin/doAddC')}", {title:title}, function(res){
+	    if (res == '0') {
+	        ui.error('保存失败');
+        }else {
+            ui.success('添加成功');
+			location.reload();
+			ui.box.close();
+		}
+	});
+}
+
+//编辑地区
+function editC() {
+	var title	= $('#title').val();
+	var id	= "{$lootc['id']}";
+	
+	if(title=='') {
+        ui.error('请输入名称');
+        return ;
+    }
+	
+	//判断名称是否有变化
+	if(title == "{$lootc['title']}") {
+		ui.success('名称无变化，未提交修改');
+		ui.box.close();
+		return false;
+	}
+
+	//判断是否有重名
+	$.post("{:U('loot/Admin/doEditC')}", {id:id, title:title}, function(res){
+		if (res == '0') {
+            ui.error('保存失败');
+        }else {
+        	$('#lootc_title_'+id).html(title);
+            ui.success('保存成功');
+            ui.box.close();
+        }
+	});
+}
+
+function cancel() {
+	ui.box.close();
+}
+</script> 

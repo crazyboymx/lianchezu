@@ -2,13 +2,13 @@
 	<if condition="$config['createGroup']">
       <div class="mod_create">
           <a href="{:U('group/Index/add')}" class="btn_group_c"></a>
-          <h4><a href="{:U('group/SomeOne')}">进入我的群组首页</a></h4>
+          <h4><a href="{:U('group/SomeOne')}">进入我的家族首页</a></h4>
       </div>
     </if>
         <!--微群分类-->
     <php>if(!empty($category_tree)){</php>
     <div class="mod_class clearfix">
-      <h2>群组分类</h2>
+      <h2>家族分类</h2>
       <ul class="rankBlog">
         <volist name="category_tree" id="category_top">
         <li>
@@ -21,9 +21,9 @@
     <!--排行榜-->
     <div class="mod_ranking clearfix">
       <php>if (!empty($hot_group_list)) {</php>
-      <h2>群组排行榜</h2>
+      <h2>家族排行榜</h2>
       <dl class="fans_toplist">
-      <dt><span class="right">成员数</span>群组</dt>
+      <dt><span class="right">成员数</span>家族</dt>
         <volist name="hot_group_list" id="hot_group">
           <php>if($key>2){ $class='no'; }else{ $class='no top'.($key+1); }</php>
           <dd>
@@ -41,7 +41,7 @@
     <php>if (!empty($hot_tags_list)) {</php>
     <!--热门标签-->
     <div class="mod_tag clearfix">
-      <h2>热门群标签</h2>
+      <h2>热门家族标签</h2>
       <ul class="topic_list">
         <volist name="hot_tags_list" id="hot_tag">
           <li><a href="{:U('group/Index/search', array('k'=>urlencode($hot_tag['tag_name'])))}">{$hot_tag['tag_name']}({$hot_tag['count']})</a></li>

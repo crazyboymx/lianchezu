@@ -1,0 +1,25 @@
+﻿#
+# 安装说明.txt
+# 本产品包括3大部分，分别独立：充值系统、积分消耗系统"抢星位"、勋章系统
+#
+
+1. 安全起见, 请备份站点的所有文件和数据库
+2. 安装"抢星位（loot）"将文件上传与apps目录，登陆后安装 并进行相关配置
+3. 安装"充值系统（UserPay）"将文件上传于addons\plugins目录，登陆后安装 并进行相关配置
+   充值系统需要申请ips环讯3.0的key，申请具体请查看 http://main.ips.com.cn/
+4. 安装勋章（Medal）将Medal中的文件上传于addons\plugins\Medal\lib目录中，进入后台勋章管理中进行相应安装，安装提前需要开启勋章设置
+5. 在头部加入用于显示的钩子，显示效果如图 ：入口显示.jpg 并将代码和代码二加入如图：代码一.jpg和代码二.jpg的位置
+   代码一：
+   {:Addons::hook('header_topnav', array('menu' => & $header_topnav))}
+	<volist name="header_topnav" id="vo">
+		<li><a href="{$vo['url']}" class="fb14">{$vo['name']}</a></li>
+	</volist>
+   代码二：
+    {:Addons::hook('header_account_tab', array('menu' => & $header_account_drop_menu))}
+	<volist name="header_account_drop_menu" id="vo">
+            <dd><a href="{$vo['url']}"><span class="ico_pub ico_pub_{$vo['act']}"></span>{$vo['name']}</a></dd>  
+	</volist>
+	该代码ts后续版本将会支持，到时将无需自行修改
+	
+6. 清理缓存
+7. Enjoy

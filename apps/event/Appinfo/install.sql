@@ -80,15 +80,8 @@ CREATE TABLE `ts_event_type` (
 -- ----------------------------
 -- Records of ts_event_type
 -- ----------------------------
-INSERT INTO `ts_event_type` VALUES ('1', '音乐/演出');
-INSERT INTO `ts_event_type` VALUES ('2', '展览');
-INSERT INTO `ts_event_type` VALUES ('3', '电影');
-INSERT INTO `ts_event_type` VALUES ('4', '讲座/沙龙');
-INSERT INTO `ts_event_type` VALUES ('5', '戏剧/曲艺');
-INSERT INTO `ts_event_type` VALUES ('8', '体育');
-INSERT INTO `ts_event_type` VALUES ('9', '旅行');
-INSERT INTO `ts_event_type` VALUES ('10', '公益');
-INSERT INTO `ts_event_type` VALUES ('11', '其它');
+INSERT INTO `ts_event_type` VALUES ('1', '长途');
+INSERT INTO `ts_event_type` VALUES ('2', '短途');
 
 -- ----------------------------
 -- Table structure for ts_event_user
@@ -118,17 +111,17 @@ VALUES
 DELETE FROM `ts_template` WHERE `type` = 'event';
 INSERT INTO `ts_template` (`name`, `alias`, `title`, `body`, `lang`, `type`, `type2`, `is_cache`, `ctime`) 
 VALUES
-    ('event_create_weibo', '发起活动', '','我发起了一个活动：【{title}】{url}', 'zh', 'event', 'weibo', 0, 1290417734),
-    ('event_share_weibo', '分享活动', '', '分享@{author} 的活动:【{title}】 {url}', 'zh',  'event', 'weibo', 0, 1290595552);
+    ('event_create_weibo', '发起自驾游', '','我发起了一个自驾游：【{title}】{url}', 'zh', 'event', 'weibo', 0, 1290417734),
+    ('event_share_weibo', '分享自驾游', '', '分享@{author} 的自驾游:【{title}】 {url}', 'zh',  'event', 'weibo', 0, 1290595552);
 
 # 增加默认积分配置
 DELETE FROM `ts_credit_setting` WHERE `type` = 'event';
 INSERT INTO `ts_credit_setting`
 VALUES
-    ('', 'add_event', '发起活动', 'event', '{action}{sign}了{score}{typecn}', '10', '10'),
-    ('', 'delete_event', '删除活动', 'event', '{action}{sign}了{score}{typecn}', '-10', '-10'),
-    ('', 'join_event', '参加活动', 'event', '{action}{sign}了{score}{typecn}', '3', '2'),
-    ('', 'cancel_join_event', '取消参加活动', 'event', '{action}{sign}了{score}{typecn}', '-3', '-2');
+    ('', 'add_event', '发起自驾游', 'event', '{action}{sign}了{score}{typecn}', '10', '10'),
+    ('', 'delete_event', '删除自驾游', 'event', '{action}{sign}了{score}{typecn}', '-10', '-10'),
+    ('', 'join_event', '参加自驾游', 'event', '{action}{sign}了{score}{typecn}', '3', '2'),
+    ('', 'cancel_join_event', '取消参加自驾游', 'event', '{action}{sign}了{score}{typecn}', '-3', '-2');
 INSERT INTO `ts_system_data` (`uid`,`list`,`key`,`value`,`mtime`) 
 VALUES 
     (0,'event','version_number','s:5:"28172";','2012-02-14 10:00:00');

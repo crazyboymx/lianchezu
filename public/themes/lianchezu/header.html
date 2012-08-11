@@ -138,9 +138,142 @@
       </ul>
     </div>
  </div>
+      <!-- 个人链接栏 -->
+<style type="text/css">
+.info_show .my_btn {
+    background: url("/public/themes/lianchezu/images/nav_user_info_bg_v3.png") no-repeat scroll left center transparent;
+    float: left;
+    height: 46px;
+    padding-left: 7px;
+    margin-left:180px;
+    _margin-left:90px;
+}
+.info_show .my_btn li {
+    float: left;
+    font-weight: bold;
+    height: 35px;
+    line-height: 35px;
+    margin-top: 5px;
+    padding-right: 1px;
+}
+.info_show .my_btn li p {
+    float: left;
+    height: 35px;
+}
+.info_show .my_btn li a {
+    display: inline-block;
+    height: 28px;
+}
+.info_show .mb_avt {
+    float: left;
+    height: 24px;
+    margin: 5px 5px 0 0;
+    width: 24px;
+}
+.info_show .mb_name {
+    color: #FF66A1;
+    font-size: 14px;
+    margin-left: 5px;
+    padding: 0 10px 0 0;
+}
+.info_show .my_btn .split {
+    background: url("/public/themes/lianchezu/images/nav_dongtai_02_v3.png") no-repeat scroll -199px -365px transparent;
+}
+.info_show .my_btn .libg {
+    background: url("/public/themes/lianchezu/images/nav_dongtai_02_v3.png") no-repeat scroll 0 0 transparent;
+    color: #5B5B5B;
+    padding: 1px 9px 4px 30px;
+}
+.info_show .my_btn .libg span {
+    color: #FF66A1;
+}
+.info_show .my_btn_right {
+    background: url("/public/themes/lianchezu/images/nav_user_info_bg_v3.png") no-repeat scroll right center transparent;
+    display: inline;
+    float: left;
+    height: 46px;
+    width: 6px;
+}
+.info_show .my_btn li.active {
+    background: url("/public/themes/lianchezu/images/nav_dongtai_02_v3.png") no-repeat scroll right -415px transparent;
+}
+.info_show .my_btn li.active .split {
+    background: url("/public/themes/lianchezu/images/nav_dongtai_02_v3.png") no-repeat scroll 0 -365px transparent;
+}
+.info_show .my_btn li.active p {
+    background: url("/public/themes/lianchezu/images/nav_dongtai_02_v3.png") no-repeat scroll 0 -415px transparent;
+}
+.info_show .my_btn .dongtai {
+    background-position: -82px 10px;
+}
+.info_show .my_btn .dongtai:hover {
+    background-position: -82px -147px;
+}
+.info_show .my_btn .myfavs {
+    background-position: 12px -17px;
+}
+.info_show .my_btn .myfavs:hover {
+    background-position: 12px -223px;
+}
+.info_show .my_btn .myalbum {
+    background-position: 11px -48px;
+}
+.info_show .my_btn .myalbum:hover {
+    background-position: 10px -188px;
+}
+.info_show .my_btn .group {
+    background-position: -82px -16px;
+}
+.info_show .my_btn .group:hover {
+    background-position: -84px -192px;
+}
+.info_show .mb_bd {
+    height: 46px;
+}
+.info_show .mb_bd:hover .mb_name {
+    text-decoration: underline;
+}
+          .is-card img{width:24px;height:24px;position:relative;top:4px;}
+          .is-card {margin-left:10px;}
+          .is-card-username{color:#fff;position:relative;top:-4px;}
+      </style>
+      <div class="info_show" style="float:left">
+               <ul class="my_btn">
+                    <li id="is-cardc">
+                        <p style="position:relative;top:4px;">
+                        <space uid="mid" class="is-card">{uavatar}</space>
+                        {:getUserSpace($mid,'is-card-username','','',false)}
+<script type="text/javascript">
+$(function(){
+   $("#is-cardc a").removeAttr("rel"); 
+});
+</script>
+                        </p>
+                    </li>
+                    <li>
+                        <p class="split"><a href="{:U('home/Index')}" class="libg dongtai">动态</a></p>
+                    </li> 
+                    
+                    <li>
+                        <p class="split"><a href="javascript:;" class="libg myalbum">专辑</a></p>
+                    </li>
+                    
+                    <li>
+                        <p class="split"><a href="javascript:;" class="libg myfavs">喜欢</a></p>
+                    </li>  
+                    
+                    <li>
+                        <p class="split"><a href="{:U('group/Index/newIndex')}" class="libg group">家族</a></p>
+                    </li> 
+                    
+                    
+                </ul>
+                <i class="my_btn_right"></i>
+            </div>
+            <!-- 链接栏结束 -->
 	<!--个人信息区-->
     <ul class="person">
-		<li>{:getUserSpace($mid,'username nocard lcwusername','','',false)}</li>
+		<li style="display:none;">{:getUserSpace($mid,'username nocard lcwusername','','',false)}</li>
 		<li class="header_dropdown"><a href="{:U('home/message/index')}" class="application">消息<span class="ico_arrow"></span></a>
           <div class="dropmenu">
                 <ul class="message_list_container message_list_new">

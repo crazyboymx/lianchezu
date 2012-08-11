@@ -1,9 +1,9 @@
 <?php
 /**
- * 根据群组Logo的保存路径获取Logo的URL
+ * 根据家族Logo的保存路径获取Logo的URL
  *
- * @param string $save_path 群组Logo的保存路径
- * @return string 群组Logo的URL. 给定路径不存在时, 返回默认的群组Logo的URL地址.
+ * @param string $save_path 家族Logo的保存路径
+ * @return string 家族Logo的URL. 给定路径不存在时, 返回默认的家族Logo的URL地址.
  */
 function logo_path_to_url($save_path)
 {
@@ -15,10 +15,10 @@ function logo_path_to_url($save_path)
 }
 
 /**
- * 根据群组ID获取群组详情页的URL
+ * 根据家族ID获取家族详情页的URL
  *
- * @param int $group_id 群组ID
- * @return string 群组详情页的URL
+ * @param int $group_id 家族ID
+ * @return string 家族详情页的URL
  */
 function group_id_to_url($group_id)
 {
@@ -84,7 +84,7 @@ function render_in($arr,$key,$array=0) {
 	return $in_str;
 }
 
-//获取群组信息
+//获取家族信息
 function getgroupinfo($id,$field) {
 	$data = D('Group')->find($id);
 	if(empty($data)) return '';
@@ -151,7 +151,7 @@ function getApplyCount($gid){
 }
 
 
-//获取群组分类
+//获取家族分类
 function getCategorySelect($pid=0) {
 	return json_encode(D('Category')->_makeTree($pid));
 }
@@ -242,7 +242,7 @@ function redContent($string, $words, $color = 'red', $strlen = 0)
 
 
 
-//去掉群组名称
+//去掉家族名称
 function stripGroupName($title,$appid=0){
 	//在 ggg 中
 	$pattern = "/在?\s(.*?)\s+\中?(.*?)/i";
@@ -290,16 +290,16 @@ function replaceSpecialChar($code){
 
 function getSiteTitle(){
 	return array(
-		'my_group'=>'所在群组的最新动态-我的群组-',
-		'my_group_new_topic' => '最新话题-我的群组-',
-		'my_friend_group' => '好友的群组-',
-		'all_group' => '发现群组-',
+		'my_group'=>'所在家族的最新动态-我的家族-',
+		'my_group_new_topic' => '最新话题-我的家族-',
+		'my_friend_group' => '好友的家族-',
+		'all_group' => '发现家族-',
 		'newTopic_all' => '所有话题-最新话题-',
 		'newTopic_my_post' => '最新话题-我发表的话题-',
 		'newTopic_my_reply' => '我回复的话题-最新话题-',
 		'newTopic_my_collect' => '我收藏的话题-最新话题-',
 		'issue_topic' => '发布话题-',
-		'create_group' => '创建群组-',
+		'create_group' => '创建家族-',
 		'add_topic' => '发表话题',
 		'search_topic' => '搜索话题',
 		'dist_topic'  =>'精华话题',

@@ -1,0 +1,34 @@
+插件：用户自定义皮肤 
+版本：1.0
+作者：ALAN QQ:8510001
+网址：http://www.fakesay.com
+更新请关注官网
+－－－－－－－－－－－－－－－－－－－－－开始安装－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+第一步：解压目录：addons\plugins
+
+第二步：在风格中加入：第一处： public/themes/你的风格包/apps.html 
+
+                           //  你需要显示的位置
+                            {:Addons::hook('Change_Style_show')}  
+      
+                            {:Addons::hook('config_changestyle')}  
+          
+                  第二处： public/themes/你的风格包/header.html
+ 
+                           // <head>加在这个中间</head>
+
+                           {:Addons::hook('Change_Style_your',array('uid'=>$uid))}
+第三步：后台开启搞定了。
+
+－－－－－－－－－－－－－－－－－－－－－结束安装－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+
+关于风格修改：ChangeStyle／HTML中默认3个风格。照葫芦画瓢吧。。
+
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+通知：2.0的时候。会加入后台管理。支持TS吧。。
+
+
+
+广告：本人提供各种TS二次开发服务。有需要的Q：8510001 注明：TS开发 。。
+
+演示网址：www.fakesay.com

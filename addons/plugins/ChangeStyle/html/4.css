@@ -15,11 +15,11 @@
 .page_home,.body_bg{background: url(4/body_bg.png) no-repeat top center #FFD3DD}
 .content{background:url(4/content_bg.png)}
 /*---导航菜单样式---*/
-.header_holder,.header_bg{z-index:9999999;width:100%;min-width:1000px;background:url(4/head_bg.png) repeat-x 0 0 transparent;left:0;top:0;-moz-opacity:1;opacity:1}
-.header_holder0{z-index:9999999;width:100%;min-width:1000px;background:url(0/head_bg.png) repeat-x 0 0 transparent;left:0;top:0;-moz-opacity:1;opacity:1}
-.header_holder1{z-index:9999999;width:100%;min-width:1000px;background:url(1/head_bg.png) repeat-x 0 0 transparent;left:0;top:0}
-.header_holder2{z-index:9999999;width:100%;min-width:1000px;background:url(2/head_bg.png) repeat-x 0 0 transparent;left:0;top:0}
-.header_holder3{z-index:9999999;width:100%;min-width:1000px;background:url(3/head_bg.png) repeat-x 0 0 transparent;left:0;top:0}
+.header_holder,.header_bg{z-index:9999;width:100%;min-width:1000px;background:url(4/head_bg.png) repeat-x 0 0 transparent;left:0;top:0;-moz-opacity:1;opacity:1}
+.header_holder0{z-index:9999;width:100%;min-width:1000px;background:url(0/head_bg.png) repeat-x 0 0 transparent;left:0;top:0;-moz-opacity:1;opacity:1}
+.header_holder1{z-index:9999;width:100%;min-width:1000px;background:url(1/head_bg.png) repeat-x 0 0 transparent;left:0;top:0}
+.header_holder2{z-index:9999;width:100%;min-width:1000px;background:url(2/head_bg.png) repeat-x 0 0 transparent;left:0;top:0}
+.header_holder3{z-index:9999;width:100%;min-width:1000px;background:url(3/head_bg.png) repeat-x 0 0 transparent;left:0;top:0}
 .header .nav ul li.hover .dropmenu,.header .person li.hover .dropmenu{background-color: #fff;border: 1px solid #d48182;border-top:none 0}
 .header .nav ul li.hover .dropmenu a:hover,.header .person li.hover .dropmenu a:hover{background-color: #FADFE0;text-decoration: none;display:block}
 .header .nav ul li.hover .dropmenu .app_list dd a:hover {background-color:#FADFE0}

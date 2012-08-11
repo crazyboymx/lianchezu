@@ -1,0 +1,161 @@
+<include file="__THEME__/header" />
+<script>
+//关注操作
+function adduserfollow(type,uid){
+	var html = '';
+	var uid=uid;
+	$("#follow_"+uid).html( '<img src="'+ _THEME_+'/images/icon_waiting.gif" width="15">' );
+	$.post( U('weibo/Operate/follow') ,{uid:uid,type:type},function(txt){
+		if(txt=='12' || txt=='13' || txt=='11'){
+			html = '<a style="position:relative;z-index:3" onclick="adduserfollow(\'\','+uid+')"  class="btnFgray"><span>取消关注</span></a>';
+		}else if(txt=='00'){
+			ui.error('对方不允许你关注');
+		}else{
+			html = '<a style="position:relative;z-index:3"  onclick="adduserfollow(\'dofollow\','+uid+')" class="btnF"> <span><img height="9" width="9" src="../Public/images/img_add0.gif">关注</span> </a>';
+		}
+		$("#follow_"+uid).html( html );
+	});
+}
+
+//userloot操作
+function userloot(cid,num){
+	$.post( U('loot/Index/userloot') ,{cid:cid,num:num},function(txt){
+		if(txt=='05'){
+			ui.box.load( U('loot/Index/userscore')+'&cid='+cid+'&num='+num,{title:'积分不足'});
+		}else if(txt=='01'){
+			ui.error('您已经占过其他座位了，要给其他用户留机会哦！');
+		}else if(txt=='02'){
+			ui.error('位置已经满了，下次您要更快一点哦！');
+		}else if(txt=='03'){
+			ui.success('恭喜您，抢占成功！');
+			location.replace( U('loot/Index/index')+'&cid={$k_cid}');
+		}else{
+			ui.error('操作失败');
+		}
+	});
+}
+</script>
+<link href="../Public/css/recommen.css" rel="stylesheet" type="text/css">
+<div class="recommendWrap">
+  <div class="hd"></div>
+  <div class="bd">
+    <div class="recommendSort">
+      <div class="sortNav">
+        <div class="hd"></div>
+        <div class="bd">
+          <h3>分类</h3>
+          <ul>
+            <volist name="lootc" id="vo"> <li 
+              
+              
+              <eq name='k_cid' value='$vo.id'>class="current"</eq>
+              ><a href="{:U('loot/Index/index' ,array('cid'=> $vo['id']))}" title="{$vo.title}" >{$vo.title}</a>
+              </li>
+            </volist>
+          </ul>
+        </div>
+        <div class="ft"></div>
+      </div>
+      <div class="btnRecommend">
+        <p>消耗<span style="color:#F00;font-style:italic;">{$loot_inc_s['jifeng']}</span>积分</p>
+        <p>换取<span style="color:#F00;font-style:italic;">{$loot_inc_s['lootdays']}天</span>展示</p>
+      </div>
+    </div>
+    <!-- recommendSort end -->
+    <div class="recommendShow">
+      <div id="col1" class="col lft">
+        <volist name='list' id='vo' >
+          <php>if($vo['num']==1 or $vo['num']%3==1){</php>
+          <div class="mod" id="mod_{$vo['num']}">
+            <div class="hd"></div>
+            <eq name="vo['is']" value="yes">
+              <div class="nobd"> <span>
+                <php>if($vo['num']<10) echo '0'.$vo['num'];else echo $vo['num'];</php>
+                </span> <a href="javascript:void(0);" onClick="userloot('{$k_cid}','{$vo['num']}')">立刻抢走它</a>
+                <div class="btm"></div>
+              </div>
+              <else />
+              <div class="bd">
+                <div class="headPic"> <a target="_blank" rel='face' uid='{$vo.uid}' class='userface' href="{:U('home/Space/index',array('uid'=>$vo['uid']))}" > <span class="mask"></span> <img width="60" height="60" src="{$vo.uid|getUserFace='b'}" ></a> </div>
+                <h3><a target="_blank" href="{:U('home/Space/index',array('uid'=>$vo['uid']))}">{$vo.uid|getUserName}</a><span class="z_ico_likeMk">{$mid|getFollower}</span> </h3>
+                <php>$data=getUsermini($vo['uid']);</php>
+                <p>{$data['content']|getShort=###,140,'...'|format=true}({$data['ctime']|friendlyDate='mohu'})</p>
+                <p id="follow_{$vo['uid']}">
+                  <php>if( $mid > 0 && $mid != $vo['uid']){</php>
+                  <eq name="vo['fow_status']" value="1"> <a style="position:relative;z-index:3" href="javascript:void(0);"  onclick="adduserfollow('dofollow','{$vo.uid}')" class="btnF"> <span><img height="9" width="9" src="../Public/images/img_add0.gif">关注</span> </a>
+                    <else />
+                    <a style="position:relative;z-index:3" onclick="adduserfollow(\'\','{$vo.uid}')"  class="btnFgray"><span>取消关注</span></a> </eq>
+                  <php>}</php>
+                </p>
+                <div class="btm"></div>
+              </div>
+            </eq>
+          </div>
+          <php>}</php>
+        </volist>
+      </div>
+      <div id="col2" class="col">
+        <volist name='list' id='vo' >
+          <php>if($vo['num']==2 or $vo['num']%3==2){</php>
+          <div class="mod" id="mod_{$vo['num']}">
+            <div class="hd"></div>
+            <eq name="vo['is']" value="yes">
+              <div class="nobd"> <span>
+                <php>if($vo['num']<10) echo '0'.$vo['num'];else echo $vo['num'];</php>
+                </span> <a href="javascript:void(0);" onClick="userloot('{$k_cid}','{$vo['num']}')">立刻抢走它</a>
+                <div class="btm"></div>
+              </div>
+              <else />
+              <div class="bd">
+                <div class="headPic"> <a target="_blank" rel='face' uid='{$vo.uid}' class='userface' href="{:U('home/Space/index',array('uid'=>$vo['uid']))}" > <span class="mask"></span> <img width="60" height="60" src="{$vo.uid|getUserFace='b'}" ></a> </div>
+                <h3><a target="_blank" href="{:U('home/Space/index',array('uid'=>$vo['uid']))}">{$vo.uid|getUserName}</a><span class="z_ico_likeMk">{$mid|getFollower}</span> </h3>
+                <php>$data=getUsermini($vo['uid']);</php>
+                <p>{$data['content']|getShort=###,140,'...'|format=true}({$data['ctime']|friendlyDate='mohu'})</p>
+                <p id="follow_{$vo['uid']}">
+                  <php>if( $mid > 0 && $mid != $vo['uid']){</php>
+                  <a style="position:relative;z-index:3" href="javascript:void(0);"  onclick="adduserfollow('dofollow','{$vo.uid}')" class="btnF"> <span><img height="9" width="9" src="../Public/images/img_add0.gif">关注</span> </a>
+                  <php>}</php>
+                </p>
+                <div class="btm"></div>
+              </div>
+            </eq>
+          </div>
+          <php>}</php>
+        </volist>
+      </div>
+      <div id="col3" class="col">
+        <volist name='list' id='vo' >
+          <php>if($vo['num']==3 or $vo['num']%3==0){</php>
+          <div class="mod" id="mod_{$vo['num']}">
+            <div class="hd"></div>
+            <eq name="vo['is']" value="yes">
+              <div class="nobd"> <span>
+                <php>if($vo['num']<10) echo '0'.$vo['num'];else echo $vo['num'];</php>
+                </span> <a href="javascript:void(0);" onClick="userloot('{$k_cid}','{$vo['num']}')">立刻抢走它</a>
+                <div class="btm"></div>
+              </div>
+              <else />
+              <div class="bd">
+                <div class="headPic"> <a target="_blank" rel='face' uid='{$vo.uid}' class='userface' href="{:U('home/Space/index',array('uid'=>$vo['uid']))}" > <span class="mask"></span> <img width="60" height="60" src="{$vo.uid|getUserFace='b'}" ></a> </div>
+                <h3><a target="_blank" href="{:U('home/Space/index',array('uid'=>$vo['uid']))}">{$vo.uid|getUserName}</a><span class="z_ico_likeMk">{$mid|getFollower}</span> </h3>
+                <php>$data=getUsermini($vo['uid']);</php>
+                <p>{$data['content']|getShort=###,140,'...'|format=true}({$data['ctime']|friendlyDate='mohu'})</p>
+                <p id="follow_{$vo['uid']}">
+                  <php>if( $mid > 0 && $mid != $vo['uid']){</php>
+                  <a style="position:relative;z-index:3" href="javascript:void(0);"  onclick="adduserfollow('dofollow','{$vo.uid}')" class="btnF"> <span><img height="9" width="9" src="../Public/images/img_add0.gif">关注</span> </a>
+                  <php>}</php>
+                </p>
+                <div class="btm"></div>
+              </div>
+            </eq>
+          </div>
+          <php>}</php>
+        </volist>
+      </div>
+    </div>
+    <!-- recommendShow end --> 
+  </div>
+  <div class="ft"></div>
+</div>
+<!-- moreRecommend end --> 
+{:Addons::hook('weibo_js_plugin')} <include file="__THEME__/footer" /> 

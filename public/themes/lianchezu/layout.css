@@ -3,7 +3,7 @@
  * yanghengfeng
  */
  /*TS两栏切换三栏头部样式加载*/
-.logo_holder{width:760px;height:37px;float:left}
+.logo_holder{width:160px;height:37px;float:left}
 .logo_holder .nav{float:left}
  /*TS两栏切换三栏头部样式加载 End*/
 .no_l{margin-left:0;_width:auto} /*为去左边的200PX加的样式*/

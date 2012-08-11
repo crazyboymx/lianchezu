@@ -1,0 +1,155 @@
+<include file="_header" />
+<script>
+    //鼠标移动表格效果
+    $(document).ready(function(){
+        $("tr[overstyle='on']").hover(
+          function () {
+            $(this).addClass("bg_hover");
+          },
+          function () {
+            $(this).removeClass("bg_hover");
+          }
+        );
+    });
+    
+    function checkon(o){
+        if( o.checked == true ){
+            $(o).parents('tr').addClass('bg_on') ;
+        }else{
+            $(o).parents('tr').removeClass('bg_on') ;
+        }
+    }
+    
+    function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','true');
+            $('tr[overstyle="on"]').addClass("bg_on");
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+            $('tr[overstyle="on"]').removeClass("bg_on");
+        }
+    }
+
+    //获取已选择用户的ID数组
+    function getChecked() {
+        var gids = new Array();
+        $.each($('input:checked'), function(i, n){
+            gids.push( $(n).val() );
+        });
+        return gids;
+    }
+
+    //添加分类
+    function add() {
+        ui.box.load("{:U('loot/Admin/addC')}", {title:'添加分类'});
+    }
+    
+    //编辑分类
+    function edit(id) {
+        ui.box.load("{:U('loot/Admin/editC')}&id="+id, {title:'编辑分类'});
+    }
+    
+    //删除分类
+    function del(aid) {
+        aid = aid ? aid : getChecked();
+        aid = aid.toString();
+        if(aid == '') return false;
+
+        //提交删除
+        $.post("{:U('loot/Admin/doDeleteC')}", {ids:aid}, function(res){
+	        if(res == '1') {
+		        aid = aid.split(',');
+		        $.each(aid, function(i,n){
+		            $('#'+n).remove();
+		        });
+	            ui.success('删除成功');
+	        }else {
+	        	ui.success('删除失败');
+	        }
+        });
+        
+        
+    }
+	function setStatus(id, status) {    
+		$.post("{:U('loot/Admin/doSetStatus')}",{id:id,status:status},function(res){
+			if(res=='1') {
+				ui.success('保存成功');
+				
+				var statusArray = new Array("关闭","开启");
+				$('#status_'+id).html(statusArray[status]);
+				statusArray[status] = '';
+				var html = '';
+				for (s in statusArray) {
+					if(statusArray[s]=='') continue;
+					html += '<a href="javascript:void(0);" onclick="setStatus('+id+','+s+')">设为'+statusArray[s]+'</a> ';
+				}
+				$('#setStatus_'+id).html(html);
+			}else {
+				ui.error('保存失败');
+			}
+		});
+	}
+
+	function move(id, direction) {
+		var baseid  = direction == 'up' ? $('#'+id).prev().attr('id') : $('#'+id).next().attr('id');
+		if(!baseid) {
+			direction == 'up' ? ui.error('已经是最前面了') : ui.error('已经是最后面了');
+		}else {
+			$.post("{:U('loot/Admin/doOrder')}", {id:id, baseid:baseid}, function(res){
+				if(res == '1') {
+					//交换位置
+					direction == 'up' ? $('#'+id).insertBefore('#'+baseid) : $("#"+id).insertAfter('#'+baseid);
+					ui.success('保存成功');
+				}else {
+					ui.error('保存失败');
+				}
+			});
+		}
+	}
+</script>
+
+<div class="so_main"> <include file="_tab" />
+  <div class="Toolbar_inbox"> <a href="javascript:void(0);" class="btn_a" onclick="add();"><span>添加分类</span></a> <a href="javascript:void(0);" class="btn_a" onclick="del();"><span>删除分类</span></a>
+    <div class="page right">{$lootc['html']}</div>
+  </div>
+  <div class="list">
+    <table id="list" width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th style="width:30px;"> <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+          <label for="checkbox"></label>
+        </th>
+        <th class="line_l">ID</th>
+        <th class="line_l">名称</th>
+        <th class="line_l">空位剩余</th>
+        <th class="line_l">状态</th>
+        <th class="line_l">状态设置</th>
+        <th class="line_l">排序设置</th>
+        <th class="line_l">操作</th>
+      </tr>
+      <php>if(empty($lootc['data'])) {</php>
+      <tr>
+        <td>暂无分类</td>
+      </tr>
+      <php>}</php>
+      <php>$status_alias = array('0'=>'关闭','1'=>'开启');</php>
+      <volist id="vo" name="lootc['data']">
+        <tr overstyle='on' id="{$vo.id}">
+          <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+          <td>{$vo.id}</td>
+          <td id="lootc_title_{$vo.id}">{$vo.title}</td>
+          <td>{$vo.id|getLoots}个</td>
+          <td id="status_{$vo['id']}">{$status_alias[$vo['status']]}</td>
+          <td id="setStatus_{$vo['id']}"><volist name="status_alias" id="s">
+              <php>if($key==$vo['status']) continue;</php>
+              <a href="javascript:void(0);" onclick="setStatus('{$vo['id']}','{$key}')">设为{$s}</a> </volist></td>
+          <td><a href="javascript:void(0)" class="ico_top" onclick="move('{$vo['id']}','up');"><img src="__PUBLIC__/admin/images/zw_img.gif"></a>&nbsp;&nbsp; <a href="javascript:void(0)" class="ico_btm" onclick="move('{$vo['id']}','down');"><img src="__PUBLIC__/admin/images/zw_img.gif"></a></td>
+          <td><a href="javascript:void(0);" onclick="edit({$vo['id']});">编辑</a> <a href="javascript:void(0);" onclick="del({$vo['id']});">删除</a></td>
+        </tr>
+      </volist>
+    </table>
+  </div>
+  <div class="Toolbar_inbox"> <a href="javascript:void(0);" class="btn_a" onclick="add();"><span>添加分类</span></a> <a href="javascript:void(0);" class="btn_a" onclick="del();"><span>删除分类</span></a>
+    <div class="page right">{$lootc['html']}</div>
+  </div>
+</div>
+<include file="_footer" />

@@ -1,5 +1,5 @@
 <?php
-//某人的群组
+//某人的家族
 class SomeOneAction extends BaseAction {
 
 	public function _initialize() {
@@ -8,7 +8,7 @@ class SomeOneAction extends BaseAction {
 		/*
 		 * 右侧信息
 		 */
-    	// 加入的群组的数量
+    	// 加入的家族的数量
     	$join_group_count = D('Member')->where('(level>1 AND status=1)  AND uid=' . $this->mid)->count();
     	$this->assign('join_group_count', $join_group_count);
 
@@ -16,7 +16,7 @@ class SomeOneAction extends BaseAction {
     	$hot_tags_list = D('GroupTag')->getHotTags();
     	$this->assign('hot_tags_list', $hot_tags_list);
 
-    	// 群组热门排行
+    	// 家族热门排行
     	$hot_group_list = D('Group')->getHotList();
     	$this->assign('hot_group_list', $hot_group_list);
 	}
@@ -27,11 +27,11 @@ class SomeOneAction extends BaseAction {
 		switch ($type) {
 			case 'join': // 我管理的
 				$group_list = D('Group')->myjoingroup($this->uid, 1);
-        		$this->setTitle("我加入的群组");
+        		$this->setTitle("我加入的家族");
 				break;
 			case 'manage': // 我加入的
 				$group_list = D('Group')->mymanagegroup($this->uid, 1);
-        		$this->setTitle("我管理的群组");
+        		$this->setTitle("我管理的家族");
 				break;
 			case 'following': // 我关注的人的
 				$db_prefix  = C('DB_PREFIX');
@@ -39,11 +39,11 @@ class SomeOneAction extends BaseAction {
     							->table("{$db_prefix}group AS g LEFT JOIN {$db_prefix}weibo_follow AS f ON f.uid={$this->uid} AND g.uid=f.fid")
     							->where('g.status=1 AND g.is_del=0 AND f.fid<>\'\'')
     							->findPage();
-        		$this->setTitle("我关注的人的群组");
+        		$this->setTitle("我关注的人的家族");
 				break;
 			default:
 				$group_list = D('Group')->getAllMyGroup($this->uid, 1);
-        		$this->setTitle("我的群组");
+        		$this->setTitle("我的家族");
 		}
 
 		$this->assign('current_uname', ($this->mid == $this->uid) ? '我' : getUserName($this->uid));

@@ -1,0 +1,48 @@
+<div class="layerBox">
+  <dl class="pop_Set_group">
+    <dt style="font-size:18px;">
+      <form action="{$data['form_url']}" method="post" id="from1">
+        <input type="hidden"name="Mer_code" value="{$data['Mer_code']}">
+        <input type="hidden"name="Billno" value="{$data['billno']}">
+        <input type="hidden"name="Amount" value="{$data['Amount']}" >
+        <input type="hidden"name="Date" value="{$data['date']}">
+        <input type="hidden"name="Currency_Type" value="{$data['Currency_Type']}">
+        <input type="hidden"name="Gateway_Type" value="{$data['Gateway_Type']}">
+        <input type="hidden"name="Lang" value="{$data['Gateway_Type']}">
+        <input type="hidden"name="Merchanturl" value="{$data['Merchanturl']}">
+        <input type="hidden"name="FailUrl" value="{$data['FailUrl']}">
+        <input type="hidden"name="ErrorUrl" value="{$data['ErrorUrl']}">
+        <input type="hidden"name="Attach" value="{$data['attach']}">
+        <input type="hidden"name="DispAmount" value="{$data['DispAmount']}">
+        <input type="hidden"name="OrderEncodeType" value="{$data['OrderEncodeType']}">
+        <input type="hidden"name="RetEncodeType" value="{$data['RetEncodeType']}">
+        <input type="hidden"name="Rettype" value="{$data['Rettype']}">
+        <input type="hidden"name="ServerUrl" value="{$data['ServerUrl']}">
+        <input type="hidden"name="SignMD5" value="{$data['SignMD5']}">
+        <eq name="data['gateway']" value="1">
+          <input type="hidden" name="DoCredit" value=1 >
+          <input type="hidden" name="Bankco" value=00077 >
+        </eq>
+        <eq name="data['gateway']" value="2">
+          <input type="hidden" name="DoCredit" value=1 >
+          <input type="hidden" name="Bankco" value=10016 >
+        </eq>
+        <eq name="data['gateway']" value="3">
+          <input type="hidden" name="DoCredit" value=1 >
+          <input type="hidden" name="Bankco" value=10018 >
+        </eq>
+      </form>
+      <div>
+        <H2 style="font-size:18px; color:#F00">请确认你的充值信息</H2>
+        <P>充值订单号：{$data['billno']}</P>
+        <P>充值方式：{$data['Gateway']}</P>
+        <P>充值金额：{$data['amount']}元</P>
+        <P>获得积分：{$data['amount']*$UserPay['scale']}</P>
+      </div>
+    </dt>
+  </dl>
+  <div class="mt_btn">
+    <input type="button" onclick="document.forms[0].submit();" class="btn_b" value="确定">
+    <input type="button" onclick="ui.box.close()" class="btn_w" value="取消">
+  </div>
+</div>

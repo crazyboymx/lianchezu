@@ -27,7 +27,7 @@
             <form action="{:U('home/Public/doAjaxLogin')}" method="post" name="ajaxLoginForm">
             	<div class="box_quike_login">
                 	<dl class="list_login">
-                    <!--<dt><label>&nbsp;</label><div class="line_tips" id="login_tips">请输入帐号和密码</div></dt>-->
+                    <dt id="ltipc" style="display:none;"><label>&nbsp;</label><div class="line_tips" id="login_tips">&nbsp;</div></dt>
                     <dd><label>帐号:</label><div class="options_login"><input name="email" type="text" class="text_Pop" title="登录帐号" style="width:188px"/></div></dd>
                     <dd><label>密码:</label><div class="options_login"><input name="pwd" type="password" class="text_Pop" title="登录密码" style="width:188px"/></div></dd>
 					<php> $login_verify_on = in_array('login',$ts['site']['site_verify']); </php>
@@ -38,7 +38,7 @@
 					</eq>
                     </dd>
                     <dd><label></label><div class="options_login"><span><input name="remember" type="checkbox" value="1" class="ck" />记住登录状态 | <a target="_blank" href="{:U('home/Public/sendPassword')}">忘记密码?</a></span></div></dd>
-                    <dd><label>&nbsp;</label><input onclick="javascript:ajaxLogin();" type="button" name="button" id="button" value="登录" class="btn_b" /></dd>
+                    <dd><label>&nbsp;</label><input onclick="javascript:;" id="btnajaxlogin" type="button" name="button" id="button" value="登录" class="btn_b" /></dd>
                     </dl>
                 </div>
              </form>
@@ -59,19 +59,28 @@ function ajaxLogin(){
 	var password = document.ajaxLoginForm.pwd.value;
 	var verify = document.ajaxLoginForm.verify.value;
 	var remember = document.ajaxLoginForm.remember.checked;
+    $("#ltipc").hide();
 	$.post( '{:U('home/Public/doAjaxLogin')}',{email:email,password:password,remember:remember,verify:verify},function(txt){
-		json = eval('('+txt+')');
+		var json = eval('('+txt+')');
 		//登录成功
 		if(json.status==1){
 			//window.location.reload();
 			window.location.href='{:U('home/User/index')}';
 		}else{
+            if(json.message=="获取用户信息失败"){    //    获取用户信息失败 实际上登录成功
+                window.location.reload();
+                return ;
+            }
+            $("#ltipc").show();
 			$('#login_tips').html(json.message);
 			//alert(json.status +'-'+json.message );
 		}
 	});
 	return false;
 }
+$(function(){
+    $("#btnajaxlogin")[0].onclick = ajaxLogin;
+});
 </script>
 </body>
 </html>

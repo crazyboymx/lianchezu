@@ -19,43 +19,43 @@ $(document).ready(function(){
       <div class="mainbox_appC">
   <div class=page_title> <!-- page_title begin -->
     	<h2><span class="right fn f12px">
-        <a href="javascript:history.go(-1)">&lt;&lt;返回上一页</a></span>创建新的群</h2>
+        <a href="javascript:history.go(-1)">&lt;&lt;返回上一页</a></span>创建新的家族</h2>
 </div><!-- page_title end -->
   <!-- 切换标签 end  -->
   <div class="groupBox">
   <form name="addform" action="{:U('//doAdd')}" method="post" onsubmit="javascript:return group_info.check_form(this);" enctype="multipart/form-data">
     <ul class="add_group">
           <li>
-          	<div class="c1">群名称：<span class="cRed pr5">*</span></div>
+          	<div class="c1">家族名称：<span class="cRed pr5">*</span></div>
             <div class="c2">
               <input type="text" name="name" value="{$search_key}" class="text" style="width: 73%;" onblur="this.className='text';group_info.text_length(this,10);" onfocus="this.className='text2'" />
               <span id="group_name_tips" class="cRed pr5"></span>
             </div>
        	  </li>
           <li>
-          	<div class="c1">群分类：<span class="cRed pr5">*</span></div>
+          	<div class="c1">家族分类：<span class="cRed pr5">*</span></div>
             <div class="c2" id="pid"></div>
        	  </li>
           <li>
-          	<div class="c1">群头像：&nbsp;&nbsp;&nbsp;</div>
+          	<div class="c1">家族头像：&nbsp;&nbsp;&nbsp;</div>
             <div class="c2"><input type="file"  name="logo" />
             </div>
        	  </li>
           <li>
-          	<div class="c1">群简介：&nbsp;&nbsp;&nbsp;</div>
+          	<div class="c1">家族简介：&nbsp;&nbsp;&nbsp;</div>
             <div class="c2">
               <textarea rows="6" style="padding: 8px; width: 70%;" class="text" onblur="this.className='text';group_info.text_length(this,60);" onfocus="this.className='text2'" name="intro"></textarea>
               <span id="group_intro_tips" class="cRed pr5"></span>
             </div>
        	  </li>
           <li>
-          	<div class="c1">群标签：<span class="cRed pr5">*</span></div>
+          	<div class="c1">家族标签：<span class="cRed pr5">*</span></div>
             <div class="c2">
 				<div><input name="tags" type="text" class="text" style="width:73%" /> <span id="tags_change" class="cRed pr5"></span><br />
             	<if condition="$reTags">热门推荐：
             	  <volist name="reTags" id="tag"><a href="javascript:;" onclick="group_info.add_tag(this)" title="添加标签">{$tag}</a>&nbsp;&nbsp;</volist>
             	</if></div>
-                <div class="cGray2">最多设置5个，多个标签之间用英文逗号做间隔。设置标签可以让你的微群更容易被其他用户找到</div>
+                <div class="cGray2">最多设置5个，多个标签之间用英文逗号做间隔。设置标签可以让你的家族更容易被其他用户找到</div>
             </div>
        	  </li>
           <li>

@@ -1,0 +1,45 @@
+
+<div class="btop">
+<div class="user_app2"><!-- 用户组件列表 begin -->
+	<div class="user_app_top"></div>
+    <div class="user_app_box">
+  <div class="userinfo">
+    	<div class="userpic" onmouseover="this.className='userpic over'" onmouseout="this.className='userpic'" ><span id="my_face"><space uid="mid">{uavatar=b}</space></span>
+		<a class="pic" href="{:U('home/account/index')}#face">上传头像</a>
+		</div>
+  		<div class="user_name">
+        	<h2>{$mid|getUserName}{$mid|getUserVerifiedIcon}{$mid|getUserGroupIcon}</h2>
+            <php>
+            	$user_credit = X('Credit')->getUserCredit($mid);
+            	foreach($user_credit as $k => $v) {
+            </php>
+           		<p>{$v['alias']}：<a href="{:U('home/Account/credit')}"><span class="cRed">{$v['credit']}</span></a></p>
+            <php>
+                }
+                unset($user_credit);
+            </php>
+        </div>
+  </div>
+  
+  <!--关注-->
+  <div class="user_follow app_line clear">
+  	<php>$followInfo = getUserFollow($mid)</php>
+  	<span class="lineR"><a href="{:U('home/space/follow',array('type'=>'following', 'uid'=>$mid))}"><strong>{$followInfo['following']}</strong><br />关注</a></span>
+    <span class="lineR"><a href="{:U('home/space/follow',array('type'=>'follower', 'uid'=>$mid))}"><strong>{$followInfo['follower']}</strong><br />粉丝</a></span>
+    <span><a href="{:U('home/space/index',array('uid'=>$uid))}"><strong id="miniblog_count">{$uid|getBcuidCount}</strong><br />图格</a></span>
+  </div>
+  <!--关注 end-->
+
+	
+   
+    
+    
+    
+    </div>
+   
+    
+
+  
+	</div>
+	</div>
+	<!-- 用户组件列表 end -->

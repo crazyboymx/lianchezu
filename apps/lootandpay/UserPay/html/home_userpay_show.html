@@ -1,0 +1,123 @@
+<style>
+ table { border: 0px solid #FFFFFF; }
+ td { background: #F3F8FA; }
+ th { background: #C4D9E2; height: 25px; color: #6666CC; text-align: center; }
+ td { padding: 5px; border-top: 1px solid #009CAD; }
+p {
+	line-height:24px;
+}
+input {
+	vertical-align:-2px
+}
+;
+.btn_b, .btn_w, .btn_big, .btn_big:hover, .btn_big_disable, .btn_big_after, .add_atn, .btn_relation, .btn_relation2, .add_atn_small, .btn_relation_small, .btn_relation span, .btn_relation2 span, btn_b_disable, .btn_green, .btn_green_w121, .btn_reg, .btn_b_disable, .btn_upload_file, .btn_group, .btn_search_big, .btn_group, .btn_download, .N_but {
+	background: url({:SITE_URL}/addons/plugins/UserPay/html/btn.gif) no-repeat 0 0;
+	;
+	display: inline-block
+}
+.btn_b, a.btn_b, a.btn_b:hover, a.btn_b:visited, .btn_b:hover {
+	font-size: 12px;
+	height: 27px;
+	width:60px;
+	border:0 none;
+	line-height: 27px;
+	line-height:27px\0;
+	text-align:center;
+	padding:0;
+	text-decoration:none;
+	color:#fff;
+	cursor:pointer;
+	vertical-align:middle;
+*line-height:27px
+}
+</style>
+<script type="text/javascript">
+	var scale= "{$UserPay['scale']}";
+	function on_pay_amount_blur(obj){
+		if(parseInt(obj.value) < 5 || obj.value==''){
+			ui.error("充值金额必须大于5");
+			obj.value = 5;
+		}
+		
+		var v = parseInt(obj.value);
+ 
+		obj.value = ( isNaN(v) ? 0 : v );
+		on_rate_change();
+	}
+	
+	function on_rate_change(){
+		var money = parseInt($('#pay_amount').val());
+		var cur = Math.floor( money *  scale );
+		$('#pay_amount_show').html(cur);
+	}
+	//执行记录操作
+	function pay_add(){
+		var gateway = $('input:radio[name="gateway"]:checked').val();
+		var pay_amount = $('#pay_amount').val();
+  	$.post( U('home/Widget/addonsRequest'),{'addon':'UserPay','hook':'pay_add','gateway':gateway,'pay_amount':pay_amount},function(txt){
+      if(txt == '01'){
+          ui.error('操作失败');
+      	}else{
+          ui.box.load( "{:U('home/Widget/addonsRequest',array('addon'=>'UserPay','hook'=>'pay_confirm'))}"+'&billno='+txt,{title:'充值确认'});
+      }
+     });
+	}
+</script>
+<div class="setupBox">
+<div class="setItems">
+  <div class="setFold setUnfold" rel="autstyle" >
+    <h2>积分充值（兑换比例<font color="#FF0000">1RMB={$UserPay['scale']}积分 </font>）</h2>
+  </div>
+  <div style="display: block;" class="setItemsInfo">
+    <div class="data">
+      <p>剩余积分：<font color="#FF0000">{$userscore}</font><br />
+      <p>充值方式：
+        <eq name="UserPay['gateway_0']" value="1">
+          <input name="gateway" type="radio" value="0" checked="checked">
+          网银充值</eq>
+        <eq name="UserPay['gateway_1']" value="1">
+          <input name="gateway" type="radio" value="1">
+          神州行充值</eq>
+        <eq name="UserPay['gateway_2']" value="1">
+          <input name="gateway" type="radio" value="2">
+          联通卡充值</eq>
+        <eq name="UserPay['gateway_3']" value="1">
+          <input name="gateway" type="radio" value="3">
+          电信卡支付</eq>
+        <br />
+      <p>充值金额:
+        <input name="pay_amount" type="text" id="pay_amount" onblur="on_pay_amount_blur(this);" value="10" />
+        <EM>*</EM> <SPAN>请输入一个不小于5的整数</SPAN>
+      <p>获得数量：<EM id=pay_amount_show style="color:#F60">100</EM> 积分<SPAN class=c_ooo style="color:#666">*兑换比例为1元=<font color="#FF0000">{$UserPay['scale']}积分 </font></SPAN></SPAN> </br>
+        <input type="button" onclick="pay_add();" value="下一步" class="btn_b">
+    </div>
+  </div>
+  <div class="setFold setUnfold" rel="autstyle" >
+    <h2>充值记录</h2>
+  </div>
+  <div style="display: block;" class="setItemsInfo">
+    <div class="data">
+      <table width="80%">
+        <tr style="background-color:#6CF;" height="20">
+          <td>订单号</td>
+          <td>充值金额</td>
+          <td>充值方式</td>
+          <td>充值时间</td>
+          <td>充值状态</td>
+        </tr>
+        <volist name="paylist" id="vo">
+          <tr height="20">
+            <td>{$vo['billno']}</td>
+            <td>{$vo['amount']}元</td>
+            <td>{$vo['gateway']}</td>
+            <td>{$vo['date']}</td>
+            <td>{$vo['tosucess']}</td>
+          </tr>
+        </volist>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+on_rate_change();
+</script> 

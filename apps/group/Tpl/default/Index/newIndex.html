@@ -19,23 +19,23 @@ $(document).ready(function(){
             <h4>
                 <em class="right ico_quotes_right"></em>
                 <em class="left ico_quotes_left"></em>
-                <span><strong class="f1">{$count.member}</strong>个群居民</span>
-                <span><strong class="f2">{$count.group}</strong>个兴趣群</span>
-                <span><strong class="f3">{$count.topic}</strong>个群话题</span>
+                <span><strong class="f1">{$count.member}</strong>个家族</span>
+                <span><strong class="f2">{$count.group}</strong>个兴趣组</span>
+                <span><strong class="f3">{$count.topic}</strong>个话题</span>
             </h4>
-            <h5>每天100多个新群诞生,300多位新人入住,总有一群人和你一样!</h5>
+            <h5>每天100多个新家族诞生,300多位新人入住,总有一群人和你一样!</h5>
         </div>
         <!-- 你可能敢兴趣的群 --> 
         <div class="searchBox">
             <form action="{:U('group/Index/search')}" method="POST" onsubmit="javascript:if(this.k.value.length <= 0){return false;}">
-          	  <div><input name="k" type="text" class="text_group left" value="请输入您要查找的群名称..."  onfocus="if(this.value == '请输入您要查找的群名称...')this.value='';" onblur="if(this.value == '')this.value='请输入您要查找的群名称...';" /><input type="submit" class="btn_group" value="" /></div>
+          	  <div><input name="k" type="text" class="text_group left" value="请输入您要查找的家族名称..."  onfocus="if(this.value == '请输入您要查找的家族名称...')this.value='';" onblur="if(this.value == '')this.value='请输入您要查找的家族名称...';" /><input type="submit" class="btn_group" value="" /></div>
             </form>
           </div>
         <div class="group_box" id="interesting_group_list">
         </div>
         <!-- 群组热帖 -->
         <div class="group_hot_list">
-          <h2 class="lineS_btm">群组热帖</h2>
+          <h2 class="lineS_btm">家族热帖</h2>
           <if condition="$hot_thread_list">
           <ul>
             <volist name="hot_thread_list" id="thread">

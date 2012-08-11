@@ -20,13 +20,13 @@
           <php>$_class = empty($all_my_app) ? '' : 'lineS_top';</php>
       	  <div class="{$_class} group_add" style="width:120px">
       	    <php>if($hasMoreGroup){</php><a href="{:U('group/SomeOne/index')}" class="g right">查看»</a><php>}</php>
-      		<a href="{:U('group/Index/add')}" class="g">创建群组</a>
+      		<a href="{:U('group/Index/add')}" class="g">创建家族</a>
       	  </div>
       	  </if>
         </div>
     </li>
     <li id="dropdown_group_massage">
-    	<a href="{:U('group/Index/message')}" class="{$message_class} hover">群组消息 <span class="more"></span></a>
+    <a href="{:U('group/Index/message')}" class="{$message_class} hover">{$ts['app']['app_alias']}消息 <span class="more"></span></a>
     	<div class="mg_lapinfo" style="width:120px">
     		  <a href="{:U('group/Index/comment')}" class="g">评论</a>
     		  <a href="{:U('group/Index/atme')}" class="g">@提到我的</a>

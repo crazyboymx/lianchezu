@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+<neq name="ts['site']['page_title']" value="">
+    {$ts['site']['page_title']} <neq name="ts['app']['app_alias']" value="">- {$ts['app']['app_alias']} </neq>- {$ts['site']['site_name']}
+<else/>
+	<!--<?php if(APP_NAME == 'home' && MODULE_NAME == 'Space' && ACTION_NAME == 'detail'){ ?> {$data.type_data.g_title} {$mini.content|getShort=20} - <?php }?>-->
+    {$ts['site']['site_name']} <neq name="ts['site']['site_slogan']" value=""> - {$ts['site']['site_slogan']}</neq>
+</neq>    
+</title>
+<link rel="shortcut icon" href="__THEME__/favicon.ico" />
+<meta name="keywords" content="{$ts['site']['site_header_keywords']}" />
+<meta name="description" content="{$ts['site']['site_header_description']}" />
+<script>
+	var _UID_   = '{$uid}';
+	var _MID_   = '{$uid}';
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+</script>
+<!-- 全局风格CSS -->
+<link href="__THEME__/main.css?20110429" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/js/tbox/box.css" rel="stylesheet" type="text/css" />
+<!-- 核心JS加载 -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tbox/box.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/scrolltopcontrol.js"></script>
+<script src="__PUBLIC__/js/jquery.jgrow.min.js"></script>
+
+
+<?php if(APP_NAME == 'home' && MODULE_NAME == 'Welcome'  OR MODULE_NAME == 'Shopping'  OR MODULE_NAME == 'Video'  OR MODULE_NAME == 'User' && ( ACTION_NAME == 'atme' || ACTION_NAME == 'index' || ACTION_NAME == 'search') OR MODULE_NAME == 'Space' && ( ACTION_NAME == 'index' || ACTION_NAME == 'share' || ACTION_NAME == 'board') && ACTION_NAME != 'detail'){ ?>
+<script type="text/javascript">
+$(document).ready(function(){                 
+  var      mybody=$("body"); 
+  var      mymain=$(".wrap");  
+  var      mywidth=mybody.width();
+                       
+  
+
+ if(mywidth>1800)       
+ {     
+	   mymain.css("margin" ,"0 auto");
+	   mymain.css("width" ,"1874");
+	   
+ } else {if(mywidth>1400)       
+ {     
+	   mymain.css("margin" ,"0 auto");
+	   mymain.css("width" ,"1405");
+ } else{ if(mywidth>1250)       
+ {     
+	   mymain.css("margin" ,"0 auto");
+	   mymain.css("width" ,"1170");  
+ } else{ if(mywidth>800)       
+ {     
+	   mymain.css("margin" ,"0 auto");
+	   mymain.css("width" ,"940");
+ } 
+ } 
+ }
+ }
+}); 
+</script>
+<?php }?>	
+
+<script type="text/javascript">
+$(window).scroll(function(){
+if($(this).scrollTop()>61){
+$('.header-1').addClass('topfixed');
+} 
+else 
+{
+$('.header-1').removeClass('topfixed');
+}
+});
+</script>
+
+
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+
+</head>
+<body class="body_bg">
+<div class="div_body">
+<div class="header_bg">
+ <div class="header wrap"><!-- 头部 begin -->
+    <div class="logo"><a href="{:U('home/Index')}" >&nbsp;</a></div>
+    <div class="nav">
+      <ul>
+	  <session name="userInfo">
+        <li id="header_dropdown_home">
+			<a class="fb14" href="{:U('home/Space/index',array('uid'=>$mid))}"><img src="{$mid|getUserface=s}" align="absmiddle"> {$mid|getUserName} <img src="__THEME__/images/ico_arrow.gif" align="absmiddle"></a>
+          <div class="dropmenu myname"> 
+		  <a href="{:U('home/Space/index',array('uid'=>$mid))}">我的图格</a>
+		  <a href="{:U('home/Space/share',array('uid'=>$mid))}">我的分享</a>
+		   <a class="lineD_btm2" href="{:U('home/Space/share',array('uid'=>$mid,'type'=>'fav'))}">我的喜欢</a>
+		          <a href="{:U('home/space/follow',array('uid'=>$mid,'type'=>'following'))}">我的关注</a>
+	   <a class="lineD_btm2" href="{:U('home/space/follow',array('uid'=>$mid,'type'=>'follower'))}">我的粉丝</a>
+            <a  href="{:U('home/User/findfriend')}">找人</a>
+	        <a class="lineD_btm2" href="{:U('home/Account/invite')}">邀请好友</a>
+			<a href="{:U('home/Account/verified')}" >申请认证</a>
+		 <a href="{:U('home/Account')}">设置</a>
+        <volist name="ts['ucenter']['app']" id="uc_app">
+	  	<php> if($uc_app['appid'] == $ts['ucenter']['current_appid'])continue; </php>
+	  	<a href="<?php echo $uc_app['url']; ?>" target="_blank"><?php echo $uc_app['name']; ?></a>
+	  </volist>
+	  <a href="{:U('home/Public/logout')}">退出</a>
+			
+          </div>
+		 </li>
+        <li id="header_dropdown_message"
+        <php>
+        if( APP_NAME == 'home' && MODULE_NAME == 'Message' )echo 'class="on"';
+        if( APP_NAME == 'home' && MODULE_NAME == 'User' && ( ACTION_NAME == 'atme' || ACTION_NAME == 'comments' ) )echo 'class="on"';
+        </php>
+        ><a href="{:U('home/message/index')}" class="ico_arrow fb14 ">消息</a>
+          <div class="dropmenu"> 
+            <a href="{:U('home/message/index')}">
+              短消息
+              <span class="cRed fB" id="count_message"><gt name="userCount['message']" value="0">({$userCount.message})</gt></span>
+            </a> 
+			<a href="{:U('home/message/notify')}">
+			        系统通知
+              <span class="cRed fB" id="count_notify"><gt name="userCount['notify']" value="0">({$userCount.notify})</gt></span>
+            </a>
+            <a href="{:U('home/message/appmessage')}">
+              应用消息
+              <span class="cRed fB" id="count_appmessage"><gt name="userCount['appmessage']" value="0">({$userCount.appmessage})</gt></span>
+            </a> 
+			<a href="{:U('home/user/atme')}">
+			        @提到我的
+              <span class="cRed fB" id='count_atme'><gt name="userCount['atme']" value="0">({$userCount.atme})</gt></span>
+            </a> 
+			<a href="{:U('home/user/comments')}">
+			        我的评论
+              <span class="cRed fB" id='count_comment'><gt name="userCount['comment']" value="0">({$userCount.comment})</gt></span>
+            </a>
+          </div>
+		  <div class="tipsouter tipsposition" id='count_total_div' style='display:<elt name="userCount['total']" value="0">none</elt>'>
+<span class="tipsinner"><em><a href="{:U('home/Message/notify')}" id='count_total'>{$userCount['total']}</a></em></span>
+</div>
+		  	
+          </neq>
+        </li>
+		</session> 
+		<nosession name="userInfo">
+		<li>
+      	<a class="fb14" href="{:U('home/Public/login')}">登录</a>
+		</li> 
+		<li>
+      	<a class="fb14" href="{:U('home/Public/register')}">注册</a>
+		</li>
+		</nosession>
+		<li id="header_dropdown_about">
+			<a href="javascript:;" class="ico_arrow fb14 ">关于</a>
+          <div class="dropmenu"> 
+            <php>
+        foreach($ts['footer_document'] as $k => $v) {
+            $v['url'] = isset($v['url']) ? $v['url'] : U('home/Public/document',array('id'=>$v['document_id']));
+            $ts['footer_document'][$k] = '<a href="'.$v['url'].'" target="_blank">'.$v['title'].'</a>';
+        }
+        echo implode('', $ts['footer_document']);
+        </php>
+          </div>
+		</li>
+		
+      </ul>
+    </div>
+    <form action="{:U('home/user/search')}" id="quick_search_form" method="post">
+    <div class="soso br3"><label id="_header_search_label" style="display: block;" onclick="$(this).hide();$('#_header_search_text').focus();">搜分享/名字/标签</label><input type="text" class="so_text" value="" name="k" id="_header_search_text" onblur="if($(this).val()=='') $('#_header_search_label').show();"/><input name="" type="button" onclick="$('#quick_search_form').submit()" class="so_btn hand br3"/></div>
+	<script>
+	if($('#_header_search_text').val()=='')
+		$('#_header_search_label').show();
+	else
+		$('#_header_search_label').hide();
+	</script>
+</form>
+  </div>
+   <div class="header-1">
+  <div class="header-2 wrap" id="header-2">
+<div id="topchannel" class="topchannel">
+<session name="userInfo">
+<div class="fastcreate" id="addShareAct">
+<a id="addShareButton" href="javascript:void(0)" onclick="weibo.quickpublish()">新分享</a>
+<a class="newShowcase" id="addBoardButton" href="javascript:void(0)" onclick="setBcTab()">新图格</a>
+</div>
+</session> 	
+<div class="channelmenu">
+<session name="userInfo">
+<a <php>if( APP_NAME == 'home' && MODULE_NAME == 'User' && ACTION_NAME == 'index')echo 'class="current"';</php> href="{:U('home/User/index')}" id="menu-my-followed">我关注的</a><span class="dot"></span>
+</session> 
+<a <php>if(APP_NAME == 'home' && MODULE_NAME == 'Welcome' && ACTION_NAME == 'index' && $_GET['order']!=='all')echo 'class="current"';</php> href="{:U('home/Welcome/index')}">热门</a>
+<span class="dot" id="menu-hot"></span>
+<a <php>if(APP_NAME == 'home' && MODULE_NAME == 'Welcome' && ACTION_NAME == 'index' && $_GET['order']=='all')echo 'class="current"';</php> href="{:U('home/Welcome/index', array('order'=>all))}">全部</a>
+<span class="dot" id="menu-hot"></span>
+<a <php>if(APP_NAME == 'home' && MODULE_NAME == 'Shopping' && ACTION_NAME == 'index')echo 'class="current"';</php> href="{:U('home/Shopping/index')}">Shopping</a>
+<span class="dot" id="menu-hot"></span>
+<a <php>if(APP_NAME == 'home' && MODULE_NAME == 'Video' && ACTION_NAME == 'index')echo 'class="current"';</php> href="{:U('home/Video/index')}">视频</a>
+<span class="dot" id="menu-hot"></span>
+<a class="newicon <php>if(APP_NAME == 'home' && MODULE_NAME == 'User' && ACTION_NAME == 'topics')echo 'current';</php>" href="/zhimei/index.php?app=home&mod=User&act=topics&domain=66751ec2e8c4df32847baef63c416178">活动</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+<script>
+$(document).ready(function(){
+	$("#header_dropdown_home").hover(
+		function(){ $(this).addClass("hover"); },
+		function(){ $(this).removeClass("hover"); }
+	);
+	$("#header_dropdown_about").hover(
+	    function(){ $(this).addClass("hover"); },
+	    function(){ $(this).removeClass("hover"); }
+	);
+	$("#header_dropdown_message").hover(
+	    function(){ $(this).addClass("hover"); },
+	    function(){ $(this).removeClass("hover"); }
+    );
+	
+	<php>if($mid > 0) {</php>
+		ui.countNew();
+		setInterval("ui.countNew()",100000);
+	<php>}</php>
+});
+</script>

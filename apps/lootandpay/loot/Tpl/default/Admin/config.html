@@ -1,0 +1,81 @@
+<include file="_header" />
+<div class="so_main"> <include file="_tab" />
+  <div class="form2">
+    <form method="post" action="{:U('loot/admin/dolootconfig')}">
+      <dl class="lineD">
+        <dt>用户抢星位的周期设置（单位：天）：</dt>
+        <dd>
+          <input name="lootdays" type="text" value="{$lootdays}">
+          <p>(提示：用户抢到星位后，可以再星位上显示多久，比如设置为一小时（时时抢），一天（天天抢），一周（周周抢），一个月（月月抢），当然建议周期不要太长哦，会影响用户活跃的哦) 
+        </dd>
+      </dl>
+       <dl class="lineD">
+        <dt>各个分类下星位的数量：</dt>
+        <dd>
+          <input name="loots" type="text" value="{$loots}">
+          <p>(提示：产品建议最好不超过30个，当然您也可以根据自己网站做数值权衡) 
+        </dd>
+      </dl>
+       <dl class="lineD">
+        <dt>消耗积分数量：</dt>
+        <dd>
+          <input name="jifeng" type="text" value="{$jifeng}">
+          <p>(提示：在有空座位的时候，用户需要花费多少积分来抢该座位，注意数值平衡，比如设置周期1天时消耗100积分等等，数值自己掌控) 
+        </dd>
+      </dl>
+       <dl class="lineD">
+        <dt>是否开启全站通知服务：</dt>
+        <dd>
+          <label><input name="isnotify" type="radio" value="1" 
+            <eq name="isnotify" value="1">checked</eq>
+            >是</label>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <label><input name="isnotify" type="radio" value="0" 
+            <eq name="isnotify" value="0">checked</eq>
+            >否</label>
+            <p>开启是：通知一条恭喜该用户的消息，并附上链接，起到用户引导的作用。
+            <p>选择否: 则不通知
+        </dd>
+      </dl>
+      <dl class="lineD">
+        <dt>是否开启周期内抢位无限制服务：</dt>
+        <dd>
+          <label><input name="isqiang" type="radio" value="1" 
+            <eq name="isqiang" value="1">checked</eq>
+            >是</label>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <label><input name="isqiang" type="radio" value="0" 
+            <eq name="isqiang" value="0">checked</eq>
+            >否</label>
+            <p>不开启的话，周期内只能抢一次
+        </dd>
+      </dl>
+       <dl class="lineD">
+        <dt>是否关闭首页随即显示分类：</dt>
+        <dd>
+          <label><input name="iscran" type="radio" value="1" 
+            <eq name="iscran" value="1">checked</eq>
+            >是</label>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <label><input name="iscran" type="radio" value="0" 
+            <eq name="iscran" value="0">checked</eq>
+            >否</label>
+        </dd>
+      </dl>
+       <dl class="lineD">
+        <dt>指定分类显示id：</dt>
+        <dd>
+          <input name="iscran_fenlei" type="text" value="{$iscran_fenlei}">
+          <p>提示：随即显示分类设置为是时有效 ，且必须配置
+        </dd>
+      </dl>
+      <dl class="">
+        <dt></dt>
+        <dd>
+          <input type="submit" class="btn_b" value="确定" />
+        </dd>
+      </dl>
+    </form>
+  </div>
+</div>
+<include file="_footer" />

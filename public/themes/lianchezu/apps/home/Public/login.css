@@ -1,7 +1,7 @@
 .header,.footer{ width:960px}
 
 /*快速注册*/
-.M_login{_padding:57px 0 0;margin-top:40px;}
+.M_login{margin-top:5px;}
 .reg_box{display:block; overflow:visible}
 .reg_box h2{font-size:18px; font-family: "微软雅黑", "宋体"}
 .reg_box h2 span{color:#999; font-size:12px}

@@ -3416,7 +3416,7 @@ CREATE TABLE `ts_document` (
 INSERT INTO `ts_document` (`title`,`content`,`author_id`,`last_editor_id`,`is_active`,`is_on_footer`,`ctime`,`mtime`,`display_order`)
 VALUES
 	('官方社区','http://t.thinksns.com',4,4,1,1,1292213500,1292213500,1),
-	('关于我们','&nbsp;&nbsp;&nbsp; ThinkSNS是国内最具潜力的互联网产品服务公司，为客户提供社会化网络产品、技术和服务在内的一系列解决方案和平台化网络建设。<br>&nbsp;&nbsp;&nbsp; ThinkSNS从一开始是就秉承优秀的软件开源思想，注重知识分享和团队协作，以一种开放、共赢、互利和友好的态度面向所有需要ThinkSNS，支持ThinkSNS，喜爱ThinkSNS的个人和社会团体。<br>&nbsp;&nbsp;&nbsp; ThinkSNS不单单是一个人性化的产品，同时也是整个公司灵魂化的象征，我们积聚创新，不断成长和完备，汲取更多先进性的技术革新，创造更具价值的优势产品，为更多ThinkSNS的应用爱好者提供动力支持和技术源泉。',4,4,1,1,1292213562,1292215236,2);
+	('关于我们','关于我们:)',4,4,1,1,1292213562,1292215236,2);
 
 /*!40000 ALTER TABLE `ts_document` ENABLE KEYS */;
 

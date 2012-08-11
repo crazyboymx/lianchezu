@@ -1,0 +1,65 @@
+<div class="so_main">
+  <div class="form2">
+    <form method="post" action="{:Addons::adminPage('dopayConf')}">
+      <dl class="lineD">
+        <dt>测试状态：</dt>
+        <dd>
+          <label><input name="itest" type="radio" value="1" 
+            
+            
+            <eq name="itest" value="1">checked</eq>
+            >正式</label>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <label><input name="itest" type="radio" value="0" 
+            
+            
+            <eq name="itest" value="0">checked</eq>
+            >测试</label>
+        </dd>
+      </dl>
+      <dl class="lineD">
+        <dt>ips商户号（正式时需要填写）：</dt>
+        <dd>
+          <input name="Mer_code" type="text" value="{$Mer_code}">
+          <p> 
+        </dd>
+      </dl>
+      <dl class="lineD">
+        <dt>ips证书号（正式时需要填写）：</dt>
+        <dd>
+          <input name="Mer_key" type="text" value="{$Mer_key}">
+          <p> 
+        </dd>
+      </dl>
+      <dl class="lineD">
+        <dt>兑换比例：</dt>
+        <dd>
+          <input name="scale" type="text" value="{$scale}">
+          <p>(一元钱，能兑换多少积分) 
+        </dd>
+      </dl>
+      <dl class="lineD">
+        <dt>开启充值类型：</dt>
+        <dd> <INPUT type="checkbox" name="gateway_0" value="1" 
+          
+          <eq name="gateway_0" value="1">checked</eq>
+          >网银充值<INPUT type="checkbox" name="gateway_1" value="1" 
+          
+          <eq name="gateway_1" value="1">checked</eq>
+          >神州行充值<INPUT type="checkbox" name="gateway_2" value="1" 
+          
+          <eq name="gateway_2" value="1">checked</eq>
+          >联通卡充值<INPUT type="checkbox" name="gateway_3" value="1" 
+          
+          <eq name="gateway_3" value="1">checked</eq>
+          >电信卡支付 </dd>
+      </dl>
+      <dl class="">
+        <dt></dt>
+        <dd>
+          <input type="submit" class="btn_b" value="确定" />
+        </dd>
+      </dl>
+    </form>
+  </div>
+</div>
