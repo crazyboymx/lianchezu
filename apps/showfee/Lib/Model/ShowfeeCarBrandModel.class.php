@@ -2,9 +2,20 @@
 class ShowfeeCarBrandModel extends BaseModel{
     public function getAllCarBrand(){
         //先从缓存里面获取
+        $result = $this->field('id,name,coverId')->findAll();
+
+        //重组数据集结构并追加数据
+        $newresult = array();
+        foreach ( $result as $value ){
+            $newresult[$value['id']] = $this->appendContent($value);
+        }
+        return $newresult;
+    }
+    public function getAllCarBrandName(){
+        //先从缓存里面获取
         $result = $this->field('id,name')->findAll();
 
-        //重组数据集结构
+        //重组数据集结构并追加数据
         $newresult = array();
         foreach ( $result as $value ){
             $newresult[$value['id']] = $value['name'];
@@ -54,9 +65,9 @@ class ShowfeeCarBrandModel extends BaseModel{
 
     }
 
-    public function editCarBrand( $data $cover){
+    public function editCarBrand( $data, $cover){
         $data['coverId'] = $cover['status'] ? $cover['info'][0]['id'] : 0;
-        $query = $this->save( $data );
+        $query = $this->save($data);
         return $query;
     }
 
@@ -69,7 +80,13 @@ class ShowfeeCarBrandModel extends BaseModel{
     public function getCarBrand($id) {
         $map['id'] = intval($id);
         $result = $this->where($map)->find();
+        $result = $this->appendContent($result);
         return $result;
+    }
+
+    private function appendContent($data) {
+        $data['cover'] = getCover($data['coverId'], 32, 32);
+        return $data;
     }
 
 }

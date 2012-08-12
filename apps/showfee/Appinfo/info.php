@@ -45,5 +45,5 @@ return array(
 	// 作者主页 [选填]
 	'AUTHOR_HOMEPAGE_URL'		=> 'www.lianchezu.com',
 	// 贡献者姓名 [选填]
-	'CONTRIBUTOR_NAMES'			=> '马兴，阳横峰，张东宁',
+	'CONTRIBUTOR_NAMES'			=> 'lianchezu',
 );

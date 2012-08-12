@@ -195,7 +195,7 @@ class Page extends Think
         // 1 2 [3] 4 5
 		$linkPage = "";
 		//dump(ceil($this->rollPage/2)-1);
-		$halfRoll	=	ceil($this->rollPage/2);
+        $halfRoll	=	ceil($this->rollPage/2);
 
 		if( $this->totalPages <= $this->rollPage ){
 			$leftPages	=	$this->nowPage-1;

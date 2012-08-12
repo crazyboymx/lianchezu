@@ -3,6 +3,12 @@
 <link rel="stylesheet" href="../Public/event.css" type="text/css" media="screen" charset="utf-8" />
 <script  type="text/javascript" src="__PUBLIC__/js/rcalendar.js" ></script>
 <script type="text/javascript" src="../Public/js/event.js"></script>
+<link href="/public/js/msdropdown/dd.css" rel="stylesheet"/>
+<script type="text/javascript" src="/public/js/msdropdown/js/jquery.dd.js"></script>
+<style type="text/css">
+.dd .ddTitle span.ddTitleText img{height:16px;}
+.dd .ddChild a img{height:16px;}
+</style>
 <script>
 //dsy.add();
 </script>
@@ -22,139 +28,60 @@
         <!-- page_title end -->
         <div class="groupBox">
             <div class="box1">
-              <form method="post" action="{:U('event/Index/doAddEvent')}"  enctype="multipart/form-data" onsubmit="return check();">
+              <form method="post" action="{:U('event/Index/doAddShowfee')}" onsubmit="return checkfee();">
               <div class="elist">
                 <dl class="add_event">
                   <dd>
-                    <label><span class="txt_impt">*</span>费用名称：</label>
+                    <label><span class="txt_impt">*</span>标题：</label>
                     <div class="c2">
                       <input name="title" type="text" class="text" id="title" onfocus="this.className='text2'" onblur="this.className='text'" maxlength="60" />
                     </div>
                     <div class="c"></div>
                   </dd>
                   <dd>
-                    <label><span class="txt_impt"></span>活动城市：</label>
+                    <label><span class="txt_impt">*</span>费用介绍：</label>
                     <div class="c2">
-                      <input type="hidden" id="current" />
-                      <input type="text" name="city" class="text" onfocus="this.className='text2'" onblur="this.className='text'" size="30" id="selectarea" readonly />
-                      <input type="button" class="btn_b" value="选择地区" onclick="selectArea()" />
+                      <textarea id="explain" name="explain" style="width:100%; height:200px;"></textarea>
                     </div>
                     <div class="c"></div>
                   </dd>
                   <dd>
-                    <label> <span class="txt_impt">*</span>活动地点：</label>
+                    <label><span class="txt_impt">*</span>品牌：</label>
                     <div class="c2">
-                      <input name="address" type="text" class="text" id="address" onfocus="this.className='text2'" onblur="this.className='text'"  maxlength="30"/>
+                        <select name="carBrandId" id="carBrandId" style="width:300px;">
+                            <volist name="carBrandList" id="b" >
+                            <option value="{$b.id}" title="{$b.cover}">{$b.name}</option>
+                            </volist>
+                        </select>
                     </div>
                     <div class="c"></div>
                   </dd>
                   <dd>
-                    <label> <span class="txt_impt">*</span>活动分类：</label>
+                    <label><span class="txt_impt">*</span>车型 ：</label>
                     <div class="c2">
-                      <select name="type" id="type" class="text">
-                        <option value="0" selected>请选择活动分类</option>
-                        <?php foreach($type as $k=>$cate){ ?>
-                        <option value="{$k}">{$cate}</option>
-                        <?php } ?>
-                        </volist>
-                      </select>
+                        <select name="carTypeId" id="carTypeId" style="width:300px;">
+                        </select>
                     </div>
                     <div class="c"></div>
                   </dd>
                   <dd>
-                    <label> <span class="txt_impt"></span>活动经费：</label>
+                    <label><span class="txt_impt">*</span>年代：</label>
                     <div class="c2">
-                      <select name="cost" class="text">
-                        <option value="0" selected="selected">免费</option>
-                        <option value="1">AA制</option>
-                        <option value="2">50元以下</option>
-                        <option value="3">50-200元</option>
-                        <option value="4">200-500元</option>
-                        <option value="5">500-1000元</option>
-                        <option value="6">1000元以上</option>
-                      </select>
-                      资费说明：
-                      <input name="costExplain" type="text" class="text" id="textfield2" onfocus="this.className='text2'" onblur="this.className='text'" size="30" />
+                        <select name="carTime" id="carTime" style="width:300px;">
+                            <php>
+                                $s = intval(date('Y'));
+                                for($i=$s;$i>=$s-50; $i--) {
+                                    echo "<option value='".$i."'>".$i."</option>";
+                                }
+                            </php>
+                        </select>
                     </div>
                     <div class="c"></div>
                   </dd>
-                  <dd>
-                    <label> <span class="txt_impt">*</span>活动时间：</label>
-                    <div class="c2">
-                      <input name="sTime" type="text" class="text" id="sTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />
-                      -
-                      <input name="eTime" type="text" class="text" id="eTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label> <span class="txt_impt">*</span>截止报名：</label>
-                    <div class="c2">
-                      <input name="deadline" type="text" class="text" id="deadline" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label> <span class="txt_impt"></span>活动人数：</label>
-                    <div class="c2">
-                      <input name="limitCount" type="text" class="text" id="limitCount" onfocus="this.className='text2'" onblur="this.className='text'" onKeyUp="this.value=this.value.replace(/\D/g,'')" maxlength="5" value="0" />
-                      <span class="cGray2"> 活动人数上限，设0表示无限制</span></div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label><span class="txt_impt">*</span>活动介绍：</label>
-                    <div class="c2">
-                      <textarea id="explain" name="explain" style="width:100%; height:350px;"></textarea>
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label><span class="txt_impt"></span>联系方式：</label>
-                    <div class="c2">
-                      <input name="contact" type="text" class="text" id="contact" onfocus="this.className='text2'" onblur="this.className='text'" size="30" />
-                      <br />
-                      <span class="cGray2">填写联系人电话，如：张小姐，1346665XXXX </span></div>
-                    <div class="c"></div>
-                  </dd>
-                  <!--
-          <li>
-            <div class="c1">关联群组：<span class="cRed pr5">*</span></div>
-            <div class="c2">
-              <select name="select3">
-                <option>选择关联群组</option>
-              </select><br />
-              <span class="cGray2">必须是您自己创建的分，关联后活动话题会同步到该群组。</span></div>
-          </li>
-          -->
-                  <dd>
-                    <label><span class="txt_impt"></span>活动选项：</label>
-                    <div class="c2">
-                      <div>
-                        <input type="checkbox" name="friend" id="choice1" value="1" />
-                        只允许我关注的人参加该活动 </div>
-                      <div>
-                        <input type="checkbox" name="allow" id="choice2" value="1" />
-                        活动参加人员需要审批 </div>
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label><span class="txt_impt"></span>活动海报：</label>
-                    <div class="c2">
-                      <input name="cover" type="file" />
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                  <!--<li>
-                  <div class="c1">将图片上传到：&nbsp;&nbsp;&nbsp;</div> 
-               <div class="c2">
-            {:W('AlbumList',array( 'uid'=>$mid , 'form_name'=>'albumId' , 'selected'=>intval($_GET['albumId']) ) )}
-            </div>
-          </li>-->
                   <dd>
                     <label>&nbsp;</label>
                     <div class="c2">
-                      <input name="button" type="submit" class="btn_b" id="button" value="发起活动" />
+                      <input name="button" type="submit" class="btn_b" id="button" value="晒费用" />
                     </div>
                     <div class="c"></div>
                   </dd>
@@ -181,4 +108,14 @@ function selectArea(){
     var typevalue = $("#current").val();
 	ui.box.load(U('event/Area/area')+'&selected='+typevalue,{title:'选择城市'});
 }
+
+function checkfee(){
+    alert("等会哈");
+    return false;
+}
+
+$(function(){
+    $("#carBrandId,#carTypeId").msDropDown();
+});
+
 </script>

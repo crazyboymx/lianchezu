@@ -1,0 +1,201 @@
+<include file="_header" />
+<link href="/public/js/msdropdown/dd.css" rel="stylesheet"/>
+<script type="text/javascript" src="/public/js/msdropdown/js/jquery.dd.js"></script>
+<style type="text/css">
+.dd .ddTitle span.ddTitleText img{height:16px;}
+.dd .ddChild a img{height:16px;}
+</style>
+<script>
+
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+        ids.push( $(n).val() );
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+
+var ctrl = function(){
+}
+ctrl.prototype = {
+    del:function(id){
+        var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0) return ;
+        if( confirm("是否删除费用？") ){
+          $.post( '__URL__&act=deleteShowFee',{id:id},function(text ){
+              if( text == 1 ){
+                  ui.success( "删除成功" );
+                  var id_list = id.split( ',' );   
+                  for (var j=0 ; j< id_list.length ; j++   ){
+                      $('#list_'+id_list[j]).remove(); 
+                  }
+              }else if( text == 2 ){
+                  ui.success( "删除成功" );
+                  $('#list_'+id).remove();
+              }else{
+                  ui.error( "删除失败" );
+              }
+          });
+        }
+    },
+    edit:function(id){
+    },
+    add:function(){
+        ui.box.show($("#tpledit").val(),{title:"<span id='cbtitle'>新增费用</span>"});
+        $("#brandId").msDropDown();
+        $("#btnsave").click(function(){
+            var fname = $("#fname").val();
+            if(fname==""){
+                alert("费用名称不能为空");
+                return ;
+            }
+            $("#formedit").submit();
+        });
+    }
+}
+var c = null;
+</script>
+<textarea style='display:none;' id='tpledit'>
+<form style='height:150px;width:400px;' method="post" id='formedit' enctype='multipart/form-data' action="__URL__&act=addCarType" >
+车标：<br/>
+ <select name="brandId" id="brandId" style="width:300px;">
+    <volist name="brands" id="b" >
+    <option value="{$b.id}" title="{$b.cover}">{$b.name}</option>
+    </volist>
+  </select>
+<br/>
+费用：<br/>
+<input type='text' name='name' id='fname' style="width:300px;" />
+<input type='hidden' id='fid' name='id'  /><br/>
+logo上传:<br/>
+<input type='file' name='cover'/><br/>
+<input type='button' class='btn_b' value='保存' id='btnsave'/>
+</form>
+</textarea>
+<div class="so_main">
+  <include file="_tab" />
+<div style="" id="searchObject_div">
+    <div class="page_tit">搜索费用 [ <a onclick="$('#searchObject_div').toggle();" href="javascript:void(0);">隐藏</a> ]</div>
+    <div class="form2">
+    <form method="POST" action="/index.php?app=showfee&mod=Admin&act=showfees">
+    <input type="hidden" value="1" name="isSearch">
+                <dl class="lineD">
+          <dt>用户ID：</dt>
+          <dd>
+            <input class="txt" name="uid" value="{$_POST.uid}">
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>费用ID：</dt>
+          <dd>
+            <input value="{$_POST.id}" class="txt" name="id">
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>标题：</dt>
+          <dd>
+            <input value="{$_POST.title}" class="txt" name="title"><span> 支持模糊查询。</span>
+          </dd>
+        </dl>
+        <dl>
+          <dt>结果排序：</dt>
+          <dd>
+            <select name="sorder">
+              <option value="cTime" <php> if($_POST['sorder']=='cTime') echo " selected='selected' " ;</php>  >时间排序</option>
+              <option value="id"  <php> if($_POST['sorder']=='id') echo " selected='selected' "; </php>  >发布id排序</option>
+            </select>
+            <select name="eorder">
+              <option value="DESC"    <php> if($_POST['eorder']=='DESC') echo " selected='selected' "; </php> >降序</option>
+              <option value="ASC"    <php> if($_POST['eorder']=='ASC') echo " selected='selected' "; </php> >升序</option>
+            </select>
+            <select name="limit">
+              <option value="10"    <php> if($_POST['limit']=='10') echo " selected='selected' "; </php>  >每页显示10条</option>
+              <option value="20"   <php> if($_POST['limit']=='20') echo " selected='selected' "; </php> >每页显示20条</option>
+              <option value="30"  <php> if($_POST['limit']=='30') echo " selected='selected' "; </php>   >每页显示30条</option>
+              <option value="100"  <php> if($_POST['limit']=='100') echo " selected='selected' "; </php>  >每页显示100条</option>
+            </select>
+          </dd>
+        </dl>
+        <div class="page_btm">
+          <input type="submit" value="确定" class="btn_b">
+        </div>
+    </div>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" style='display:none;' onclick="c.add()"><span>新增费用</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="$('#searchObject_div').show()"><span>显示搜索</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除费用</span></a>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <th style="width:30px;">
+                <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+            </th>
+            <th>ID</th>
+            <th>用户ID</th>
+            <th>标题</th>
+            <th>详细</th>
+            <th>总费用</th>
+            <th>车标</th>
+            <th>车型 </th>
+            <th>年代</th>
+            <th>操作</th>
+          </tr>
+            <tbody id="">
+        <volist name="data" id="row">
+          <tr id="list_{$row.id}">
+            <td><input type="checkbox" name="checkbox"  onclick="checkon(this)" value="{$row.id}"></td>
+            <td>{$row.id}</td>
+            <td>{$row.uid}</td>
+            <td>{$row.title}</td>
+            <td>{$row.explain}</td>
+            <td>￥{$row.totalFee}</td>
+            <td>
+                    {$row.carBrandName}
+            </td>
+            <td>
+                    {$row.carTypeName}
+            </td>
+            <td> {$row.carTime}  </td>
+            <td>
+                <a href="javascript:void(0);" style="display:none;" onclick="c.edit({$row.id})">编辑</a>
+                <a href="javascript:void(0);" onclick="c.del({$row.id})">删除</a>
+            </td>
+          </tr>
+          </volist>
+            </tbody>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.add()" style="display:none;"><span>新增费用</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="$('#searchObject_div').show()"><span>显示搜索</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除费用<span></a>
+    </div>
+</div>
+<include file="_footer" />
+<script type="text/javascript">
+c = new ctrl();
+</script>

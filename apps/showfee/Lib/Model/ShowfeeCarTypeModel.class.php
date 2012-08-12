@@ -1,7 +1,27 @@
 <?php
 class ShowfeeCarTypeModel extends BaseModel{
-
     public function getAllCarType(){
+        //先从缓存里面获取
+        $result = $this->field('id,name,brandId,coverId')->findAll();
+
+        //重组数据集结构
+        $newresult = array();
+        foreach ( $result as $value ){
+            $newresult[$value['id']] = $this->appendContent($value);
+        }
+        return $newresult;
+    }
+
+    public function getList($map, $order, $limit) {
+        $result = $this->where($map)->order($order)->findPage($limit);
+        //将属性追加
+        foreach( $result['data'] as &$value ) {
+            $value = $this->appendContent($value);
+        }
+        return $result;
+    }
+
+    public function getAllCarTypeName(){
         //先从缓存里面获取
         $result = $this->field('id,name')->findAll();
 
@@ -21,7 +41,7 @@ class ShowfeeCarTypeModel extends BaseModel{
         return $this->add( $map );
     }
 
-    public function deleteCarType( $map,$formCate = null,$obj = null ){
+    public function deleteCarType($map, $formCate = null, $obj = null) {
         //先判断合法性
         if( empty( $map ) )
             throw new ThinkException( "不能是空条件删除" );
@@ -52,9 +72,9 @@ class ShowfeeCarTypeModel extends BaseModel{
 
     }
 
-    public function editType( $data, $cover ){
+    public function editCarType($data, $cover){
         $data['coverId'] = $cover['status'] ? $cover['info'][0]['id'] : 0;
-        $query = $this->save( $data );
+        $query = $this->save($data);
         return $query;
     }
 
@@ -67,7 +87,17 @@ class ShowfeeCarTypeModel extends BaseModel{
     public function getCarType($id) {
         $map['id'] = intval($id);
         $result = $this->where($map)->find();
+        $result = $this->appendContent($result);
         return $result;
+    }
+
+    public function appendContent($data) {
+        $carBrandM = D('ShowfeeCarBrand');
+        $brand = $carBrandM->getCarBrand($data['brandId']);
+        $data['brandName'] = isset($brand['name']) ? $brand['name'] : '';
+        $data['brandCover'] = $brand['cover'];
+        $data['cover'] = getCover($data['coverId']);
+        return $data;
     }
 
 }

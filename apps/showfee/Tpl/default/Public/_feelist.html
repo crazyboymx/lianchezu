@@ -1,24 +1,23 @@
 {:W('Weibo',array('tpl_name'=>'event_share_weibo','button_title'=>'分享'))}
-<php> var_dump($data);</php>
 <ul class="search">
     <volist name="data" id="vo">
     <li class="lineD_btm" id="event_{$vo['id']}">
 
     <div class="left" style="width: 90px;">
         <span class="pic80">
-            <a href="{:U('event/Index/eventDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}">
+            <a href="{:U('event/Index/showfeeDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}">
                 <img src="{$vo['cover']}" />
             </a>
         </span>
     </div>
 
-    <div class="right rmenu" style="width: 60px;"></div>
+    <div class="right rmenu" style="width: 300px;text-align:right;">总费用:<span style='color:red;'>￥</span><b style="font-size:40px;color:red;font-family:Constantia;">{$vo.totalFee}</b></div>
     <div style="margin:0 70px 0 90px;">
         <h3>
-            <a href="{:U('//eventDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}">
-                {$vo['title']}</a>
+            <a href="{:U('//showfeeDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}"> {$vo['title']}</a>
         </h3>
         <p><span class="cGray2" style="display:none;">费用介绍：</span>{$vo['explain']} </p>
+        <p>品牌：<a href='javascript:;'>{$vo.carBrandName}</a>,车型：<a href='javascript:;'>{$vo.carTypeName}</a>,年代：<a href='javascript:;'>{$vo.carTime}</a></p>
     </div>
     </li>
     </volist>

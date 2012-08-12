@@ -1,0 +1,130 @@
+<include file="_header" />
+<script>
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+        ids.push( $(n).val() );
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+
+var ctrl = function(){
+}
+ctrl.prototype = {
+    del:function(id){
+        var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0) return ;
+        if( confirm("是否删除车标？") ){
+          $.post( '__URL__&act=deleteBrand',{id:id},function(text ){
+              if( text == 1 ){
+                  ui.success( "删除成功" );
+                  var id_list = id.split( ',' );   
+                  for (var j=0 ; j< id_list.length ; j++   ){
+                      $('#list_'+id_list[j]).remove(); 
+                  }
+              }else if( text == 2 ){
+                  ui.success( "删除成功" );
+                  $('#list_'+id).remove();
+              }else{
+                  ui.error( "删除失败,请确认已经清空该车标下的相关信息。" );
+              }
+          });
+        }
+    },
+    edit:function(id,name){
+        c.add();
+        $("#cbtitle").html("编辑车标");
+        $("#cbname").val(name);
+        $("#cbid").val(id);
+        $("#formcb").attr("action","__URL__&act=editBrand");
+    },
+    add:function(){
+        ui.box.show($("#tplcb").val(),{title:"<span id='cbtitle'>新增车标</span>"});
+        $("#btnsavecb").click(function(){
+            var cbname = $("#cbname").val();
+            if(cbname==""){
+                alert("车标名称不能为空");
+                return ;
+            }
+            $("#formcb").submit();
+        });
+    }
+}
+var c = null;
+</script>
+<textarea style='display:none;' id='tplcb'>
+<form style='height:100px;width:400px;' method="post" id='formcb' enctype='multipart/form-data' action="__URL__&act=addBrand" >
+车标：<br/>
+<input type='text' name='name' id='cbname' />
+<input type='hidden' id='cbid' name='id'  /><br/>
+品牌上传:<br/>
+<input type='file' name='cover'/><br/>
+<input type='button' class='btn_b' value='保存' id='btnsavecb'/>
+</form>
+</textarea>
+<div class="so_main">
+  <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.add()"><span>新增车标</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除车标</span></a>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <th style="width:30px;">
+                <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+            </th>
+            <th>ID</th>
+            <th>名称</th>
+            <th>品牌</th>
+            <th>操作</th>
+          </tr>
+            <tbody id="">
+        <volist name="brands" id="row">
+          <tr id="list_{$row.id}">
+            <td><input type="checkbox" name="checkbox"  onclick="checkon(this)" value="{$row.id}"></td>
+            <td>{$row.id}</td>
+            <td>{$row.name}</td>
+            <td>
+                <img src="{$row.cover}" />
+            </td>
+            <td>
+                <a href="javascript:void(0);" onclick="c.edit({$row.id},'{$row.name}')">编辑</a>
+                <a href="javascript:void(0);" onclick="c.del({$row.id})">删除</a>
+            </td>
+          </tr>
+          </volist>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.add()"><span>新增车标</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除车标<span></a>
+    </div>
+</div>
+<include file="_footer" />
+<script type="text/javascript">
+c = new ctrl();
+</script>

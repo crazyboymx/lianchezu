@@ -13,16 +13,15 @@
         <div class="tab-menu">
           <!-- 切换标签 begin  -->
           <ul>
-            <li><a href="{:U('//personal', array('action'=>'launch'))}" <php>if(!in_array($_GET['action'],array('join','att'))){echo 'class="on"';}</php>><span>{$name}发起的活动</span></a></li>
-            <li><a href="{:U('//personal', array('action'=>'join'))}" <if condition="$_GET['action'] eq 'join'"> class="on"</if>><span>{$name}参与的活动</span></a></li>
-            <li><a href="{:U('//personal', array('action'=>'att'))}" <if condition="$_GET['action'] eq 'att'"> class="on"</if>><span>{$name}关注的活动</span></a></li>
+            <li><a href="{:U('//personal', array('action'=>'launch'))}" <php>if(!in_array($_GET['action'],array('join','att'))){echo 'class="on"';}</php>><span>{$name}的晒费用</span></a></li>
+            <li><a href="{:U('//personal', array('action'=>'join'))}" <if condition="$_GET['action'] eq 'join'"> class="on"</if>><span>{$name}粉丝的晒费用</span></a></li>
           </ul>
         </div>
         <!-- 切换标签 end  -->
         <div class="groupBox">
           <!-- 活动 begin  -->
           <div class="boxL">
-            <include file="../Public/_eventList" />
+            <include file="../Public/_feelist" />
           </div>
           <!-- 活动 end  -->
         </div>

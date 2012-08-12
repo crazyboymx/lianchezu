@@ -450,7 +450,7 @@ class EventModel extends BaseModel{
 	 * @return void
 	 */
 	public function getList( $map,$order,$limit ){
-		$result = $this->where( $map )->order( $order )->findPage($limit);
+        $result = $this->where( $map )->order( $order )->findPage($limit);
 		//将属性追加
 		foreach( $result['data'] as &$value ){
 				$value = $this->appendContent( $value );

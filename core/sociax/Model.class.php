@@ -1294,7 +1294,7 @@ class Model extends Think
      */
      public function findPage($pageopt,$count=false,$options=array(),$onlyShowPage=false) {
 		// 分析表达式
-        $options =  $this->_parseOptions($options);
+         $options =  $this->_parseOptions($options);
 		// 如果没有传入总数，则自动根据条件进行统计
 		if($count===false){
 			// 查询总数

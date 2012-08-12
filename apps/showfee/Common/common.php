@@ -16,6 +16,7 @@ function getConfig($key=NULL){
 }
 //获取活动封面存储地址
 function getCover($coverId,$width=80,$height=80){
+    echo 'coverid' . $coverId . '<br />';
 	$cover = D('Attach')->field('savepath,savename')->find($coverId);
 	if($cover){
 		$cover	=	SITE_URL."/thumb.php?w=$width&h=$height&url=".get_photo_url($cover['savepath'].$cover['savename']);

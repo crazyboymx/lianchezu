@@ -1,8 +1,14 @@
+<style type="text/css">
+.btn_event_c, .btn_event_c:hover {
+    background-position: -8px -914px;
+}
+</style>
+
 <div class="mainbox_appR">
-  <div class="right_box box_create"><a href="{:U('/Index/addEvent')}" class="btn_event_c"></a></div>
+  <div class="right_box box_create"><a href="{:U('/Index/addShowfee')}" class="btn_event_c"></a></div>
  <!--组织者&关注者-->
-    <php>if(ACTION_NAME == 'eventDetail') {</php>
-    <div class="right_box">
+    <php>if(ACTION_NAME == 'showfeeDetail') {</php>
+    <div class="right_box" style="display:none;">
             <div>
               <h2>组织者</h2>
               <ul class="ListBox">
@@ -25,7 +31,7 @@
 		    	<h3>参加这个活动的人也参加了</h3>
 		        <volist name="other" id="vo">
 		            <p class="btmlineD">
-		            <a href="{:U('//eventDetail',array('id'=>$vo['id'],'uid'=>$vo['uid']))}">{$vo['title']}</a> <br />
+		            <a href="{:U('//showfeeDetail',array('id'=>$vo['id'],'uid'=>$vo['uid']))}">{$vo['title']}</a> <br />
 		            <span class="cGray2">{$vo['cTime']} {$vo['joinCount']}人参加/{$vo['attentionCount']}人关注</span><br />
 		            </p>
 		        </volist>
@@ -66,15 +72,15 @@
 <!--搜索活动&分类浏览END-->   
            
  <!--推荐活动--> 
-  <div class="right_box">
+  <div class="right_box" style="display:none;">
     <h2>推荐{$ts['app']['app_alias']}</h2>
     <ul class="Recommended">
       <volist name="is_hot_list" id="li"> 
    	    <li>
-          <div class="c1"><a href="{:U('//eventDetail',array(uid=>$li['uid'],id=>$li['id']))}"><img src="{$li['coverId']}" /></a></div>
+          <div class="c1"><a href="{:U('//showfeeDetail',array(uid=>$li['uid'],id=>$li['id']))}"><img src="{$li['coverId']}" /></a></div>
           <div class="c2">
             <dl>
-              <dt><a href="{:U('//eventDetail',array(uid=>$li['uid'],id=>$li['id']))}" class="OverH" style="width:8em; display:block;float:left;"><strong>{$li.title}</strong></a></dt><br /> 
+              <dt><a href="{:U('//showfeeDetail',array(uid=>$li['uid'],id=>$li['id']))}" class="OverH" style="width:8em; display:block;float:left;"><strong>{$li.title}</strong></a></dt><br /> 
               <dd>类型：{$li.type}</dd>
               <dd>地点：{$li.address}</dd>
               <dd>组织者：<a href="{:U('home/Space/index',array(uid=>$li['uid']))}">{$li.uid|getUserName|getShort=###,5}</a></dd>
