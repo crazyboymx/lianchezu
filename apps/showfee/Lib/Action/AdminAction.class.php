@@ -223,8 +223,8 @@ class AdminAction extends AdministratorAction {
     }
 
     public function deleteShowfee() {
-        $id['id'] = array("in", $_REQUEST['id']);
-        if($result = $this->showfee->deleteShowfee($id)){
+        $id['id']  = array("in", $_REQUEST['id']);
+        if($result = $this->showfee->deleteShowfee($id, $this->mid)) {
             if (!strpos($_REQUEST['id'], ",")) {
                 echo 2;            //说明只是删除一个
             }else {

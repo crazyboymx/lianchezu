@@ -21,6 +21,24 @@ class ShowfeeCarTypeModel extends BaseModel{
         return $result;
     }
 
+    //我容易么我。。。 
+    public function getCarTypesByBrand($brandId){
+        /*$result = $this->where(" brandId ='".$brandId."'")->field("id,name,coverId")->find();
+        foreach ( $result as $value ){
+            $value['cover'] = getCover($value["coverId"]);
+        }
+        return $result;*/
+        //return $this->getList(array("brandId"=>$brandid),"id",9999);
+        $result = $this->field('id,name,brandId,coverId')->where("brandId=".$brandId)->findAll();
+
+        //重组数据集结构
+        $newresult = array();
+        foreach ( $result as $value ){
+            $newresult[$value['id']] = $this->appendContent($value);
+        }
+        return $newresult;
+    }
+
     public function getAllCarTypeName(){
         //先从缓存里面获取
         $result = $this->field('id,name')->findAll();

@@ -70,10 +70,15 @@ class IndexAction extends Action {
         $this->display();
     }
 
+    public function getCatTypesByBrand(){
+        $data = D('ShowfeeCarType')->getCarTypesByBrand($_REQUEST["brandId"]);
+        $this->ajaxReturn($data,'info',1);
+    }
     public function addShowfee() {
         $this->_createLimit($this->mid);
         $this->setTitle('添加' . $this->appName);
         $this->assign('carBrandList', D('ShowfeeCarBrand')->getAllCarBrand());
+        $this->assign ("feeTypeList",D('ShowfeeFeeType')->getAllFeeType());
         $this->display();
     }
 
@@ -179,10 +184,10 @@ class IndexAction extends Action {
         }
     }
 
-    public function deleteShowfee(){
-        $eventid['id']  = intval($_REQUEST['id']);    //要删除的id.
-        $eventid['uid'] = $this->mid;
-        $result         = $this->showfee->deleteEvent($eventid);
+    public function deleteShowfee() {
+        $id   = array('in', $_REQUEST['id']); //要删除的id.
+        $uid = $this->mid;
+        $result = $this->showfee->deleteShowfee($id, $uid);
         if( false != $result){
             echo 1;
         }else{

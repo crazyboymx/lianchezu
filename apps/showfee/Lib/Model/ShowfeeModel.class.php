@@ -101,7 +101,15 @@ class ShowfeeModel extends BaseModel{
         return $result;
     }
 
-    public function deleteShowfee($showfeeId) {
+    public function deleteShowfee($showfeeId, $uid) {
+        $uids = $this->field('uid')->where($showfeeId)->findAll();
+        if (service('Passport')->isLoggedAdmin() == false) {
+            foreach ($uids as $u) {
+                if ($u != $uid) {
+                    return false;
+                }
+            }
+        }
         if (empty($showfeeId)) {
             return false;
         }
@@ -115,7 +123,6 @@ class ShowfeeModel extends BaseModel{
         }
         $feeRecordIds = implode(',', $feeRecordIds);
         $feeRecord_map['id'] = array('in', $feeRecordIds);
-        $uids = $this->field('uid')->where($showfeeId)->findAll();
         //扣除积分
         foreach ($uids as $uid) {
             X('Credit')->setUserCredit($uid, 'delete_showfee');

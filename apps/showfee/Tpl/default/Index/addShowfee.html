@@ -28,18 +28,18 @@
         <!-- page_title end -->
         <div class="groupBox">
             <div class="box1">
-              <form method="post" action="{:U('event/Index/doAddShowfee')}" onsubmit="return checkfee();">
+              <form method="post" action="{:U('event/Index/doAddShowfee')}" onsubmit="return checkfee();" autocomplete="off">
               <div class="elist">
                 <dl class="add_event">
                   <dd>
                     <label><span class="txt_impt">*</span>标题：</label>
                     <div class="c2">
-                      <input name="title" type="text" class="text" id="title" onfocus="this.className='text2'" onblur="this.className='text'" maxlength="60" />
+                      <input name="title" type="text" class="text" id="title" onfocus="this.className='text2'" onblur="this.className='text'" maxlength="60" style="width:400px;" />
                     </div>
                     <div class="c"></div>
                   </dd>
                   <dd>
-                    <label><span class="txt_impt">*</span>费用介绍：</label>
+                    <label>费用介绍：</label>
                     <div class="c2">
                       <textarea id="explain" name="explain" style="width:100%; height:200px;"></textarea>
                     </div>
@@ -49,6 +49,7 @@
                     <label><span class="txt_impt">*</span>品牌：</label>
                     <div class="c2">
                         <select name="carBrandId" id="carBrandId" style="width:300px;">
+                            <option value="" selected="selected">[无]</option>
                             <volist name="carBrandList" id="b" >
                             <option value="{$b.id}" title="{$b.cover}">{$b.name}</option>
                             </volist>
@@ -75,6 +76,79 @@
                                 }
                             </php>
                         </select>
+                    </div>
+                    <div class="c"></div>
+                  </dd>
+                    <dd>
+                    <label><span class="txt_impt">*</span>明细：</label>
+                    <div class="c2">
+                    <input type='hidden' name="fee" id="feejson" />
+                <style type="text/css">
+                    .feetb{width:100%;}
+                    .feetb td,.feetb th{padding:8px; font-size:14px;border-bottom:dashed 1px #ccc;}
+                    .feetb th{font-weight:bold;}
+                </style>
+                <table border="0" class="feetb">
+                    <thead>
+                        <tr>
+                            <th>费用类型</th>
+                            <th>说明</th>
+                            <th>花费</th>
+                            <th><a href='javascript:;' class='addfee' id="addfee">+添加</a></th>
+                        </tr>
+                    </thead>
+                    <tbody id="feelist">
+                        <tr>
+                            <td>
+                                <select class='feeTypeId' style="width:100px;">
+                                    <option value="">[无]</option>
+                                    <php >
+                                        foreach( $feeTypeList as $id => $typename){
+                                            echo "<option value='".$id."'>".$typename."</option>";
+                                        }
+                                    </php>
+                                </select>
+                            </td>
+                            <td><textarea class="explain" style="width:200px;height:60px;"></textarea></td>
+                            <td >￥<input class="fee" type='text' style='width:80px;' /></td>
+                            <td><a href="javascript:;" class="delfee">删除</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+<script type="text/javascript">
+$(function(){
+    $("#addfee").click(function(){
+        var $newrow = $("#feelist>tr:eq(0)").clone();
+        $newrow.appendTo("#feelist");
+        $newrow.find(":input").val("");
+        calTotalFee();
+    });
+    $("#feelist").delegate(".delfee","click",function(){
+        var $tr = $(this).closest("tr");
+        if($("#feelist>tr").length==1){
+            alert("最后一个费用不能删除");
+            return  ;
+        }
+        if(!confirm("请确认删除此项费用")) return ;
+        $tr.remove();
+        calTotalFee();
+    });
+    $("#feelist").delegate(".fee","change",calTotalFee);
+    function calTotalFee(){
+        var $fee = $("#feelist .fee"),total=0;
+        $fee.each(function(){
+            var fee = $(this).val();
+            if(!isNaN(fee)  && fee!="") total+=parseFloat(fee);
+        });
+        $("#totalFee").html(total);
+    }
+});
+</script>
+                <div style="text-align:right;">
+                    总费用:
+<span style="color:red;">￥</span>
+<b style="font-size:40px;color:red;font-family:Constantia;" id='totalFee'>0</b>
+                </div>
                     </div>
                     <div class="c"></div>
                   </dd>
@@ -110,11 +184,81 @@ function selectArea(){
 }
 
 function checkfee(){
-    alert("等会哈");
+    var title = $("#title").val();
+    if(title==""){
+        alert("标题别忘了填哦");
+        $("#title").focus();
+        return false;
+    }
+    var carBrand =$("#carBrandId").val();
+    if(!carBrand){
+        alert("记得选爱车的品牌哦");
+        $("#carBrandId").focus();
+        return false;
+    }
+    var carTypeId =$("#carTypeId").val();
+    if(!carTypeId){
+        alert("记得选爱车的车型哦");
+        $("#carTypeId").focus();
+        return false;
+    }
+    var $fees= $("#feelist>tr"),feeerror=false;
+    $fees.each(function(){
+        var tr=this,$feetype =$(".feeTypeId",tr),feetype=$feetype.val(),
+            $fee=$(".fee",tr),fee=$fee.val();
+        if(feetype==""){
+            alert("记得选晒费用类型");
+            feeerror=true;
+            $feetype.focus(); 
+            return false;
+        }
+        if(fee==""){
+            alert("记得填晒费用");
+            feeerror=true;
+            $fee.focus(); 
+            return false;
+        }
+        if(isNaN(fee)){
+            alert("白花花的银子要填数字哦");
+            feeerror=true;
+            $fee.focus(); 
+            return false;
+        }
+    });
+    if(!feeerror) return false;
+    alert("TODO:jsonfee");
     return false;
 }
 
 $(function(){
+
+    var cache ={};
+    function applyBrand(){
+        var brandId = $("#carBrandId").val(),$ct = $("#carTypeId").data("dd");
+        while($ct.ddProp.options.length) $ct.remove($ct.ddProp.options.length-1);
+        if(brandId=="") return ;
+        if(cache[brandId]){
+            fillOpts(cache[brandId]);
+        }else{
+            fillOpts({});
+            //$ct.add({text:'正在加载车型', value:''});
+            $.getJSON("/index.php?app=showfee&mod=Index&act=getCatTypesByBrand&brandId="+brandId,function(data){
+                cache[brandId]=data.data;
+                fillOpts(data.data);
+            });
+        }
+    }
+
+    function fillOpts(data){
+        var $ct = $("#carTypeId").data("dd");
+        while($ct.ddProp.options.length) $ct.remove($ct.ddProp.options.length-1);
+        //$ct.add({text:'[无]', value:''});
+        for(var typeId in data){
+            $ct.add({text:data[typeId].name,value:typeId,title:data[typeId].brandCover});
+        }
+    }
+
+    document.getElementById("carBrandId").onchange= applyBrand;
     $("#carBrandId,#carTypeId").msDropDown();
 });
 
