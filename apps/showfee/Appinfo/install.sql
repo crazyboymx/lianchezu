@@ -93,8 +93,8 @@ VALUES
 DELETE FROM `ts_template` WHERE `type` = 'showfee';
 INSERT INTO `ts_template` (`name`, `alias`, `title`, `body`, `lang`, `type`, `type2`, `is_cache`, `ctime`) 
 VALUES
-    ('showfee_create_weibo', '晒费用', '','我晒了一个费用：【{title}】{url}', 'zh', 'event', 'weibo', 0, 1290417734),
-    ('showfee_share_weibo', '分享费用', '', '分享@{author} 的费用:【{title}】 {url}', 'zh',  'event', 'weibo', 0, 1290595552);
+    ('showfee_create_weibo', '晒费用', '','我晒了一个费用：【{title}】{url}', 'zh', 'showfee', 'weibo', 0, 1290417734),
+    ('showfee_share_weibo', '分享费用', '', '分享@{author} 的费用:【{title}】 {url}', 'zh',  'showfee', 'weibo', 0, 1290595552);
 
 # 增加默认积分配置
 DELETE FROM `ts_credit_setting` WHERE `type` = 'showfee';

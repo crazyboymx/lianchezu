@@ -11,13 +11,17 @@
         </span>
     </div>
 
-    <div class="right rmenu" style="width: 300px;text-align:right;">总费用:<span style='color:red;'>￥</span><b style="font-size:40px;color:red;font-family:Constantia;">{$vo.totalFee}</b></div>
+    <div class="right rmenu" style="width: 300px;text-align:right;">总费用:<span style='color:red;'>￥</span><b style="font-size:40px;color:red;font-family:Constantia;">{$vo.totalFee}</b>
+        <php > if($vo['uid'] == $mid) {</php> <a href="{:U('showfee/Index/editShowfee',array('uid'=>$mid,'id'=>$vo['id']))}" style="display:inline;padding-left:0px;margin-left:5px;">编辑</a> <php> } </php>
+    </div>
     <div style="margin:0 70px 0 90px;">
         <h3>
             <a href="{:U('//showfeeDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}"> {$vo['title']}</a>
         </h3>
         <p><span class="cGray2" style="display:none;">费用介绍：</span>{$vo['explain']} </p>
-        <p>品牌：<a href='javascript:;'>{$vo.carBrandName}</a>,车型：<a href='javascript:;'>{$vo.carTypeName}</a>,年代：<a href='javascript:;'>{$vo.carTime}</a></p>
+        <p>品牌：<a href='{:U('//index',array('cid'=>$vo['carBrandId']))}'>{$vo.carBrandName}</a>,
+        车型：{$vo.carTypeName},
+        年代：{$vo.carTime}</p>
     </div>
     </li>
     </volist>

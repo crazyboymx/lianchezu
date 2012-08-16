@@ -19,12 +19,12 @@
         <div class="tab-menu">
           <!-- 切换标签 begin  -->
           <div class="right">
-            {:W('Weibo',array('tpl_name'=>$_SESSION['new_event'] == 1?'event_create_weibo':'event_share_weibo','button_title'=>'分享'))}
+            {:W('Weibo',array('tpl_name'=>$_SESSION['new_event'] == 1?'showfee_create_weibo':'showfee_share_weibo','button_title'=>'分享'))}
 			<php>
 			    $tpl_data = urlencode(serialize(array(
 			                  'author'=>getUserName($uid),
-			                  'title'=>$title,
-                              'url'=>U('event/Index/eventDetail',array('id'=>$id,'uid'=>$uid)),
+			                  'title'=>$showfee['title'],
+                              'url'=>U('showfee/Index/showfeeDetail',array('id'=>$showfee['id'],'uid'=>$uid)),
                 )));
 			    $param_data = urlencode(serialize(array('has_status'=>1,'is_success_status'=>1,'status_title'=>'发起活动成功')));
 			</php>
@@ -46,7 +46,6 @@
         </div>
         <!-- 切换标签 end  -->
         <div class="groupBox">
-          
           <div class="boxL">
             <div class="box1">
               <div class="info">
@@ -70,11 +69,11 @@
                     </li>
                     <li>
                       <div class="c1"> 品牌：</div>
-                      <div class="c2"><a href="javascript:;"> <img src='{$showfee.carBrandCover}' />{$showfee.carBrandName}</a></div>
+                      <div class="c2"><a href="{:U('showfee/Index/index',array('cid'=>$showfee['carBrandId']))}"> <img src='{$showfee.carBrandCover}' />{$showfee.carBrandName}</a></div>
                     </li>
                     <li>
                       <div class="c1">车型：</div>
-                      <div class="c2"><a href="javascript:;"><img src='{$showfee.carTypeCover}'/>{$showfee.carTypeName}</a> </div>
+                      <div class="c2"><img src='{$showfee.carTypeCover}'/>{$showfee.carTypeName}</div>
                     </li>
                     <li>
                       <div class="c1"> 年代：</div>
@@ -115,7 +114,7 @@
               <h3 style="margin-bottom:0px;"><strong>合计</strong></h3>
 <div style="text-align:right;" class="right rmenu">总费用:<span style="color:red;">￥</span><b style="font-size:40px;color:red;font-family:Constantia;">{$showfee.totalFee}</b></div>
             </div>
-{:W('Comment',array('type'=>'showfee','appid'=>$id,'author_uid'=>$uid,'title'=>$title,'url'=>U('showfee/Index/showfeeDetail',array('id'=>$id,'uid'=>$uid)),'table'=>'showfee','id_field'=>'id','comment_count_field'=>'commentCount'))}
+{:W('Comment',array('type'=>'showfee','appid'=>$showfee['id'],'author_uid'=>$uid,'title'=>$showfee['title'],'url'=>U('showfee/Index/showfeeDetail',array('id'=>$showfee['id'],'uid'=>$uid)),'table'=>'showfee','id_field'=>'id','comment_count_field'=>'commentCount'))}
             </div>
             <div class="c"></div>
           <!-- end  -->

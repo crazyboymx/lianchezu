@@ -108,10 +108,13 @@ class IndexAction extends Action {
         $this->_createLimit($this->mid);
         $map['title']      = t($_POST['title']);
         $map['explain']    = h($_POST['explain']);
+        $map['carTime']        = $_POST['carTime'];
         $map['uid']        = $this->mid;
         $map['carBrandId'] = intval(t($_POST['carBrandId']));
         $map['carTypeId'] = intval(t($_POST['carTypeId']));
-        $feeRecord = json_decode(t($_POST['feeRecord']));
+        //http://bbs.phpchina.com/home.php?mod=space&uid=68442&do=blog&id=48792
+        //json_decode 的第二个参数灰常有用哦
+        $feeRecord = json_decode(t($_POST['feeRecord']),true);
 
         if(strlen(text($map['explain'])) < 4){
             $this->error('介绍不得小于4个字符');
@@ -156,6 +159,8 @@ class IndexAction extends Action {
         if($result = $this->showfee->getShowfeeContent($id, $uid)) {
             $this->assign($result);
             $this->assign('carBrandList', D('ShowfeeCarBrand')->getAllCarBrand());
+            $this->assign('carTypeList',D('ShowfeeCarType')->getCarTypesByBrand($result['carBrandId']));
+            $this->assign ("feeTypeList",D('ShowfeeFeeType')->getAllFeeType());
             $this->setTitle('编辑' . $this->appName);
             $this->display();
         }else {
@@ -165,19 +170,21 @@ class IndexAction extends Action {
 
     public function doEditShowfee() {
         $id = intval($_POST['id']);
+        $map['id']      =$id;
         $map['title']      = t($_POST['title']);
         $map['explain']    = h($_POST['explain']);
+        $map['carTime']    = h($_POST['carTime']);
         $map['uid']        = $this->mid;
         $map['carBrandId'] = intval(t($_POST['carBrandId']));
         $map['carTypeId'] = intval(t($_POST['carTypeId']));
-        $feeRecord = json_decode(t($_POST['feeRecord']));
+        $feeRecords = json_decode(t($_POST['feeRecord']),true);
 
         if(strlen(text($map['explain'])) < 4){
             $this->error('介绍不得小于4个字符');
         }
 
-        if($addId = $this->showfee->editShowfee($id, $map, $feeRecord)) {
-            $this->assign('jumpUrl',U('/Index/showfeeDetail',array('id'=>$addId, 'uid'=>$this->mid)));
+        if($addId = $this->showfee->editShowfee($id, $map, $feeRecords)) {
+            $this->assign('jumpUrl',U('showfee/Index/showfeeDetail',array('id'=>$id, 'uid'=>$this->mid)));
             $this->success($this->appName.'修改成功');
         }else{
             $this->error($this->appName.'修改失败');

@@ -11,7 +11,7 @@ class ShowfeeFeeRecordModel extends BaseModel {
 
     public function addFeeRecord($map) {
         $map['cTime'] = isset($map['cTime']) ? $map['cTime'] : time();
-        if (empty($map['fee']) || empty($map['explain']) || empty($map['feeType']) || empty($map['showfeeId'])) {
+        if (empty($map['fee'])  || empty($map['feeTypeId']) || empty($map['showfeeId'])) {
             return -1;
         }
         return $this->add($map);

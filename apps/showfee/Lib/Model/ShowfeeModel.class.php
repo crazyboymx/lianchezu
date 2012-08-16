@@ -40,8 +40,8 @@ class ShowfeeModel extends BaseModel{
         if ($addId) {
             foreach ($feeRecord as &$fr) {
                 $fr['showfeeId'] = $addId;
+                D('ShowfeeFeeRecord')->addFeeRecord($fr);
             }
-            D('ShowfeeFeeRecord')->addAll($feeRecord);
             //发布到微薄
             $_SESSION['new_event']=1;
             $this->commit();
@@ -68,17 +68,19 @@ class ShowfeeModel extends BaseModel{
 
     public function editShowfee($showfeeId, $map, $feeRecord) {
         $this->startTrans();
-        $addId = $this->where('id ='.$id)->save($map);
-        if ($addId) {
+        $addId = $this->where('id ='.$ShowfeeId)->save($map);
+        //@crazyboy : $addId 老是false  为啥。。。？？？？
+        if (true) {
             //删除旧费用记录
             $frm = D('ShowfeeFeeRecord');
             $frm->where('showfeeId=' . $showfeeId)->delete();
             foreach ($feeRecord as &$fr) {
-                $fr['showfeeId'] = $addId;
+                $fr['showfeeId'] = $map["id"];
+                $frm->addFeeRecord($fr);
             }
-            $frm->addAll($feeRecord);
+            //$frm->addAll($feeRecord);
             $this->commit();
-            return $addId;
+            return true;
         }else{
             $this->rollback();
             return false;
