@@ -1,0 +1,267 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.LoadImage.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.masonry.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.infinitescroll.js"></script>
+<script type="text/javascript" src="{:U('weibo/plugins/init')}"></script>
+
+<style type="text/css">
+<!--
+.item {
+  width: 215px;
+  float: left;
+  margin:auto;
+
+}
+.wrap { margin: auto;width:982px;}
+
+-->
+</style>
+
+
+<script type="text/javascript">
+var II=0;
+$(function(){
+         var speed = 1000;
+         $("#container").masonry({
+            singleMode: true,
+            columnWidth: 240,
+            itemSelector: '.item',
+            animate: false,
+            animationOptions: {
+                duration: speed,
+                queue: false
+            }
+		
+        });
+        $("#container").infinitescroll({
+            navSelector : '#page_nav', // selector for the paged navigation
+            nextSelector : '#page_nav a', // selector for the NEXT link (to page 2)
+            itemSelector : '.item', // selector for all items you'll retrieve
+            loadingImg : '__THEME__/images/loader.gif',
+            donetext : '已经到最后一页了',
+            debug: false,
+            errorCallback: function() {
+            // fade out the error message after 2 seconds
+            $('#infscr-loading').animate({opacity: .8},2000).fadeOut('normal');
+            }},
+            // call masonry as a callback.
+            function( newElements ) { $(this).masonry({ appendedContent: $(newElements) }); }
+        );
+		
+     $(".haibao .pic img").LoadImage(true,210,1800,"__THEME__/images/icon_waiting.gif");
+		
+     });
+</script>
+
+<div class="content"><!-- 内容 begin  -->
+  <div class="main no_l wrap">
+  	<if condition="$topics['topic_id']">
+        <if condition="$topics['pic']"><div class="topics_img"><img alt="#{$topics.name}#" src="{:SITE_URL}/data/uploads/{$topics.pic}" /></div>
+		<div class="c"></div>
+		</if>
+	</if>
+	<div class="clear"></div>
+	<div class="overflowX">
+        <if condition="$topics['topic_id']">
+        <div class="topics_info">
+          <dl class="topics_info_dl">
+            <dt>#{$topics.name}#</dt>
+            <dd>{$topics.content}<if condition="$topics['link']"><a href="{$topics.link}" target="_blank">&gt;&gt;详细</a></if></dd>
+          </dl>
+        </div>
+        </if>
+
+         <div class="floatright" style="padding-right:10px;" onmouseover="this.className='floatright hover'" onmouseout="this.className='floatright'">
+		 <session name="userInfo">
+		 <a href="javascript:void(0)" onclick="weibo.quickpublish('#{$search_key}#')" class="relate_bao_link"><span><b>上传主题分享</b></span></a>
+		 <else/>
+		 <a href="{:U('home/Public/login')}" class="relate_bao_link"><span><b>上传主题分享</b></span></a>
+		 	
+		 </session> 
+		 <div class="canyu"><span class="uploadShareTtips">或者编辑已经发表的分享，在描述中添加<em class="b">#{$topics.name}#</em>并保存即可参与主题。</span></div></div>
+		
+		<div class="tab-menu pt10"><!-- 切换标签 begin  -->
+          <ul>
+            <li><a href="###" class="on feed_item"><span>热议网友</span></a></li>
+          </ul>
+        </div>
+        <div class="MenuSub alR"> <span class="left cGray">该话题共有"<span class="cRed">{$list.count}</span>"条相关分享</span> <a href="{:U('home/user/topics',array('k'=>urlencode($search_key)))}" 
+          <eq name="type" value="">class="on"</eq>
+          >全部</a>| <a href="{:U('home/user/topics',array('k'=>urlencode($search_key),'type'=>'original'))}" 
+          <eq name="type" value="original">class="on"</eq>
+          >原创</a>| <a href="{:U('home/user/topics',array('k'=>urlencode($search_key),'type'=>'goods'))}" 
+          <eq name="type" value="goods">class="on"</eq>
+          >宝贝</a>| <a href="{:U('home/user/topics',array('k'=>urlencode($search_key),'type'=>'image'))}" 
+          <eq name="type" value="image">class="on"</eq>
+          >图片</a>| <a href="{:U('home/user/topics',array('k'=>urlencode($search_key),'type'=>'video'))}" 
+          <eq name="type" value="video">class="on"</eq>
+          >视频</a></div>
+		  </div>
+		
+    <div class="mainbox pt10" style="width:960px; overflow:hidden; margin:auto;">
+        <div class="look_qiang pt10" id="container"> 
+		 <php>if (!$_GET['p']){</php>
+		 <php>if(!empty($search_key)){</php>
+		 
+		 <div class="item">
+		 <div class="btop">
+		 <div class="padding10">
+		  <gt name="mid" value="0">
+			<div class="right_box">
+			  <div id="followTopic" class="followtopic2">
+			  	<php>if($followState){</php><a href="javascript:void(0)" onclick="weibo.unfollowTopic('{$search_key_id}','{$search_key}')">取消该话题</a>
+				<php>}else{</php><a href="javascript:void(0)" onclick="weibo.followTopic('{$search_key}')">关注该话题</a>
+				<php>}</php>
+			  </div>
+			  <h2><span class="ico_tuijian"></span><a href="javascript:void(0)" onclick="weibo.quickpublish('大家来谈谈#{$search_key}#这个话题吧！')">推荐该话题给朋友</a></h2>
+			</div>
+		  </gt>
+		  <div class="right_box">
+		    <h2>其他关注该话题的人</h2>
+		    <ul>
+		      <volist name="other_following" id="of">
+		        <li style="width:33%;" class="left alC">
+		          <div class="userPic">
+		            <space uid="of['uid']" target="_blank">{uavatar=m}</space>
+	              </div>
+		          <div class="HOver">
+		            <space uid="of['uid']" class="fn" target="_blank">{uname}</space>
+	              </div>
+	            </li>
+	          </volist>
+	        </ul>
+	    </div>
+		  <!-- <input type="button" class="btn_green_w121 hand mr10" value="关注该话题" onclick="weibo.followTopic('{$search_key}')" />
+          已关注该话题 <a href="#" class="mr10">取消</a>
+          <input type="button" class="btn_green_w121 hand " value="分享该话题" /> -->
+		<php>}</php>
+        <div class="right_box">
+        {:W('HotTopic', array('type'=>'auto'))} {:W('HotTopic', array('type'=>'recommend'))}</div>
+		</div>
+		</div>
+		</div>
+		<php>}</php>
+            <volist id="vo" name="list['data']">
+			<if condition="$vo['type']">
+			
+			<div class="item">
+
+                  <div class="haibao" onmouseover="this.className='haibao hover'" onmouseout="this.className='haibao'" >
+                  		
+                        <div class="pic">
+						
+						<php>
+						if( $vo['transpond_id'] )
+						{
+								$weibo_id = $vo['transpond_id'];
+						}else{  
+						
+								$weibo_id = $vo['weibo_id'];
+						}
+								$bcdata = M('weibo')->where("weibo_id=" . $weibo_id . "")->findAll() ;
+								$title = unserialize($bcdata[0]['type_data']) ;
+								if( $vo['type'] == 1 ){
+									$st_arr='<div class="ipic"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank"><img class="mycpic" width="'.$title[mwidth].'" height="'.$title[mheight].'" src="__UPLOAD__/'.$title[thumbhaibaourl].'"></a></div>';
+								}else if( $vo['type'] == 3 ){
+									if($title[flashimg])
+									{
+									$st_arr='<div class="ivideo"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank"><img class="mycpic" width="'.$title[mwidth].'" height="'.$title[mheight].'" src="'.$title[flashimg].'"></a><div class="video_play"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank"><img src="__THEME__/images/feedvideoplay.gif"></a></div></div>';
+									}else{
+									$st_arr='<div class="ivideo"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank"><img width="127" height="95" src="__THEME__/images/nocontent.png"></a><div class="video_play"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank"><img src="__THEME__/images/feedvideoplay.gif"></a></div></div>';
+									}
+								}else if( $vo['type'] == 4 ){
+									if($title[logo])
+									{
+									$zhuanji = get_zhuanji($title[logo],2);
+									$st_arr='<div class="imusic"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank"><img class="mycpic" width="'.$title[mwidth].'" height="'.$title[mheight].'" src="'.$zhuanji.'"></a></div>';
+									}else{
+									$st_arr='<div class="imusic"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank"><img width="127" height="95" src="__THEME__/images/nomusic.gif"></a></div>';
+									}
+								}else if( $vo['type'] == 5 ){
+									$st_arr='<div class="ipic"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank" title="'.$title[g_title] .'"><img  width="'.$title[mwidth].'" height="'.$title[mheight].'" src="'.$title[middle_pic].'"></a></div><div class="jiage price-label small-label">
+									<span class="leftfold png"></span>
+									<span class="rightfold png">￥'.$title[price].'</span></div>';	
+								}
+								echo $st_arr;
+						</php>
+						<div class="hbc">
+						<session name="userInfo">
+						<a href="javascript:void(0)" onclick="weibo.pinglun({$vo.weibo_id})" class="hb comment-btn" >评论</a>
+						<php>if( $vo['uid'] == $mid ){</php><a href="javascript:void(0)" onclick="weibo.myedit({$vo.weibo_id},{$vo.bc_id},0)" class="hb edit-btn"><span></span>编辑</a><php>}else{</php>
+						<php>if(favisloveno($vo['weibo_id'])=='1'){</php>
+						<a w="f" href="javascript:void(0)" onclick="ui.loveok2(this,'1','{$vo.favcount}','{$vo.weibo_id}','{$mid}','{$vo.uid|getUserFace}')" callback="weibo.deletfav2('{$vo.weibo_id}')" class="hb unfavourite-btn" id="favloe_{$vo.weibo_id}"><span></span><span  style="display:none" class="favCount" id="fav_{$vo.weibo_id}">{$vo.favcount}</span>取消</a>
+						<php>}else{</php>
+						<a w="f" href="javascript:void(0)" onclick="ui.loveok2(this,'1','{$vo.favcount}','{$vo.weibo_id}','{$mid}','{$vo.uid|getUserFace}')" callback="weibo.deletfav2('{$vo.weibo_id}')" class="hb favourite-btn" id="favloe_{$vo.weibo_id}"><span></span><span  style="display:none" class="favCount" id="fav_{$vo.weibo_id}">{$vo.favcount}</span>喜欢</a>
+						<php>}</php><span class="tou" id="favicon_{$vo.weibo_id}"></span>
+						<php>}</php>
+						<else/>
+						<a href="{:U('home/Public/login')}" class="hb comment-btn" >评论</a>
+						<a href="{:U('home/Public/login')}" class="hb edit-btn"><span></span>喜欢</a>
+						</session>
+						</div><session name="userInfo"><a href="javascript:void(0)" onclick="weibo.transpond({$vo.weibo_id},0)" class="hb forward-btn"><span></span>转发</a><else/><a href="{:U('home/Public/login')}" class="hb forward-btn"><span></span>转发</a></session><php>if( $vo['uid'] == $mid ){</php><a href="javascript:void(0)" onclick="ui.confirm(this,'确认要删除此分享?')" callback="weibo.deleted({$vo.weibo_id})" class="hb2 del-btn" title="删除?"><span></span> </a><php>}</php></div>
+						<div class="pincontent"><p class="vocontent">{$vo.content|format=true}<if condition="$vo['type'] eq 5"><u class="_tb"></u></if><if condition="$vo['type'] eq 4"><u class="ico_music"></u></if></p>
+						<php>if( $vo['transpond_id'] ){
+						$transpond = $bcdata[0]['transpond'] ;
+						</php>
+						转发 {$transpond} 
+						<php>}
+						if( $vo['comment'] ){</php>
+						评论 {$vo.comment} 
+						<php>}
+						if( $vo['favcount'] ){</php>
+						喜欢 {$vo.favcount}
+						<php>}</php>
+						
+						</div>
+						
+							
+							
+              <div class="pin_c">
+			  <div class="myavatar floatleft"><space uid="vo.uid">{uavatar=s}</space></div>
+                <div class="msgCnt"><space uid="vo.uid">{uname}</space>{$vo.uid|getUserGroupIcon}  
+				<if condition="$vo['transpond_id']">
+				转发到 
+				<else/>
+				分享到 
+				</if>
+				<a href="{:U('home/Space/board',array('uid'=>$vo['uid'], 'type'=>1 ,'bc_id'=>$vo['bc_id']))}">{$vo.weibo_id|getBname}</a><br />
+<span class="mydate">{$vo.ctime|friendlyDate}</span></div>
+				
+               
+			   
+              
+			    
+              </div>
+				
+           
+                   
+                   
+                </div>
+				</div>
+			
+			
+			
+			
+			</if>
+		  
+            </volist>
+		  
+		  
+		  
+		 
+        </div>
+		
+		
+        <div class="c"></div>
+        <div class="seemore">
+
+	   	<p class="page" id="page_nav">{$list.html}</p>
+       </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<!-- 内容 end --> 
+
+<include file="__THEME__/footer" /> 

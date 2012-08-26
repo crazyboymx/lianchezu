@@ -1,0 +1,89 @@
+<!-- certif -->
+<dl class="friend_info_left">
+  <dt><space uid="uid">{uavatar=b}</space></dt>
+  <dd style="width:180px; text-align:center;"><div class="myname"> {$uid|getUserName}{$uid|getUserVerifiedIcon}{$uid|getUserGroupIcon}</div></dd>
+
+  <php>if($userinfo['domain']){</php>
+            		<div class="up_address"><a href="{:U('home/Space/index', array('uid'=>$userinfo['domain']))}">{:U('home/Space/index', array('uid'=>$userinfo['domain']))}</a></div>
+					
+            	<php>}</php>
+	</dl>	
+	<div class="pb10"></div>		
+<php>if($mid!=$uid && $mid!=0){</php>
+	<php>if($isBlackList){</php>
+		<div style="width:75%;margin-top:4px; text-align:center; float:left;" >已加入黑名单， <a href="javascript:void(0)" onclick="ui.confirm(this,'确定要将此用户从你黑名单中解除?')" callback="setBlacklist({$uid},'del')">解除</a></div>
+	<php>}else{</php>
+    <div style="width:75%;margin-top:4px; text-align:center;float:left;" id="follow_state">
+	<script>document.write(followState('{$followstate}'))</script></div>
+	<php>}</php><php>}</php><php>if ($mid > 0 && $privacy['message'] && $mid != $uid) {</php><div style="float:left;"><a href="javascript:void(0)" onclick="ui.sendmessage({$uid})" class="d-letter" title="发私信"></a></div>
+					<php>}</php>
+     
+	 <div class="c"></div>
+	<div class="pt10 mb20">	
+				<php>
+            	$user_credit = X('Credit')->getUserCredit($uid);
+            	foreach($user_credit as $k => $v) {
+            </php>
+           		{$v['alias']}：<a href="{:U('home/Account/credit')}"><span class="cRed">{$v['credit']}</span></a> &nbsp;
+
+            <php>
+                }
+                unset($user_credit);
+            </php>
+			
+
+			</div>
+			
+			
+			
+<div>
+    <div class="user_follow_detail lineD_btm">
+	  	<span class="lineR"><a href="{:U('home/space/follow',array('uid'=>$uid,'type'=>'following'))}"><strong>{$spaceCount.following|intval}</strong><br>关注</a></span>
+	    <span class="lineR"><a href="{:U('home/space/follow',array('uid'=>$uid,'type'=>'follower'))}"><strong>{$spaceCount.follower|intval}</strong><br>粉丝</a></span>
+	    <span><a href="{:U('home/Space/index',array('uid'=>$uid))}"><strong>{$uid|getBcuidCount}</strong><br>图格</a></span>
+    </div>
+</div>
+ <if condition="$verified['verified'] eq 1">
+   	<div class="certif">
+	    <a href="{:U('home/Account/verified')}" target="_blank"><img src="__THEME__/images/ico_VIP.png" /></a>
+	    <p>{$verified['info']}</p>
+    </div>
+   </if>
+			<div style="padding:0 10px; text-align:left;" >
+           {:W('Medal',array('async'=>1,'uid'=>$uid, 'show_alert'=>'0'))}
+		   </div>
+<div class="mylocation">
+ 
+				<volist name="userdata" id="profile"> 
+					<p class="pb10 charm">
+					<span class="colonleft"></span>	 
+						<php>$title=unserialize($profile['data']); echo $title['summary']</php> 
+							
+							<span class="colonright"></span>
+							</p>
+                    	</volist>
+						
+ 地区：{$user.location}</div>
+
+<div class="concernbox cf">
+
+<php>if( $uid == $mid ){</php>
+<a class="longbutton concern" href="{:U('home/Account')}"><span>编辑档案</span></a>
+
+<php>}else{</php>	
+					<a class="longbutton concern" href="{:U('home/space/profile',array('uid'=>$uid))}" target="_blank">个人档案</a>
+								
+
+<php>}</php>
+
+
+</div>
+
+<div class="right_box" style="padding-top:0px;padding-bottom:20px;">
+    <h2>{$uid|getUserName}的标签</h2>
+    <p class="tags">
+    	<volist id="vo" name="usertags">
+        	<a tagid="{$vo.tag_id}" weight="423" href="{:U('home/user/searchtag',array('k'=>urlencode($vo['tag_name'])))}" class="fB">{$vo.tag_name}</a>&nbsp;
+    	</volist>
+    </p>
+</div>

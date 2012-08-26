@@ -1,0 +1,62 @@
+<include file="__THEME__/header" />
+
+<div class="content"><!-- 内容 begin  --> 
+  <include file="__THEME__/apps" />
+  <div class="main">
+    <div class="mainbox">
+      <div class="mainbox_C no_r">
+        <div class="page_title"> <!-- page_title begin -->
+          <h2>好友</h2>
+        </div>
+        <div class="tab-menu">
+          <ul>
+            <li><a class="feed_item"  href="{:U('home/Friend/index')}" ><span>我的好友</span></a></li>
+            <li><a class="feed_item on" href="{:U('home/Friend/ping')}"><span>好友屏蔽</span></a></li>
+            <li><a class="feed_item" href="{:U('home/Friend/track')}"><span>访问脚印</span></a></li>
+            <li><a class="feed_item" href="{:U('home/Message/myinvite')}"><span>查找朋友</span></a></li>
+            <li><a class="feed_item" href="{:U('home/Message/myinvite')}"><span>邀请好友</span></a></li>
+          </ul>
+        </div>
+        <div class="mainbox_C_C">
+          <div class="feedBox">
+          <h2 class="fB lh30 lineS_btm f14px ">屏蔽以下用户的动态</h2>
+          <ul class="feed_list">
+          <li>
+          <div class="alR left" style="width:110px;">用户名：</div>
+          <div class="left" style="width:360px; margin-bottom:20px;"><input type="text" class="text" />
+          <br /><input type="button" value="添加" class="btn_b mt5"/></div>
+          </li>
+          </ul>
+          <h2 class="fB lh30 lineD_btm f14px ">已屏蔽动态的用户</h2>
+            <ul class="feed_list">
+              <li class="lineD_btm">
+                <div class="userPic"><a href="{:U('home/space/index',array('uid'=>$vo['from']))}" title=""><img card="1" src="{$vo.from|getUserFace}"></a></div>
+                <div class="feed_c">
+                  <div class="lh20"><a href="###" class="right" title="解除屏蔽">解除屏蔽</a><a id="fname_10002" href="/index.php?s=/space/10002">刘晓庆</a></div>
+                  <div class="cGray2 lh20"><span class="wn">微博：</span>TS2，已经完成了大部分预期功能的开发，但离用户见面还相去甚远。剩下的几个月时间里，再思考、再精简、再优化、再重构。期待与大家一起的揭开谜底的日子。<img src="http://i.thinksns.com/public/images/biaoqing/mini/time.gif"></div>
+                </div>
+              </li>
+              <li class="lineD_btm">
+                <div class="userPic"><a href="{:U('home/space/index',array('uid'=>$vo['from']))}" title=""><img card="1" src="{$vo.from|getUserFace}"></a></div>
+                <div class="feed_c">
+                  <div class="lh20"><a href="#" class="right" title="解除屏蔽">解除屏蔽</a><a id="fname_" href="/index.php?s=/space/10002">刘晓庆</a></div>
+                  <div class="cGray2 lh20"><span class="wn">微博：</span>TS2，已经完成了大部分预期功能的开发，但离用户见面还相去甚远。剩下的几个月时间里，再思考、再精简、再优化、再重构。期待与大家一起的揭开谜底的日子。<img src="http://i.thinksns.com/public/images/biaoqing/mini/time.gif"></div>
+                </div>
+              </li>
+              <li class="lineD_btm">
+                <div class="userPic"><a href="{:U('home/space/index',array('uid'=>$vo['from']))}" title=""><img card="1" src="{$vo.from|getUserFace}"></a></div>
+                <div class="feed_c">
+                  <div class="lh20"><a href="#" class="right" title="解除屏蔽">解除屏蔽</a><a id="fname_2" href="/index.php?s=/space/10002">刘晓庆</a></div>
+                  <div class="cGray2 lh20"><span class="wn">微博：</span>TS2，已经完成了大部分预期功能的开发，但离用户见面还相去甚远。剩下的几个月时间里，再思考、再精简、再优化、再重构。期待与大家一起的揭开谜底的日子。<img src="http://i.thinksns.com/public/images/biaoqing/mini/time.gif"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="c"></div>
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<include file="__THEME__/footer" /> 

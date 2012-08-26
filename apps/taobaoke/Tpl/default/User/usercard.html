@@ -1,0 +1,60 @@
+
+<div class="user_Card" style="text-align:left">
+    <div class="li">
+	    
+        <div id="me_{$user_id}" style="position:absolute; z-index:999999999">
+        <table id="_widget_user_popbox_{$user_id}" rel="_widget_user" user_id="{$user_id}" cellspacing="0" cellpadding="0" border="0" class="boxy-wrapper more_card"  onmouseover="clearTimeout(_widget_user_delay);"  onmouseout="_widget_user_delay = setTimeout(function(){
+                _widget_user_hide();
+            }, 200);" style="display:none;">
+        <tbody>
+	        <tr>
+	            <td class="boxy-inner">
+	                <div style="position:relative; height:1; width:100%;"></div>
+	                <div style="padding:15px; width:300px;background:#fff;border-left:1px solid #BBD570;border-right:1px solid #BBD570;border-top:1px solid #BBD570">
+	                    <div  style="width:70px;float:left"><img src="{$user_id|getUserFace}" width="50px" height="50px"/></div>
+	                    <div  style="width:229px;float:left">
+	                        <h3 class="lh25 f14px" id="title_1"><strong><space uid="{user_id}">{uname}</space>{$user_id|getUserGroupIcon}</strong>
+							
+							
+	</h3>
+							
+	                        <p>
+		  <php>$followInfo = getUserFollow($user_id)</php>
+		  <php>$fav_num = getfavnum($user_id)</php>
+	<?php $faved=M('fav')->where('favuid='.$user_id.'')->count();?>
+ 关注：<a href="{:U('home/space/follow',array('uid'=>$user_id,'type'=>'following'))}">{$followInfo['following']}</a>
+ 粉丝：<a href="{:U('home/space/follow',array('uid'=>$user_id,'type'=>'follower'))}">{$followInfo['follower']}</a>
+ 图格：<a href="{:U('home/space/index',array('uid'=>$user_id))}">{$user_id|getBcuidCount}</a>
+ 
+ </p>
+	                    </div>
+						<div class="c"></div>
+						 <div class="honortip">
+                   性别：{$userinfo.sex|getSex}
+                  <br />
+
+	               所在地：{$userinfo.location}
+	                </div>
+	                    <div class="c"></div>
+	                </div>
+	               <div style="padding:5px 15px; background-color:#EEF8D1;clear:both;border-left:1px solid #BBD570;border-right:1px solid #BBD570;border-bottom:1px solid #BBD570">
+                  <php>if($mid!=$user_id){</php>
+							<span id="follow"><php>if($followstate=='havefollow' || $followstate=='eachfollow'){</php>
+	已关注<php>}else{</php>	
+	<a href="javascript:;"  onclick="dofollow('dofollow','dofollow','{$user_id}');$('#follow').html('已关注');">+加关注</a><php>}</php></span>
+	 <php>}else{</php>
+	 你自己哦!
+	  <php>}</php>
+	                </div>
+					<div style="position:relative;">
+					<div class="tip_arrow" style="margin-left: 2px;"></div>
+					</div>
+	            </td>
+	        </tr>
+	    </tbody>
+	    </table>
+		
+	    </div>
+    </div>
+    <div class="c"></div>
+</div>

@@ -1,0 +1,374 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.masonry.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.infinitescroll.js"></script>
+<script type="text/javascript" src="{:U('weibo/plugins/init')}"></script>
+
+<style type="text/css">
+<!--
+.item {
+  width: 215px;
+  float: left;
+  margin:auto;
+
+}
+
+
+-->
+</style>
+
+<script type="text/javascript">
+$(function(){
+         var speed = 1000;
+         $("#container").masonry({
+            singleMode: true,
+            columnWidth: 234,
+            itemSelector: '.item',
+            animate: false,
+            animationOptions: {
+                duration: speed,
+                queue: false
+            }
+		
+        });
+		
+        $("#container").infinitescroll({
+            navSelector : '#page_nav', // selector for the paged navigation
+            nextSelector : '#page_nav a', // selector for the NEXT link (to page 2)
+            itemSelector : '.item', // selector for all items you'll retrieve
+            loadingImg : '__THEME__/images/loader.gif',
+            donetext : '已经到最后一页了',
+            debug: false,
+            errorCallback: function() {
+            // fade out the error message after 2 seconds
+            $('#infscr-loading').animate({opacity: .8},2000).fadeOut('normal');
+            }},
+            // call masonry as a callback.
+            function( newElements ) { $(this).masonry({ appendedContent: $(newElements) }); }
+        );
+		
+
+		
+     });
+
+function close_announcement() {
+	$('#announcement').hide('slow');
+	$.post("{:U('home/User/closeAnnouncement')}",{},function(res){});
+}
+
+
+</script>
+
+<volist name="ts['ad']['header']" id="vo">
+<div class="ad_header"><div class="ke-post">{$vo['content']}</div></div>
+</volist>
+
+<div class="content"><!-- 内容 begin  --> 
+  
+  <div class="main no_l wrap">
+  <div id="countNew" class="pb10"> </div>
+  <php>if($announcement['is_open'] && !empty($announcement['content'])) {</php>
+        <div class="iine_warning" style="font-size:14px;padding: 5px; margin-bottom:10px;*display: inline-block" id="announcement"><a class="del right" href="javascript:void(0);" onclick="close_announcement();"></a>{$announcement['content']}</div>
+        <php>}</php>
+    <div class="mainbox">
+      
+
+       
+ 
+        
+ <div class="look_qiang" id="container"> 
+		 <php>if (!$_GET['p']){</php>
+		<div class="item">
+		 <include file="__THEME__/apps" />
+		
+		
+		
+		<div class="right_box btop">
+		 <div class="padding10">
+          <h2>关注的话题</h2>
+          <ul class="topic_list" rel="followTopicArea">
+            <volist id="vo" name="followTopic">
+              <li onmouseover="$(this).find('.ico_close').show()" onmouseout="$(this).find('.ico_close').hide()"><a class="ico_close right" style="display:none" title="删除" href="javascript:void(0)" onclick="deleteFollowTopic(this,'{$vo.topic_id}')">x</a><a href="{:U('home/user/search/',array('k'=>urlencode($vo['name'])))}" title="{$vo.name}">{$vo.name}</a></li>
+            </volist>
+          </ul>
+          <div class="alR lh25"><a href="javascript:void(0)" onclick="$('.quick_win').show()">+添加</a></div>
+          <div style="display:none;" class="quick_win">
+            <div class="alR mb5"><a href="javascript:void(0)" onclick="$('.quick_win').hide()" class="del" title="关闭"></a></div>
+            <p>
+              <input type="text" class="text" name="quick_name" style=" width:90px;"/>
+              <input type="button" onclick="addFollowTopic()" value="保存" class="N_but" />
+            </p>
+            <p class="cGray2">请添加想关注的话题</p>
+          </div>{:W('HotTopic', array('type'=>'auto'))} {:W('HotTopic', array('type'=>'recommend'))}
+        </div>
+		</div>
+		
+		
+		 </div> 
+		 <php>}</php>
+		 <php>if (!$_GET['p']){</php>
+			
+			
+			<volist name="ts['ad']['middle']" id="vo">
+			<div class="item pb10">
+          <div class="ad_c1"><div class="ke-post">{$vo.content}</div></div>
+		  </div>
+		  </volist>
+		 	
+			
+		 <php>}</php>	
+            <volist id="vo" name="list['data']">
+			<if condition="$vo['type']">
+			
+			<div class="item">
+
+                  <div class="haibao" onmouseover="this.className='haibao hover'" onmouseout="this.className='haibao'" >
+                  		
+                        <div class="pic">
+						
+						<php>
+						if( $vo['transpond_id'] )
+						{
+								$weibo_id = $vo['transpond_id'];
+						}else{  
+						
+								$weibo_id = $vo['weibo_id'];
+						}
+								$bcdata = M('weibo')->where("weibo_id=" . $weibo_id . "")->findAll() ;
+								$title = unserialize($bcdata[0]['type_data']) ;
+								if( $vo['type'] == 1 ){
+									$st_arr='<div class="ipic"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank"><img  class="mycpic" width="'.$title[mwidth].'" height="'.$title[mheight].'" src="__UPLOAD__/'.$title[thumbhaibaourl].'"></a></div>';
+								}else if( $vo['type'] == 3 ){
+									if($title[flashimg])
+									{
+									$st_arr='<div class="ivideo"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank"><img class="mycpic" width="'.$title[mwidth].'" height="'.$title[mheight].'" src="'.$title[flashimg].'"></a><div class="video_play"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank"><img src="__THEME__/images/feedvideoplay.gif"></a></div></div>';
+									}else{
+									$st_arr='<div class="ivideo"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank"><img width="127" height="95" src="__THEME__/images/nocontent.png"></a><div class="video_play"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank"><img src="__THEME__/images/feedvideoplay.gif"></a></div></div>';
+									}
+								}else if( $vo['type'] == 4 ){
+									if($title[logo])
+									{
+									$zhuanji = get_zhuanji($title[logo],2);
+									$st_arr='<div class="imusic"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank"><img class="mycpic" width="'.$title[mwidth].'" height="'.$title[mheight].'" src="'.$zhuanji.'"></a></div>';
+									}else{
+									$st_arr='<div class="imusic"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank"><img width="127" height="95" src="__THEME__/images/nomusic.gif"></a></div>';
+									}
+								}else if( $vo['type'] == 5 ){
+									$st_arr='<div class="ipic"><a href='.U('home/Space/detail',array('id' =>''. $vo[weibo_id].'')).' target="_blank" title="'.$title[g_title] .'"><img  width="'.$title[mwidth].'" height="'.$title[mheight].'" src="'.$title[middle_pic].'"></a></div><div class="jiage price-label small-label">
+									<span class="leftfold png"></span>
+									<span class="rightfold png">￥'.$title[price].'</span></div>';	
+								}
+								echo $st_arr;
+						</php><div class="hbc"><a href="javascript:void(0)" onclick="weibo.pinglun({$vo.weibo_id})" class="hb comment-btn" >评论</a><php>if( $vo['uid'] == $mid ){</php><a href="javascript:void(0)" onclick="weibo.myedit({$vo.weibo_id},{$vo.bc_id},0)" class="hb edit-btn"><span></span>编辑</a><php>}else{</php>
+						<php>if(favisloveno($vo['weibo_id'])=='1'){</php>
+						<a w="f" href="javascript:void(0)" onclick="ui.loveok2(this,'1','{$vo.favcount}','{$vo.weibo_id}','{$mid}','{$vo.uid|getUserFace}')" callback="weibo.deletfav2('{$vo.weibo_id}')" class="hb unfavourite-btn" id="favloe_{$vo.weibo_id}"><span></span><span  style="display:none" class="favCount" id="fav_{$vo.weibo_id}">{$vo.favcount}</span>取消</a>
+						<php>}else{</php>
+						<a w="f" href="javascript:void(0)" onclick="ui.loveok2(this,'1','{$vo.favcount}','{$vo.weibo_id}','{$mid}','{$vo.uid|getUserFace}')" callback="weibo.deletfav2('{$vo.weibo_id}')" class="hb favourite-btn" id="favloe_{$vo.weibo_id}"><span></span><span  style="display:none" class="favCount" id="fav_{$vo.weibo_id}">{$vo.favcount}</span>喜欢</a>
+						<php>}</php><span class="tou" id="favicon_{$vo.weibo_id}"></span>
+						<php>}</php></div><a href="javascript:void(0)" onclick="weibo.transpond({$vo.weibo_id},0)" class="hb forward-btn"><span></span>转发</a><php>if( $vo['uid'] == $mid ){</php><a href="javascript:void(0)" onclick="ui.confirm(this,'确认要删除此分享?')" callback="weibo.deleted({$vo.weibo_id})" class="hb2 del-btn" title="删除?"><span></span> </a><php>}</php></div>
+						<div class="pincontent"><p class="vocontent">{$vo.content|format=true}<if condition="$vo['type'] eq 5"><u class="_tb"></u></if><if condition="$vo['type'] eq 4"><u class="ico_music"></u></if></p>
+						<php>if( $vo['transpond_id'] ){
+						$transpond = $bcdata[0]['transpond'] ;
+						</php>
+						转发 {$transpond} 
+						<php>}
+						if( $vo['comment'] ){</php>
+						评论 {$vo.comment} 
+						<php>}
+						if( $vo['favcount'] ){</php>
+						喜欢 {$vo.favcount}
+						<php>}</php>
+						
+						</div>
+						
+							
+							
+              <div class="pin_c">
+			  <div class="myavatar floatleft"><space uid="vo.uid">{uavatar=s}</space></div>
+                <div class="msgCnt"><space uid="vo.uid">{uname}</space>{$vo.uid|getUserGroupIcon}  
+				<if condition="$vo['transpond_id']">
+				转发到 
+				<else/>
+				分享到 
+				</if>
+				<a href="{:U('home/Space/board',array('uid'=>$vo['uid'], 'bc_id'=>$vo['bc_id']))}">{$vo.weibo_id|getBname}</a><br />
+<span class="mydate">{$vo.ctime|friendlyDate}</span></div>
+				
+               
+			   
+              
+			    
+              </div>
+				
+           
+                   
+                   
+                </div>
+				</div>
+			
+			
+			
+			
+
+		  </if>
+            </volist>
+		  
+		  
+		  
+		 
+        </div>
+       
+        <div class="clearfix"></div>
+      <div class="seemore">
+
+	   	<p class="pager" id="page_nav">{$list.html}</p>
+       </div>
+    </div>
+  </div>
+</div>
+<!-- 内容 end --> 
+<script>
+	<php>if(ACTION_NAME=='index' && $show_feed==0){</php>
+	var sinceId = '{$vo.weibo_id}';
+	var lastId  = '{$lastId}';
+	var showfeed = '{$show_feed}';
+	var gid  = '{$gid}';
+	<php>}</php>
+$(document).ready(function(){
+	//微博字数控制
+<php>if($type=='' && ACTION_NAME=='index' && $show_feed==0){</php>
+	//更新最新的微博数
+	setInterval("countNew()",120000);
+<php>}</php>
+});
+
+
+
+
+//获取未读取的条数
+function countNew(){
+	$.post(U('weibo/index/countnew'),{lastId:lastId,showfeed:showfeed},function(txt){
+		if(txt.indexOf('<TSAJAX>')==0) {
+			if(txt.indexOf('<HASNEW>')!=-1) {
+				$('#countNew').html(txt);
+			}
+		}else{
+			location.reload();
+		}
+	})
+}
+
+//加载未读取的微博
+function loadNew(pLastId,limit,showfeed){
+	<php>if(is_numeric($gid)){</php>
+		location.href=U('home/User/index');
+	<php>}else{</php>
+	$.post(U('weibo/Index/loadnew'),{since:pLastId,limit:limit,showfeed:showfeed},function(txt){
+		if(txt.indexOf('<TSAJAX>')==0){
+			if(txt.indexOf('<HASNEW>')!=-1) {
+	            lastId = pLastId;
+	            location.href=U('home/User/index');
+			}
+		}else{
+			location.reload();
+		}
+			
+	})
+	<php>}</php>
+}
+
+//加载更多
+function loadmore(o){
+	var type = '{$type}';
+	$(o).html('加载中...');
+	$.post(U('weibo/index/loadmore'),{type:type,since:sinceId,showfeed:showfeed,gid:gid},function(txt){
+		if(txt){
+			$('.look_qiang').append(txt);
+		}
+		$(o).html('更多');
+		
+	})
+}
+
+
+//更改动态显示
+function changeFeedShowStatus(o){
+		var Days = 30;  
+	    var exp  = new Date();  
+	    exp.setTime(exp.getTime() + Days*24*60*60*1000);	
+	if( o.checked ){
+	    document.cookie = "feed=1;expires=" + exp.toGMTString(); 
+		location.reload();
+	}else{
+		document.cookie = "feed=0;expires=" + exp.toGMTString(); 
+		location.reload();
+	}
+}
+
+function deleteMini(id) {
+	$.post(U('home/User/doDeleteMini'),{id:id},function(txt){
+		if(txt == '1') {
+			$("#list_li_"+id).slideUp('fast');
+		}else {
+			ui.error('删除失败，请稍后重试');
+		}
+	});
+}
+
+function setSearchUser(txt){
+		alert(txt);
+		reg = /@[^@\s]{1,20}$/g
+		var   patt   =   new   RegExp(reg);
+		var result = patt.exec( txt.val() );
+		if(!result) return false;
+		var textArea = document.getElementById('content_publish');
+		var key = result.toString().replace('@','');
+
+		$(".txtShadow").html('@' + '<span id="showTips"></span>');
+		var p = $("#showTips").offset();
+				$('#searchUser').css({
+					top: p.top + 5,
+					left: p.left
+				});
+		$('#searchUser').find('dl').html('<dt>你想用@提到谁？</dt><dt>test</dt>');
+		$('#searchUser').show();
+				
+		/**
+		$.get( U('weibo/Index/searchuser',['n='+key]),function(txt){
+			if (txt!='null') {
+				txt = eval("(" + txt + ")");
+				var html = '';
+				$.each(txt, function(i, n){
+					html += '<dt>' + n.uname + '</dt>';
+				});
+				$(".txtShadow").html('@' + '<span id="showTips"></span>');
+				var p = $("#showTips").offset();
+				$('#searchUser').css({
+					top: p.top + 5,
+					left: p.left
+				});
+				$('#searchUser').find('dl').html('<dt>你想用@提到谁？</dt>' + html);
+				$('#searchUser').show();
+			}
+		});
+		**/
+			
+			//$('#searchUser').hide();
+}
+
+
+</script> 
+<!-- 用@提到的人 begin-->
+<div class="atwho" id="searchUser" style="display:none;">
+  <dl>
+    
+    <!--
+                <dd class="ucr">张小小</dd>
+                <dd>张大妮</dd>
+                <dd>冷大少</dd>
+				-->
+    
+  </dl>
+</div>
+<!-- 用@提到的人 end --> 
+<include file="__THEME__/footer" /> 

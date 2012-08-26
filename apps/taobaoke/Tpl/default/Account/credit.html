@@ -1,0 +1,76 @@
+<include file="__THEME__/header" />
+<link href="../Public/account.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/avatar/avatar.js"></script>
+<script type="text/javascript" src="../Public/js/account.js"></script>
+<script type="text/javascript" src="{:U('weibo/Plugins/init')}"></script>
+<style type="text/css">
+<!--
+.wrap { margin: auto;width:982px;}
+-->
+</style>
+
+<script>
+//鼠标移动表格效果
+$(document).ready(function(){
+    $("tr[overstyle='on']").hover(
+      function () {
+        $(this).addClass("iine_warning");
+      },
+      function () {
+        $(this).removeClass("iine_warning");
+      }
+    );
+});
+</script>
+
+
+<div class="mainbox wrap"><!-- 内容 begin  --> 
+  <div class="floatleft tleft">	
+  <include file="__THEME__/apps" />
+  </div>
+  <div class="main"> <!-- 右侧内容 begin  -->
+    <div class="overflowH">
+      <div class="mainbox_C no_r">
+    <!-- page_title end -->
+    <div class="tab-menu"><!-- 切换标签 begin  -->
+      <ul>
+      	<volist id="vo" name="accountmenu">
+      		<li><a href="{:U('home/Account/'.$vo['url'])}" <php>if(ACTION_NAME==$vo['url']){</php>class="on"<php>}</php> ><span>{$vo.name}</span></a></li>
+      	</volist>
+      </ul>
+    </div>
+    <!-- 切换标签 end  -->
+    <div class="mainbox_C_C">
+		<div class="feedBox" style="margin-right:0px;">
+		  <!-- 修改密码 -->
+          <div class="setItems">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="line-height:25px;">
+  			  <tr>
+  			  	<th class="lineD_btm cGray2">动作</th>
+  			  	<volist name="credit_type" id="ct">    	
+		    	<th class="lineD_btm cGray2">{$ct.alias}</th>
+		   		</volist>
+		   	  </tr>
+		   	  <volist name="credit_rules" id="vo">
+		   	  <tr overstyle='on' >
+		   	  	<td class="lineS_btm">{$vo.alias}</td>
+		   	  	<volist name="credit_type" id="ct">    	
+		    	<th class="lineS_btm">{$vo[$ct['name']]}</th>
+		   		</volist>
+		   	  </tr>
+		   	  </volist>
+		   	</table>
+          </div>
+
+        <div class="c"></div>
+        </div>
+        </div>
+      </div>
+	  </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" />

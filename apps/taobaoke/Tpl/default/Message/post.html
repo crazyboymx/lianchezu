@@ -1,0 +1,74 @@
+<div class="pop_form alL" style="width:400px;">
+<div class="c"></div>
+    <div class="pop_form_li">
+        <div class="pop_form_l alR lh20">收信人：</div>
+        <div class="pop_form_r">
+            <div style="width:222px;">{:W('SelectFriends',array('uid'=>$touid))}</div>
+        	 <!--<php>if($touid){</php>
+				<input type="hidden" style="width:220px;" onblur="this.className='text'" onfocus="this.className='text2'" class="text" id="message_to" value="{$touid}"/>
+				<input type="text" readonly disabled=true style="width:220px;" onblur="this.className='text'" onfocus="this.className='text2'" class="text" value="{$touid|getUserName}"/>
+			<php>}else{</php>
+				<input type="text" style="width:220px;" onblur="this.className='text'" onfocus="this.className='text2'" class="text" id="message_to"/>
+			<php>}</php>-->
+		</div>
+    </div>
+    <div class="pop_form_li">
+        <div class="pop_form_l alR lh20">标题：</div>
+        <div class="pop_form_r"><input type="text" style="width:220px;" onblur="this.className='text'" onfocus="this.className='text2'" class="text" id="message_title"/></div>
+    </div>
+    <div class="pop_form_li">
+        <div class="pop_form_l alR lh20">内容：</div>
+        <div class="pop_form_r"><textarea style="width:280px; height:60px;" id="message_content" onblur="this.className='text'" onfocus="this.className='text2'" class="text"></textarea></div>
+    </div>
+    <div class="c"></div>
+    <div class="answers"><input type="button" value="确定" class="btn_b" onclick="doPostMessage();" id="postbut"/></div>
+</div>
+
+<script>
+function butstate(type){
+	if( type == 'open' ){
+		$('#postbut').attr('disabled','');
+		$('#postbut').val('提交');
+	}
+	if( type == 'close' ){
+		$('#postbut').attr('disabled','true');
+		$('#postbut').val('Loading......');
+	}
+}
+    function doPostMessage() {
+    	butstate('close');
+        var message_to      = $('#ui_fri_ids').val();
+        var message_title   = $('#message_title').val();
+        var message_content = $('#message_content').val();
+        if (message_to == "") {
+        	ui.error("请选择好友");
+        	butstate('open');
+        	return ;
+        }
+        if (message_title == "") {
+        	ui.error("请填写标题");
+        	butstate('open');
+        	return ;
+        }
+        if (message_content == "") {
+        	ui.error("请填写内容");
+        	butstate('open');
+        	return ;
+        }
+        $.post("{:U('home/Message/doPost')}", {to:message_to, title:message_title, content:message_content}, function(res){
+        	if (res == '1') {
+                ui.success('发送成功');
+                ui.box.close();
+            }else if(res == '-1') {
+            	ui.error('发信频率太快啦, 请10秒后重试');
+            	butstate('open');
+            }else if(res == '-2') {
+            	ui.error('最多发送给10个人');
+            	butstate('open');
+            }else {
+                ui.error('发送失败');
+                butstate('open');
+            }
+        });
+    }
+</script>

@@ -1,0 +1,43 @@
+<include file="__THEME__/header" />
+<link href="../Public/accounts.css" rel="stylesheet" type="text/css" />
+
+
+
+
+
+<div class="content"><!-- 内容 begin  --> 
+  <include file="__THEME__/apps" />
+  <div class="main"> <!-- 右侧内容 begin  -->
+    <div class=page_title> <!-- page_title begin -->
+      <h2><img src="../Public/images/applications.gif" />邀请管理</h2>
+      <div class="c"></div>
+    </div>
+    <!-- page_title end -->
+	Email: <input type="text" id="email" value=""/><br /><br />
+	<input type="button" onclick="submitInvite();" value="确定" />
+	<div id="test"></div>
+
+	<!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" />
+
+<script type="text/javascript">
+function submitInvite() {
+	var email = $('#email').val();
+	$.post("{:U('home/Account/doInvite')}", {email:email}, function(res){
+		if(res == '-1') {
+			ui.success('邮件格式错误～');
+		}else if(res == '-2') {
+			ui.success('邀请已发送～');
+		}else if(res == '0') {
+			ui.success('邀请失败`');
+		}else if(!isNaN(res)) {
+			ui.box.load("{:U('home/Account/inviteExisted')}&uid="+res, {title: '邀请好友'});
+		}else {
+			$('#test').html('<a href="'+res+'" target="_blank">'+res+'</a>');
+		}
+	});
+}
+</script>

@@ -1,0 +1,572 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="__THEME__/facybox.css" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="{:U('weibo/Plugins/init')}"></script>
+<script src="__PUBLIC__/js/facybox.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+      $('a[rel*=facybox]').facybox({
+        // noAutoload: true
+      });
+      
+      $("h2",$("#changelog")).css("cursor","pointer").click(function(){
+          $(this).next().slideToggle('fast');
+      }).trigger("click");
+      
+    });
+	
+$(window).scroll(function(){
+$('.header-1').removeClass('topfixed');
+});
+
+
+  </script>
+<style type="text/css">
+<!--
+.wrap { margin: auto;width:982px;}
+.myboard .mbox { margin-top:0;}
+-->
+</style>
+<div class="content wrap"><!-- 内容 begin  --> 
+  <div class="main no_l">
+    <div class="mainbox">
+      <div class="mainbox_R_Detail">
+      <div class="myboard">
+       <volist id="vo" name="bcdata">
+             
+                
+               
+           <div class="mbox" ><div class="followlist"><h3 class="mboxTitle"><span class="pd floatright">共{$vo.bc_id|getCcCount}张</span><span class="t" title="{$vo.title}">{$vo.title|getShort=###, 10, '...'}</span></h3><div class="list">
+				<a href="{:U('home/Space/board',array('uid'=>$mini['uid'],'bc_id'=>$vo['bc_id']))}">
+				<php>if(getCcCount($vo['bc_id']) == 0 ){</php>
+				<img src="__THEME__/images/board_thumb.jpg">
+				<php>}else{</php>
+				{$vo.bc_id|getCcpic}
+				<php>}</php>
+				</a></div>
+						<div class="follow">
+						<session name="userInfo">
+						<php>if( $mini['uid'] == $mid ){</php>
+						<a href="javascript:void(0);" onclick="setBcTab('{$vo.bc_id}')" class="longbutton concern">编辑</a>
+						<php>} else {
+						if(guangzhuisno($vo['bc_id'])=='1'){</php>
+						<a w="t" href="javascript:void(0)" onclick="ui.fengmianok(this,'1','{$vo.fengcount}','{$vo.bc_id}','{$mid}','{$mini.uid|getUserFace}')" callback="weibo.deletfengmian('{$vo.bc_id}')" id="fengmianloe_{$vo.bc_id}" class="longbutton unconcern">已关注(<span class="fengcount" id="fengmian_{$vo.bc_id}">{$vo.fengcount}</span>)</a></span>
+						
+						<php>}else{</php>
+						<a w="t" href="javascript:void(0)" onclick="ui.fengmianok(this,'1','{$vo.fengcount}','{$vo.bc_id}','{$mid}','{$mini.uid|getUserFace}')" callback="weibo.deletfengmian('{$vo.bc_id}')" id="fengmianloe_{$vo.bc_id}" class="longbutton concern">关注(<span class="fengcount" id="fengmian_{$vo.bc_id}">{$vo.fengcount}</span>)</a></span>
+						
+						<php>}</php>
+						<span class="tou" id="fengmianicon_{$vo.bc_id}"></span>
+						<php>}</php>
+						<else/>
+						<a href="{:U('home/Public/login')}" class="longbutton concern">关注({$vo.fengcount})</a>
+						</session>
+						</div>
+				</div></div>    
+            
+                       
+        </volist>
+		<div class="clear"></div>
+		<div class="pt10" style="width:222px; overflow:hidden;">
+		<volist name="ts['ad']['right']" id="vo">
+		<div class="ad_right "><div class="ke-post">{$vo.content}</div></div>
+		</volist>
+		</div>
+		<div class="clear"></div>
+		<if condition="$data['from'] eq 5">
+		<div class="mbox2" ><div class="followlist followlist2"><h3 class="mboxTitle"><span class="t" title="{$vo.title}">同采自<php>$from_data = get_domain($data['from_data']);echo $from_data;</php></span></h3><div class="list">
+				<a href="{:U('home/From/index',array('web'=>$from_data))}">
+		<volist id="vo" name="bcdata_from">
+             
+                
+              <php>
+						if( $vo['transpond_id'] )
+						{
+								$weibo_id = $vo['transpond_id'];
+						}else{  
+						
+								$weibo_id = $vo['weibo_id'];
+						}
+								$bcdata = M('weibo')->where("weibo_id=" . $weibo_id . "")->findAll() ;
+								$title = unserialize($bcdata[0]['type_data']) ; 
+								</php>
+           
+				<img src="__UPLOAD__/{$title.thumburl}">
+				
+            
+                       
+        </volist>
+		</a>
+		</div>
+		</div></div>    
+		<div class="clear"></div>
+		</if>
+		
+           {:W('RelatedUser',array('async'=>1))} 
+		   
+       </div>   
+          
+          
+         
+          
+          
+          
+          
+        
+      </div>
+      <div class="mainbox_C xiangxi">
+	  <if condition="$type eq 5">
+	 <div style=" position:relative">
+	 <div class="price-label large-label"><span class="leftfold png"></span><span class="rightfold png">¥{$data.type_data.price}</span></div>
+	 </div>
+	 </if>	
+	  
+      <div class="overflowH mydetail_l">
+      <div class="feedBox">
+        <ul class="feed_list">
+          
+            <li class="grayline" id="list_li_{$mini.id}">
+			  <div class="floatright" style="width:200px;"><div class="tl tl2 floatright">
+			  
+			  				<session name="userInfo">
+			  				<a href="javascript:void(0)" onclick="weibo.transpond({$mini.id},0)" class="zhuangfa"></a>
+							<php>if( $mini['uid'] == $mid ){</php>
+							<a href="javascript:void(0)" onclick="weibo.myedit({$mini.id},{$nowbc_id2},0)" class="bianji"></a>
+							<php>} else {
+							if(favisloveno($mini['id'])=='1'){</php>
+									<a w="f" href="javascript:void(0)" onclick="ui.loveok(this,'1','{$mini.favcount}','{$mini.id}','{$mid}','{$mini.uid|getUserFace}')" callback="weibo.deletfav('{$mini.id}')" class="love add_fav fav fav2" id="favloe_{$mini.id}" title="取消？">
+									<span class="favCount2" id="fav_{$mini.id}">{$mini.favcount}</span><i></i></a><span class="tou" id="favicon_{$mini.id}"></span>
+							 <php>}else{</php>
+							 
+							 <a w="f" href="javascript:void(0)" onclick="ui.loveok(this,'1','{$mini.favcount}','{$mini.id}','{$mid}','{$mini.uid|getUserFace}')" callback="weibo.deletfav('{$mini.id}')" class="love add_fav fav" id="favloe_{$mini.id}" title="喜欢？">
+							 <span class="favCount" id="fav_{$mini.id}">{$mini.favcount}</span><i></i></a><span class="tou" id="favicon_{$mini.id}"></span>
+							 <php>}}</php>
+
+							<else/>
+							
+							
+							<a href="{:U('home/Public/login')}" class="zhuangfa"></a>
+							
+							<a href="{:U('home/Public/login')}" class="love add_fav fav">
+		
+									<span class="favCount" id="fav_{$mini.id}">{$mini.favcount}</span><i></i></a><span class="tou" id="favicon_{$mini.id}"></span>
+							</session>
+
+</div>
+<div class="clear"></div>
+<div class="floatright pt10">
+<!-- Baidu Button BEGIN -->
+    <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+        <span class="bds_more">分享到：</span>
+        <a class="bds_qzone"></a>
+        <a class="bds_tsina"></a>
+        <a class="bds_tqq"></a>
+        <a class="bds_renren"></a>
+		<a class="shareCount"></a>
+    </div>
+<script type="text/javascript" id="bdshare_js" data="type=tools" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+	var bds_config = {
+		'bdText':'{$mini.content}(分享自@{$ts['site']['site_name']}),美图来自',
+		<if condition="$type eq 1">
+		'bdPic':"http://"+location.host+"__UPLOAD__/{$type_data.thumbmiddleurl}",
+		</if>
+		<if condition="$type eq 5">
+		'bdPic':"{$type_data.originalurl}",
+		</if>
+		<if condition="$type eq 3">
+		'bdPic':"{data.flashimg}",
+		</if>
+		'searchPic':'0',
+		'render':true,	
+		'review':'normal',
+		'snsKey':{'tsina':'<php> echo $sina_wb_akey;</php>','qzone':'212818','tqq':'<php> echo $qq_key;</php>','douban':'<php> echo $douban_key;</php>','renren':'172300'}//qzone和renren修改为你的appkey
+	}
+	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+</script>
+<!-- Baidu Button END --></div>
+</div>
+              <div class="userPic"><space uid="mini.uid">{uavatar}</space></div>
+              <div class="feed_c">
+                <div class="msgCnt"><space uid="mini.uid">{uname}</space>{$mini.uid|getUserGroupIcon} 
+				<if condition="$mini['transpond_id']">
+				<php>if ($mini['expend']['uid']!= $mini['uid']){</php>
+				转自 <space uid="mini.expend.uid">{uname}</space>
+				<php>}</php>
+				</if>
+				<span class="gray">{$mini.ctime|friendlyDate}</span></div>
+				
+				
+					<php>if($mid!=$mini['uid'] && $mid!=0){</php>
+	<php>if($isBlackList){</php>
+		<span>已加入黑名单， <a href="javascript:void(0)" onclick="ui.confirm(this,'确定要将此用户从你黑名单中解除?')" callback="setBlacklist({$mini.uid},'del')">解除</a></span>
+	<php>}else{</php>
+    <span id="follow_list_{$mini.uid}">
+	<script>document.write(followState('{:getFollowState($mid,$mini["uid"])}','dolistfollow',{$mini.uid}))</script></span>
+	<php>}</php>
+
+
+<php>}</php>
+				
+				<php>$fav_num = getfavnum($mini['uid'])</php>
+              <a href="{:U('home/Space/index',array('uid'=>$mini['uid']))}">{$mini.uid|getBcuidCount}</a>个图格&nbsp;&nbsp;<a href="{:U('home/Space/share',array('uid'=>$mini['uid']))}">{$spaceCount.miniblog|intval}</a>个分享&nbsp;&nbsp;<a class="blue" href="{:U('home/Space/share',array('uid'=>$mini['uid'],'type'=>'fav'))}">{$fav_num}</a>个喜欢
+              
+			    
+              </div>
+            </li>
+			
+        </ul>
+      </div>
+	  <div class="c"></div>
+	  <div style="position:relative;">
+	  	<php>$myup = getCcpic_updown($nowbc_id2,$mini['id'],1);echo $myup;</php>
+		<php>$mydown = getCcpic_updown($nowbc_id2,$mini['id'],2);echo $mydown;</php>
+	  </div>
+	<if condition="$data['from'] eq 5">
+	 <div class="floatright" style="padding:10px 22px 0 0;">采自 <a href="{$data['from_data']}" target="_blank" rel="nofollow"><php>$from_data = get_domain($data['from_data']);echo $from_data;</php></a></div>
+	 </if>
+	 <div class="clear"></div>
+	 
+	 
+	  <div class="mycontent">
+	  		
+	  		
+			<div class="myimage" onmouseover="this.className='myimage hover'" onmouseout="this.className='myimage'" style=" position:relative;">
+			<if condition="$type eq 5">
+			<div style="cursor: pointer;" onclick="window.open('{$data[type_data][goodsurl]}', '_blank');" id="gotobuy-pos" class="gotobuy-pos js-nb-click">
+<div class="gotobuy png">
+<p>{$data.type_data.g_title|getShort=###, 10, '...'}</p>
+<p class="buylinks">
+
+<span class="gotobuy-price">¥<em>{$data.type_data.price}</em></span>
+
+
+
+
+
+<a class="btn-gotobuy taobao png" href="###">去购买</a>
+
+
+
+
+</p><p>
+</p></div>
+</div>
+</if>	
+
+<php>
+if($data['from']==5){
+}
+$from_data2 = get_domain($data['from_data']);;
+$from_me1 = get_domain('http://item.taobao.com ');
+$from_me2 = get_domain('http://detail.tmall.com');
+if($from_data2==$from_me1 OR $from_data2==$from_me2){
+</php>
+			<div style="cursor: pointer;" onclick="window.open('{$data['from_data']}', '_blank');" id="gotobuy-pos" class="gotobuy-pos js-nb-click">
+<div class="gotobuy png">
+<p>{$mini.content|getShort=###, 10, '...'}</p>
+<p class="buylinks pt10">
+
+
+
+
+
+
+<a class="btn-gotobuy taobao png" href="###">去购买</a>
+
+
+
+
+</p><p>
+</p></div>
+</div>
+<php>
+}
+</php>		
+			
+			<if condition="$type eq 1">
+			<php>if ($data['from'] == 5){</php>
+			<a target="_blank" rel="nofollow" href="{$data['from_data']}" ><img class="big_pic" src="__UPLOAD__/{$type_data.thumbmiddleurl}" /></a>
+			<php>}else{</php>
+			<a target="_blank" rel="facybox" href="__UPLOAD__/{$type_data.picurl}" ><img title="查看原图" class="big_pic" src="__UPLOAD__/{$type_data.thumbmiddleurl}" /></a>
+			<php>}</php>
+			
+			<a title="查看原图" id="zoomr_show" rel="facybox" href="__UPLOAD__/{$type_data.picurl}"></a>
+			</if>
+			<if condition="$type eq 5">
+			<a target="_blank" rel="nofollow" href="{$data['type_data']['goodsurl']}"><img src="{$data.type_data.big_pic}" title="{$data.type_data.g_title}" /> </a>
+			<a title="查看原图" id="zoomr_show" rel="facybox" href="{$type_data.originalurl}"></a>
+			</if>
+			<if condition="$type eq 3">
+			<div class="feed_img" style="position:relative; text-align:center;">
+			<php>if( $mini['transpond_id'] ){</php>
+				{$mini.expend.expend}
+			<php>}else{</php>
+                	{$mini.expend}
+                <php>}</php>
+			</div>
+			<script>document.getElementById( "openvideo").click();</script>
+			</if>
+			<if condition="$type eq 4">
+			<php>if($type_data[logo]){</php>
+			<php>$zhuanji_b = get_zhuanji($type_data[logo],5);$zhuanji_m = get_zhuanji($type_data[logo],4);</php>
+			<a title="查看原图" id="zoomr_show" rel="facybox" href="{$zhuanji_b}"></a>
+			<div><img src="{$zhuanji_m}" /></div>
+			<php>}</php>
+			<div class="padding10"><object width="257" height="33" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"> 
+<param value="http://www.xiami.com/widget/0_{$type_data[mp3id]}/singlePlayer.swf" name="movie"> 
+<param value="transparent" name="wmode"> 
+<param value="high" name="quality"> 
+<embed width="257" height="33" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" quality="high" wmode="transparent" menu="false" src="http://www.xiami.com/widget/0_{$type_data[mp3id]}/singlePlayer.swf"> 
+</object> 
+			 
+			 &nbsp;&nbsp;&nbsp;&nbsp; <a href="{:U('home/Music/music_list',array('uid'=>$mini['uid'], 'bc_id'=>$nowbc_id))}"><img src="__THEME__/images/bofang.png"></a>
+			 </div>
+			
+			</if>
+			</div>
+			<h2 class="f14 padding20">{$mini.content|format=true}</h2>
+			
+			<if condition="$data['from'] eq 5"> 
+	 <div class="floatleft" style="padding:10px 0 0 15px;font-size:14px;">通过 <a href="{:U('home/Caiji/tools')}" target="_blank" >书签栏采集工具</a></div>
+	  </if>
+			<!--<if condition="$type eq 5">
+					<div class="body_link">
+							<a style="background:url(__THEME__/images/buy.gif) no-repeat 0 1px;" href="{$data['type_data']['goodsurl']}" target="_blank"  rel="nofollow" class="shop_link" title="{$data.type_data.g_title}">{$data.type_data.g_title}</a>
+								
+							<a class="relate_bao_link" href="{$data['type_data']['goodsurl']}" rel="nofollow" target="_blank" title="购买"><span>¥{$data.type_data.price} <b>购买链接</b></span></a>
+							
+							
+			  </div>
+			</if>-->
+	  </div>
+	  <div class="c"></div>
+	  <div class="feedBox right"> 
+					
+					
+					来自 <cite><?php echo getFrom($mini['from'], $mini['from_data']);?></cite>
+					<session name="userInfo">
+					&nbsp;&nbsp;|&nbsp;&nbsp;<cite><a href="javascript:void(0)" onclick="denounce('weibo',{$mini.id},'{$mini.content|msubstr=0,140|t|keyWordFilter|addslashes}','{$mini.uid}',{$mid});">举报</a></cite>&nbsp;&nbsp;|&nbsp;&nbsp;
+					
+					<php>
+					//推荐功能（包括宝贝，图片）
+					
+							$loginuser = $uid;
+							if($loginuser == "1" ){</php>
+							
+					<span class="tuijian" >
+							 
+							 
+							 
+							 
+<a w="t" href="javascript:void(0)" onclick="ui.tuijianok(this,'1','{$mini.jiancount}','{$mini.id}','{$mini.uid}','{$mini.uid|getUserFace}')" callback="weibo.delettuijian('{$mini.id}')" id="tuijianloe_{$mini.id}">推荐首页(<span class="jianCount" id="tuijian_{$mini.id}">{$mini.jiancount}</span>)</a></span>
+   <span class="tou" id="tuijianicon_{$mini.id}"></span>
+   <if condition="$type eq 1">
+   &nbsp;&nbsp;|&nbsp;&nbsp;
+   <span class="tuijian" >
+   <a w="t" href="javascript:void(0)" onclick="ui.darenok(this,'1','{$mini.fengcount}','{$mini.id}','{$mini.uid}','{$mini.uid|getUserFace}')" callback="weibo.deletdaren('{$mini.id}')" id="darenloe_{$mini.id}">设为封面达人(<span class="fengcount" id="daren_{$mini.id}">{$mini.fengcount}</span>)</a></span>
+
+   <span class="tou" id="darenicon_{$mini.id}"></span>
+   </if>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+						<php>}</php>
+					
+						<php>if( $mini['uid'] == $mid ){</php>
+						
+						<a href="javascript:void(0)" onclick="ui.confirm(this,'确认要删除这条微博?')" callback="weibo.deleted2({$mini.id})">删除</a>&nbsp;&nbsp;|&nbsp;&nbsp;<php>}</php>
+						
+						
+						<a href="javascript:void(0)"  >评论({$mini.comment})</a>
+
+		    </session>
+		  </div>
+		<div class="c"></div>		
+		<div class="firstsend">
+<span class="pointer"></span> <span class="markpaste"></span>
+        <ul class="feed_list" style="margin:0 auto;">
+          
+            <li id="list_li_{$mini.id}">
+			
+			  <if condition="$mini['transpond_id']">
+              <div class="userPic"><space uid="mini.expend.uid">{uavatar}</space></div>
+              <div class="feed_c">
+                <div class="msgCnt">
+				
+				<space uid="mini.expend.uid">{uname}</space>{$mini.expend.uid|getUserGroupIcon} 首发到 <a href="{:U('home/Space/board',array('uid'=>$mini['expend']['uid'], 'bc_id'=>$nowbc_id))}">{$nowtitle} </a>
+				
+				
+			   
+				
+				</div>
+				
+            	<span class="gray">{$mini.expend.ctime|friendlyDate}</span>
+				<php>$fav_num = getfavnum($mini['expend']['uid'])</php>
+              <div><a href="{:U('home/Space/index',array('uid'=>$mini['expend']['uid']))}">{$mini.expend.uid|getBcuidCount}</a>个图格&nbsp;&nbsp;<a href="{:U('home/Space/share',array('uid'=>$mini['expend']['uid']))}">{$mini.expend.uid|getMiniNum_zhuan}</a>个分享&nbsp;&nbsp;<a class="blue" href="{:U('home/Space/share',array('uid'=>$mini['expend']['uid'],'type'=>'fav'))}">{$fav_num}</a>个喜欢</div>    
+			    
+              </div>
+			  <else/>
+			  <div class="userPic"><space uid="mini.uid">{uavatar}</space></div>
+              <div class="feed_c">
+                <div class="msgCnt">
+				<space uid="mini.uid">{uname}</space>{$mini.uid|getUserGroupIcon} 首发到 <a href="{:U('home/Space/board',array('uid'=>$mini['uid'],'bc_id'=>$nowbc_id))}">{$nowtitle} </a>
+				
+				</div>
+				<span class="gray">{$mini.ctime|friendlyDate}</span> 
+				<php>$fav_num = getfavnum($mini['uid'])</php>
+				<div><a href="{:U('home/Space/index',array('uid'=>$mini['uid']))}">{$mini.uid|getBcuidCount}</a>个图格&nbsp;&nbsp;<a href="{:U('home/Space/share',array('uid'=>$mini['uid']))}">{$mini.uid|getMiniNum_zhuan}</a>个分享&nbsp;&nbsp;<a class="blue" href="{:U('home/Space/share',array('uid'=>$mini['uid'],'type'=>'fav'))}">{$fav_num}</a>个喜欢
+			   
+              </div>
+			  </if>
+			  
+            </li>
+			
+        </ul>
+<div class="c"></div>
+</div>
+		
+		<div class="c"></div>
+		 <php>if( $mini['favcount'] ){</php>	
+		<div class="feedBox">
+		<div class="nwl_img clearfix">
+        
+							
+          <span>喜欢这个分享的人({$mini.favcount})</span>
+
+		 
+          <ul class="u_like"> 
+		  <volist id="vo" name="fav">
+                                   <li> <a href="{:U('home/Space/index',array('uid'=>$vo['uid']))}" title="{$vo['uid']|getUserName}于{$vo['dateline']|friendlyDate}喜欢"><img src="{$vo.uid|getUserface}"></a></li> 
+                </volist>
+</ul>
+
+        </div>
+		</div>
+		<php>}</php>
+		
+<php>if ($mid <= 0) {</php> 
+	  <div class="message"><div style="padding:6px">只有登录才可以评论，立即 <a href="{:U('home/Public/login')}">登录</a> 或 <a href="{:U('home/Public/register')}">注册</a></div></div>  
+<php>} else if ($privacy['weibo_comment']){</php>   
+	  <form action="{:U('weibo/Operate/addcomment')}" method="post" callback="addDetailComment" rel="miniblog_comment">
+		<input type="hidden" name="weibo_id" value="{$mini.id}">
+		<input type="hidden" name="reply_comment_id" id="replyid_{$mini.id}">	  	
+      <div class="message">
+            	<h2><em>共{$comment.count}条</em>评论</h2>
+                <div style="margin:5px"><textarea class="message_text" id="comment_{$mini.id}" style="width:99%;" name="comment_content" cols="" rows=""></textarea></div>
+                <div style="margin:5px; height:24px;">
+                    <input type="submit" class="N_but right" value="确定">
+                    <span><a class="faceicon1" href="javascript:void(0)" onclick="ui.emotions(this)" target_set="comment_{$mini.id}"></a></span>
+                    <!--<span><label><input type="checkbox" value="1" name="transpond"> 同时告诉给我的粉丝</label></span>-->
+			        <if condition="$mini['transpond_id']">
+			          <span><label><input name="transpond_weibo_id" type="checkbox" value="{$mini['transpond_id']}" /> 同时评论给原文作者</label>
+			        </if>
+                </div>
+            </div> 
+	  </form>
+<php>} else {</php>
+	  <div class="message"><div style="margin:5px">您没有权限评论此微博</div></div>
+<php>}</php>
+
+      <div class="feedBox"> 
+        <ul class="feed_list">
+
+<volist id="vo" name="comment['data']">
+           <li class="lineD_btm">
+              <div class="userPic"><space uid="vo.uid">{uavatar}</space></div>
+              <div class="feed_c" style="margin-left:65px">
+                <div class="msgCnt" style="padding-bottom:0; font-size:12px;"><space uid="vo.uid">{uname}</space>{$vo.uid|getUserGroupIcon}<em> {$vo.ctime|date='m月d日 H:i',###}</em>
+                </div>
+			    <div class="feed_c_btm"> 
+					<span class="right">
+						<php>if ($mid > 0 && ($vo['uid'] == $mid || $mini['uid'] == $mid)) {</php>
+						<a href="javascript:void(0)" onclick="ui.confirm(this,'确认要删除这条评论?')" callback="doDelComment({$vo.comment_id})">删除</a> |
+						<php>}</php>
+						
+						<php>if($mid > 0 && $privacy['weibo_comment']){</php> 
+						 	<a href="javascript:void(0)" onclick="reply('{$vo.uid|getUserName}',{$vo.comment_id})">回复</a>
+						 <php>}</php>
+					</span> {$vo.content|formatComment=true}
+				</div>
+              </div>
+            </li>
+</volist>
+
+        </ul>
+      </div>
+	  <div class="page">{$comment.html}</div>
+      <div class="c"></div>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+</div>
+<!-- 内容 end --> 
+ <script>
+
+ $(document).ready(function(){
+
+    <php>if ($mid > 0) {</php>
+	    $("#comment_{$mini.id}").keyup(function(event){
+			if(event.keyCode==32 || event.keyCode==8 || event.keyCode==13){
+				checkInputLength(this,140);
+			}
+		}).keypress(function(){
+			checkInputLength(this,140);
+		}).blur(function(){
+			checkInputLength(this,140);
+		}).keydown(function(){
+			checkInputLength(this,140);
+		}).keyup(function(){
+			checkInputLength(this,140);
+		});
+
+	    shortcut('ctrl+return',	function(){ $("form[rel='miniblog_comment']").submit();},{'target':'comment_<?php echo $mini['id']; ?>'});
+    <php>}</php>
+ });
+ 
+ 
+ function checkInputLength(obj,num){
+	 	var $obj = $(obj);
+		var str  = $obj.val();  
+		var len  = getLength(str);
+		if( len > num ){
+			$obj.val(subStr(str, num));
+		}
+}
+ 
+ function reply( name,id){
+		$("#comment_{$mini.id}").val( '回复@'+name+' : ' ).focus();
+		$("#replyid_{$mini.id}").val(id);
+		
+		var textArea = document.getElementById("comment_{$mini.id}");
+		var strlength = textArea.value.length;
+		if (document.selection) { //IE
+			 var rng = textArea.createTextRange();
+			 rng.collapse(true);
+			 rng.moveStart("character",strlength)
+		}else if (textArea.selectionStart || (textArea.selectionStart == '0')) { // Mozilla/Netscape…
+	        textArea.selectionStart = strlength;
+	        textArea.selectionEnd = strlength;
+	    }		
+	}
+	
+	function addDetailComment(txt){
+		ui.success('回复成功');
+		setInterval("location.reload()",1000);
+	}
+	
+	//删除某条回复
+	function doDelComment(id){
+		$.post( U('weibo/operate/docomments') , {id:id} ,function(txt){
+			ui.success('删除成功');
+			setInterval("location.reload()",1000);
+		});
+	}	
+	
+	
+</script>
+<volist name="ts['ad']['footer']" id="vo">
+<div class="ad_footer"><div class="ke-post">{$vo['content']}</div></div>
+</volist>
+<include file="__THEME__/footer" /> 

@@ -68,9 +68,8 @@ class ShowfeeModel extends BaseModel{
 
     public function editShowfee($showfeeId, $map, $feeRecord) {
         $this->startTrans();
-        $addId = $this->where('id ='.$ShowfeeId)->save($map);
-        //@crazyboy : $addId 老是false  为啥。。。？？？？
-        if (true) {
+        $addId = $this->where('id ='.$showfeeId)->save($map);
+        if ($addId) {
             //删除旧费用记录
             $frm = D('ShowfeeFeeRecord');
             $frm->where('showfeeId=' . $showfeeId)->delete();

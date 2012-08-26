@@ -1,0 +1,115 @@
+
+<!--快速登录-->
+<div class="alL"  style="width:370px">
+<div class="tab-menu"><!-- 切换标签 begin  -->
+  <ul>
+    <li><a href="###" class="on"><span>登录</span></a></li>
+    <li><a href="###" class=""><span>注册</span></a></li>
+  </ul>
+</div>
+<div class="reg_box">
+  <p class="cGray2 lh30 pl10">登录thinksns</p>
+  <form action="{:U('home/Public/doRegister')}" method="post" id="regform" name="reg">
+    <php>if(!empty($invite)) {</php>
+    <input type="hidden" name="validationid" value="{$invite['validationid']}">
+    <input type="hidden" name="validationcode" value="{$invite['code']}">
+    <php>}</php>
+    <ul class="form_list">
+      <li class="form_li">
+        <div class="left alR" style="width:85px;">Email：</div>
+        <div class="left" style="width:160px;">
+          <input type="text" class="text" style="width:150px;" value="{$invite['touser']}" name="email" require="true" />
+        </div>
+        <div class="left">
+           <span class="ico_cue_ok"></span>
+        </div>
+      </li>
+      <li class="form_li">
+        <div class="left alR" style="width:85px;">登录密码：</div>
+        <div class="left" style="width:160px;">
+          <input type="password" class="text" style="width:150px;" name="password" />
+        </div>
+        <div class="left">
+          <div> <span class="ico_cue_no"></span> 密码错误</div>
+        </div>
+      </li>
+      <li class="form_li">
+        <div class="left alR" style="width:85px;">&nbsp;</div>
+        <div class="left" style="width:160px;"> <a href="href=javascript:reg.submit();" class="btn_w"><strong>登录</strong></a></div>
+      </li>
+    </ul>
+  </form>
+  <div class="c"></div>
+  <div class="lineS_top lh30 alC ml10 mr10">没有thinksns账号？<a href="#">立即注册</a></div>
+</div>
+</div>
+
+<!--快速注册-->
+<div class="alL"  style="width:370px">
+<div class="tab-menu"><!-- 切换标签 begin  -->
+  <ul>
+    <li><a href="###" class=""><span>登录</span></a></li>
+    <li><a href="###" class="on"><span>注册</span></a></li>
+  </ul>
+</div>
+<div class="reg_box">
+  <p class="cGray2 lh30 pl10">还不是这里的用户？没关系注册一个呗！！！</p>
+  <form action="{:U('home/Public/doRegister')}" method="post" id="regform" name="reg">
+    <php>if(!empty($invite)) {</php>
+    <input type="hidden" name="validationid" value="{$invite['validationid']}">
+    <input type="hidden" name="validationcode" value="{$invite['code']}">
+    <php>}</php>
+    <ul class="form_list">
+      <li class="form_li">
+        <div class="left alR" style="width:85px;">Email：</div>
+        <div class="left" style="width:160px;">
+          <input type="text" class="text" style="width:150px;" value="{$invite['touser']}" name="email" require="true" datatype="email|ajax" url="{:U('home/Public/isEmailAvailable')}" msg="重要！请填有效邮箱地址，以收邮件完成注册|邮箱已被占用!"/>
+        </div>
+        <div class="left">
+          <div id="success_email" style="display:none;"> <span class="ico_cue_ok"></span> </div>
+          <div class="error_email" style="position: relative;display:none;"> <span class="ico_cue_no"></span><span id="error_email"></span> </div>
+        </div>
+      </li>
+      <li class="form_li">
+        <div class="left alR" style="width:85px;">登录密码：</div>
+        <div class="left" style="width:160px;">
+          <input type="password" class="text" style="width:150px;" name="password" id="password" require="true" value="" datatype="limit"  min="6" max="16" msg="密码由6-16个英文字母、数字或特殊字符组成"/>
+        </div>
+        <div class="cr">
+          <div id="success_password"  style="display:none;"> <span class="ico_cue_ok"></span> </div>
+          <div class="error_password" style="position: relative;display:none;"> <span class="ico_cue_no"></span> <span id="error_password"></span> </div>
+        </div>
+      </li>
+      <li class="form_li">
+        <div class="left alR" style="width:85px;">确认密码：</div>
+        <div class="left" style="width:160px;">
+          <input type="password" class="text" style="width:150px;" name="repassword" require="true" value="" datatype="repeat|limit"  min="6" max="16" to="password" msg="两次输入的密码不一样，请重输！|密码由6-16个英文字母、数字或特殊字符组成"/>
+        </div>
+        <div class="cr">
+          <div id="success_repassword"  style="display:none;"> <span class="ico_cue_ok"></span> </div>
+          <div class="r error_repassword" style="position: relative;display:none;"> <span class="ico_cue_no"></span> <span id="error_repassword"></span> </div>
+        </div>
+      </li>
+         <li class="form_li">
+          <div class="left alR" style="width:85px;">验证码：</div>
+          <div class="left" style="width:160px;">
+            <input type="text" class="text"  style="width: 60px; margin-right:5px; float:left;" name="verify" require="true" datatype="require|ajax" url="__URL__/checkVerify" msg="验证码不能为空|验证码输入有误，请重输！"/>
+            <div class="left"> <img src="__URL__/verify" id="verifyimg"/><a href="javascript:void(0);" onclick="changeverify()"><br />
+              看不清 换一张</a> </div>
+          </div>
+          <div class="left">
+            <div id="success_verify"  style="display:none;"> <span class="ico_cue_ok"></span>  </div>
+            <div class="r error_verify" style="position: relative;display:none;">
+              <span class="ico_cue_no"></span> 
+                  <p id="error_verify"></p>
+                 </div>
+            </div>
+        </li>
+      <li class="form_li">
+        <div class="left alR" style="width:85px;">&nbsp;</div>
+        <div class="left" style="width:160px;"> <a href="href=javascript:reg.submit();" class="btn_reg"><strong>快速创建我的微博</strong></a></div>
+      </li>
+    </ul>
+  </form>
+</div>
+</div>

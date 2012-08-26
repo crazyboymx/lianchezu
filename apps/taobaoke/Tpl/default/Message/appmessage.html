@@ -1,0 +1,82 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+
+<link href="__PUBLIC__/js/tbox/box.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tbox/box.js"></script>
+<script type="text/javascript" src="{:U('weibo/Plugins/init')}"></script>
+<style type="text/css">
+<!--
+.wrap { margin: auto;width:982px;}
+-->
+</style>
+
+<div class="mainbox wrap"><!-- 内容 begin  --> 
+  <div class="floatleft tleft">	
+  <include file="__THEME__/apps" />
+  </div>
+  <div class="main">
+    <div class="overflowH">
+      <div class="mainbox_C no_r">
+        <div class="tab-menu">
+          <ul>
+            <li><a class="feed_item"  href="{:U('home/Message/inbox')}" ><span>收件箱</span></a></li>
+            <li><a class="feed_item" href="{:U('home/Message/outbox')}"><span>发件箱</span></a></li>
+            <li><a class="feed_item" href="{:U('home/Message/notify')}"><span>系统通知</span></a></li>
+            <li><a class="feed_item on" href="{:U('home/Message/appmessage')}"><span>应用消息</span></a></li>
+            
+          </ul>
+        </div>
+        <div class="lh30" style="width:99%; overflow:hidden;">
+          <php>if (empty($data)) {</php>
+              暂无应用消息
+          <php>}</php>
+          <!--
+          <div class="app_message_clew"><span class="right"><a href="#">忽略该应用的所有邀请</a></span>您有 1 个 忍者村 邀请</div>
+          -->
+          <ul class="feed_list">
+          	<volist id="vo" name="data">
+            <li class="lineD_btm" id="myinvite_{$vo.hash}">
+                <div class="userPic">
+                    <a href="{:U('home/space/index',array('uid'=>$vo['fromuid']))}" title="">
+                        <img card="1" src="{$vo.fromuid|getUserFace}">
+                    </a>
+                </div>
+                <div style="margin-left:70px;">{$vo.myml}</div>
+            </li>
+			</volist>
+          </ul>
+          <div class="c"></div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<!-- 内容 end --> 
+<script>
+	function manyou_add_userapp(hash, url){
+        if (url) {
+            ui.success('正在跳转至应用...');
+        }
+        setTimeout(function(){
+	        $.post( "{:U('home/Message/deleteMyInvite')}", {hash:hash}, function(res){
+	            if (res == '1') {
+	                if (url) {
+	                    //同意
+	                    self.location.href = url;
+	                }else {
+	                    //忽略
+	                    ui.success('忽略成功');
+	                    $('#myinvite_'+hash).remove();
+	                }
+	            }else {
+	                ui.error('操作失败');
+	            }
+	        });
+        }, 1500);
+	}
+</script>	
+<include file="__THEME__/footer" /> 

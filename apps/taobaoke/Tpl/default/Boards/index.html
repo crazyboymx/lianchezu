@@ -1,0 +1,143 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.masonry.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.infinitescroll.js"></script>
+<script type="text/javascript" src="{:U('weibo/plugins/init')}"></script>
+
+<style type="text/css">
+<!--
+.item {
+  width: 222px;
+  float: left;
+  margin:auto;
+
+}
+
+-->
+</style>
+<script type="text/javascript">
+$(function(){
+         var speed = 1000;
+         $("#container").masonry({
+            singleMode: true,
+            columnWidth: 234,
+            itemSelector: '.item',
+            animate: false,
+            animationOptions: {
+                duration: speed,
+                queue: false
+            }
+		
+        });
+        $("#container").infinitescroll({
+            navSelector : '#page_nav', // selector for the paged navigation
+            nextSelector : '#page_nav a', // selector for the NEXT link (to page 2)
+            itemSelector : '.item', // selector for all items you'll retrieve
+            loadingImg : '__THEME__/images/loader.gif',
+            donetext : '已经到最后一页了',
+            debug: false,
+            errorCallback: function() {
+            // fade out the error message after 2 seconds
+            $('#infscr-loading').animate({opacity: .8},2000).fadeOut('normal');
+            }},
+            // call masonry as a callback.
+            function( newElements ) { $(this).masonry({ appendedContent: $(newElements) }); }
+        );
+
+		$('#boardIntroFilters a').click(function(){
+            var colorClass = '.' + $(this).attr('class');
+
+            if(colorClass=='.all') {
+                // show all hidden boxes
+                $("#container").children('.invis')
+                .toggleClass('invis').fadeIn(speed);
+            } else {
+                // hide visible boxes
+                $("#container").children().not(colorClass).not('.invis')
+                .toggleClass('invis').fadeOut(speed);
+                // show hidden boxes
+                $("#container").children(colorClass+'.invis')
+                .toggleClass('invis').fadeIn(speed);
+            }
+           $("#container").masonry();
+
+
+            return false;
+        });
+        $(".sd_Comment").click(function( event ){
+            //alert("qqq");
+            $(this).parents(".pin").find(".pinComments").append('fhafkjdsahfdsajfkdsahfsd <br /> alkdsafdka ');
+
+            $("#container").masonry();
+            event.preventDefault();
+        });
+         $(".sd_Comment1").click(function( event ){
+            //alert("qqq");
+            $(this).parents(".pin").find(".pinComments").append('fhafkjdsahfdsajfkdsahfsd <br /> alkdsafdka ');
+
+            
+            event.preventDefault();
+        });
+		
+     });
+	 
+</script>
+<include file="../Public/top_reg" />
+<div class="content no_bg"><!-- 内容 begin  -->
+  <div class="main no_l wrap">
+    <div class="mainbox">
+	
+		 <div class="myboard" id="container">	
+			<volist name="list['data']" id="vo">
+			<php>
+			$BoardCount = getCcCount($vo['bc_id']);
+			if( $BoardCount > 9 ){
+			</php>
+			<div class="item">
+				<div class="mbox mt15" onmouseover="this.className='mbox mt15 hover'" onmouseout="this.className='mbox mt15'" ><div class="followlist"><h3 class="mboxTitle"><span class="number floatright">共{$vo.bc_id|getCcCount}张</span><span class="t" title="{$vo.title}">{$vo.title|getShort=###, 8, '...'}</span></h3><div class="list">
+				<a href="{:U('home/Space/board',array('uid'=>$vo['uid'], 'bc_id'=>$vo['bc_id']))}">
+				<php>if(getCcCount($vo['bc_id']) == 0 ){</php>
+				<img src="__THEME__/images/board_thumb.jpg">
+				<php>}else{</php>
+				{$vo.bc_id|getCcpic}
+				<php>}</php>
+				</a></div>
+				<div class="follow">
+				<session name="userInfo">
+					<php>if( $vo['uid'] == $mid ){</php><a class="longbutton concern" href="javascript:void(0);" onclick="setBcTab('{$vo.bc_id}')">编辑</a>
+				<php>} else {
+						if(guangzhuisno($vo['bc_id'])=='1'){</php>
+						<a w="t" href="javascript:void(0)" onclick="ui.fengmianok(this,'1','{$vo.fengcount}','{$vo.bc_id}','{$mid}','{$vo.uid|getUserFace}')" callback="weibo.deletfengmian('{$vo.bc_id}')" id="fengmianloe_{$vo.bc_id}" class="longbutton unconcern">已关注(<span class="fengcount" id="fengmian_{$vo.bc_id}">{$vo.fengcount}</span>)</a></span>
+						
+						<php>}else{</php>
+						<a w="t" href="javascript:void(0)" onclick="ui.fengmianok(this,'1','{$vo.fengcount}','{$vo.bc_id}','{$mid}','{$vo.uid|getUserFace}')" callback="weibo.deletfengmian('{$vo.bc_id}')" id="fengmianloe_{$vo.bc_id}" class="longbutton concern">关注(<span class="fengcount" id="fengmian_{$vo.bc_id}">{$vo.fengcount}</span>)</a></span>
+						
+						<php>}</php>
+						<span class="tou" id="fengmianicon_{$vo.bc_id}"></span>
+				<php>}</php>
+				<else/>
+				<a href="{:U('home/Public/login')}" class="longbutton concern">关注({$vo.fengcount})</a>
+				</session>
+				</div>
+				</div>
+				</div>
+				
+			</div>
+			
+			<php>}</php>
+           </volist>     
+        
+           </div>
+	  <div class="clearfix"></div>
+	<div class="seemore">
+
+	   	<p class="pager" id="page_nav">{$list.html}</p>
+       </div>
+      <div class="c"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="clearfix"></div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" /> 
