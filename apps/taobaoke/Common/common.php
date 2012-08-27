@@ -1,45 +1,45 @@
 <?php
+//获取应用配置
+function getConfig($key=NULL){
+	$config = model('Xdata')->lget('taobaoke');
+	$config['limitpage']    || $config['limitpage'] =10;
+	$config['canCreate']===0 || $config['canCreat']=1;
+    ($config['credit'] > 0   || '0' === $config['credit']) || $config['credit']=0;
+    $config['credit_type']  || $config['credit_type'] ='experience';
+	($config['limittime']   || $config['limittime']==='0') || $config['limittime']=0;//换算为秒
 
-//是否已设置头像
-function isSetAvatar($uid){
-    return is_file( SITE_PATH.'/data/uploads/avatar/'.$uid.'/small.jpg');
+	if($key){
+		return $config[$key];
+	}else{
+		return $config;
+	}
+}
+//获取活动封面存储地址
+function getCover($coverId,$width=80,$height=80){
+	$cover = D('Attach')->field('savepath,savename')->find($coverId);
+	if($cover){
+		$cover	=	SITE_URL."/thumb.php?w=$width&h=$height&url=".get_photo_url($cover['savepath'].$cover['savename']);
+	}else{
+		$cover	=	SITE_URL."/thumb.php?w=$width&h=$height&url=./apps/event/Tpl/default/Public/images/hdpic1.gif";
+	}
+	return $cover;
+}
+//根据存储路径，获取图片真实URL
+function get_photo_url($savepath) {
+	return './data/uploads/'.$savepath;
 }
 
-//获取微博条数
-function getMiniNum($uid){
-	return M('weibo')->where('uid='.$uid)->count();
+/**
+ * getBlogShort 
+ * 去除标签，截取blog的长度
+ * @param mixed $content 
+ * @param mixed $length 
+ * @access public
+ * @return void
+ */
+function getBlogShort($content,$length = 40) {
+	$content	=	stripslashes($content);
+	$content	=	strip_tags($content);
+	$content	=	getShort($content,$length);
+	return $content;
 }
-
-//仿知美二次开发 获取微博条数
-function getMiniNum_zhuan($uid){
-	return M('weibo')->where('uid='.$uid.' AND isdel=0 AND type<>0')->count();
-}
-
-//获取关注数
-function getUserFollow($uid){
-	$count['following'] = M('weibo_follow')->where("uid=$uid AND type=0")->count();
-	$count['follower']  = M('weibo_follow')->where("fid=$uid AND type=0")->count();
-	return $count;
-}
-
-// 短地址
-function getContentUrl($url) {
-	return getShortUrl( $url[1] ).' ';
-}
-
-// 登陆页微博表情解析
-function login_emot_format($content)
-{
-    echo preg_replace_callback('/(?:#[^#]*[^#^\s][^#]*#|(\[.+?\]))/is', 'replaceEmot', $content);
-}
-
-//仿知美二次开发 获取喜欢数
-function getfavnum($uid){
-	return M('fav')->where('uid='.$uid)->count();
-}
-
-//仿知美二次开发  获取被喜欢数
-function getfavednum($uid){
-	return M('fav')->where('favuid='.$uid)->count();
-}
-

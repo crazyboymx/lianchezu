@@ -1,0 +1,151 @@
+<include file="_header" />
+<link href="/public/js/msdropdown/dd.css" rel="stylesheet"/>
+<script type="text/javascript" src="/public/js/msdropdown/js/jquery.dd.js"></script>
+<style type="text/css">
+.dd .ddTitle span.ddTitleText img{height:16px;}
+.dd .ddChild a img{height:16px;}
+</style>
+<script>
+var globalData = <php> echo json_encode($carTypes);</php>;
+
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+        ids.push( $(n).val() );
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+
+var ctrl = function(){
+}
+ctrl.prototype = {
+    del:function(id){
+        var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0) return ;
+        if( confirm("是否删除车型？") ){
+          $.post( '__URL__&act=deleteCarType',{id:id},function(text ){
+              if( text == 1 ){
+                  ui.success( "删除成功" );
+                  var id_list = id.split( ',' );   
+                  for (var j=0 ; j< id_list.length ; j++   ){
+                      $('#list_'+id_list[j]).remove(); 
+                  }
+              }else if( text == 2 ){
+                  ui.success( "删除成功" );
+                  $('#list_'+id).remove();
+              }else{
+                  ui.error( "删除失败" );
+              }
+          });
+        }
+    },
+    edit:function(id){
+        var row = globalData[id];
+        c.add();
+        $("#brandId").val(row.brandId).msDropDown();
+        $("#cbtitle").html("编辑车型");
+        $("#fname").val(row.name);
+        $("#fid").val(row.id);
+        $("#formedit").attr("action","__URL__&act=editCarType");
+    },
+    add:function(){
+        ui.box.show($("#tpledit").val(),{title:"<span id='cbtitle'>新增车型</span>"});
+        $("#brandId").msDropDown();
+        $("#btnsave").click(function(){
+            var fname = $("#fname").val();
+            if(fname==""){
+                alert("车型名称不能为空");
+                return ;
+            }
+            $("#formedit").submit();
+        });
+    }
+}
+var c = null;
+</script>
+<textarea style='display:none;' id='tpledit'>
+<form style='height:150px;width:400px;' method="post" id='formedit' enctype='multipart/form-data' action="__URL__&act=addCarType" >
+车标：<br/>
+ <select name="brandId" id="brandId" style="width:300px;">
+    <volist name="brands" id="b" >
+    <option value="{$b.id}" title="{$b.cover}">{$b.name}</option>
+    </volist>
+  </select>
+<br/>
+车型：<br/>
+<input type='text' name='name' id='fname' style="width:300px;" />
+<input type='hidden' id='fid' name='id'  /><br/>
+品牌上传:<br/>
+<input type='file' name='cover'/><br/>
+<input type='button' class='btn_b' value='保存' id='btnsave'/>
+</form>
+</textarea>
+<div class="so_main">
+  <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.add()"><span>新增车型</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除车型</span></a>
+    </div>
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <th style="width:30px;">
+                <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+            </th>
+            <th>ID</th>
+            <th>名称</th>
+            <th>品牌</th>
+            <th>图片</th>
+            <th>操作</th>
+          </tr>
+            <tbody id="">
+        <volist name="data" id="row">
+          <tr id="list_{$row.id}">
+            <td><input type="checkbox" name="checkbox"  onclick="checkon(this)" value="{$row.id}"></td>
+            <td>{$row.id}</td>
+            <td>{$row.name}</td>
+            <td>
+                <img src="{$row.brandCover}" />
+                    {$row.brandName}
+            </td>
+            <td> <img src="{$row.cover}"/>  </td>
+            <td>
+                <a href="javascript:void(0);" onclick="c.edit({$row.id})">编辑</a>
+                <a href="javascript:void(0);" onclick="c.del({$row.id})">删除</a>
+            </td>
+          </tr>
+          </volist>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.add()"><span>新增车型</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除车型<span></a>
+    </div>
+</div>
+<include file="_footer" />
+<script type="text/javascript">
+c = new ctrl();
+</script>

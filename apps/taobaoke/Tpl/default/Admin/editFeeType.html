@@ -1,0 +1,34 @@
+<div style="width:300px;margin:10px auto 20px auto;">
+    <br />
+    类型：<input id="tname" class="txt" value ="" />
+    <input type="hidden" id="tid" class="txt" value ="" />
+    <input type="hidden" id="taction" class="txt" value ="" />
+</div>
+<div >
+    <input type="button" class="btn_b" onclick="editType()" value="确定" />
+</div>
+<script>
+function editType(){
+    var tid=$("#tid").val(),tname=$("#tname").val(),taction=$("#taction").val();
+    if(tname==""){
+        alert("类型不能为空");
+        return ;
+    }
+  $.post(taction,{name:tname,id:tid},function( id ){
+      if( id > 0 ){//新增
+          ui.box.close();
+          ui.success('操作成功');
+          /*$('#feetypelist').append(
+                '<tr id="list_'+id+'">'+
+                  '<td><input type="checkbox" name="checkbox"  onclick="checkon(this)" value="'+id+'"></td>'+
+                  '<td>'+name+'</td>'+
+                  '<td><a href="javascript:c.edit('+id+')">编辑</a> <a href="javascript:c.del('+id+')">删除</a></td>'+
+                '</tr>'
+          );*/
+            window.location.reload();
+      }else{
+          ui.error( "操作失败" );
+      }
+  });
+}
+</script>

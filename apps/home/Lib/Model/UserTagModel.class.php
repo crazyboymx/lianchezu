@@ -178,4 +178,3 @@ class UserTagModel extends Model{
 		return $res;
 	}
 }
-?>

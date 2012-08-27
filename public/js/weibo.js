@@ -121,8 +121,11 @@ $.extend({
                         }
                    },{id:weibo_id})
                 },
-                upCount:function(){
-                    upCount();
+                upCount:function(type){
+                    upCount(type);
+                },
+                downCount:function(type){
+                    downCount(type);
                 },
                 addtheme:function(){
                     var text = '#请在这里输入自定义话题#';

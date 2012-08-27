@@ -1,0 +1,295 @@
+.look_qiang .haibao {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 3px solid #FFFFFF;
+    box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+    color: #888888;
+    margin-bottom: 16px;
+    width: 216px;
+}
+.look_qiang .haibao .vocontent a {
+    background: none repeat scroll 0 0 #FF99CC;
+    border-radius: 2px 2px 2px 2px;
+    color: #FFFFFF;
+    display: inline-block;
+    margin-right: 3px;
+    padding: 0 3px;
+}
+.look_qiang .hover .vocontent {
+    color: #000000;
+}
+.look_qiang .hover {
+    border: 3px solid #E71F8D;
+}
+.look_qiang .hover .pic img {
+    opacity: 0.8;
+}
+.myavatar {
+    margin-right: 6px;
+    margin-top: 3px;
+}
+.floatleft {
+    float: left;
+}
+.haibao .pic {
+    padding-top: 5px;
+    text-align: center;
+}
+.haibao .pincontent {
+    padding: 6px 8px 6px 13px;
+}
+.haibao .pin_c {
+    background: none repeat scroll 0 0 #FBFBFB;
+    border-top: 1px solid #F0F0F0;
+    clear: both;
+    padding: 8px 0 8px 13px;
+}
+.myavatar {
+    margin-right: 6px;
+    margin-top: 3px;
+}
+.seemore {
+    display: none;
+    padding: 20px;
+    text-align: center;
+}
+.seemore .current {
+    padding: 3px 8px;
+}
+.seemore .pager a {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    padding: 3px 8px;
+}
+
+
+.btop {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-left: 3px solid #FFFFFF;
+    border-right: 3px solid #FFFFFF;
+    border-top: 3px solid #E71F8D;
+    box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+    color: #888888;
+    margin-bottom: 16px;
+    width: 216px;
+}
+.home_cf {
+    padding: 16px 0 11px 16px;
+    width: 206px;
+}
+.home_cf .myli a {
+    background: url("images/table.gif") no-repeat scroll left -141px transparent;
+    color: #888888;
+    cursor: pointer;
+    display: block;
+    float: left;
+    line-height: 24px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    padding-left: 10px;
+}
+.home_cf .myli a em {
+    background: url("images/table.gif") no-repeat scroll right -166px transparent;
+    color: #FF076A !important;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-size: 14px;
+    padding-right: 10px;
+}
+.home_cf .myli a.current {
+    background: url("images/table.gif") no-repeat scroll left -91px transparent;
+    color: #FFFFFF !important;
+}
+.home_cf .myli a.current em {
+    background: url("images/table.gif") no-repeat scroll right -116px transparent;
+    color: #FFFFFF !important;
+    cursor: pointer;
+}
+.home_cf .myli a:hover {
+    background: url("images/table.gif") no-repeat scroll left -91px transparent;
+    color: #FFFFFF !important;
+    text-decoration: none;
+}
+.home_cf .myli a:hover em {
+    background: url("images/table.gif") no-repeat scroll right -116px transparent;
+    color: #FFFFFF !important;
+    cursor: pointer;
+}
+.jiage {
+    clear: both;
+    color: #000000;
+    left: -9px;
+    margin-top: -35px;
+    opacity: 0.8;
+    padding: 2px;
+    position: absolute;
+}
+.hover .jiage {
+    opacity: 1;
+}
+._tb {
+    background: url("images/tao.gif") no-repeat scroll 0 0 transparent;
+    height: 14px;
+    padding: 0 0 0 16px;
+    width: 16px;
+}
+.ico_music {
+    background: url("images/ico_music.gif") no-repeat scroll 0 0 transparent;
+    height: 18px;
+    padding: 0 0 0 16px;
+    width: 16px;
+}
+.ivideo {
+    border: 1px solid #E71F8D;
+    margin: 10px auto 0;
+    padding: 2px;
+    position: relative;
+    width: 127px;
+}
+.ivideo img.mycpic {
+    height: 96px;
+    width: 128px;
+}
+.ivideo .video_play {
+    left: 65px;
+    margin: -15px 0 0 -15px;
+    opacity: 0.5;
+    position: absolute;
+    top: 48px;
+}
+.item .hb {
+    display: none;
+    left: 3px;
+    position: absolute;
+    text-align: center;
+    top: 4px;
+    z-index: 2;
+}
+.item .hb2 {
+    bottom: 20px;
+    display: none;
+    position: absolute;
+    right: 3px;
+    text-align: center;
+}
+.item .hover .hb {
+    display: block;
+}
+.item .hover .hb2 {
+    display: block;
+}
+.item .hbc {
+    display: none;
+    position: absolute;
+    right: 24px;
+    top: 4px;
+}
+.item .hbc .hb {
+    display: inline-block;
+    position: static;
+}
+.item .hover .hbc {
+    display: block;
+}
+a.hb {
+    background-image: url("images/link.png");
+    background-repeat: no-repeat;
+    color: #000000 !important;
+    display: inline-block;
+    line-height: 29px;
+    padding-left: 25px;
+    padding-right: 5px;
+    width: 35px;
+}
+a.forward-btn {
+    background-position: 0 0;
+}
+a.forward-btn:hover {
+    background-position: -72px top;
+}
+a.forward-btn:active {
+    background-position: -144px top;
+}
+a.comment-btn {
+    background-position: left -31px;
+}
+a.comment-btn:hover {
+    background-position: -72px -31px;
+}
+a.comment-btn:active {
+    background-position: -144px -31px;
+}
+a.favourite-btn {
+    background-position: left -62px;
+}
+a.favourite-btn:hover {
+    background-position: -72px -62px;
+}
+a.favourite-btn:active {
+    background-position: -144px -62px;
+}
+a.edit-btn {
+    background-position: left -186px;
+}
+a.edit-btn:hover {
+    background-position: -72px -186px;
+}
+a.edit-btn:hover {
+    background-position: -144px -186px;
+}
+a.del-btn {
+    background-image: url("images/fzcg_xxx.gif");
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 23px;
+    line-height: 23px;
+    padding-left: 0;
+    width: 13px;
+}
+a.unfavourite-btn {
+    background-position: left -93px;
+    color: #999999;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.vocontent {
+    padding-bottom: 3px;
+}
+.price-label .leftfold {
+    background: url("images/pricelabel.png") no-repeat scroll left top transparent;
+    display: block;
+    float: left;
+}
+.price-label .rightfold {
+    background: url("images/pricelabel.png") no-repeat scroll right top transparent;
+    color: #FFFFFF;
+    display: block;
+    float: left;
+    font-family: "Microsoft Yahei","微软雅黑";
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+}
+.small-label .leftfold, .small-label-gift .leftfold {
+    background-position: 0 -50px;
+    height: 27px;
+    width: 6px;
+}
+.small-label .rightfold, .small-label-gift .rightfold {
+    background-position: right -50px;
+    font-size: 13px;
+    height: 27px;
+    line-height: 20px;
+    padding-right: 16px;
+}
+#infscr-loading {
+    background: none repeat scroll 0 0 #000000;
+    border-radius: 10px 10px 10px 10px;
+    bottom: 40px;
+    color: #FFFFFF;
+    height: 100px;
+    left: 45%;
+    opacity: 0.8;
+    padding: 10px;
+    position: fixed;
+    width: 200px;
+    z-index: 5000;
+}

@@ -1,0 +1,120 @@
+<include file="_header" />
+<script>
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+        ids.push( $(n).val() );
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+
+var ctrl = function(){
+}
+ctrl.prototype = {
+    del:function(id){
+        var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0) return ;
+        if( confirm("是否删除{$ts['app']['app_alias']}费用类型？") ){
+          $.post( '__URL__&act=deleteFeeType',{id:id},function(text ){
+              if( text == 1 ){
+                  ui.success( "删除多个{$ts['app']['app_alias']}费用类型成功" );
+                  var id_list = id.split( ',' );   
+                  for (var j=0 ; j< id_list.length ; j++   ){
+                      $('#list_'+id_list[j]).remove(); 
+                  }
+              }else if( text == 2 ){
+                  ui.success( "删除成功" );
+                  $('#list_'+id).remove();
+              }else{
+                  ui.error( "删除失败" );
+              }
+          });
+        }
+    },
+    edit:function(id,name){
+        ui.box.load('/apps/showfee/Tpl/default/Admin/editFeeType.html',{title:'修改类型',complete:function(){
+            window.setTimeout(function(){
+                $("#tname").val(name);
+                $("#tid").val(id);
+                $("#taction").val("__URL__&act=doEditFeeType"); 
+            },50);
+        }});
+    },
+    add:function(){
+        ui.box.load('/apps/showfee/Tpl/default/Admin/editFeeType.html',{title:'增加类型',complete:function(){
+            window.setTimeout(function(){
+                $("#taction").val("__URL__&act=doEditFeeType"); 
+            },50);
+        }});
+    }
+}
+var c = null;
+</script>
+<div class="so_main">
+  <include file="_tab" />
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.add()"><span>新增费用类型</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除费用类型</span></a>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <th style="width:30px;">
+                <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+            </th>
+            <th>ID</th>
+            <th>费用类型</th>
+            <th>操作</th>
+          </tr>
+            <tbody id="feetypelist">
+          <php> foreach ( $list as $id=>$name ){ </php>
+          <tr id="list_{$id}">
+            <td><input type="checkbox" name="checkbox"  onclick="checkon(this)" value="{$id}"></td>
+            <td>{$id}</td>
+            <td>{$name}</td>
+            <td>
+                <a href="javascript:void(0);" onclick="c.edit({$id},'{$name}')">编辑</a>
+                <a href="javascript:void(0);" onclick="c.del({$id})">删除</a>
+            </td>
+          </tr>
+          <php>}</php>
+            </tbody>
+        </table>
+    </div>
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.add()"><span>新增费用类型</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除费用类型</span></a>
+    </div>
+</div>
+<include file="_footer" />
+<script type="text/javascript">
+$( function(){
+   $( "select[name='type']" ).val("{$type}");
+   $( "select[name='sorder']" ).val("{$sorder}");
+   $( "select[name='eorder']" ).val("{$eorder}");
+   $( "select[name='limit']" ).val("{$limit}");
+});
+c = new ctrl();
+</script>
