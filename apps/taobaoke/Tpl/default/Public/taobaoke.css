@@ -1,3 +1,59 @@
+.header-1 {
+    border-top: 1px solid #DAD9D9;
+    border-bottom: 1px solid #DAD9D9;
+    margin-bottom:10px;
+    background-color:#fff;
+}
+.header-2 {
+    height: 43px;
+}
+.channelmenu{padding-left:8px;}
+.topchannel {
+    height: 43px;
+    margin: 0 auto;
+    padding: 0 2px;
+}
+.topchannel .fastcreate {
+    float: right;
+}
+.topchannel .fastcreate a {
+    background: url("images/newcreat.gif") no-repeat scroll 12px 15px transparent;
+    color: #E71F8D;
+    display: inline-block;
+    font-size: 14px;
+    height: 41px;
+    line-height: 41px;
+    padding-left: 26px;
+    vertical-align: middle;
+    width: 54px;
+}
+.topchannel .fastcreate a.newShowcase {
+    background-position: 12px -27px;
+}
+.channelmenu a {
+    color: #E71F8D;
+    display: inline-block;
+    float: left;
+    font-family: "Microsoft Yahei";
+    font-size: 16px;
+    height: 33px;
+    padding-top: 8px;
+}
+.channelmenu .dot {
+    background: url("images/dot.gif") no-repeat scroll center center transparent;
+    display: inline-block;
+    float: left;
+    height: 10px;
+    margin-top: 16px;
+    width: 22px;
+}
+
+
+
+.look_qiang {
+    background-color:#fff;
+    padding-top:4px;
+}
 .look_qiang .haibao {
     background: none repeat scroll 0 0 #FFFFFF;
     border: 3px solid #FFFFFF;
