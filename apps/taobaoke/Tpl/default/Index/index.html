@@ -1,6 +1,7 @@
 <include file="__THEME__/header" />
 <script type="text/javascript" src="../Public/js/jquery.masonry.js"></script>
 <script type="text/javascript" src="../Public/js/jquery.infinitescroll.js"></script>
+<script type="text/javascript" src="../Public/taobaoke.js"></script>
 <link rel="stylesheet" href="../Public/taobaoke.css" type="text/css" />
 <style type="text/css">
 <!--
@@ -42,41 +43,6 @@ $(function(){
             function( newElements ) { $(this).masonry({ appendedContent: $(newElements) }); }
         );
 
-		$('#boardIntroFilters a').click(function(){
-            var colorClass = '.' + $(this).attr('class');
-
-            if(colorClass=='.all') {
-                // show all hidden boxes
-                $("#container").children('.invis')
-                .toggleClass('invis').fadeIn(speed);
-            } else {
-                // hide visible boxes
-                $("#container").children().not(colorClass).not('.invis')
-                .toggleClass('invis').fadeOut(speed);
-                // show hidden boxes
-                $("#container").children(colorClass+'.invis')
-                .toggleClass('invis').fadeIn(speed);
-            }
-           $("#container").masonry();
-
-
-            return false;
-        });
-        $(".sd_Comment").click(function( event ){
-            //alert("qqq");
-            $(this).parents(".pin").find(".pinComments").append('fhafkjdsahfdsajfkdsahfsd <br /> alkdsafdka ');
-
-            $("#container").masonry();
-            event.preventDefault();
-        });
-         $(".sd_Comment1").click(function( event ){
-            //alert("qqq");
-            $(this).parents(".pin").find(".pinComments").append('fhafkjdsahfdsajfkdsahfsd <br /> alkdsafdka ');
-
-            
-            event.preventDefault();
-        });
-		
      });
  </script>
  <div class="content no_bg"><!-- 内容 begin  -->
@@ -86,7 +52,7 @@ $(function(){
     <div id="header-2" class="header-2 wrap">
         <div class="topchannel" id="topchannel">
             <div id="addShareAct" class="fastcreate">
-                <a onclick="weibo.quickpublish()" href="javascript:void(0)" id="addShareButton">新分享</a>
+                <a onclick="taobaoke.quickpublish()" href="javascript:void(0)" id="addShareButton">新分享</a>
                 <a onclick="setBcTab()" href="javascript:void(0)" id="addBoardButton" class="newShowcase">新图格</a>
             </div>  
             <div class="channelmenu">
@@ -102,7 +68,7 @@ $(function(){
 </div>
 
 
-
+<!-- <php> var_dump(unserialize($list['data'][9]['type_data'])); </php> -->
 
   <div class="main no_l wrap">
     <div class="mainbox">
@@ -138,7 +104,73 @@ $(function(){
 		 <php>}</php>
 	    
          <!--  copy code start  -->
+         <volist name ="list['data']" id='vo'>
+         <php>
+            $title = array();
+            if($vo['type_data']){
+                $title = unserialize($vo['type_data']);
+            }
+            if ($vo['transpond_id']){
+                $bcdata = M('taobaoke')->where("weibo_id=" . $vo['transpond_id'] . "")->findAll() ;
+                $title = unserialize($bcdata[0]['type_data']);
+            }
+         </php>
 <!-- item start -->
+<div class="item">
+    <div id='item_{$vo.weibo_id}'  onmouseout="this.className='haibao'" onmouseover="this.className='haibao hover'" class="haibao">
+        <div class="pic">
+            <div class="ipic">
+                <a title="{$vo.content}" target="_blank" href="###"   >
+                    <php> if($vo['type']==1){</php>
+                    <img  width="{$title[mwidth]}" height="{$title[mheight]}" src="__UPLOAD__/{$title[thumbmiddleurl]}"/>
+                    <php>} else { </php>
+                    <img  width="{$title[mwidth]}" height="{$title[mheight]}" src="{$title[middle_pic]}"/>
+                    <php>}  </php>
+                </a>
+            </div>
+                <php> if($title['price']){ </php>
+        <div class="jiage price-label small-label">
+                <span class="leftfold png"></span>
+                <span class="rightfold png">￥{$title.price}</span> 
+        </div>
+                <php>}</php>
+        <div class="hbc">
+            <a class="hb comment-btn"  href="javascript:void(0)">评论</a>
+            <a  class="hb favourite-btn"  href="javascript:void(0)">
+                <span></span>
+                <span  class="favCount" style="display:none">0</span>喜欢
+            </a>
+            <span  class="tou"></span>
+        </div>
+        <a class="hb forward-btn"  href="javascript:void(0)"><span></span>转发</a>
+    </div>
+    <div class="pincontent">
+        <p class="vocontent">
+        {$vo.content}  <php > if($vo['type']==5) { </php> <u class="_tb"></u><php>}</php>
+        </p>
+        转发：{$vo.transpond} 评论：{$vo.comment} 喜欢：{$vo.favcount}
+    </div>
+    <div class="pin_c">
+        <div class="myavatar floatleft">
+            <space uid="vo.uid">{uavatar=s}</space>
+        </div>
+        <div class="msgCnt">
+            <space uid="vo.uid">{uname}</space>
+ 
+            <if condition="$vo['transpond_id']"> 转发到 <else/> 分享到 </if>
+
+            <a href="#TODO_{$vo['weibo_id']}">{$vo.weibo_id|getBname}</a>
+
+            <br/>
+            <span class="mydate">{$vo.ctime|friendlyDate}</span></div>
+         </div>
+    </div>
+</div>
+<!-- item end -->
+</volist>
+
+<!-- item start -->
+<!-- 
 <div class="item">
     <div onmouseout="this.className='haibao'" onmouseover="this.className='haibao hover'" class="haibao">
         <div class="pic">
@@ -181,413 +213,8 @@ $(function(){
          </div>
     </div>
 </div>
+-->
 <!-- item end -->
-<!-- item start -->
-<div class="item">
-    <div onmouseout="this.className='haibao'" onmouseover="this.className='haibao hover'" class="haibao">
-        <div class="pic">
-            <div class="ipic">
-                <a title="SHANISHI 睫毛膏 浓密纤长 防水 正品 豹纹组合加长300% 免邮" target="_blank" href="###">
-                    <img width="210" height="210" src="http://img01.taobaocdn.com/bao/uploaded/i1/T11ymLXcNlXXXeBfja_120745.jpg_210x1000.jpg">
-                </a>
-            </div>
-        <div class="jiage price-label small-label">
-                <span class="leftfold png"></span>
-                <span class="rightfold png">￥56.00</span>
-        </div>
-        <div class="hbc">
-            <a class="hb comment-btn" onclick="weibo.pinglun(2193)" href="javascript:void(0)">评论</a>
-            <a id="favloe_2193" class="hb favourite-btn" callback="weibo.deletfav2('2193')" onclick="ui.loveok2(this,'1','0','2193','1','../Public/images/user_pic_middle.gif')" href="javascript:void(0)" w="f">
-                <span></span>
-                <span id="fav_2193" class="favCount" style="display:none">0</span>喜欢
-            </a>
-            <span id="favicon_2193" class="tou"></span>
-        </div>
-        <a class="hb forward-btn" onclick="weibo.transpond(2193,0)" href="javascript:void(0)"><span></span>转发</a>
-    </div>
-    <div class="pincontent">
-        <p class="vocontent">
-            <a href="#">#夜生活女王炼成秘籍#</a>
-            睫毛膏，浓密纤长，豹纹很美，还有一个豹纹包包，拿出来很拉风的<u class="_tb"></u>
-        </p>
-        转发 2                                          
-    </div>
-    <div class="pin_c">
-        <div class="myavatar floatleft">
-            <a target="_self" class="username" href="###"><img src="../Public/images/user_pic_small.gif"></a>
-        </div>
-        <div class="msgCnt">
-            <a target="_self" class="username" href="###"></a>    
-                转发到 
-            <a href="###">111</a>
-            <br/>
-            <span class="mydate">08月26日 16:16</span></div>
-         </div>
-    </div>
-</div>
-<!-- item end -->
-
-<!-- item start -->
-<div class="item">
-    <div onmouseout="this.className='haibao'" onmouseover="this.className='haibao hover'" class="haibao">
-        <div class="pic">
-            <div class="ipic">
-                <a title="SHANISHI 睫毛膏 浓密纤长 防水 正品 豹纹组合加长300% 免邮" target="_blank" href="###">
-                    <img width="210" height="210" src="http://img01.taobaocdn.com/bao/uploaded/i1/T11ymLXcNlXXXeBfja_120745.jpg_210x1000.jpg">
-                </a>
-            </div>
-        <div class="jiage price-label small-label">
-                <span class="leftfold png"></span>
-                <span class="rightfold png">￥56.00</span>
-        </div>
-        <div class="hbc">
-            <a class="hb comment-btn" onclick="weibo.pinglun(2193)" href="javascript:void(0)">评论</a>
-            <a id="favloe_2193" class="hb favourite-btn" callback="weibo.deletfav2('2193')" onclick="ui.loveok2(this,'1','0','2193','1','../Public/images/user_pic_middle.gif')" href="javascript:void(0)" w="f">
-                <span></span>
-                <span id="fav_2193" class="favCount" style="display:none">0</span>喜欢
-            </a>
-            <span id="favicon_2193" class="tou"></span>
-        </div>
-        <a class="hb forward-btn" onclick="weibo.transpond(2193,0)" href="javascript:void(0)"><span></span>转发</a>
-    </div>
-    <div class="pincontent">
-        <p class="vocontent">
-            <a href="#">#夜生活女王炼成秘籍#</a>
-            睫毛膏，浓密纤长，豹纹很美，还有一个豹纹包包，拿出来很拉风的<u class="_tb"></u>
-        </p>
-        转发 2                                          
-    </div>
-    <div class="pin_c">
-        <div class="myavatar floatleft">
-            <a target="_self" class="username" href="###"><img src="../Public/images/user_pic_small.gif"></a>
-        </div>
-        <div class="msgCnt">
-            <a target="_self" class="username" href="###"></a>    
-                转发到 
-            <a href="###">111</a>
-            <br/>
-            <span class="mydate">08月26日 16:16</span></div>
-         </div>
-    </div>
-</div>
-<!-- item end -->
-
-<!-- item start -->
-<div class="item">
-    <div onmouseout="this.className='haibao'" onmouseover="this.className='haibao hover'" class="haibao">
-        <div class="pic">
-            <div class="ipic">
-                <a title="SHANISHI 睫毛膏 浓密纤长 防水 正品 豹纹组合加长300% 免邮" target="_blank" href="###">
-                    <img width="210" height="210" src="http://img01.taobaocdn.com/bao/uploaded/i1/T11ymLXcNlXXXeBfja_120745.jpg_210x1000.jpg">
-                </a>
-            </div>
-        <div class="jiage price-label small-label">
-                <span class="leftfold png"></span>
-                <span class="rightfold png">￥56.00</span>
-        </div>
-        <div class="hbc">
-            <a class="hb comment-btn" onclick="weibo.pinglun(2193)" href="javascript:void(0)">评论</a>
-            <a id="favloe_2193" class="hb favourite-btn" callback="weibo.deletfav2('2193')" onclick="ui.loveok2(this,'1','0','2193','1','../Public/images/user_pic_middle.gif')" href="javascript:void(0)" w="f">
-                <span></span>
-                <span id="fav_2193" class="favCount" style="display:none">0</span>喜欢
-            </a>
-            <span id="favicon_2193" class="tou"></span>
-        </div>
-        <a class="hb forward-btn" onclick="weibo.transpond(2193,0)" href="javascript:void(0)"><span></span>转发</a>
-    </div>
-    <div class="pincontent">
-        <p class="vocontent">
-            <a href="#">#夜生活女王炼成秘籍#</a>
-            睫毛膏，浓密纤长，豹纹很美，还有一个豹纹包包，拿出来很拉风的<u class="_tb"></u>
-        </p>
-        转发 2                                          
-    </div>
-    <div class="pin_c">
-        <div class="myavatar floatleft">
-            <a target="_self" class="username" href="###"><img src="../Public/images/user_pic_small.gif"></a>
-        </div>
-        <div class="msgCnt">
-            <a target="_self" class="username" href="###"></a>    
-                转发到 
-            <a href="###">111</a>
-            <br/>
-            <span class="mydate">08月26日 16:16</span></div>
-         </div>
-    </div>
-</div>
-<!-- item end -->
-
-<!-- item start -->
-<div class="item">
-    <div onmouseout="this.className='haibao'" onmouseover="this.className='haibao hover'" class="haibao">
-        <div class="pic">
-            <div class="ipic">
-                <a title="SHANISHI 睫毛膏 浓密纤长 防水 正品 豹纹组合加长300% 免邮" target="_blank" href="###">
-                    <img width="210" height="210" src="http://img01.taobaocdn.com/bao/uploaded/i1/T11ymLXcNlXXXeBfja_120745.jpg_210x1000.jpg">
-                </a>
-            </div>
-        <div class="jiage price-label small-label">
-                <span class="leftfold png"></span>
-                <span class="rightfold png">￥56.00</span>
-        </div>
-        <div class="hbc">
-            <a class="hb comment-btn" onclick="weibo.pinglun(2193)" href="javascript:void(0)">评论</a>
-            <a id="favloe_2193" class="hb favourite-btn" callback="weibo.deletfav2('2193')" onclick="ui.loveok2(this,'1','0','2193','1','../Public/images/user_pic_middle.gif')" href="javascript:void(0)" w="f">
-                <span></span>
-                <span id="fav_2193" class="favCount" style="display:none">0</span>喜欢
-            </a>
-            <span id="favicon_2193" class="tou"></span>
-        </div>
-        <a class="hb forward-btn" onclick="weibo.transpond(2193,0)" href="javascript:void(0)"><span></span>转发</a>
-    </div>
-    <div class="pincontent">
-        <p class="vocontent">
-            <a href="#">#夜生活女王炼成秘籍#</a>
-            睫毛膏，浓密纤长，豹纹很美，还有一个豹纹包包，拿出来很拉风的<u class="_tb"></u>
-        </p>
-        转发 2                                          
-    </div>
-    <div class="pin_c">
-        <div class="myavatar floatleft">
-            <a target="_self" class="username" href="###"><img src="../Public/images/user_pic_small.gif"></a>
-        </div>
-        <div class="msgCnt">
-            <a target="_self" class="username" href="###"></a>    
-                转发到 
-            <a href="###">111</a>
-            <br/>
-            <span class="mydate">08月26日 16:16</span></div>
-         </div>
-    </div>
-</div>
-<!-- item end -->
-
-<!-- item start -->
-<div class="item">
-    <div onmouseout="this.className='haibao'" onmouseover="this.className='haibao hover'" class="haibao">
-        <div class="pic">
-            <div class="ipic">
-                <a title="SHANISHI 睫毛膏 浓密纤长 防水 正品 豹纹组合加长300% 免邮" target="_blank" href="###">
-                    <img width="210" height="210" src="http://img01.taobaocdn.com/bao/uploaded/i1/T11ymLXcNlXXXeBfja_120745.jpg_210x1000.jpg">
-                </a>
-            </div>
-        <div class="jiage price-label small-label">
-                <span class="leftfold png"></span>
-                <span class="rightfold png">￥56.00</span>
-        </div>
-        <div class="hbc">
-            <a class="hb comment-btn" onclick="weibo.pinglun(2193)" href="javascript:void(0)">评论</a>
-            <a id="favloe_2193" class="hb favourite-btn" callback="weibo.deletfav2('2193')" onclick="ui.loveok2(this,'1','0','2193','1','../Public/images/user_pic_middle.gif')" href="javascript:void(0)" w="f">
-                <span></span>
-                <span id="fav_2193" class="favCount" style="display:none">0</span>喜欢
-            </a>
-            <span id="favicon_2193" class="tou"></span>
-        </div>
-        <a class="hb forward-btn" onclick="weibo.transpond(2193,0)" href="javascript:void(0)"><span></span>转发</a>
-    </div>
-    <div class="pincontent">
-        <p class="vocontent">
-            <a href="#">#夜生活女王炼成秘籍#</a>
-            睫毛膏，浓密纤长，豹纹很美，还有一个豹纹包包，拿出来很拉风的<u class="_tb"></u>
-        </p>
-        转发 2                                          
-    </div>
-    <div class="pin_c">
-        <div class="myavatar floatleft">
-            <a target="_self" class="username" href="###"><img src="../Public/images/user_pic_small.gif"></a>
-        </div>
-        <div class="msgCnt">
-            <a target="_self" class="username" href="###"></a>    
-                转发到 
-            <a href="###">111</a>
-            <br/>
-            <span class="mydate">08月26日 16:16</span></div>
-         </div>
-    </div>
-</div>
-<!-- item end -->
-
-<!-- item start -->
-<div class="item">
-    <div onmouseout="this.className='haibao'" onmouseover="this.className='haibao hover'" class="haibao">
-        <div class="pic">
-            <div class="ipic">
-                <a title="SHANISHI 睫毛膏 浓密纤长 防水 正品 豹纹组合加长300% 免邮" target="_blank" href="###">
-                    <img width="210" height="210" src="http://img01.taobaocdn.com/bao/uploaded/i1/T11ymLXcNlXXXeBfja_120745.jpg_210x1000.jpg">
-                </a>
-            </div>
-        <div class="jiage price-label small-label">
-                <span class="leftfold png"></span>
-                <span class="rightfold png">￥56.00</span>
-        </div>
-        <div class="hbc">
-            <a class="hb comment-btn" onclick="weibo.pinglun(2193)" href="javascript:void(0)">评论</a>
-            <a id="favloe_2193" class="hb favourite-btn" callback="weibo.deletfav2('2193')" onclick="ui.loveok2(this,'1','0','2193','1','../Public/images/user_pic_middle.gif')" href="javascript:void(0)" w="f">
-                <span></span>
-                <span id="fav_2193" class="favCount" style="display:none">0</span>喜欢
-            </a>
-            <span id="favicon_2193" class="tou"></span>
-        </div>
-        <a class="hb forward-btn" onclick="weibo.transpond(2193,0)" href="javascript:void(0)"><span></span>转发</a>
-    </div>
-    <div class="pincontent">
-        <p class="vocontent">
-            <a href="#">#夜生活女王炼成秘籍#</a>
-            睫毛膏，浓密纤长，豹纹很美，还有一个豹纹包包，拿出来很拉风的<u class="_tb"></u>
-        </p>
-        转发 2                                          
-    </div>
-    <div class="pin_c">
-        <div class="myavatar floatleft">
-            <a target="_self" class="username" href="###"><img src="../Public/images/user_pic_small.gif"></a>
-        </div>
-        <div class="msgCnt">
-            <a target="_self" class="username" href="###"></a>    
-                转发到 
-            <a href="###">111</a>
-            <br/>
-            <span class="mydate">08月26日 16:16</span></div>
-         </div>
-    </div>
-</div>
-<!-- item end -->
-
-<!-- item start -->
-<div class="item">
-    <div onmouseout="this.className='haibao'" onmouseover="this.className='haibao hover'" class="haibao">
-        <div class="pic">
-            <div class="ipic">
-                <a title="SHANISHI 睫毛膏 浓密纤长 防水 正品 豹纹组合加长300% 免邮" target="_blank" href="###">
-                    <img width="210" height="210" src="http://img01.taobaocdn.com/bao/uploaded/i1/T11ymLXcNlXXXeBfja_120745.jpg_210x1000.jpg">
-                </a>
-            </div>
-        <div class="jiage price-label small-label">
-                <span class="leftfold png"></span>
-                <span class="rightfold png">￥56.00</span>
-        </div>
-        <div class="hbc">
-            <a class="hb comment-btn" onclick="weibo.pinglun(2193)" href="javascript:void(0)">评论</a>
-            <a id="favloe_2193" class="hb favourite-btn" callback="weibo.deletfav2('2193')" onclick="ui.loveok2(this,'1','0','2193','1','../Public/images/user_pic_middle.gif')" href="javascript:void(0)" w="f">
-                <span></span>
-                <span id="fav_2193" class="favCount" style="display:none">0</span>喜欢
-            </a>
-            <span id="favicon_2193" class="tou"></span>
-        </div>
-        <a class="hb forward-btn" onclick="weibo.transpond(2193,0)" href="javascript:void(0)"><span></span>转发</a>
-    </div>
-    <div class="pincontent">
-        <p class="vocontent">
-            <a href="#">#夜生活女王炼成秘籍#</a>
-            睫毛膏，浓密纤长，豹纹很美，还有一个豹纹包包，拿出来很拉风的<u class="_tb"></u>
-        </p>
-        转发 2                                          
-    </div>
-    <div class="pin_c">
-        <div class="myavatar floatleft">
-            <a target="_self" class="username" href="###"><img src="../Public/images/user_pic_small.gif"></a>
-        </div>
-        <div class="msgCnt">
-            <a target="_self" class="username" href="###"></a>    
-                转发到 
-            <a href="###">111</a>
-            <br/>
-            <span class="mydate">08月26日 16:16</span></div>
-         </div>
-    </div>
-</div>
-<!-- item end -->
-
-
-<!-- item start -->
-<div class="item">
-    <div onmouseout="this.className='haibao'" onmouseover="this.className='haibao hover'" class="haibao">
-        <div class="pic">
-            <div class="ipic">
-                <a title="SHANISHI 睫毛膏 浓密纤长 防水 正品 豹纹组合加长300% 免邮" target="_blank" href="###">
-                    <img width="210" height="210" src="http://img01.taobaocdn.com/bao/uploaded/i1/T11ymLXcNlXXXeBfja_120745.jpg_210x1000.jpg">
-                </a>
-            </div>
-        <div class="jiage price-label small-label">
-                <span class="leftfold png"></span>
-                <span class="rightfold png">￥56.00</span>
-        </div>
-        <div class="hbc">
-            <a class="hb comment-btn" onclick="weibo.pinglun(2193)" href="javascript:void(0)">评论</a>
-            <a id="favloe_2193" class="hb favourite-btn" callback="weibo.deletfav2('2193')" onclick="ui.loveok2(this,'1','0','2193','1','../Public/images/user_pic_middle.gif')" href="javascript:void(0)" w="f">
-                <span></span>
-                <span id="fav_2193" class="favCount" style="display:none">0</span>喜欢
-            </a>
-            <span id="favicon_2193" class="tou"></span>
-        </div>
-        <a class="hb forward-btn" onclick="weibo.transpond(2193,0)" href="javascript:void(0)"><span></span>转发</a>
-    </div>
-    <div class="pincontent">
-        <p class="vocontent">
-            <a href="#">#夜生活女王炼成秘籍#</a>
-            睫毛膏，浓密纤长，豹纹很美，还有一个豹纹包包，拿出来很拉风的<u class="_tb"></u>
-        </p>
-        转发 2                                          
-    </div>
-    <div class="pin_c">
-        <div class="myavatar floatleft">
-            <a target="_self" class="username" href="###"><img src="../Public/images/user_pic_small.gif"></a>
-        </div>
-        <div class="msgCnt">
-            <a target="_self" class="username" href="###"></a>    
-                转发到 
-            <a href="###">111</a>
-            <br/>
-            <span class="mydate">08月26日 16:16</span></div>
-         </div>
-    </div>
-</div>
-<!-- item end -->
-
-<!-- item start -->
-<div class="item">
-    <div onmouseout="this.className='haibao'" onmouseover="this.className='haibao hover'" class="haibao">
-        <div class="pic">
-            <div class="ipic">
-                <a title="SHANISHI 睫毛膏 浓密纤长 防水 正品 豹纹组合加长300% 免邮" target="_blank" href="###">
-                    <img width="210" height="210" src="http://img01.taobaocdn.com/bao/uploaded/i1/T11ymLXcNlXXXeBfja_120745.jpg_210x1000.jpg">
-                </a>
-            </div>
-        <div class="jiage price-label small-label">
-                <span class="leftfold png"></span>
-                <span class="rightfold png">￥56.00</span>
-        </div>
-        <div class="hbc">
-            <a class="hb comment-btn" onclick="weibo.pinglun(2193)" href="javascript:void(0)">评论</a>
-            <a id="favloe_2193" class="hb favourite-btn" callback="weibo.deletfav2('2193')" onclick="ui.loveok2(this,'1','0','2193','1','../Public/images/user_pic_middle.gif')" href="javascript:void(0)" w="f">
-                <span></span>
-                <span id="fav_2193" class="favCount" style="display:none">0</span>喜欢
-            </a>
-            <span id="favicon_2193" class="tou"></span>
-        </div>
-        <a class="hb forward-btn" onclick="weibo.transpond(2193,0)" href="javascript:void(0)"><span></span>转发</a>
-    </div>
-    <div class="pincontent">
-        <p class="vocontent">
-            <a href="#">#夜生活女王炼成秘籍#</a>
-            睫毛膏，浓密纤长，豹纹很美，还有一个豹纹包包，拿出来很拉风的<u class="_tb"></u>
-        </p>
-        转发 2                                          
-    </div>
-    <div class="pin_c">
-        <div class="myavatar floatleft">
-            <a target="_self" class="username" href="###"><img src="../Public/images/user_pic_small.gif"></a>
-        </div>
-        <div class="msgCnt">
-            <a target="_self" class="username" href="###"></a>    
-                转发到 
-            <a href="###">111</a>
-            <br/>
-            <span class="mydate">08月26日 16:16</span></div>
-         </div>
-    </div>
-</div>
-<!-- item end -->
-
 
 
 

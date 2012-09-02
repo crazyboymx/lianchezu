@@ -43,3 +43,39 @@ function getBlogShort($content,$length = 40) {
 	$content	=	getShort($content,$length);
 	return $content;
 }
+
+//获取用户分类个数
+function getBcuidCount($uid) {
+    if ($uid<>"")
+    {
+        $bcuidcount=M('taobaoke_bc')->where('uid=' . $uid)->count();
+        return $bcuidcount;
+    }
+}
+
+//获取子类名字
+function getBname($id) {
+    if ($id <> "") {
+        $bname = M('taobaoke')->where('weibo_id=' . $id)->findall();
+
+        foreach ($bname as $bcn) {
+            $bcname_arr = $bcn['bc_id'];
+        }
+
+
+        $map['bc_id'] = $bcname_arr;
+
+        $nowtitle = M('taobaoke_bc')->getField('title', $map);
+
+        return $nowtitle;
+    }
+}
+
+//获取子类数
+function getCcCount($bc_id) {
+    if ($bc_id<>"")
+    {
+        $cccount=M('taobaoke')->where( 'type in(1,3,4,5) and isdel=0 and bc_id=' . $bc_id)->count();
+        return $cccount;
+    }
+}

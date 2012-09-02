@@ -50,6 +50,7 @@ class IndexAction extends AdministratorAction {
     		'全局配置'		=>  array(
     			'站点配置'	=>	U('admin/Global/siteopt'),
     			'注册配置'	=>	U('admin/Global/register'),
+    			'平台配置'	=>	U('admin/Global/platform'),
     			'邀请配置'	=>	U('admin/Global/invite'),
     			'积分配置'	=>	U('admin/Global/credit'),
     			'公告配置'	=>	U('admin/Global/announcement'),

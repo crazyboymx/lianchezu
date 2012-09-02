@@ -324,7 +324,7 @@ ui = window.ui ||{
 			
 			jQuery('<div class="boxy-modal-blackout"></div>')
 	        .css(jQuery.extend(ui.box._cssForOverlay(), {
-	            zIndex: 9999, opacity: 0.2
+	            zIndex: 99, opacity: 0.2
 	        })).appendTo(document.body);
 			
 			

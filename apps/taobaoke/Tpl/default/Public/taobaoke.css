@@ -349,3 +349,75 @@ a.unfavourite-btn {
     width: 200px;
     z-index: 5000;
 }
+.newtuge li {
+    float: left;
+    padding-right: 10px;
+    width: 150px;
+}
+
+/*弹出表情*/
+.talkBox {padding:0 10px; background-color:#F7F7F7!important; position:relative;}
+.talkPop{ clear:left;margin-top:20px;position:absolute; z-index:9; width:340px;height:20px;}
+.textareabox{ position: absolute;z-index:9999;width:460px;}
+.talkPop_arrow{background-position: -143px -4px;height:8px; width:15px;overflow:hidden;}
+.talkPop_box{ background-color:#F8FAFC; border:solid 1px #93C3DF;margin-bottom:5px;}
+.talkPop_box #weibo_close_handle{margin:3px;}
+#publish_type_content{ margin:-20px 10px 10px;}
+.talkBox h2 {height:37px;overflow:hidden;margin-bottom:8px;}
+.talkBox h2 span{ font-size: 18px; line-height: 52px; float:left;}
+.wordNum{ float:right; font-size:12px; color:#999}
+.wordNum strong{font-family:Constantia,Georgia;font-size:25px;font-weight:normal;top:-1px;vertical-align:-2px;}
+.talkBox .cntBox {  overflow:hidden;position: relative; }
+.talkBox .cntBox textarea,.talkBox .cntBox .txtShadow{width:99.3%;_width:99%; height:78px;padding:5px 0; margin:0; font-size:14px; overflow:hidden}
+.txtShadow {left:0;opacity:0;position:absolute;top:0;*top:1px;z-index:-1;}
+#publish_type_content_before{ _padding-top:8px;}
+
+.talkBox .funBox { padding-top:5px; line-height:25px; }
+.talkBox .funBox a.a52 {width:52px;display:inline-block; color:#345974;}
+
+
+
+#saybox {
+    float: left;
+    margin-left: 240px;
+	_margin-left: 120px;
+    overflow: hidden;
+    width: 440px;
+	text-align:left;
+	display:none;
+	padding-top:10px;
+}
+
+.notop .btn_green{text-align:center;width:121px; margin:0 auto; display:block;cursor:pointer; position:relative;top:-20px;}
+.talkPop_box { line-height:18px;}
+.talkPop_box .btn_green input{text-align:center;width:121px; margin:0 auto; display:block;cursor:pointer; *height:30px; *margin-left:109px;}
+.btn_green #uploadpic{ position:absolute;opacity:0.0; margin-top:-28px;FILTER: ALPHA(OPACITY=0); _MOZ-OPACITY: 0.0;width:121px; height:28px;}
+.btn_green2{width:121px; height:28px;overflow: hidden;position: relative;}
+.btn_green2 input{ opacity:0.0;FILTER: ALPHA(OPACITY=0); _MOZ-OPACITY: 0.0;border: 0 none;cursor: pointer;    position: absolute;
+    right: 0;
+    top: 0; height: 28px;font-size: 36px;}
+.btn_green2 a.gp_btn_c {
+    background: url("images/common_btn.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    display: inline-block;
+    height: 28px;
+    overflow: hidden;
+    width: 121px;
+}
+.swfbtn {
+    clear: both;
+    margin-bottom: 40px;
+}
+
+.indeximg {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #BBBBBB;
+    box-shadow: 0 0 4px rgba(25, 25, 25, 0.3);
+    float: left;
+    height: 190px;
+    margin-left: -220px;
+    padding: 5px;
+    position: relative;
+    text-align: center;
+    width: 190px;
+}

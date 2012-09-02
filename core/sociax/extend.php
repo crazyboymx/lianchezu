@@ -426,6 +426,35 @@ function t($text, $parse_br = false, $quote_style = ENT_NOQUOTES)
 	return $text;
 }
 
+/*-
+ * 用处 ：此函数用来逆转javascript的escape函数编码后的字符。
+ * 参数：javascript编码过的字符串。
+ */
+function js_unescape($str) {
+    $ret = '';
+    $len = strlen($str);
+    for ($i = 0; $i < $len; $i++)
+    {
+        if ($str[$i] == '%' && $str[$i+1] == 'u')
+        {
+            $val = hexdec(substr($str, $i+2, 4));
+
+            if ($val < 0x7f) $ret .= chr($val);
+            else if($val < 0x800) $ret .= chr(0xc0|($val>>6)).chr(0x80|($val&0x3f));
+            else $ret .= chr(0xe0|($val>>12)).chr(0x80|(($val>>6)&0x3f)).chr(0x80|($val&0x3f));
+
+            $i += 5;
+        }
+        else if ($str[$i] == '%')
+        {
+            $ret .= urldecode(substr($str, $i, 3));
+            $i += 2;
+        }
+        else $ret .= $str[$i];
+    }
+    return $ret;
+}
+
 //解析jsescape
 function unescape($str) {
     $str = rawurldecode($str);
@@ -2679,4 +2708,40 @@ function getRequestUri(){
 		}
 	}
 	return $uri;
+}
+
+//获取用户分类个数
+function getBcuidCount($uid) {
+    if ($uid<>"")
+    {
+        $bcuidcount=M('taobaoke_bc')->where('uid=' . $uid)->count();
+        return $bcuidcount;
+    }
+}
+
+//获取子类名字
+function getBname($id) {
+    if ($id <> "") {
+        $bname = M('taobaoke')->where('weibo_id=' . $id)->findall();
+
+        foreach ($bname as $bcn) {
+            $bcname_arr = $bcn['bc_id'];
+        }
+
+
+        $map['bc_id'] = $bcname_arr;
+
+        $nowtitle = M('taobaoke_bc')->where($map)->getField('title');
+
+        return $nowtitle;
+    }
+}
+
+//获取子类数
+function getCcCount($bc_id) {
+    if ($bc_id<>"")
+    {
+        $cccount=M('taobaoke')->where( 'type in(1,3,4,5) and isdel=0 and bc_id=' . $bc_id)->count();
+        return $cccount;
+    }
 }

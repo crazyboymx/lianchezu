@@ -84,180 +84,50 @@ class IndexAction extends Action {
         $listCount=M('taobaoke')->where($map)->count();
         $catelog=M('taobaoke')->where($map)->order($order)->findPage($row, $listCount);
         $this->assign('list' , $catelog) ;
-        /*
-        echo $catelog['data'][3]['type_data'];
-        echo "<br/>";
-        echo "<br/>";
-        echo "<br/>";
-        var_dump( unserialize($catelog['data'][3]['type_data']));
-        exit;*/
-        //unserialize  貌似不行。。
         $this->display();
     }
 
-    public function personal() {
-        if ($this->uid == $this->mid)
-            $name = '我';
-        else
-            $name = getUserName($this->uid);
 
-        switch( $_GET['action'] ) {
-        default:      //发起的
-            $map['uid'] = $this->uid;
-            $this->setTitle("{$name}的{$this->appName}");
+    //转发
+    public function transpond(){
+        $bind = M ( 'login' )->where ( 'uid=' . $this->mid )->findAll ();
+        foreach ( $bind as $v ) {
+            $data ['login_bind'] [$v ['type']] = $v ['is_sync'];
         }
-        $result = $this->showfee->getShowfeeList($map,'id DESC',$this->mid);
-        $this->assign($result);
-        $this->assign('name', $name);
-        $this->display();
-    }
 
-    public function getCatTypesByBrand(){
-        $data = D('ShowfeeCarType')->getCarTypesByBrand($_REQUEST["brandId"]);
-        $this->ajaxReturn($data,'info',1);
-    }
-    public function addShowfee() {
-        $this->_createLimit($this->mid);
-        $this->setTitle('添加' . $this->appName);
-        $this->assign('carBrandList', D('ShowfeeCarBrand')->getAllCarBrand());
-        $this->assign ("feeTypeList",D('ShowfeeFeeType')->getAllFeeType());
-        $this->display();
-    }
+        $map['uid']=$this->mid;
+        $bcdisplay = D('TaobaokeBc')->where($map)->order('bc_id DESC')->findAll();
+        $this->assign('bcdisplay',$bcdisplay);
+        $nobc= D('TaobaokeBc')->where($map)->getField('bc_id');
 
-    private function _createLimit($uid){
-        $config = getConfig();
+        $this->assign('nobc',$nobc);
 
-        if(!$config['canCreate']){
-            $this->error('禁止发起'.$this->appName);
-        }
-        if($config['credit']){
-            $userCredit = X('Credit')->getUserCredit($uid);
-            if($userCredit[$config['credit_type']]['credit']<$config['credit']){
-                $this->error($userCredit[$config['credit_type']]['alias'].'小于'.$config['credit'].'，不允许发起'.$this->appName);
+        $pWeibo = D('taobaoke');
+        if($_POST){
+            //仿知美二次开发
+            $post['bc_id']         = $_POST['bc_id'];
+
+            $post['content']         = $_POST['content'];
+            $post['transpond_id']    = intval( $_POST['transpond_id'] );
+            $post['reply_weibo_id']  = $_POST['reply_weibo_id'];
+            if( $id = $pWeibo->transpond($this->mid,$post) ){
+                $data = $pWeibo->getOneLocation($id);
+                X('Credit')->setUserCredit($this->mid,'forward_weibo')
+                    ->setUserCredit($data['expend']['uid'],'forwarded_weibo');
+                $this->assign('data',$data);
+                $this->display('publish');
             }
-        }
-        if( $timeLimit = $config['limittime'] ){
-            $regTime = M('user')->getField('ctime',"uid={$uid}");
-            $difference = (time()-$regTime)/3600;
-
-            if($difference<$timeLimit){
-                $this->error('账户创建时间小于'.$timeLimit.'小时，不允许发起'.$this->appName);
+        }else{
+            $intId = intval( $_GET['id'] );
+            $info = $pWeibo->where( 'weibo_id='.$intId)->find();
+            if( $info['transpond_id'] ){
+                $info['transponInfo'] = D('Operate')->field('weibo_id,uid,content,type_data')->where('weibo_id='.$info['transpond_id'])->find();
+            }else{
+                $info['old_content'] = $info['content'];
             }
-        }
-    }
-
-    public function doAddShowfee() {
-        $this->_createLimit($this->mid);
-        $map['title']      = t($_POST['title']);
-        $map['explain']    = h($_POST['explain']);
-        $map['carTime']        = $_POST['carTime'];
-        $map['uid']        = $this->mid;
-        $map['carBrandId'] = intval(t($_POST['carBrandId']));
-        $map['carTypeId'] = intval(t($_POST['carTypeId']));
-        //http://bbs.phpchina.com/home.php?mod=space&uid=68442&do=blog&id=48792
-        //json_decode 的第二个参数灰常有用哦
-        $feeRecord = json_decode(t($_POST['feeRecord']),true);
-
-        if(strlen(text($map['explain'])) < 4){
-            $this->error('介绍不得小于4个字符');
-        }
-
-        if($addId = $this->showfee->addShowfee($map, $feeRecord)) {
-            X('Credit')->setUserCredit($this->mid, 'add_showfee');
-            $this->assign('jumpUrl',U('/Index/showfeeDetail',array('id'=>$addId, 'uid'=>$this->mid)));
-            $this->success($this->appName.'添加成功');
-        }else{
-            $this->error($this->appName.'添加失败');
-        }
-    }
-
-    public function showfeeDetail() {
-        $id   = intval( $_GET['id'] );
-        $uid  = intval($_GET['uid']);
-        $test = array($id,$uid);
-        //检测id和uid是否为0
-        if( false == $this->checkUrl($test)) {
-            $this->error("错误的访问页面，请检查链接");
-        }
-
-        $this->showfee->setMid( $this->mid );
-        if($result = $this->showfee->getShowfeeContent($id,$uid)) {
-            $this->assign('showfee', $result);
-            $this->setTitle($result['title']);
+            $info['upcontent'] = intval($_GET['upcontent']);
+            $this->assign( 'data' , $info );
             $this->display();
-        }else {
-            $this->error( '错误的访问页面，请检查链接' );
-        }
-    }
-
-    public function editShowfee() {
-        $id = intval( $_GET['id'] );
-        $uid = $this->showfee->where('id=' . $id)->getField('uid');
-        if( $uid != $this->mid ) {
-            $this->error( '您没有权限编辑这个'.$this->appName ) ;
-        }
-
-        $this->showfee->setMid($this->mid);
-        if($result = $this->showfee->getShowfeeContent($id, $uid)) {
-            $this->assign($result);
-            $this->assign('carBrandList', D('ShowfeeCarBrand')->getAllCarBrand());
-            $this->assign('carTypeList',D('ShowfeeCarType')->getCarTypesByBrand($result['carBrandId']));
-            $this->assign ("feeTypeList",D('ShowfeeFeeType')->getAllFeeType());
-            $this->setTitle('编辑' . $this->appName);
-            $this->display();
-        }else {
-            $this->error('错误的访问页面，请检查链接');
-        }
-    }
-
-    public function doEditShowfee() {
-        $id = intval($_POST['id']);
-        $map['id']      =$id;
-        $map['title']      = t($_POST['title']);
-        $map['explain']    = h($_POST['explain']);
-        $map['carTime']    = h($_POST['carTime']);
-        $map['uid']        = $this->mid;
-        $map['carBrandId'] = intval(t($_POST['carBrandId']));
-        $map['carTypeId'] = intval(t($_POST['carTypeId']));
-        $feeRecords = json_decode(t($_POST['feeRecord']),true);
-
-        if(strlen(text($map['explain'])) < 4){
-            $this->error('介绍不得小于4个字符');
-        }
-
-        if($addId = $this->showfee->editShowfee($id, $map, $feeRecords)) {
-            $this->assign('jumpUrl',U('showfee/Index/showfeeDetail',array('id'=>$id, 'uid'=>$this->mid)));
-            $this->success($this->appName.'修改成功');
-        }else{
-            $this->error($this->appName.'修改失败');
-        }
-    }
-
-    public function deleteShowfee() {
-        $id   = array('in', $_REQUEST['id']); //要删除的id.
-        $uid = $this->mid;
-        $result = $this->showfee->deleteShowfee($id, $uid);
-        if( false != $result){
-            echo 1;
-        }else{
-            echo 0;               //删除失败
-        }
-    }
-
-    private function _paramDate($date) {
-        $date_list = explode( ' ',$date );
-        list( $year,$month,$day ) = explode( '-',$date_list[0] );
-        list( $hour,$minute,$second ) = explode( ':',$date_list[1] );
-        return mktime( $hour,$minute,$second,$month,$day,$year );
-    }
-
-    public function checkUrl(array $data) {
-        $count1 = count($data);
-        $count2 = count(array_filter($data));
-        if($count2 < $count1) {
-            return false;
-        }else {
-            return true;
         }
     }
 }

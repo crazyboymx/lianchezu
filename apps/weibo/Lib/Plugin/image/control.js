@@ -7,14 +7,64 @@ jQuery.extend(weibo.plugin, {
 
 var stopUploadPic = 0;
 jQuery.extend(weibo.plugin.image, {
-	html:'<div id="upload_selectpic"><div class="btn_green" href="javascript:void(0);" >从电脑选择图片'+
+	html:'<input type="text" style="width:230px;height:20px;" id="online_img" value="" name="online_img">'+
+	'<input type="button" style="width:130px;" value="采集" id="shangchuan" onclick="weibo.plugin.image.upload1()">'+
+	'<div id="upload_selectpic"><div class="btn_green2">'+
 	'<form action="'+U("weibo/plugins/before_publish")+'" enctype="multipart/form-data" method="post" id="uploadpic">'+
-	'<input type="hidden" name="plugin_id" value="1"><input type="file" hidefoucs="true" name="pic" onchange="weibo.plugin.image.upload(this)">'+
-	'</form></div><div>仅支持JPG、GIF、PNG、JPEG图片文件，且文件小于2M</div></div><div class="alC pt10 pb10 f14px" id="upload_loading" style="display:none"><img src="'+ _THEME_+'/images/icon_waiting.gif" width="20" class="alM"> 正在上传中...<br /><a class="btn_w mt10" href="javascript:void(0)" onclick="$(\'div .talkPop\').remove();weibo.plugin.image.stopAjax();">取消上传</a></div>',
+	'<input type="hidden" name="plugin_id" value="1"><a class="gp_btn_c"><input type="file" hidefoucs="true" name="pic" onchange="weibo.plugin.image.upload(this)"></a>'+
+	'</form></div></div><div class="alC pt10 pb10 f14px" id="upload_loading" style="display:none"><img src="'+ _THEME_+'/images/icon_waiting.gif" width="20" class="alM"> 正在上传中...<br /><a class="btn_w mt10" href="javascript:void(0)" onclick="$(\'div .talkPop\').remove();weibo.plugin.image.stopAjax();">取消上传</a></div>',
 	click:function(options){
 		if (1 != $('div.talkPop').data('type')) {
 			weibo.publish_type_box(1,this.html,options);
 		}
+	},
+	upload1:function(){
+		$("#shangchuan").val('获取中...');
+               
+                
+		var img_url=$("#online_img").val();
+		$.post( U("weibo/plugins/before_publish_input") ,{imgurl:img_url,plugin_id:1},function(txt){
+			 txt = eval( '(' + txt + ')' );
+			      if(txt.boolen==1){
+						var img = new Image;
+						img.src = txt.picurl;
+						img.onload = function(){
+							if( this.width>190 || this.height>190 ){
+								var style;
+								if( this.height >  this.width ){
+									style = "height:190px;width:"+this.width*(190/this.height)+"px";
+								}else{
+									style = "width:190px;height:"+this.height*(190/this.width)+"px";
+								}
+								
+								var html = '<div class="indeximg"><img src="'+txt.picurl+'" style="'+style+'"><input id="pickpic" name="publish_type_data" type="hidden" style="width:86%" value='+txt.type_data+' /></div>'+
+								'<div class="mymargin"><input type="text" style="width:230px;height:20px;" id="online_img" value="http://" name="online_img">&nbsp;&nbsp;'+
+	'<input type="button" class="btn_b" value="采集" id="shangchuan" onclick="weibo.plugin.image.upload1()"></div>';
+								 
+							}else{
+								var html = '<div class="indeximg"><img src="'+txt.picurl+'"><input id="pickpic" name="publish_type_data" type="hidden" style="width:86%" value='+txt.type_data+' /></div>'+
+								'<div class="mymargin"><input type="text" style="width:230px;height:20px;" id="online_img" value="http://" name="online_img">&nbsp;&nbsp;'+
+	'<input type="button" class="btn_b" value="采集" id="shangchuan" onclick="weibo.plugin.image.upload1()"></div>';
+								}
+							if($('#content_publish').val()==''){
+								$('#content_publish').val('');
+							}
+							$("#publish_type_content").html( html );
+							$('div.talkPop').data('type', 1);
+							$('#upload_loading').hide();
+							$("#shangchuan").val('采集');
+							$("#online_img").val('http://');
+                                                        $('#online_img').show();
+                                                        $('#shangchuan').show();
+							$('#upload_selectpic').hide();
+							weibo.checkInputLength('#content_publish',140);
+						};
+								
+				  }else{
+					alert( txt.message );
+						$("#shangchuan").val('重新采集');
+			      }
+		});
 	},
 	upload:function(o){
 		var allowext = ['jpg','jpeg','gif','png'];
@@ -38,30 +88,44 @@ jQuery.extend(weibo.plugin.image, {
 						var img = new Image;
 						img.src = txt.picurl;
 						img.onload = function(){
-							if( this.width>100 || this.height>100 ){
+							if( this.width>190 || this.height>190 ){
 								var style;
 								if( this.height >  this.width ){
-									style = "height:100px;width:"+this.width*(100/this.height)+"px";
+									style = "height:190px;width:"+this.width*(190/this.height)+"px";
 								}else{
-									style = "width:100px;height:"+this.height*(100/this.width)+"px";
+									style = "width:190px;height:"+this.height*(190/this.width)+"px";
 								}
 								
-								var html = "<img src='"+txt.picurl+"' style='"+style+"'><input name='publish_type_data' type='hidden' style='width:86%' value="+txt.type_data+" />";
+							var html = '<div class="indeximg"><img src="'+txt.picurl+'" style="'+style+'"><input id="pickpic" name="publish_type_data" type="hidden" style="width:86%" value='+txt.type_data+' /></div>'+
+								'<div id="upload_selectpic"><div class="btn_green2" >'+
+	'<form action="'+U("weibo/plugins/before_publish")+'" enctype="multipart/form-data" method="post" id="uploadpic">'+
+	'<input type="hidden" name="plugin_id" value="1"><a class="gp_btn_c"><input type="file" hidefoucs="true" name="pic" onchange="weibo.plugin.image.upload(this)"></a>'+
+	'</form></div></div><div class="alC pt10 pb10 f14px" id="upload_loading" style="display:none"><img src="'+ _THEME_+'/images/icon_waiting.gif" width="20" class="alM"> 正在上传中...<br /><a class="btn_w mt10" href="javascript:void(0)" onclick="$(\'div .talkPop\').remove();weibo.plugin.image.stopAjax();">取消上传</a></div>';
+								 
 							}else{
-								var html = "<img src='"+txt.picurl+"'><input name='publish_type_data' type='hidden' style='width:86%' value="+txt.type_data+" />";					}
+								var html = '<div class="indeximg"><img src="'+txt.picurl+'"><input id="pickpic" name="publish_type_data" type="hidden" style="width:86%" value='+txt.type_data+' /></div>'+
+								'<div id="upload_selectpic"><div class="btn_green2" href="javascript:void(0);" >'+
+	'<form action="'+U("weibo/plugins/before_publish")+'" enctype="multipart/form-data" method="post" id="uploadpic">'+
+	'<input type="hidden" name="plugin_id" value="1"><a class="gp_btn_c"><input type="file" hidefoucs="true" name="pic" onchange="weibo.plugin.image.upload(this)"></a>'+
+	'</form></div><div class="alC pt10 pb10 f14px" id="upload_loading" style="display:none"><img src="'+ _THEME_+'/images/icon_waiting.gif" width="20" class="alM"> 正在上传中...<br /><a class="btn_w mt10" href="javascript:void(0)" onclick="$(\'div .talkPop\').remove();weibo.plugin.image.stopAjax();">取消上传</a></div>';			
+								
+								}
 							if($('#content_publish').val()==''){
-								$('#content_publish').val('图片分享 ');
+								$('#content_publish').val('');
 							}
-							$("#publish_type_content").html( txt.file_name+'&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="$(\'div .talkPop\').remove();">删除图片</a><BR>'+html );
-							$('div.talkPop').data('type', 1);
+							$("#publish_type_content").html(html );
 							$('#upload_loading').hide();
 							$('#upload_selectpic').show();
-							weibo.checkInputLength('#content_publish',_LENGTH_);
+						
+							weibo.checkInputLength('#content_publish',140);
 						};
 								
 				  }else{
 					alert( txt.message );
-					$('.talkPop').remove();
+                                        
+                                        $('#upload_selectpic').show();
+                                        
+                                         
 			      }
 			    } 
 			};

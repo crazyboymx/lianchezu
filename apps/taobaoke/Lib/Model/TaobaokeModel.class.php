@@ -22,7 +22,6 @@ class TaobaokeModel extends BaseModel{
      */
     function publish($uid,$data,$from=0,$type=0,$type_data, $sync , $goods_url=""  ,$from_data=""){
 
-        //列入 BC_ID  仿知美二次开发
         $data['bc_id'] =intval( $data['bc_id'] );
         $data['content'] =t( $data['content'] );
         if($id = $this->doSaveWeibo($uid, $data, $from , $type ,$type_data,$sync, $goods_url , $from_data)){
@@ -35,43 +34,35 @@ class TaobaokeModel extends BaseModel{
 
     //发布微博
     function doSaveWeibo($uid,$data,$from=0,$type=0,$type_data,$sync, $goods_url="" ,$from_data=""){
-        /*if(!$data['content']){
-            return false;
-        }*/
-
         if (!function_exists('getContentUrl'))
             require_once SITE_PATH . '/apps/weibo/Common/common.php';
 
-        $save['uid']			= $uid;
+        $save['uid'] = $uid;
         if($data['tag']){
-            $save['tag']			= $data['tag'];
+            $save['tag'] = $data['tag'];
         }
         if($data['fenlei_input']){
-            $save['fenlei_input']			= $data['fenlei_input'];
+            $save['fenlei_input'] = $data['fenlei_input'];
         }
         if($data['price']){
-            $save['price']			= $data['price'];
+            $save['price'] = $data['price'];
         }
-        $save['transpond_id']	= intval( $data['transpond_id'] );
-
-        //加入BC_ID 仿知美二次开发
-        $save['bc_id']	= intval( $data['bc_id'] );
-
-        $save['from']			= intval( $from );  //0网站 1手机网页版 2 android 3 iphone
+        $save['transpond_id'] = intval( $data['transpond_id'] );
+        $save['bc_id']      = intval( $data['bc_id'] );
+        $save['from']       = intval( $from );  //0网站 1手机网页版 2 android 3 iphone
         // 微博内容处理
-        $save['content'] 		= preg_replace('/^\s+|\s+$/i', '', html_entity_decode($data['content'], ENT_QUOTES));
-        $save['content'] 		= preg_replace("/#[\s]*([^#^\s][^#]*[^#^\s])[\s]*#/is",'#'.trim("\${1}").'#',$save['content']);	// 滤掉话题两端的空白
-        $save['content']		= preg_replace_callback('/((?:https?|mailto):\/\/(?:www\.)?(?:[a-zA-Z0-9][a-zA-Z0-9\-]*\.)?[a-zA-Z0-9][a-zA-Z0-9\-]*(?:\.[a-zA-Z0-9]+)+(?:\/[^\x{4e00}-\x{9fa5}\s<\'\"“”‘’]*)?)/u',getContentUrl, $save['content']);
-        $save['from_data']		= $from_data;
-        $save['goods_url'] = $goods_url ;
-        $save['content'] = t(getShort($save['content'], 140));
+        $save['content']    = preg_replace('/^\s+|\s+$/i', '', html_entity_decode($data['content'], ENT_QUOTES));
+        $save['content']    = preg_replace("/#[\s]*([^#^\s][^#]*[^#^\s])[\s]*#/is",'#'.trim("\${1}").'#',$save['content']);	// 滤掉话题两端的空白
+        $save['content']    = preg_replace_callback('/((?:https?|mailto):\/\/(?:www\.)?(?:[a-zA-Z0-9][a-zA-Z0-9\-]*\.)?[a-zA-Z0-9][a-zA-Z0-9\-]*(?:\.[a-zA-Z0-9]+)+(?:\/[^\x{4e00}-\x{9fa5}\s<\'\"“”‘’]*)?)/u',getContentUrl, $save['content']);
+        $save['from_data']  = $from_data;
+        $save['goods_url']  = $goods_url ;
+        $save['content']    = t(getShort($save['content'], 140));
 
         if($type){
             $save = array_merge( $save , (array)$this->checkWeiboType($type, $type_data) );
         }else{
             if($data['type']) $save['type'] = intval( $data['type'] );
         }
-
         $save['ctime']      = time();
 
         if( $id = $this->add( $save ) ){
@@ -79,8 +70,7 @@ class TaobaokeModel extends BaseModel{
                 $this->setInc('transpond','weibo_id='.$save['transpond_id']);
             }
 
-            //if(in_array('sina',$sync)){
-            $opt = M('login')->where("uid=".$uid." AND type='sina'")->field('oauth_token,oauth_token_secret,is_sync')->find();
+            /*$opt = M('login')->where("uid=".$uid." AND type='sina'")->field('oauth_token,oauth_token_secret,is_sync')->find();
             if($opt['is_sync']){
                 include_once( SITE_PATH.'/addons/plugins/login/sina.class.php' );
                 $sina = new sina();
@@ -92,9 +82,7 @@ class TaobaokeModel extends BaseModel{
                     $sina->update($data['content'],$opt);
                 }
             }
-            //}
-            //话题处理
-            D('Topic','weibo')->addTopic( html_entity_decode($save['content'],ENT_QUOTES) );
+            D('Topic','weibo')->addTopic( html_entity_decode($save['content'],ENT_QUOTES) );*/
             return $id;
         }else{
             return false;
@@ -165,10 +153,7 @@ class TaobaokeModel extends BaseModel{
 
     //转发操作
     function transpond($uid,$data,$api=false){
-
-        //bc_id 仿知美二次开发
         $post['bc_id']       = intval( $data['bc_id'] );
-
         $post['content']       = t( $data['content'] );
         $post['transpond_id']  = intval( $data['transpond_id'] );
 
@@ -183,12 +168,12 @@ class TaobaokeModel extends BaseModel{
                 $comment['weibo_id']  = $value;
                 $comment['content']   = $post['content'];
                 $comment['ctime']     = time();
-                D('Comment','taobaoke')->addcomment( $comment );
-                Model('UserCount')->addCount($weiboinfo['uid'],'comment');
+                //D('Comment','taobaoke')->addcomment( $comment );
+                //Model('UserCount')->addCount($weiboinfo['uid'],'comment');
             }
         }
 
-        $id = $this ->doSaveWeibo( $uid , $post , intval($data['from']) );  
+        $id = $this->doSaveWeibo( $uid , $post , intval($data['from']) );
         if($id){
             $this->notifyToAtme($uid,$id, $post['content'], $transponInfo['uid']);
             return $id;
@@ -197,7 +182,7 @@ class TaobaokeModel extends BaseModel{
         }
     }
 
-    // 给提到我的发通知 @诺南 
+    // 给提到我的发通知
     function notifyToAtme($uid,$id,$content,$transpond_uid,$addCount=true){
         $notify['weibo_id'] = $id;
         $notify['content'] = $content;
@@ -224,13 +209,13 @@ class TaobaokeModel extends BaseModel{
         if( $type_data && $type !=0 ){
             $pluginInfo = D('Plugin', 'weibo')->getPluginInfoById($type);
             $do_type = 'publish';
-            include SITE_PATH.'/apps/taobaoke/Lib/Plugin/'.$pluginInfo['plugin_path'].'/control.php';
+            include SITE_PATH.'/apps/weibo/Lib/Plugin/'.$pluginInfo['plugin_path'].'/control.php';
             if (!empty($typedata)) {
                 $save['type'] = $type;
                 $save['type_data']  = serialize( $typedata );
             }
         }else{
-            $save['type']       = 0;
+            $save['type']   = 0;
         }
         return $save;
     }
@@ -247,13 +232,13 @@ class TaobaokeModel extends BaseModel{
     public function getOneLocation($id, $value, $show_transpond = true)
     {
         if (!$value)
-            if (($value = object_cache_get("weibo_{$id}")) === false)
+            if (($value = object_cache_get("taobaoke_{$id}")) === false)
                 $value = $this->where('weibo_id='.$id.' AND isdel=0')->find();
 
         if (!$value)
             return false;
 
-        $result['id']           = $value['weibo_id'];
+        $result['id']   = $value['weibo_id'];
         //增加喜欢
         $result['favcount'] = $value['favcount'] ;
         //增加推荐
@@ -333,10 +318,10 @@ class TaobaokeModel extends BaseModel{
 
     //解析类型模板
     private	function templateForType($type) {
-        $info = D('Plugin', 'taobake')->getPluginInfoById($type);
+        $info = D('Plugin', 'weibo')->getPluginInfoById($type);
         if (!$info)
             return false;
-        return require SITE_PATH.'/apps/taobaoke/Lib/Plugin/'.$info['plugin_path'].'/template.php';
+        return require SITE_PATH.'/apps/weibo/Lib/Plugin/'.$info['plugin_path'].'/template.php';
     }
 
     /**

@@ -517,6 +517,32 @@ class GlobalAction extends AdministratorAction {
         }
     }
 
+    /** 系统配置 - 平台配置 **/
+    public function platform() {
+        if($_POST) {
+            $_LOG['uid'] = $this->mid;
+            $_LOG['type'] = '3';
+            $data[] = '全局 - 平台配置 ';
+            $data[] = model('Xdata')->lget('platform');
+            if( $_POST['__hash__'] )unset( $_POST['__hash__'] );
+            $data[] = $_POST;
+            $_LOG['data'] = serialize($data);
+            $_LOG['ctime'] = time();
+            M('AdminLog')->add($_LOG);
+            foreach($_POST as $k => $v)
+                $_POST[$k] = t($v);
+
+            $this->assign('jumpUrl', U('admin/Global/platform'));
+            if( model('Xdata')->lput('platform', $_POST) )
+                $this->success('保存成功');
+            else
+                $this->error('保存失败');
+        }else {
+            $this->assign( model('Xdata')->lget('platform') );
+            $this->display();
+        }
+    }
+
     /** 系统配置 - 附件配置 **/
 
     public function attachConfig() {
