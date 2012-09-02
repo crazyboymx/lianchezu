@@ -1,0 +1,81 @@
+<div class="get">
+    
+    
+    
+    
+    <ul>解开被时间禁锢的胶囊： </ul> 
+    
+    <div class="getkey"> 
+        输入封印的钥匙：<br/><input id="getkey" name="key" type="text" value="" class="text" size="50" /> <a href="javascript:;" onclick="getkey();">解 封</a>  
+         
+    </div>
+ 
+    <div class="getdata">
+   
+    <ul><span id="content"></span></ul>
+    <ul class="right"><span id="uidname"></span></ul> 
+    <ul class="right"><span id="puttime"></span></ul>
+     
+    <ul class="red"><span id="gettime"></span></ul>
+    
+    
+    </div>
+    
+     <div class="mygetdata">
+         <ul>我有{$tpcount}个胶囊</ul>
+   <volist id="vo" name="tpdata">
+    <ul>{$vo['key']}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$vo.gettime|dateFormat}</ul>
+   
+   </volist> 
+   
+    </div>
+    
+
+</div>
+
+<script type="text/javascript">
+    function getkey(){  
+         
+        var url="{:Addons::createAddonUrl('TimePill','getdo')}";
+       
+        var getkey=$('#getkey').val(); 
+        
+       
+        $.post(url,{key:getkey},function(txt){
+            
+           txt = eval( '(' + txt + ')' );
+            if(txt.ok == 1){
+                $('#content').html(txt.tpc);
+                $('#uidname').html('—— '+txt.tpu);
+                $('#puttime').html('寄予：'+txt.tppt);
+                $('#gettime').hide();
+                
+                
+                $('.getdata').show();
+                 ui.success('解封成功');
+      
+            }else if (txt.ok == 2){
+                $('#content').hide();
+                $('#uidname').hide();
+                $('#puttime').hide();
+                $('#gettime').html('时间尚早。。禁锢之日未到。。。'+txt.tpgt);
+                 
+                $('.getdata').show();
+                 ui.success('解封成功');
+      
+            }else{
+                //location.reload();
+                ui.error('时光机器出了问题');
+                
+            }
+        });
+       
+       
+        
+    }
+ 
+ 
+  
+           
+   
+</script>

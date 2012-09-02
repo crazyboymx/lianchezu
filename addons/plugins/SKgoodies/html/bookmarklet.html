@@ -1,0 +1,392 @@
+/**
+ *      ThinkSNS SK书签栏采集小工具 插件 v1.0 (C)2012-2099 啊.Qin.
+ *      This is NOT a freeware, use is subject to license terms
+ *		任何人修改代码需要告诉作者，并开源。不得商业出售！
+ *      author  啊.Qin <172376799#qq.com>
+ */
+// Add jQuery
+function SK_init() {
+    var GM_JQ = document.createElement('script');
+    GM_JQ.src = 'http://jquery.com/src/jquery-latest.js';
+    GM_JQ.type = 'text/javascript';
+    document.getElementsByTagName('head')[0].appendChild(GM_JQ);
+    GM_wait();
+}
+// Check if jQuery's loaded
+function GM_wait()
+{
+    if(typeof window.jQuery == 'undefined') {window.setTimeout(GM_wait,100);}
+    else {jQuery = window.jQuery;pinit();}
+}
+
+SK_init();
+
+var SK_url,SK_image_list;
+
+// *** put your code inside letsJQuery: ***
+function pinit()
+{
+    
+        SK_image_list = new Array();
+        SK_url = '{:SITE_URL}';
+        page_url = location.href;
+        page_title = document.title;
+        
+        //适配YOUKU
+        if (page_url.indexOf('{:SITE_URL}') != -1) {
+                alert('不能在{$ts['site']['site_name']}站内收藏图片');
+                return;
+             init();
+        }else if (page_url.indexOf('http://v.youku.com/v_show/id_') != -1) {
+            var is_video = true;
+            jQuery.getJSON('http://v.youku.com/player/getPlayList/VideoIDS/'+videoId2,  function(youku){
+                var media = youku.data[0].logo;
+                var width = 448;
+                var height = 336;
+                var media_url = "http://player.youku.com/player.php/sid/"+videoId2+"/v.swf";
+                var title = youku.data[0].title;
+                
+                SK_image_list.push({
+                   'img_url'    :   media,
+                   'width'      :   width,
+                   'height'     :   height,
+                   'alt'        :   title,
+                   'media_url'  :   media_url,
+                   'is_video'   :   1
+                });
+                
+                init();
+            });
+        }else if(page_url.indexOf("www.tudou.com")>0 && typeof bigItemUrl != 'undefined'){
+            if(bigItemUrl.indexOf("w.jpg")==-1){
+                var image=bigItemUrl.split("/");
+                bigItemUrl=bigItemUrl.replace(image[image.length-1],"w.jpg")
+            }
+            
+            SK_image_list.push({
+               'img_url'    :   bigItemUrl,
+               'media_url'  :   "http://www.tudou.com/v/" + iid_code + "/v.swf",  
+               'width'      :   320,
+               'height'     :   240,
+               'alt'        :   page_title,
+               'is_video'   :   1
+            });
+            
+            init();
+        }else if (page_url.indexOf("www.56.com/u") > 0) {
+            var reg = /v_(.+?)\.html/, a = reg.exec(page_url);
+            a = a[1];
+            SK_image_list.push({
+               'img_url'    :   bigItemUrl,
+               'media_url'  :   "http://player.56.com/v_" + a + ".swf",  
+               'width'      :   480,
+               'height'     :   405,
+               'alt'        :   page_title,
+               'is_video'   :   1
+            });
+            init();
+        }else if (page_url.indexOf("v.ku6.com") > 0) {
+            SK_image_list.push({
+               'img_url'    :   App.VideoInfo.data.data.bigpicpath,
+               'media_url'  :   "http://player.ku6.com/refer/" + App.VideoInfo.id + "/v.swf",  
+               'width'      :   480,
+               'height'     :   360,
+               'alt'        :   page_title,
+               'is_video'   :   1
+            });
+            init();
+        }else if(page_url.indexOf("tv.sohu.com") > 0) {
+            SK_image_list.push({
+               'img_url'    :   cover,
+               'media_url'  :   "http://share.vrs.sohu.com/" + vid + "/v.swf",  
+               'width'      :   640,
+               'height'     :   480,
+               'alt'        :   page_title,
+               'is_video'   :   1
+            });
+            init();
+        }else if(page_url.indexOf("www.iqiyi.com") > 0 && typeof info != 'undefined') {
+            alert('暂时不支持QIYI');
+            /*
+            SK_image_list.push({
+               'img_url'    :   cover,
+               'media_url'  :   flashUrl,  
+               'width'      :   info['data']['flashWidth'],
+               'height'     :   info['data']['flashHeight'],
+               'alt'        :   info.title,
+               'is_video'   :   1
+            });
+            init();
+            */
+        }
+        else if(page_url.indexOf("video.sina.com.cn") > 0 && typeof jQuerySCOPE != 'undefined') {
+            SK_image_list.push({
+               'img_url'    :   jQuerySCOPE['video']['pic'],
+               'media_url'  :   jQuerySCOPE['video']['swfOutsideUrl'],  
+               'width'      :   400,
+               'height'     :   300,
+               'alt'        :   jQuerySCOPE['video']['title'],
+               'is_video'   :   1
+            });
+            init();
+        }else if(page_url.indexOf("video.sina.com.cn/playlist") > 0 && typeof video != 'undefined') {
+            var img = jQuery('#Interfix_list .cur img.pic').attr('src');
+            var img_url = img.replace(/_1.jpg/,'_2.jpg');
+            SK_image_list.push({
+               'img_url'    :   img_url,
+               'media_url'  :   video['video']['swfOutsideUrl'],  
+               'width'      :   400,
+               'height'     :   300,
+               'alt'        :   page_title,
+               'is_video'   :   1
+            });
+            init();
+        }
+        else {
+            init();
+        }
+        //设置背景图
+        
+        
+}
+
+function beforeGet(url) {
+    
+}
+
+function init(options) {
+    
+        var setting = {
+            'img_list'  :   new Array()
+        };
+        jQuery.extend(setting,options);
+        
+        selectlist = new Array();
+        imglist = new Array();
+        
+        
+        JMgetCss();
+		jQuery('object, embed').css('visibility', 'hidden');
+        jQuery('img').each(function(index){
+            var height = jQuery(this).height();
+            var width = jQuery(this).width();
+            if (height > 120 && width >= 192) {
+                if (jQuery(this).attr('alt') != undefined) {
+                    var alt = jQuery(this).attr('alt');
+                }else {
+                    var alt = '';
+                }
+                SK_image_list.push({
+                   'img_url'    :   jQuery(this).attr('src'),
+                   'width'      :   width,
+                   'height'     :   height,
+                   'alt'        :   alt,
+                   'is_video'   :   0,
+                   'media_url'  :   ''
+                })
+            }
+        });
+        
+        for (var i = 0; i < SK_image_list.length;i++) {
+                var height = SK_image_list[i].height;
+                var width = SK_image_list[i].width;
+                var img_url = SK_image_list[i].img_url;
+          
+                var style = "";
+                if (height < width) {
+                    var top = (1 - height/width) * 100; 
+                    var style = "margin-top:"+top+'px;';
+                }
+                
+                var vhtml = '';
+                if (SK_image_list[i].is_video) {
+                    vhtml = '<span></span>';
+                }
+                
+                imglist.push('<div class="tpmImagePreview"><span class="tpmDimensions">'+height+' x '+width+'</span><div class="tpmImg"><a href="javascript:;" onclick="pinIt(\''+i+'\')">'+vhtml+'<img style="'+style+'" src="'+img_url+'" alt="Pin This" class="ImageToPin"><img class="tpm_PinIt" src="{:SITE_URL}/addons/plugins/SKgoodies/html/img/pinthis.png" alt="bookmark it" style="display: none;"></a></div></div>');
+        }
+        
+        
+        if (imglist.length==0) {
+            alert('该页面暂时没有可以抓取的图片');
+            return;
+        }
+        
+        
+        
+        JMgetBackGround();
+        
+        if (jQuery('#tpm_Container .tpmImagePreview').length == 0) {
+            jQuery('#tpm_Container').append(imglist.join(""));
+            
+            //绑定click事件
+            jQuery('.tpmImagePreview').hover(function(){
+                jQuery(this).find('.tpm_PinIt').show();
+            }, function(){
+                jQuery(this).find('.tpm_PinIt').hide();
+            });
+
+            jQuery('#tpm_RemoveLink').click(function(){
+                tm_close();
+            });
+            
+        }
+        
+        
+        
+        jQuery('body,html').animate({scrollTop:0},0);
+}
+
+function pinIt(i) {
+    var options = SK_image_list[i];
+    if(options['alt'] == '') {
+        options['alt']  =  document.title;
+    }
+    options['page_url'] = document.location.href;
+    openurl(options);
+    
+    tm_close();
+    return false;    
+}
+
+function openurl(options) {
+    var data = new Array();
+    data.push('pic_url='+encodeURIComponent(options['img_url']));
+    data.push('url='+encodeURIComponent(options['page_url']));
+    data.push('alt='+encodeURIComponent(options['alt']));
+    data.push('h='+options['height']);
+    data.push('w='+options['width']);
+    data.push('title='+encodeURIComponent(document.title));
+    data.push('v='+options['is_video']);
+    data.push('media='+options['media_url']);
+    
+    if (location.href.indexOf('http://item.taobao.com/item.htm') != -1 || location.href.indexOf('http://detail.tmall.com/item.htm') != -1) {
+        if(jQuery('#J_StrPrice').length == 1) {
+            data.push('p='+jQuery('#J_StrPrice').html());
+        }
+    }else if (location.href.indexOf('http://www.quwan.com/goods') != -1){
+        if (jQuery('#main_goods_price').length == 1) {
+            var price = jQuery('#main_goods_price').val();
+            
+            //data.push('p='+price.substring(1,price.length));
+            data.push('p='+price);
+            console.log(data);
+    }
+    }
+    data.push('t='+(new Date).getTime());
+    window.open('{:SITE_URL}/index.php?app=home&mod=Widget&act=addonsRequest&addon=SKgoodies&hook=SKshare&'+data.join('&'),"pin");
+}
+
+function JMgetBackGround() {
+    if (jQuery('#tpm_Overlay').length == 0) {
+     jQuery('body').append('<div id="tpm_Overlay"></div>');
+    }
+    if (jQuery('#tpm_Container').length == 0) {
+            jQuery('body').append('<div id="tpm_Container"><div class="tpm_close_div"><a href="javascript:;" id="tpm_RemoveLink">取消收藏</a></div><div id="tpm_Control"><img src="__THEME__/images/logo.png"></div></div>');
+    }
+}
+
+function JMgetCss() {
+    
+    var height = jQuery(window).height();
+    var site_url = "{:SITE_URL}";
+csslist = new Array();
+    csslist.push('#tpm_Container {left:0; padding-top: 37px;position: absolute;top: 0;z-index: 100000002;}');
+    csslist.push('#tpm_Overlay {background: #F2F2F2;bottom: 0;left: 0;opacity: 0.9;filter: alpha(opacity=90);position: fixed;_position:absolute;width:100%;height:'+height+'px;right: 0;top: 0;z-index: 100000001;}');
+    csslist.push('#tpm_Control {background-color: #333;border-color: #CCCCCC;border-style: solid;border-width: 0 1px 1px 0;float: left;height: 200px;opacity: 1;position: relative;width: 200px;z-index: 100000;}');
+    csslist.push('#tpm_Control img {display: block;margin: 82px auto 0;padding: 0;position: relative;}');
+    csslist.push('.tpm_close_div a {background: url("'+site_url+'/addons/plugins/SKgoodies/html/img/fullGradientNormal.png") repeat-x scroll 0 0 #FFFFFF;border-bottom: 1px solid #CCCCCC;color: #211922;font-size: 14px;font-weight: bold;height: 24px;left: 0;line-height: 1em;padding: 12px 0 0;position: fixed;width:100%;_position:absolute;top:0;right: 0;text-align: center;text-decoration: none;text-shadow: 0 1px #FFFFFF;top: 0;z-index: 10001;}');
+    csslist.push('.tpm_close_div  a:hover {background-color: #1389E5;border-color: #1389E5;color: #FFFFFF;text-decoration: none;text-shadow: 0 -1px #46A0E6;}');
+    csslist.push('.tpm_close_div  a:active {background-color: #211922;background-image: url("'+site_url+'/addons/plugins/SKgoodies/html/img/fullGradientInverted.png");border-color: #211922;height: 23px;padding-top: 13px;text-shadow: 0 -1px #211922;}');
+    csslist.push('.tpmImagePreview {background-color: #FFFFFF;border-color: #E7E7E7;border-style: solid;border-width: 0 1px 1px 0;float: left;height: 200px;margin: 0;opacity: 1;padding: 0;position: relative;text-align: center;width: 200px;z-index: 10002;overflow:hidden;}');
+    csslist.push('.tpmImagePreview .tpmImg {border: medium none;height: 200px;opacity: 1;padding: 0;width: 200px;}');
+    csslist.push('.tpmImagePreview .tpmImg a {bottom: 0;display: block;left: 0;margin: 0;padding: 0;position: absolute;right: 0;text-align: center;top: 0;z-index: 1;}');
+    csslist.push('.tpmImagePreview .tpmImg a:hover {background-color: #FCF9F9;border: medium none;}');
+    csslist.push('.tpmImagePreview .tpmImg .ImageToPin {height: auto !important;max-height: 200px;max-width: 200px;width: auto !important;}');
+    csslist.push('.tpmImagePreview img.tpm_PinIt {background-color: transparent;border: medium none;display: none;left: 42px;padding: 0;position: absolute;top: 82px;z-index: 100;}');
+    csslist.push('.tpmImagePreview img.tpm_vidind {background-color: transparent;border: medium none;left: 75px;padding: 0;position: absolute;top: 75px;z-index: 99;}');
+    csslist.push('.tpmDimensions {background: none repeat scroll 0 0 white;border-radius: 4px 4px 4px 4px;display: inline-block;font-size: 10px;margin-top: 180px;padding: 0 2px;position: relative;text-align: center;z-index: 10003;}');
+    csslist.push('.tpmImagePreview span.select{background:green;border-radius: 4px 4px 4px 4px;display: inline-block;font-size: 12px;margin-top: 20px;padding:3px 15px;position: absolute;color:#fff;text-align: center;z-index: 10003;display:none;}');
+    csslist.push('.tpmImagePreview.on span.select{display:inline;}');
+    csslist.push('#tpm_Footer {text-align:center;background:#fff;border-top: 3px solid #333;color: #211922;font-size: 14px;height: 40px;left: 0;line-height: 1em;padding: 33px 0 0;position: fixed;right: 0;text-align: center;text-decoration: none;bottom: 0;z-index: 10003;}');
+    csslist.push('#tpm_Footer a.bigbutton {background:#CB3E3E;color: #FFFFFF;font-size: 14px;padding: 4px 10px;font-size:16px;}');
+    csslist.push('#tpm_Footer a.bigbutton.dis {background:#999;color: #FFFFFF;font-size: 14px;padding: 4px 10px;font-size:16px;}');
+    csslist.push('#tpm_hidden_iframe {display:none;}');
+    csslist.push('.tpmImagePreview .tpmImg span {position: absolute;display: block;top: 0;left: 0;width: 100%;height: 100%;background: url("'+site_url+'/addons/plugins/SKgoodies/html/img/media_video.png") center center no-repeat;}')
+    jQuery('head').append("<style>"+csslist.join("")+"</style>");
+}     
+function jm_removeItem(array,item) {
+
+    var newarray =  new Array();
+    for(var i=0;i<array.length;i++)
+    {
+        if(array[i]!=item)
+        {
+            newarray.push(array[i]);
+        }
+    }
+    return newarray;
+}
+
+
+function tm_close() {
+    jQuery('#tpm_Container').remove();
+    jQuery('#tpm_Overlay').remove();
+	jQuery('object, embed').css('visibility', 'visible');
+}
+
+
+function getVideoOnCustomerPage(url) {
+    var c = function(a, c) {
+        var d = new Image;
+        if (url.indexOf("player.youku.com/player") > 0 || url.indexOf("www.tudou.com") > 0 || url.indexOf("player.ku6.com/refer") > 0 || url.indexOf("player.56.com") > 0)
+            d.src = "http://" + SK_url + "/pins/create/video/swf?url=" + encodeURIComponent(a), d.width = 448, d.height = 336, d = encapsulateImage(d), d.container = c, d.video = a, d.media_type = 1, b.push(d);
+        else if (a.indexOf("v.ifeng.com/include/exterior.swf") > 0) {
+            var e = /guid=(.+?)&/, f = e.exec(SK_url);
+            if (!f)
+                return !1;
+            f = f[1], d.src = "http://" + SK_url + "/pins/create/video/ifeng/" + f, d.width = 480, d.height = 360, d = encapsulateImage(d), d.container = c, d.video = a, d.media_type = 1, b.push(d)
+        }
+    };
+    for (h = 0; h < a.embeds.length; h++) {
+        var d = a.embeds[h];
+        if (tagName(d.parentNode) == "object")
+            continue;
+        var e = d.src, f = d.getAttribute("flashvars");
+        if (f && e.indexOf("www.56.com") > 0) {
+            f = f.split("&");
+            var g;
+            for (var h = 0; h < f.length; h++) {
+                g = f[h].split("=");
+                if (g[0] == "vid") {
+                    e = "http://player.56.com/v_" + g[1] + ".swf";
+                    break
+                }
+            }
+        }
+        c(e, d)
+    }
+    var i = document.getElementsByTagName("object");
+    for (h = 0; h < i.length; h++) {
+        if (tagName(i[h].parentNode) == "object")
+            continue;
+        var e = __getElement(i[h], "param[name=movie], param[name=src]");
+        if (e) {
+            var j = i[h];
+            e = getAttribute(e, "value");
+            var f = __getElement(i[h], "param[name=FlashVars]");
+            if (f && e.indexOf("www.56.com") > 0) {
+                f = getAttribute(f, "value").split("&");
+                var g;
+                for (var h = 0; h < f.length; h++) {
+                    g = f[h].split("=");
+                    if (g[0] == "vid") {
+                        e = "http://player.56.com/v_" + g[1] + ".swf";
+                        break
+                    }
+                }
+            }
+            c(e, j.parentNode || j)
+        }
+    }
+}

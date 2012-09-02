@@ -1,0 +1,55 @@
+<div class="form2">
+  <form method="post" action="{:Addons::adminPage('doaddtheme')}" enctype="multipart/form-data">
+    <dl class="">
+      <dt>目录名称：</dt>
+      <dd>
+        <input name="theme_name" type="text" value="{$theme_name}">
+        <p>位于public\themes\ 文件名，如：newstyle
+      </dd>
+    </dl>
+    <dl class="">
+      <dt>中文名称：</dt>
+      <dd>
+        <input name="title" type="text" value="{$title}">
+        <p>显示给前台用户的名称，如：微博版、社区版
+      </dd>
+    </dl>
+    <dl class="">
+      <dt>上传图标：</dt>
+      <dd>
+      	<neq name="icon" value=""><img src="{:SITE_URL}/addons/plugins/UserTheme/icon/{$icon}" height="110" width="250"><br /></neq>
+        <input name="icon" type="file" value="">
+        <p>显示给前台用户，截图之类,格式jpg,gif,png,jpeg,文件将上传到：addons\plugins\UserTheme\icon目录，图片大小建议为250*110
+      </dd>
+    </dl>
+    <dl class="">
+      <dt>介绍：</dt>
+      <dd>
+        <textarea name="info" cols="50" rows="4">{$info}</textarea>
+        <p>说明此包的相关内容，最好不要超过50个字
+      </dd>
+    </dl>
+    <dl class="">
+      <dt>新风格是否通知用户：</dt>
+      <dd>
+        <label>
+          <input name="tongzhi_yes" type="radio" value="1"  >
+          是</label>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <label>
+          <input name="tongzhi_yes" type="radio" value="0" checked="checked">
+          否</label>
+        <p>发起原因有助于用户体验，和用户反馈
+      </dd>
+    </dl>
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" /> <input type="button" class="btn_w" onclick="cancel()" value="取消" />
+    </div>
+    <input type="hidden" name="id" value="{$id}" />
+  </form>
+</div>
+<script type="text/javascript">
+function cancel() {
+	ui.box.close();
+}
+</script> 

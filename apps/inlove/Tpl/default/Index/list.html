@@ -1,0 +1,92 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/weibo.js"></script>
+<div class="content_holder">
+  <div class="content"><!-- 内容 begin  -->
+    <div class="main no_l" style="padding:20px;">
+      <div class="tab-menu"><!-- 切换标签 begin  -->
+        <ul>
+          <li><a href="{:U('inlove/Index/index')}"><span>通告大厅</span></a></li>
+          <li><a href="{:U('inlove/Index/frommy')}" 
+            <eq name="ACTION_NAME" value="frommy"> class="on"</eq>
+            ><span>我的勇敢告白</span></a></li>
+          <li><a href="{:U('inlove/Index/tomy')}"   
+            <eq name="ACTION_NAME" value="tomy"> class="on"</eq>
+            ><span>我收到的告白</span></a></li>
+          <li><a href="{:U('inlove/Index/inlove')}"  
+            <eq name="ACTION_NAME" value="inlove"> class="on"</eq>
+            ><span>成功告白</span></a></li>
+        </ul>
+      </div>
+      <div class="mainbox boxspace">
+        <div class="mainbox_appR"> <include file="../Public/right" /> </div>
+        <div class="mainbox_appC boxspace_L">
+          <div class="">
+            <ul class="feed_list">
+              <li class="t"> <span class="left pr10">
+                <eq name="ACTION_NAME" value="tomy">收到</eq>
+                <span id="inlove_list_count">{$count}</span> 封告白</span> </li>
+              <php>if(empty($data)) {</php>
+              暂无信息
+              <neq name="ACTION_NAME" value="inlove">,成功告白将不再此处显示</neq>
+              <php>}</php>
+              <volist name="data" id="vo">
+                <li class="lineD_btm" id="inlove_{$vo['list_id']}">
+                  <div class="left" style="padding:16px 5px 0 6px;"></div>
+                  <div class="userPic">
+                    <eq name="ACTION_NAME" value="tomy"><img src="{$ts['app']['large_icon_url']}" />
+                      <else />
+                      <space uid="vo.last_inlove.from_uid" target="_blank">{uavatar}</space>
+                    </eq>
+                  </div>
+                  <div class="feed_c" style="margin-left:90px">
+                    <div class="msgCnt">
+                      <switch name="vo.type">
+                        <case value="1">
+                          <div style="padding:0 0 10px 0" class="inlove_two">
+                            <if condition="$vo['last_inlove']['from_uid'] eq $mid ">
+                              <space uid="vo['last_inlove']['from_uid']" target="_blank">您</space>
+                              对
+                              <eq name="ACTION_NAME" value="tomy">TA
+                                <else />
+                                <space uid="vo['last_inlove']['to_uid'][0]" target="_blank">{uname}</space>
+                              </eq>
+                              说：
+                              <else />
+                              <eq name="ACTION_NAME" value="tomy">TA
+                                <else />
+                                <space uid="vo['last_inlove']['from_uid']" target="_blank">{uname}</space>
+                              </eq>
+                              对
+                              <space uid="vo['last_inlove']['to_uid'][0]" target="_blank">您</space>
+                              说： </if>
+                            {$vo.last_inlove.content|getShort=###, 100}
+                            <if condition="$vo['new']"><span class="message_new">&nbsp;</span></if>
+                          </div>
+                        </case>
+                        <case value="2">
+                          <div style="padding:0 0 10px 0" class="inlove_group"> <a href="{:U('inlove/Index/detail', array('id'=>$vo['list_id'],'type'=>$vo['type']))}">{$vo.title}
+                            <if condition="$vo['new']"><span class="message_new">&nbsp;</span></if>
+                            </a> </div>
+                          <div>
+                            <space uid="vo.last_inlove.from_uid" target="_blank">{uname}</space>
+                            ：{$vo.last_inlove.content|getShort=###, 100}</div>
+                        </case>
+                      </switch>
+                    </div>
+                    <div> <span class="right pr10"> <a href="{:U('inlove/Index/detail', array('id'=>$vo['list_id'],'type'=>$vo['type'],'acname'=>ACTION_NAME))}">共{$vo['inlove_num']}条对话</a> | <a href="{:U('inlove/Index/detail', array('id'=>$vo['list_id'],'type'=>$vo['type'],'acname'=>ACTION_NAME))}">回复</a> </span> <span style="color:#999">{$vo.list_ctime|friendlyDate}</span> </div>
+                  </div>
+                </li>
+              </volist>
+              </li>
+            </ul>
+            <p class="page">{$html}</p>
+          </div>
+          <div class="c"></div>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+<include file="__THEME__/footer" /> 

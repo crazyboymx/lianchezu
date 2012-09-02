@@ -1,0 +1,29 @@
+<include file="__THEME__/header" />
+<link  href="../Public/share.css" rel="stylesheet" type="text/css"/>   
+
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+  <div class="main no_l"><!-- 画布 begin  -->  
+    <include file="top" />
+    <div class="mainbox has_bg">
+     <div class="chosign">
+       <ul>
+        <volist name="sign" id="sg">
+         <li>
+          <a href="javascript:chosign({$sg['id']})">
+           <img id="{$sg['id']}pic" src="{$sg['sign']}"/>
+           <h3>{$sg['name']}</h3>
+          </a>
+         </li>
+        </volist>
+       </ul>
+     </div>
+      <div class="c"></div>
+    </div>    
+  </div>
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<script type="text/javascript" src="../Public/js/common.js"></script>
+<include file="__THEME__/footer" />

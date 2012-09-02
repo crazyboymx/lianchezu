@@ -1,0 +1,76 @@
+<script type="text/javascript" src="{:SITE_URL}/addons/plugins/Myweather/html/functions.js"></script>
+<script type="text/javascript" src="{:SITE_URL}/addons/plugins/Myweather/html/gn.js"></script>
+<div id="myweather">
+<php>if (isset($weather)) {</php>
+	<span style="font-size:14px;color:#345974">&nbsp;{$cityname}</span><span>&nbsp;|&nbsp;<a href="javascript:;" onclick='changeCid()'>更改</a></span>
+	<table id="mycity" style="width:98%;background:#fff;">
+		<volist name="weather" id="vo">
+			<tr>
+				<td>{$vo.now}</td>
+			</tr>
+		</volist>
+	</table>
+<php>}</php>
+<div id="choosetable" style="display:none">
+	<span style="font-size:14px;color:#345974">设置天气</span>&nbsp;|&nbsp;<span><a href="javascript:;" onclick='cancel()'>取消</a></span>
+	<br />
+	<table>
+		<tr>
+			<td>省份</td>
+			<td>
+				<select name="province" id="select1" onchange="changeChild(value, ArrayCatalog1, 'select2')" style="color:#000;">
+					<option value="-1">请选择</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>城市</td>
+			<td>
+				<select name="city" id="select2" onchange="showConfirm()">
+					<option value="-1">请选择</option>
+				</select>
+			</td>
+			<tr id="confirmButton"></tr>
+		</tr>
+	</table>
+</div><!-- #choosetable end -->
+	<script type="text/javascript">
+				init(ArrayCatalog1, 'select1');
+				function showConfirm(){
+					var cid = $('#select2').val();
+					if (cid > 0 && cid != -1){
+						var button = "<td><a href=\"javascript:;\" onclick='confirmCid(" + cid + ")'>确认</a>&nbsp;</td>";
+						button += "<td>&nbsp;<a href=\"javascript:;\" onclick='cancel()'>取消</a></td>";
+						$('#confirmButton').html(button);
+					}else{
+						$('#confirmButton').html('');
+					}
+				}
+				function confirmCid(cid){
+					var url = '{:Addons::createAddonUrl('Myweather','saveCid')}';
+					$.post(url, {'cid': cid}, function(txt){
+							if(1 == txt){
+								ui.success(" 更新完成 ");
+								$('#choosetable').hide();
+								$('#myweather').load('{:Addons::createAddonUrl('Myweather','home_index_left_middle')}');
+							}else{
+								ui.error('操作失败');
+							}
+						}
+					);
+				}
+				function changeCid(){
+					$('#mycity').hide();
+					$('#choosetable').show();
+				}
+				function cancel(){
+					$('#mycity').show();
+					$('#choosetable').hide();
+				}
+			</script>
+<php>if (!isset($weather)) {</php>
+	<script type="text/javascript">
+		$('#choosetable').show();
+	</script>
+<php>}</php>
+</div>

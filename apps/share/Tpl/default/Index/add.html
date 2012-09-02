@@ -1,0 +1,65 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/share.info.form.js" ></script>
+<link  href="../Public/share.css" rel="stylesheet" type="text/css"/>
+
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+<include file="../Public/_mainNav2" />
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox ha_bg">
+    
+      <div class="mainbox_appC ha_bg" style="padding-bottom:20px; margin:0;">
+      <div class="page_title"><h2>{$biaoti}</h2></div> <div class="c"></div>
+       <div class="shareBox" style=" padding:20px 140px;">
+         
+       <form name="addform" action="{:U('//doAdd')}" method="post" 
+             onsubmit="javascript:return share_info.check_form(this);" enctype="multipart/form-data">
+       <ul class="add_share" >
+       
+          <li>
+          	<div class="testyle">专辑类型、封面(必选)：建议尺寸为980x300，封面更好看：</div><div class="c"></div>
+              <div class="addstyle">
+              <select name="sharenav">
+              <volist name="type" id="vo">
+              <option name="sharenav" value="{$vo.id}">{$vo.name}</option>
+              </volist>
+              </select>
+              </div>
+              <input type="file" class="text" style="font-size:14px; background:#fafafa; width:565px; margin-left:0; height:42px; float:left;"  name="logo" />
+            
+       	  </li>         
+          
+          <li>
+          	<div class="testyle">专辑名称(必填)：</div><div class="c"></div>
+              <input type="text" name="name" class="text" value="{$share.name}"
+                     onfocus="this.className='text2';" 
+                      onblur="this.className='text';share_info.text_length(this,30);" />
+              <span id="share_name_tips" class="cRed pr5"></span>
+       	  </li>
+
+          <li>
+          	<div class="testyle">专辑简介(必填)：</div><div class="c"></div>
+              <textarea rows="6"  class="text" style="height:150px;" 
+                        onblur="this.className='text';share_info.text_length(this,100);" 
+                        onfocus="this.className='text2'" name="intro">{$share['intro']}
+              </textarea>
+              <span id="share_intro_tips" class="cRed pr5"></span>
+       	  </li>
+          <li>
+            <input type="hidden" name="id" value="{$share.id}">
+            <input type="hidden" name="dosubmit" value="1">
+            <input type="hidden" name="city" value="{$user['city']}">
+            <input name="button" type="submit" class="btn_b" id="button" value="创建" />
+       	  </li>
+          </ul>
+    </form>
+  </div>
+        <div class="c"></div>
+      </div><div class="c"></div>
+    </div>
+  </div>
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />

@@ -1,0 +1,20 @@
+﻿#
+# 版本选择插件 安装说明.txt
+#
+
+1. 安全起见, 请备份站点的所有文件和数据库
+2. 将以下代码加入到 core\sociax\App.class.php 第401行 global $ts; 之后
+	
+	//使用用户切换的版本包 程序_小时代 提供
+	$user_site_theme=M('user_theme')->where('uid='.$_SESSION['mid'])->getField('theme_name');
+	if($user_site_theme){
+		$ts['site']['site_theme']=$user_site_theme;
+	}
+	
+	如果该文件您没有修改，那么您也可以将UserTheme\core文件夹中的文件直接替换，安全可靠
+	
+3. 解压文件并上传至服务器文件的addons\plugins目录中
+4. 进入网站后台安装此插件"管理后台 - 扩展 - 插件 - 插件列表" 安装名为"主站风格版本选择"的插件，刷新页面
+5. 进入"管理后台 - 扩展 - 插件 - 插件列表-"主站风格版本选择", 进行相关配置
+6. 清理缓存
+7. Enjoy

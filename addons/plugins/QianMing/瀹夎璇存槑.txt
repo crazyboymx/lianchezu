@@ -1,0 +1,29 @@
+插件：个性签名 
+版本：1.0 （适用TS2.5以上版本）
+作者：ALAN QQ:8510001
+网址：http://www.fakesay.com
+更新请关注官网
+－－－－－－－－－－－－－－－－－－－－－开始安装－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+第一步：解压目录：addons\plugins
+
+第二步：在风格中加入：{:Addons::hook('home_space_qianming', array('uid'=>$uid))} 
+
+                           //  你需要显示的位置 
+第三步：后台开启搞定了。
+
+－－－－－－－－－－－－－－－－－－－－－结束安装－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+
+安装案例演示：
+
+我装在 public/themes/fakesay/apps/home/Space/userMenu.html 
+第8行 <dd><div class="c1">个性签名:</div><div class="c2"> {:Addons::hook('home_space_qianming', array('uid'=>$uid))}</div></dd>
+            
+ 
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+ 
+
+
+
+广告：本人提供各种TS有价值的二次开发服务。价格有点小贵，有需要的Q：8510001 注明：TS开发 。。
+
+演示网址：www.fakesay.com

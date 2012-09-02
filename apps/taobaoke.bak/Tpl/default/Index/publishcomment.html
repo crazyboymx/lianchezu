@@ -1,0 +1,112 @@
+
+<style type="text/css">
+<!--
+
+.mypublish {text-align:left;padding:10px;width:500px; background:#f2f2f2;}
+-->
+</style>
+
+<div class="mypublish">
+<php>if($privacy['weibo_comment']){</php>
+    <div class="new_position" id="comment_list_before_{$weibo_id}">
+<form action="{:U('weibo/Operate/addcomment')}" rel="miniblog_comment" <neq name="callback" value="">callback="{$callback}"</neq> method="post">
+	<input type="hidden" name="weibo_id" value="{$weibo_id}">
+	<input type="hidden" name="reply_comment_id" id="replyid_{$randtime}">
+	  
+	  <div style="margin:5px"><textarea class="message_text" style="width:99%;" name="comment_content" cols="" rows="" id="comment_{$randtime}" ></textarea></div>
+                            <div style="margin:5px; height:24px;">
+                                <input type="submit" class="btn_w right" value="发布">
+                                <span><a class="faceicon1" href="javascript:void(0)" onclick="ui.emotions(this)" target_set="comment_{$randtime}"></a></span>
+                            </div>
+	  
+	  </form>
+    </div>
+<php>}else{</php>
+	<div class="new_position" >您没有权限评论此微博</div>
+<php>}</php>
+
+	<volist id="vo" name="list['data']">
+    <div class="position_list" id="comment_list_c_{$vo.comment_id}"><space uid="vo.uid" target="_blank" class="pic">{uavatar=s}</space>
+      <p class="list_c"><space uid="vo.uid" class="null" target="_blank">{uname}</space>{$vo.uid|getUserGroupIcon} : {$vo.content|formatComment=true} ({$vo.ctime|friendLydate})</p>
+      <div class="alR clear">
+      	<php>if( $vo['uid']==$mid || $data['uid']==$mid){</php>
+			<a href="javascript:void(0)" onclick="ui.confirm(this,'确认要删除这条评论?')" callback="delComment({$vo.comment_id})">删除</a>
+		<php>}</php>
+		<php>if($privacy['weibo_comment']){</php>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="reply('{$vo.uid|getUserName}',{$randtime},{$vo.comment_id})">回复</a><php>}</php></div>
+    </div>
+	</volist>
+	
+	<div class="c"></div>
+	<php>if($list['totalPages']>1){</php>
+	<div class=""><a href="{:U('home/space/detail',array('id'=>$weibo_id))}">查看更多>>></a></div>
+	<php>}</php>
+</div>
+
+<script>
+	$(document).ready(function(){
+		var $comment_content = $("#comment_{$randtime}");
+		$comment_content.jGrow();
+		$comment_content.keyup(function(event){
+			if(event.keyCode==32 || event.keyCode==8 || event.keyCode==13){
+				checkCommentLength(this,140);
+			}
+		}).keypress(function(){
+			checkCommentLength(this,140);
+		}).blur(function(){
+			checkCommentLength(this,140);
+		}).keydown(function(){
+			checkCommentLength(this,140);
+		}).keyup(function(){
+			checkCommentLength(this,140);
+		}).focus();
+	    <php>if($quick_reply){</php>
+	    	reply('{$quick_reply_uname}',{$randtime},'{$quick_reply_comment_id}');
+	    <php>}</php>
+
+	    shortcut('ctrl+return',	function(){ $('#comment_list_before_{$weibo_id} form').submit();},{'target':'comment_<?php echo $randtime; ?>'});
+
+		var url = "{:U('home/User/searchTips')}";
+		userAutoTips({id:'comment_<?php echo $randtime; ?>',url: url});
+	});
+
+
+
+	function checkCommentLength(obj,num){
+  	 	var $obj = $(obj);
+		var str  = $obj.val();  
+		var len  = getLength(str);
+		if( len > num ){
+			$obj.val(subStr(str, num));
+		}
+	}
+	//回复
+	function reply( name, weibo_id ,id){
+		$("#comment_"+weibo_id).val( '回复@'+name+' : ' ).focus();
+		$("#replyid_"+weibo_id).val(id);
+		
+		var textArea = document.getElementById("comment_"+weibo_id);
+		var strlength = textArea.value.length;
+		if (document.selection) { //IE
+			 var rng = textArea.createTextRange();
+			 rng.collapse(true);
+			 rng.moveStart("character",strlength)
+		}else if (textArea.selectionStart || (textArea.selectionStart == '0')) { // Mozilla/Netscape…
+	        textArea.selectionStart = strlength;
+	        textArea.selectionEnd = strlength;
+	    }		
+	}
+
+	//删除回复
+	function delComment(id){
+		$.post( U('weibo/operate/docomments'),{id:id},function(txt){
+			txt = eval('('+txt+')');
+			if(txt.boolen){
+				$("#comment_list_c_"+id).slideUp('fast');
+				$("a[rel='comment'][minid='{$data.weibo_id}']").html( "评论("+txt.count+")" );
+			}else{
+				alert('删除失败');
+			}
+		 })
+		
+	}
+</script>

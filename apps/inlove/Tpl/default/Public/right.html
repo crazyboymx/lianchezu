@@ -1,0 +1,37 @@
+<div class="right_box">
+  <div class="userpic" style="width:80px; height:80px; float:left;"><a href="{:U('home/Space/index', array('uid' => $inloveid))}" target="_blank" title="查看官方微博"><img src="{$ts['app']['large_icon_url']}" style="width:80px; height:80px;"/></a> </div>
+  <div style="float:left; margin-left:10px;">
+    <h2 style="margin-top:-5px;">{$ts['app']['app_alias']}</h2>
+    <div> <span><a href="###"><strong>{$appcount['user']}</strong>&nbsp;使用人数</a></span><br />
+      <span><a href="###"><strong>{$appcount['inlove']}</strong>&nbsp;告白总数</a></span><br />
+      <span><a href="###"><strong>{$appcount['tucao']}</strong>&nbsp;吐槽总数</a></span><br />
+    </div>
+  </div>
+  <div style="float:left; width:100%">
+                    <php>if($appcount['isBlackList']){</php>
+                     <dd style="width:90%; text-align:center; padding-top:20px" >
+                     已加入黑名单， <a href="javascript:void(0)" onclick="ui.confirm(this,'是否解除黑名单?')" callback="setBlacklist({$inloveid},'del')">解除</a></dd>
+                    <php>}else{</php>
+                    <dd style="width:90%; text-align:center; padding-top:20px"  id="follow_list_{$inloveid}">
+                    <script>document.write(followState('{$appcount[followstate]}','dolistfollow','{$inloveid}'))</script>
+                    </dd>
+                    <php>}</php>
+    </div>            
+             
+  <h2>这是什么呢？</h2>
+  <div class="lineS_btm">
+    <p style="line-height:20px;">在这里你@Ta 对Ta进行匿名告白，如果 Ta 也@你，那么你们双方就可以在系统中看到彼此的信；</p>
+    <p style="line-height:20px; margin-top:10px;">当你暗恋的人收到你的匿名消息的时候，Ta可能会通过应用告诉你Ta想跟你说的话；当你被暗恋的时候，你可以向暗恋你的人提问，但你不会知道Ta是谁。</p>
+    <p style="line-height:20px; margin-top:10px;">或者，你也可以把这里当作一个树洞；但这个树却是五百年修来的<font color="#CC0000">爱情之树</font>。</p>
+  </div>
+  <h2>最近告白的</h2>
+  <ul class="fans_person">
+    <volist name="from_uids" id="vo">
+      <li>
+        <div class="userPic">
+          <space uid="vo">{uavatar}</space>
+        </div>
+      </li>
+    </volist>
+  </ul>
+</div>

@@ -1,0 +1,188 @@
+<include file="__THEME__/header" />
+<!--[if IE 6]>
+		<script src="__PUBLIC__/js/DD_belatedPNG_0.0.8a-min.js" type="text/javascript"></script>  
+		<script type="text/javascript">
+			DD_belatedPNG.fix('.ilogo');
+		</script>
+	<![endif]--> 
+<style>
+<!--
+body {
+    margin-top: 3%;
+}
+.login_con{width:982px; margin:auto;}
+.header_bg { display:none;}
+.login_con{
+    background: url("__THEME__/images/bg.jpg") no-repeat scroll left top transparent;
+    height: 370px;
+    margin: -19px auto 0;
+    overflow: hidden;
+    position: relative;
+    width: 660px;
+}
+.text{
+-moz-transition: all 0.08s ease-in-out 0s;
+    border: 1px solid #FFFFFF;
+    box-shadow: 1px 2px 10px rgba(255, 255, 255, 0.95) inset, 1px 2px 5px rgba(0, 0, 0, 0.35);
+    color: #666666;
+    font-size: 14px;
+    font-weight: 700;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 58px;
+	background:#F2EDED;
+
+}
+.c1{position:relative;}
+.c1 label{position: absolute;   left: 60px;_left: 0px;
+    top: 12px;_top: 18px;width:60px;
+}
+.login_box ul li .c2 {color:#fff;}
+.login_con .login_boxR {margin-right:155px;_margin-right:45px;margin-top:30px;}
+
+.btn_b2{
+    -moz-transition-duration: 0.05s;
+    -moz-transition-property: color, -moz-box-shadow, text-shadow;
+    -moz-transition-timing-function: ease-in-out;
+    border: 1px solid transparent;
+    border-radius: 0.2em 0.2em 0.2em 0.2em;
+    box-shadow: 0 1px rgba(255, 255, 255, 0.8), 0 1px rgba(255, 255, 255, 0.35) inset;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1em;
+    padding: 0.45em 0.825em;
+    position: relative;
+    text-align: center;
+	background-color:#DF4C54;
+	color:#FCF9F9;
+	font-size:14px;
+	font-weight:bold;
+}
+.login_top{width:260px; text-align:left; color:#BBBBBB;}
+.login_box ul li .c2 a { color:#fff;}
+.login_logo{ position:relative;}
+.login_logo .ilogo{ position: absolute;left:50px;top:100px;}
+--> 
+</style>
+<script>
+function changeverify(){
+    var date = new Date();
+    var ttime = date.getTime();
+    var url = "{:U('home/Public/verify')}";
+    $('#verifyimg').attr('src',url+'&'+ttime);
+}
+
+$(function(){                    
+  var      mymain=$(".wrap");
+mymain.css("margin" ,"0 auto");  
+  mymain.css("width" ,"982");                   
+
+}); 
+</script>
+
+<php>
+if($_GET["t"]==1){
+</php>
+<div class="LoginBox_msg"><font color="red">email或密码错误!</font></div>
+<php>}elseif($_GET["t"]==2){</php>
+<div class="LoginBox_msg"><font color="red">该账号尚未完成注册步骤，请点击注册确认邮件的确认链接！<a href="__URL__/reSendEmail/email/{.email}/uid/{.uid}">点击这里</a>重新发送确认邮件。</font></div>
+<php>}elseif( $_GET['t'] == 3 ){</php>
+<div class="LoginBox_msg"><font color="red">验证码错误!</font></div>
+<php>}</php>
+<div class="login_con"><!-- 内容 begin  -->
+  <div class="login_logo"><a href="{:U('home/Index')}" ><img  class="ilogo" src="__THEME__/images/logo.png"></a></div>
+
+  <div class="login_boxR">
+    <div class="login_box">
+      <form action="{:U('home/Public/doLogin')}" method="post">
+        <ul>
+          <li>
+            <div class="c1"><label>Email：</label></div>
+            <div class="c2">
+
+<php>if($_GET['t']=='unactive'){</php>
+            <div class="clew_bg" style="position:absolute; margin-top:-80px; width:230px">
+    <div class="clew_bg_arrow_b"></div>
+    	<div class="clew_bg_top"><div></div></div>
+        <div class="clew_bg_con lh18"><div><span class="right"><a href="javascript:void(0)" onClick="$('.clew_bg').hide()" class="del" title="关闭"></a></span><span class="ico_cue_no"></span><strong class="cRed">该账户尚未激活</strong></div>
+        <div>到注册确认邮件中激活账户，或者，<a href="{:U('home/Public/resendEmail',array('uid'=>$uid,'email'=>$email))}">重发确认邮件</a></div></div>
+        <div class="clew_bg_btm"><div></div></div>
+    </div>
+<php>}</php>
+	
+              <input name="email" type="text" class="text" id="textfield3" style="width:200px;"/>
+            </div>
+          </li>
+          <li style="display:none;">
+            <div class="c1" style="padding:0">&nbsp;</div>
+            <div class="c2 cGray2" style="padding:0">帐号/邮箱地址</div>
+          </li>
+          <li>
+            <div class="c1"><label>密&nbsp;&nbsp;码：</label></div>
+            <div class="c2">
+              <input name="password" type="password" class="text" id="textfield3"  style="width:200px;"/>
+            </div>
+          </li>
+          <php> $verify_allow = unserialize($site_opts["verify"]);
+            $login_verify_allow = $verify_allow['login']; </php>
+          <eq name="register_verify_on" value="1">
+            <li>
+              <div class="c1">验证码：</div>
+              <div class="c2">
+                <div class="left">
+                  <input name="verify" type="text" class="text" id="textfield3" onFocus="this.className='text2'" onBlur="this.className='text'" style="width:50px;" />
+                </div>&nbsp;
+                <a href="javascript:void(0);" onClick="changeverify()"><img src="{:U('home/Public/verify')}" id="verifyimg" alt="换一张" /></a> </div>
+            </li>
+          </eq>
+          <li>
+            <div class="c1"></div>
+            <div class="c2" style="margin-left:0px;_margin-left:-60px">
+            <a href="{:U('home/Public/sendPassword')}" class="right">忘了密码？</a>
+              <label><input name="remember" type="checkbox" value="1" />下次自动登录</label>
+            </div>
+          </li>
+          <li style="margin-left:0px;_margin-left:-60px">
+            <div class="c1"></div>
+            <div class="c2">
+              <input name="button" type="submit" class="btn_b2 hand" id="button" value="登 录" />
+              &nbsp;<a href="{:U('home/public/register')}"  class="f14px">立即注册</a> </div>
+          </li>
+        </ul>
+      </form>
+      <div class="c"></div>
+	  <php>if($regInfo['register_type']=='open'){</php>
+	  <div style="margin-left:60px;_margin-left:0px">
+      <div class="login_top mt10 alC" style=" padding-top:10px;" >
+        <p class="pb10">其他账号：
+        <volist name="platforms" id="vo">
+        	<a href="{:U('home/Public/tryOtherLogin',array('type'=>$vo))}">
+        		<img src="__THEME__/images/btn_{$vo}.gif" style="cursor: pointer;">
+        	</a>
+        </volist>
+        </p>
+      </div>
+	  </div>
+	  <php>}</php>
+    </div>
+  </div>
+  <div class="login_boxL" style="display:none">
+  <h2><span class="icoWrite"></span><strong>大家正在说</strong></h2>
+    <ul class="feed_list">
+<volist id="vo" name="list">
+      <li class="lineD_btm">
+        <div class="userPic"><a href="{:U('home/space/index',array('uid'=>$vo['uid']))}" title=""><img card="1" src="{$vo.uid|getUserFace}"></a></div>
+        <div class="feed_c">
+          <div class="msgCnt"><a href="{:U('home/space/index',array('uid'=>$vo['uid']))}"><strong>{$vo.uid|getUserName}</strong></a>：{$vo.content}</div>
+          <div class="feed_c_btm"> <cite> <a href="{:U('home/space/detail',array('id'=>$vo['weibo_id']))}">{$vo.ctime|friendlyDate='mohu'}</a></cite></div>
+          <div style="" id="comment_list_418"></div>
+        </div>
+      </li>
+</volist>
+    </ul>
+    <div class="c"></div>
+  </div>
+</div>
+
+</div>
+

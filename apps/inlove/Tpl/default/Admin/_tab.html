@@ -1,0 +1,8 @@
+<div class="page_tit">{$ts['app']['app_alias']}</div>
+<div class="tit_tab">
+  	<ul>
+    <li><a href="{:U('inlove/admin/index')}" <eq name="ACTION_NAME" value="index">class="on"</eq> >{$ts['app']['app_alias']}配置</a></li>
+    <li><a href="{:U('inlove/admin/inlovelist')}" <eq name="recycle" value="0">class="on"</eq> >{$ts['app']['app_alias']}列表</a></li>
+    <li><a href="{:U('inlove/admin/inlovelist',array('recycle'=>1))}" <eq name="recycle" value="1">class="on"</eq> >{$ts['app']['app_alias']}回收站</a></li>
+    </ul>
+</div>

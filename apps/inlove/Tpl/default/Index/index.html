@@ -1,0 +1,103 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/weibo.js"></script>
+<link rel="stylesheet" href="../Public/css/layout.css" type="text/css" media="screen" charset="utf-8" />
+<div class="content_holder">
+  <div class="content"><!-- 内容 begin  -->
+    <div class="main no_l" style="padding:20px;">
+      <div class="tab-menu"><!-- 切换标签 begin  -->
+        <ul>
+          <li><a href="{:U('inlove/Index/index')}" class="on" ><span>通告大厅</span></a></li>
+          <li><a href="{:U('inlove/Index/frommy')}"  ><span>我的勇敢告白</span></a></li>
+          <li><a href="{:U('inlove/Index/tomy')}"  ><span>我收到的告白</span></a></li>
+          <li><a href="{:U('inlove/Index/inlove')}"><span>成功告白</span></a></li>
+        </ul>
+      </div>
+      <div class="mainbox boxspace">
+        <div class="mainbox_appR"> <include file="../Public/right" /> </div>
+        <div class="mainbox_appC boxspace_L">
+          <div class="talkBox" style="height:160px">
+            <form method="post" action="{:U('inlove/Index/publish')}" id="miniblog_publish" class="formObj" oncomplete="false">
+              <input type="hidden" name="publish_type" value="0">
+              <h2>
+                <div class="wordNum numObj"></div>
+                <span>@Ta 以官方名义勇敢、大声说出你的爱&hellip;&hellip;</span></h2>
+              <div class="cntBox">
+                <input type="button" disabled="true" class="btn_big_disable hand buttonObj"  value="&nbsp;" id="publish_handle"  />
+                <textarea name="content" id="content_publish" class="contentObj" cols="" rows="" style="width:85%;height:55px;*height:52px;padding:5px; margin:0; _padding:5;overflow: hidden;overflow-x:hidden;overflow-y:auto;line-height:18px;"></textarea>
+                <div class="txtShadow" style="z-index:-1000"></div>
+              </div>
+              <div class="funBox">
+                <div id="publish_type_content_before" class="left"> 
+                  <!-- {:Addons::hook('home_index_middle_publish_type',array('position'=>'other'))}--> 
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="tab-menu" style="height:1px;"><!-- 横线  --> 
+            
+          </div>
+          <div class="feedBox"> <ul class="feed_list" 
+          
+          
+          
+            <eq name='insert' value='1'> id="feed_list"</eq>
+            >
+            <volist id="vo" name="list['data']">
+              <li class="lineD_btm"  id="list_li_{$vo.weibo_id}">
+                <div class="userPic">
+                  <neq name="vo.users" value="1"><img src="../Public/icon/tucao.png" />
+                    <else />
+                    <img src="../Public/icon/inlove.png" /></neq>
+                </div>
+                <div class="feed_c">
+                  <div class="msgCnt">
+                    <if condition="$show eq 'detail'">
+                      <p style="vertical-align:top;display:inline">{$vo.content|format=true}</p>
+                      <else />
+                      <php>$detail_more = get_str_length($vo['content'], true) > 140 ? ' <a href="' . U('home/space/detail',array('id'=>$vo['weibo_id'])) . '" target="_blank">查看更多&raquo;</a>' : '';</php>
+                      <p style="vertical-align:top;display:inline">{$vo.content|getShort=###,140,'...'|format=true}{$detail_more}</p>
+                    </if>
+                  </div>
+                  {$vo.expend}
+                  <div class="feed_c_btm"> <span class="right"> <a href="{:U('home/space/detail',array('id'=>$vo['weibo_id']))}"  target="_blank">查看<neq name="vo.users" value="1">原文<else />告白</neq>>></a> </span> <cite style="font-size:10px; color:#888">
+                    <neq name="vo.users" value="1">吐槽<else />告白</neq>时间：{$vo.ctime|friendlyDate}</cite> </div>
+                </div>
+              </li>
+            </volist>
+            </ul>
+          </div>
+          <div class="c"></div>
+          <div class="page">{$list.html}</div>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+<script>
+var weibo = $.weibo({
+    initForm:false
+    });
+weibo.initForm("miniblog_publish",{       
+        enter:function(formObj,buttonObj,contentObj,numObj,txt){
+		if(txt=='01') {
+			ui.error('不能对自己告白哦！');	
+		}else if( txt=='02'){
+			ui.error('您没有@要告白的对象或者@对象不存在！');		
+		}else if( txt=='03'){
+			ui.error('您告白的对象太多了，不要太花心哦！');		
+		}else if( txt=='04'){
+			ui.error('存在非法字符，不能发布');		
+		}else if( txt=='05'){
+			ui.error('积分不足，不能发布哦！');		
+		}else if(txt.length<10){
+			ui.error('操作太频繁可不好哦，每隔'+txt+'秒发布一次');	
+		}else{
+            $('.feed_list').prepend( txt ).slideDown('slow');
+            contentObj.val('');
+		}
+        }
+   });
+</script> 
+{:Addons::hook('weibo_js_plugin')} <include file="__THEME__/footer" /> 

@@ -1,0 +1,47 @@
+<include file="_header" />
+<div class="so_main"> <include file="_tab" />
+  <div class="form2">
+    <form method="post" action="{:U('inlove/admin/doinloveconfig')}">
+      <dl class="lineD">
+        <dt>恋爱通告官方账号ID：</dt>
+        <dd>
+          <input name="inloveid" type="text" value="{$inloveid}">
+          <p>提示：此用户必须存在，恋爱通告的官方账号，（注意：官方微博账号的设置是ID，非用户名或者邮箱） 
+        </dd>
+      </dl>
+       <dl class="lineD">
+        <dt>是否开启积分消耗：</dt>
+        <dd>
+          <label><input name="jifenopen" type="radio" value="1" 
+            <eq name="jifenopen" value="1">checked</eq>
+            >是</label>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <label><input name="jifenopen" type="radio" value="0" 
+            <eq name="jifenopen" value="0">checked</eq>
+            >否</label>
+            <p>（开启每次扣除5分，您可以进入 全局-积分配置总重新配置）
+        </dd>
+      </dl>
+      <dl class="lineD">
+        <dt>用户需要@几个人才能发布（默认无限制）：</dt>
+        <dd>
+          <input name="tcount" type="text" value="{$tcount}">
+          <p>(提示：用户不能@自己，如果设置1则有且只能@1为用户，设置2则不能@超过2位真实存在的用户，超出将提示："您告白的对象太多了，不要太花心哦！") 
+        </dd>
+      </dl>
+      <dl class="lineD">
+        <dt>用户发布的间隔时间（单位：秒）：</dt>
+        <dd>
+          <input name="timewait" type="text" value="{$timewait}">
+        </dd>
+      </dl>
+      <dl class="">
+        <dt></dt>
+        <dd>
+          <input type="submit" class="btn_b" value="确定" />
+        </dd>
+      </dl>
+    </form>
+  </div>
+</div>
+<include file="_footer" />

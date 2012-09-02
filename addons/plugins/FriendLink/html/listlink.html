@@ -1,0 +1,68 @@
+<script type="text/javascript">
+//鼠标移动表格效果
+$(document).ready(function(){
+    $("tr[overstyle='on']").hover(
+      function () {
+        $(this).addClass("bg_hover");
+      },
+      function () {
+        $(this).removeClass("bg_hover");
+      }
+    );
+});
+	//添加
+    function add() {
+        ui.box.load("{:Addons::adminPage('addlink')}", {title:'添加'});
+    }
+    
+    //编辑
+    function edit(id) {
+        ui.box.load("{:Addons::adminPage('addlink')}&id="+id, {title:'编辑'});
+    }
+    
+    //删除
+    function del(id) {
+        if(id == '') return false;
+
+        //提交删除
+        $.post("{:Addons::adminPage('doDeleteLink')}", {id:id}, function(res){
+	        if(res == '1') {
+		        $('#link'+id).remove();
+	            ui.success('删除成功');
+	        }else {
+	        	ui.success('删除失败');
+	        }
+        });
+    }
+</script>
+  <div class="Toolbar_inbox">
+    <a href="javascript:void(0);" onclick="add();" class="btn_a"><span>添加</span></a>
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th class="line_l">ID</th>
+    <th class="line_l">名称</th>
+    <th class="line_l">时间</th>
+    <th class="line_l">操作</th>
+  </tr>
+  
+  <php>if(empty($listlink)) {</php>
+    <tr><td>暂无</td></tr>
+  <php>}</php>
+  
+  <volist id="vo" name="listlink">
+      <tr overstyle='on' id="link{$vo['id']}">
+        <td>{$vo['id']}</td>
+        <td><a href="{$vo.url}" target="_blank">{$vo['title']}</a></td>
+        <td>{$vo['ctime']|date="Y-m-d H:i",###}</td>
+        <td>
+            <a href="javascript:void(0);" onclick="edit({$vo['id']})">编辑</a> | <a href="javascript:void(0);" onclick="del({$vo['id']})">删除</a>
+        </td>
+      </tr>
+  </volist>
+  </table>
+  </div>
+  <div class="Toolbar_inbox">
+    <a href="javascript:void(0);" onclick="add();" class="btn_a"><span>添加</span></a>
+  </div>

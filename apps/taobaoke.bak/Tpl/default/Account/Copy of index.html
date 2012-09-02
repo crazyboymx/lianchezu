@@ -1,0 +1,448 @@
+<include file="__THEME__/header" />
+<link href="../Public/account.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/avatar/avatar.js"></script>
+<script type="text/javascript" src="../Public/js/account.js"></script>
+
+<div class="content"><!-- 内容 begin  --> 
+  <include file="__THEME__/apps" />
+  <div class="main"> <!-- 右侧内容 begin  -->
+    <div class="mainbox wrap">
+      <div class="mainbox_C no_r">
+      <div class=page_title> <!-- page_title begin -->
+      <h2><img src="../Public/images/applications.gif" />帐号管理</h2>
+    </div>
+      <div class="tab-menu"><!-- 切换标签 begin  -->
+      <ul>
+        <li><a href="###" class="on"><span>个人资料</span></a></li>
+        <li><a href="###"><span>隐私设置</span></a></li>
+        <li><a href="{:U('home/Account/security')}"><span>帐号安全</span></a></li>
+        <li><a href="{:U('home/Account/bind')}"><span>外部绑定</span></a></li>
+      </ul>
+    </div>
+    <!-- 切换标签 end  -->
+    <div class="mainbox_C_C">
+    <div class="mainbox_R">
+    <div class="right_box">
+    完善您的个人资料以便您的朋友快速的找到您！！
+    </div>
+    </div>
+		<div class="feedBox">
+          <div class="setItems">
+            <div class="setFold setUnfold" rel="base" >
+              <h2>基本资料</h2>
+              <div class="setStep"> <span class="txt1">用户基本信息</span></div>
+            </div>
+            <div style="display: block;" class="setItemsInfo">
+		      <div class="data"><!-- 基本资料 begin  -->
+		            <ul>
+		                <form action="{:U('home/Account/update')}" method="post" class="form_validator" type="base" id="regform">
+						<input type="hidden" name="dotype" value="upbase">
+		                <li>
+		                    <div class="left alR" style="width: 15%;">姓名：</div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5"><input disabled=true value="{$userInfo.base.list.uname}" /></div>
+		                    </div>
+		                </li>
+						
+		                <li>
+		                    <div class="left alR" style="width: 15%;">所在地区：</div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5">
+							      <script>ui.getarea('area','',{$userInfo.base.list.province},{$userInfo.base.list.city});</script>
+							  </div>
+		                    </div>
+		                </li>						
+						
+		                <li>
+		                    <div class="left alR" style="width: 15%;">性别：</div><div class="left" style="width: 50%;">
+		                        <label><input name="sex" type="radio" value="1" <eq name="userInfo.base.list.sex" value="1">checked='true'</eq> /> 男</label> &nbsp;&nbsp;&nbsp;
+		                        <label><input name="sex" type="radio" value="0" <eq name="userInfo.base.list.sex" value="0">checked='true'</eq>  dataType="Group"  msg="必须选定一个性别" /> 女</label>
+		                    </div>
+						</li>
+		
+		
+		
+		                <li><div class="left alR" style="width: 15%;">&nbsp;</div><div class="left" style="width: 50%;"><input type="submit" class="btn_b" value="保存" />
+		                </div><div class="left" style="width: 20%;">&nbsp;</div><div class="left" style="width: 15%;">&nbsp;</div></li>
+		            </form> 
+		           </ul>
+		
+		
+		        </div><!-- 基本资料 end  -->
+            </div>
+          </div>
+		  <div class="setItems">
+            <div class="setFold" rel="tags">
+              <h2>个人标签</h2>
+              <div class="setStep"> <span class="txt1">添加描述自己职业、兴趣爱好等方面的词语，让更多人找到你，让你找到更多同类</span></div>
+            </div>
+            <div class="setItemsInfo"> 
+				<div class="setupTag_box">
+                	<div class="setupTag_boxL">
+                            	<input type="text" id="tag_input" class="text mr5" style=" width:190px"><a class="N_but" href="javascript:void(0);" id="add_tag" onclick="doUserTag()"><em>保存</em></a>
+                <div class="mt10 cGray2">选择最适合你的词语，多个标签用空格分开</div></div>
+                    <div class="setupTag_boxR">
+                    	<p>你可能感兴趣的标签(点击直接添加) ：</p>
+                        <div id="rec_tags" class="setupTag_list01">
+                        <volist id="vo" name="userFavTag">
+                        	<a href="javascript:;" onclick="addTagById({$vo.tag_id})" title="添加标签"><em>+</em>{$vo.tag_name}</a>
+						</volist>
+                       </div>
+                       </div>
+                    </div>
+                    
+                 <div class="lineS_top pt10 cGray2">我已经添加的标签</div>
+                 <div class="setupTag_list02" id="mytagshow2">
+                    <ul id="tag_list" class="tagList">
+						<volist id="vo" name="userTag">
+							<li><a class="a1" href="">{$vo.tag_name}</a><a class="a2" onclick="deleteTag(this)" tagid="{$vo.user_tag_id}" href="javascript:;"><img class="del" src="__THEME__/images/zw_img.gif" /></a></li>
+						</volist>
+					</ul>
+                    <div class="clear"></div>
+                    </div>
+                </div>
+			</div>
+          <div class="setItems">
+            <div class="setFold" rel="intro">
+              <h2>个人情况</h2>
+              <div class="setStep"> <span class="txt1">个人详情，将出现在个人空间详细资料里</span></div>
+            </div>
+            <div style="display:none;"  class="setItemsInfo"> 
+				 <div class="data"><!-- 个人情况 begin  -->
+					<form action="{:U('home/Account/update')}" method="post" class="form_validator" type="intro" expend="setdegree">
+					<input type="hidden" name="dotype" value="upintro">
+					    <ul>
+					        <volist name="userInfo.intro.list" id="vo">
+					          <li>
+						          <div class="left alR" style="width: 15%;">{$vo.name}：</div><div class="left" style="width: 50%;">
+						            <input type="text"  class="text" style="width:300px;" onfocus="this.className='text2'" onblur="this.className='text'"  name="intro[{$vo.field}]" value="{$vo.value}"/>
+						          </div>
+					            </li>
+					        </volist>
+					</ul>
+							<ul>
+					        <li>
+					        <div class="left alR" style="width: 15%;">&nbsp;</div><div class="left" style="width: 50%;">
+					            <input type="submit" class="btn_b" value="修改" />
+					        </div>
+					        <div class="left" style="width: 20%;">&nbsp;</div><div class="left" style="width: 15%;">&nbsp;</div></li>
+					</ul>
+					
+					</form>
+				</div><!-- 个人情况 end  -->
+			</div>
+          </div>
+		  
+          <div class="setItems">
+            <div class="setFold" rel="contact" >
+              <h2>联系方式</h2>
+              <div class="setStep"> <span class="txt1">补充联系方式，更方便你的朋友联系上你</span></div>
+            </div>
+            <div style="display:none;"  class="setItemsInfo"> 
+				 <div class="data"><!-- 联系方式 begin  -->
+					<form action="{:U('home/Account/update')}" method="post" class="form_validator" type="contact" expend="setdegree">
+					<input type="hidden" name="dotype" value="upcontact">
+					    <ul>
+					        <volist name="userInfo.contact.list" id="vo">
+					          <li>
+						          <div class="left alR" style="width: 15%;">{$vo.name}：</div><div class="left" style="width: 50%;">
+						            <input type="text" id="old_{$vo['name']}" class="text" style="width:300px;" onfocus="this.className='text2'" onblur="this.className='text'"  name="contact[{$vo.field}]" value="{$vo.value}"/>
+						          </div>
+					            </li>
+					        </volist>
+					</ul>
+							<ul>
+					        <li>
+					        <div class="left alR" style="width: 15%;">&nbsp;</div><div class="left" style="width: 50%;">
+					            <input type="submit" class="btn_b" value="修改" />
+					        </div>
+					        <div class="left" style="width: 20%;">&nbsp;</div><div class="left" style="width: 15%;">&nbsp;</div></li>
+					</ul>
+					
+					</form>
+				</div><!-- 联系方式 end  -->
+			</div>
+          </div>
+		  
+          <div class="setItems">
+              <div class="setFold" rel="education" >
+              <h2>教育、工作情况</h2>
+              <div class="setStep"> <span class="txt1">教育、工作情况</span></div>
+            </div>
+            <div style="display:none;"  class="setItemsInfo"> 
+	
+		        <div class="data"><!-- 教育情况 begin  -->
+
+		            <div>
+					
+					<ul id="profileList">
+						<volist id="vo" name="userInfo.profile.list">
+						 	<li id="pro_{$vo.id}">
+							<switch name="vo['module']">
+								<case value="education">
+									<div id="div_action_702" class="projectlist">
+										<h3><a href="javascript:profile_del({$vo.id});" class="right"><span class="iconItemClose"> &nbsp;</span></a>
+										[教育]<a href="#" target="_blank">{$vo.school}</a>
+										</h3><p>{$vo.year}入学 - {$vo.class}</p>
+									</div>
+								</case>
+							
+							
+								<case value="career">
+									<div id="div_action_702" class="projectlist">
+											<h3><a href="javascript:profile_del({$vo.id});" class="right"><span class="iconItemClose"> &nbsp;</span></a>
+											[公司/机构]<a href="#" target="_blank">{$vo.company}</a>
+											</h3><p>{$vo.begintime} 至 {$vo.endtime}<br>{$vo.position}</p>
+									</div>
+
+								</case>
+							</switch>
+							</li>
+						</volist>
+					</ul>					
+					
+		                <h2 class="lh35  f14px"><strong>添加</strong></h2>
+						<form action="{:U('home/account/addproject')}" method="post" expend="addprofile">
+						   <ul>
+		                        <li>
+                    				<DIV class="left alR lh25" style="width:15%;">类型：</DIV>
+		                            <DIV class="left" style="width: 85%;">
+		                            	<select name="addtype" onchange="changeEduCar(this)">
+												<option value="">请选择</option>
+												<option value="education">教育</option>
+											    <option value="career">公司/机构</option>
+											</select>
+		                            </DIV>								
+		                        </li>
+							</ul>
+								
+							<ul id="educarContent">
+							</ul>
+								</form>
+					</div>         
+		          
+		        </div><!-- 教育情况 end  -->	
+	
+			</div>
+          </div>
+	
+		  
+          <div class="setItems">
+		    
+            <div class="setFold" rel="face" >
+			<div style="float:left;margin-right:10px;border:1px solid #8098A8;height:30px;padding:1px;width:30px;"><img src="{$mid|getUserFace='s'}" width="30"></div>
+              <h2>上传头像</h2>
+             <div class="setStep">
+			  	<span class="txt1" id="avatarInfo">
+				<php>if( isSetAvatar($mid) ){</php>
+					已设置头像
+				<php>}else{</php>
+					未设置头像
+				<php>}</php>
+				</span>
+              </div>
+            </div>
+            <div style="display:none;"  class="setItemsInfo"> 
+				<div style="padding:10px 0;color:#666;"> 
+				你可以选择上传一张本地头像，也可以  <a style="color:#cc3300;" href="javascript:void(0);" onclick="useCamera()">使用摄像头。</a> 
+				</div> 
+				<form enctype="multipart/form-data" method="post" name="upform" target="upload_target" action="{:U('home/Account/avatar',array('t'=>'upload'))}">
+				<input type="file" name="Filedata" id="Filedata"/> 
+				<input style="margin-right:20px;" type="submit" name="" value="上传形象照" onclick="return checkFile();" /><span style="visibility:hidden;" id="loading_gif"><img src="../Public/js/avatar/loading.gif" align="absmiddle" />上传中，请稍侯......</span> 
+				</form> 
+				<iframe src="about:blank" name="upload_target" style="display:none;"></iframe> 
+				<div id="avatar_editor"></div> 
+			</div>
+          </div>		  
+		  <div class="setItems">
+		    
+            <div class="setFold" rel="face" >
+			<div style="float:left;margin-right:10px;border:1px solid #8098A8;height:30px;padding:1px;width:30px;"><img src="{$mid|getUserFace='s'}" width="30"></div>
+              <h2>上传头像</h2>
+             <div class="setStep">
+			  	<span class="txt1" id="avatarInfo">
+				<php>if( isSetAvatar($mid) ){</php>
+					已设置头像
+				<php>}else{</php>
+					未设置头像
+				<php>}</php>
+				</span>
+              </div>
+            </div>
+            <div style=""  class="setItemsInfo"> 
+				<div style="padding:10px 0;color:#666;"> 
+				你可以选择上传一张本地头像，也可以  <a style="color:#cc3300;" href="javascript:void(0);" onclick="useCamera()">使用摄像头。</a> 
+				</div> 
+                <div class="picSettings">
+                	<div class="left" style="width:270px; height:270px; border-right:1px solid #E5E5E5">选择图片</div>
+                    <div class="left" style="width:250px; padding-left:15px;">
+                    	<div style="width:180px; color:#09C; margin-bottom:20px;">您上传的头像会自动生成三种尺寸，请注意每个头像是否清楚</div>
+                        <div class="left alC cGray2 lh25" style="width:150px; margin-right:10px;"><img src="http://develop.thinksns.com/sociax_2_0/data/uploads/avatar/5/big.jpg" width="150px" height="150px" style="border:1px solid #B4B5AF" /><br />大尺寸头像,150×150像素</div>
+                        <div class="left alC cGray2" style="width:80px; margin-bottom:20px;"><img src="http://develop.thinksns.com/sociax_2_0/data/uploads/avatar/5/big.jpg" width="50px" height="50px"  style="border:1px solid #B4B5AF"/><br />中尺寸头像50×50像素</div>
+                        <div class="left alC cGray2" style="width:80px"><img src="http://develop.thinksns.com/sociax_2_0/data/uploads/avatar/5/big.jpg" width="30px" height="30px"  style="border:1px solid #B4B5AF"/><br />小尺寸头像30×30像素</div>
+                    </div>
+                    <div style="clear:left; padding-top:20px;"> <input type="button" class="btn_b" value="确定" /> <input type="button" class="btn_w" value="取消" /></div>
+                </div>
+			</div>
+          </div>
+        <div class="c"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" />
+
+<script>
+	$(document).ready(function(){
+		var hs = document.location.hash;
+		changeModel( hs.replace('#','') );
+		$('.setFold').click(function(){
+			if( $(this).attr('class')=='setFold' ){
+				changeModel( $(this).attr('rel') );
+			}else{
+				$(this).removeClass('setUnfold');
+				$(this).next('.setItemsInfo').hide();
+			}
+			location.href='#'+$(this).attr('rel');
+		})
+		
+		//监听 form 表单提交
+	  	$("form").bind('submit', function() {
+			var expend = $(this).attr('expend');
+			var type   = $(this).attr('type');
+			var options = {
+			    success: function(txt) {
+					  if( expend ){
+					  	var degree = eval( expend +"('"+txt +"')");
+						var o= $("div[rel='"+type+"']");
+						 o.find(".degree").css('width',txt+'%') ;
+						 o.find(".proText").html( txt + '%') ;
+					  }else{
+					  	 ui.success( txt );
+					  }
+			    }
+			};		
+	         $(this).ajaxSubmit(options);
+			 return false;
+	    });
+	
+	});
+	
+	function setdegree(txt){
+		return txt;
+	}
+	
+	//切换操作模块
+	function changeModel( type ){
+		var t = type || 'base';
+		$('.setFold').removeClass('setUnfold');
+		$('.setItemsInfo').hide();
+		var handle = $('div[rel="'+t+'"]');
+		handle.addClass('setUnfold');
+		handle.next('.setItemsInfo').show();
+	}
+	
+	function addprofile(txt){
+		txt = eval('(' + txt + ')');
+		var html='';
+		if(txt.id){
+			if (txt.addtype == 'education') {
+				html= '<li id="pro_'+txt.id+'"><div class="projectlist">' 
+					+ '<h3><a href="javascript:profile_del('+txt.id+');" class="right"><span class="iconItemClose"> &nbsp;</span></a>' 
+					+ '[教育]<a href="#" target="_blank">'+ txt.school +'</a></h3>'
+					+ '<p>'+ txt.year +'入学 - ' +txt.classes+ '</p></div></li>';
+			}else if( txt.addtype == 'career' ){
+				html= '<li><div id="div_action_702" class="projectlist">' 
+					+ '<h3><a href="profile_del('+txt.id+');" class="right"><span class="iconItemClose"> &nbsp;</span></a>' 
+					+ '[公司/机构]<a href="/search/index/type/colleague/coName/asdfasd" target="_blank">'+ txt.company +'</a>' 
+					+ '</h3><p>'+ txt.begintime +' 至 '+ txt.endtime + '<BR>'+ txt.position +'</p></div></li>';
+			}
+			$('#profileList').append( html );
+		}else{
+			 ui.success( txt.message );
+		}
+	}
+	
+	function profile_del(id){
+		$.post('{:U("home/account/delprofile")}',{id:id},function(txt){
+			if(txt){
+				$("#pro_"+id).remove();
+			}else{
+				alert( '删除失败' );
+			}
+		});
+	}
+	
+	//允许上传的图片类型
+	var extensions = 'jpg,jpeg,gif,png';
+	//保存缩略图的地址.
+	var saveUrl = '<php>echo urlencode( U("home/Account/avatar/",array("t"=>"save")) ) </php>';
+	//保存摄象头白摄图片的地址.
+	var cameraPostUrl = '<php>echo urlencode( U("home/Account/avatar/",array("t"=>"camera")) )</php>';
+	//头像编辑器flash的地址.
+	var editorFlaPath = '../Public/js/avatar/AvatarEditor.swf';
+</script> 
+
+<script>
+	//个人标签部分
+	$(document).ready(function(){
+		$('#tag_list').find('li').live("mouseover", function(){
+			$(this).addClass('bg');
+		});
+		$('#tag_list').find('li').live("mouseout", function(){
+			$(this).removeClass('bg');
+		});
+		
+	})
+	
+	function addTagById(tagid){
+		$.post(U('home/Account/doUserTag'),{type:'addByid',tagid:tagid},function(txt){
+			txt = eval("("+txt+")");
+			if(txt.code=='1'){
+				var html = '<li><a class="a1" href="">'+txt.data.tag_name+'</a><a class="a2" onclick="deleteTag(this)" tagid="'+txt.data.user_tag_id+'" href="javascript:;"><img class="del" src="__THEME__/images/zw_img.gif" /></a></li>'
+				$("#tag_list").append(html);
+			}else{
+				alert('添加失败');
+			}
+		})
+	}
+	
+	function doUserTag(){
+		var tagName = $("#tag_input").val();
+		if(tagName==''){
+			alert('Tag名不能为空');
+			return false;
+		}
+		$.post(U('home/Account/doUserTag'),{type:'addByname',tagname:tagName},function(txt){
+			txt = eval("("+txt+")");
+			if(txt.code=='1'){
+				var html='';
+				$.each(txt.data,function(i,n){
+					html+= '<li><a class="a1" href="">'+n.tag_name+'</a><a class="a2" onclick="deleteTag(this)" tagid="'+n.user_tag_id+'" href="javascript:;"><img class="del" src="__THEME__/images/zw_img.gif" /></a></li>'
+				});
+				$('#tag_input').val('');
+				$("#tag_list").append(html);
+			}else{
+				alert('添加失败');
+			}
+			
+		})
+	}
+	
+	function deleteTag(o){
+		var tagId = $(o).attr('tagid');
+		
+		$.post(U('home/Account/doUserTag'),{type:'deltag',tagid:tagId},function(txt){
+			$(o).parent('li').fadeOut("slow",function(){
+				$(this).remove();
+ 			}); 
+		})
+	}
+	
+</script>

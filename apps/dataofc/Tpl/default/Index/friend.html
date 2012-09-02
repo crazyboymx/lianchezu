@@ -1,0 +1,63 @@
+<include file="__THEME__/header" />
+<link href="../Public/css/OFC.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../Public/static/swfobject.js"></script>
+    <script type="text/javascript">
+	var file="{:U('dataofc/Index/friend',array('action'=>json))}";
+	var flashvars = {"data-file":encodeURIComponent(file)};
+    var path='../Public/static/open-flash-chart.swf';
+    var params = {menu: "false",scale: "noScale",wmode:"opaque"};
+    swfobject.embedSWF(path, "weibo_OFC", "100%", "350px", 
+        "9.0.0", "http://www.flexrain.cn/js/expressInstall.swf", flashvars,params);
+    </script>
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox">
+    <div class="mainbox_appC no_r">
+
+    <div class="tab-menu"><!-- 切换标签 begin  -->
+      <ul>
+        <li><a href="{:U('dataofc/Index/index')}" <eq name="tab" value="1">class="on"</eq>><span>个人微博数据分析</span></a></li>
+         <li><a href="{:U('dataofc/Index/friend')}" <eq name="tab" value="2">class="on"</eq>><span>个人关系数据分析</span></a></li>
+		<!-- <eq name="isSystemAdmin" value="TRUE"><li><a href="{:U('dataofc/Index/admin')}" <eq name="tab" value="admin">class="on"</eq>><span>全站数据统计</span></a></li></eq>-->
+		 </ul>
+    </div>
+	<div class="AI">
+    <div class="h2"><span class="icon_guanxi"></span>个人关系数据分析<span id="s_1" style="float:right; cursor:pointer;" onclick="f_1(1)">-收起</span></div>
+    <div class="OFC">总粉丝数：{$fans} 个 ，总收听：{$idol} 个 ，相互收听： {$fso} 个</div>
+    <div id="flash_1">
+	
+	 <div class="weibo_OFC" style="margin-top:15px;"><span class="title"><h2>表2：关系分析图表</h2></span><div id="weibo_OFC"></div></div>
+     </div>
+	</div>
+    
+    
+    
+    
+    
+    
+      </div>
+      
+    </div>
+  <div class="powered">以上数据来自【{$ts['site']['site_name']}】权威分析，由Thinksaas驱动</div>
+  </div>
+</div>
+</div>
+
+<script>
+var s1=0;
+var s2=0;
+function f_1(o){
+	if(s1==0){
+	  $('#flash_'+o).hide();
+	  $('#s_'+o).html('+展开');
+	  s1=1;
+	}else{
+		$('#flash_'+o).show();
+		$('#s_'+o).html('-收起');
+		s1=0;
+	}
+}
+</script>
+<include file="__THEME__/footer" />

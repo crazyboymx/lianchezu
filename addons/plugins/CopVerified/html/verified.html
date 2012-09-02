@@ -1,0 +1,216 @@
+  <!-------- 搜索用户 -------->
+  <div id="searchUser_div" <neq name="type" value="searchUser">style="display:none;"</neq>>
+  	<div class="page_tit">搜索用户 [ <a href="javascript:void(0);" onclick="searchUser();">隐藏</a> ]</div>
+	
+	<div class="form2">
+	<form method="post">
+	<php>if($type != 'searchUser') $uid = '';</php>
+    <dl class="lineD">
+      <dt>用户ID：</dt>
+      <dd>
+        <input name="uid" id="uid" type="text" value="{$uid}">
+        <p>用户ID,多个时使用英文的","分割</p>
+      </dd>
+    </dl>
+	
+    <dl class="lineD">
+      <dt>机构名称：</dt>
+      <dd>
+        <input name="name" id="name" type="text" value="{$realname}">
+        <p>支持模糊查询</p>
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>负责人：</dt>
+      <dd>
+        <input name="fuzeren" id="fuzeren" type="text" value="{$phone}">
+        <p>支持模糊查询</p>
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>联系方式：</dt>
+      <dd>
+        <input name="lianxifangshi" id="lianxifangshi" type="text" value="{$reason}">
+        <p>支持模糊查询</p>
+      </dd>
+    </dl>
+	<dl class="lineD">
+      <dt>认证资料：</dt>
+      <dd>
+        <input name="jieshao" id="jieshao" type="text" value="{$reason}">
+        <p>支持模糊查询</p>
+      </dd>
+    </dl>
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+	</form>
+  </div>
+  </div>
+  
+  <!-------- 用户列表 -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$html}</div>
+	<a href="javascript:void(0);" class="btn_a" onclick="searchUser();">
+		<span class="searchUser_action"><neq name="type" value="searchUser">搜索用户<else/>搜索完毕</neq></span>
+	</a>
+	
+		<a href="javascript:void(0);" class="btn_a" onclick="deleteAd()"><span>取消认证</span></a>
+	
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th style="width:30px;">
+		<input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+    	<label for="checkbox"></label>
+	</th>
+    <th class="line_l">ID</th>
+    <th class="line_l">用户信息</th>
+    <th class="line_l">机构名称</th>
+    <th class="line_l">负责人</th>
+    <th class="line_l" width="350">联系方式</th>
+	<th class="line_l" width="350">认证资料</th>
+    <th class="line_l">状态</th>
+    
+  </tr>
+  <volist id="vo" name="data">
+	  <tr overstyle='on' id="user_{$vo['uid']}">
+	    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.uid}"></td>
+	    <td>{$vo.uid}</td>
+	    <td>
+			<div style="float:left;margin-right:10px;border:1px solid #8098A8;padding:1px;"><space uid="vo.uid" target="_blank">{uavatar=s}</space></div>
+			<div style="float:left"><space uid="vo.uid" class="fn" target="_blank">{uname}</space><br>{$vo.email}</div></td>
+		<td>{$vo.name}</td>
+	    <td>{$vo.fuzeren}</td>
+	    <td>{$vo.lianxifangshi}</td>
+	   <td>{$vo.jieshao}</td>
+	    <td>已认证</td>
+	   
+	  </tr>
+  </volist>
+  </table>
+  </div>
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$html}</div>
+	<a href="javascript:void(0);" class="btn_a" onclick="searchUser();">
+		<span class="searchUser_action"><neq name="type" value="searchUser">搜索用户<else/>搜索完毕</neq></span>
+	</a>
+	<a href="javascript:void(0);" class="btn_a" onclick="deleteAd()"><span>取消认证</span></a>
+  </div>
+<script>
+	//鼠标移动表格效果
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function () {
+		    $(this).addClass("bg_hover");
+		  },
+		  function () {
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+
+	//搜索用户
+	var isSearchHidden = <neq name="type" value="searchUser">1<else/>0</neq>;
+	function searchUser() {
+		if(isSearchHidden == 1) {
+			$("#searchUser_div").slideDown("fast");
+			$(".searchUser_action").html("搜索完毕");
+			isSearchHidden = 0;
+		}else {
+			$("#searchUser_div").slideUp("fast");
+			$(".searchUser_action").html("搜索用户");
+			isSearchHidden = 1;
+		}
+	}
+
+	function checkon(o){
+		if( o.checked == true ){
+			$(o).parents('tr').addClass('bg_on') ;
+		}else{
+			$(o).parents('tr').removeClass('bg_on') ;
+		}
+	}
+
+	function checkAll(o){
+		if( o.checked == true ){
+			$('input[name="checkbox"]').attr('checked','true');
+			$('tr[overstyle="on"]').addClass("bg_on");
+		}else{
+			$('input[name="checkbox"]').removeAttr('checked');
+			$('tr[overstyle="on"]').removeClass("bg_on");
+		}
+	}
+
+	//获取已选择用户的ID数组
+	function getChecked() {
+		var uids = new Array();
+		$.each($('table input:checked'), function(i, n){
+			var val = $(n).val();
+			if (val > 0) {
+				uids.push( $(n).val() );
+			}
+		});
+		return uids;
+	}
+function removeItem(ids) {
+    	ids = ids.split(',');
+        for(i = 0; i < ids.length; i++) {
+            $('#user_'+ids[i]).remove();
+        }
+    }
+	function deleteAd(ids) {
+
+    	var length = 0;
+
+    	if(ids) {
+
+    		length = 1;
+
+    	}else {
+
+    		ids    = getChecked();
+
+    		length = ids[0] == 0 ? ids.length - 1 : ids.length;
+
+            ids    = ids.toString();
+
+    	}
+
+    	if(ids=='') {
+
+    		ui.error('请先选择一个用户');
+
+    		return ;
+
+    	}
+
+    	if(confirm('您将取消'+length+'人的认证，删除后无法恢复，确定继续？')) {
+
+    		$.post("{:U('home/widget/addonsRequest')}",{'addon':'CopVerified','hook':'delrenz',uid:ids},function(res){
+
+    			if(res=='1') {
+
+    				ui.success('删除成功');
+
+    				removeItem(ids);
+
+    			}else {
+
+    				ui.error('删除失败');
+
+    			}
+
+    		});
+
+    	}
+
+    }
+
+    
+
+</script>
+<include file="../Public/_footer" />

@@ -1,0 +1,41 @@
+<style TYPE="text/css">
+	.midder {margin: 0 auto;overflow: hidden;padding: 10px;}
+	.midder table {border: 1px solid #DDD;border-collapse: collapse;border-spacing: 0;width: 100%;}
+	.midder table tr td {border-bottom: 1px solid #DDD;height: 29px;line-height: 29px;margin: 0;outline: 0 none;padding: 0 20px;vertical-align: top;}
+	.midder table tr.old td {background: none repeat scroll 0 0 #F6F6F6;font-weight: bold;}
+	.midder table tr.odd td {vertical-align: middle;background: none repeat scroll 0 0 #FBFBFB;}
+</style>
+<div class="midder">
+	<form method="post" action="{:Addons::adminUrl('option')}">	
+		<table  cellpadding="0" cellspacing="0">
+		<tr class="old">
+			<td width="5%">电台顺序<a href="{$ask_url}">(?)</a></td>
+			<td width="30%">电台图片</td>
+			<td width="20%">网页标题<a href="{$ask_url}">(?)</a></td>
+			<td width="20%">电台名称</td>
+			<td width="20%">管理</td>
+		</tr>
+		<volist name="data" id="item">
+			<tr class="odd">
+				<td><input type="text" name="id{$key}" value="{$key}"></td>
+				<td><img witdh="67" height="68" src="{$url_path}images/{$item[image]}" ></td>
+				<td>{$item[title]}</td>
+				<td>{$item[name]}</td>
+				<td>
+					<a href="{:Addons::adminUrl('option')}&do=change&id={$key}">[
+						<eq name="item['isopen']" value="0">
+							<font color="#00FF00">开启</font>
+						<else />
+							<font color="#FF0000">关闭</font>
+						</eq>
+					]</a>&nbsp;
+					<a href="{:Addons::adminUrl('option')}&do=del&id={$key}" onclick="return confirm('你确定要删除吗？');">[删除]</a>&nbsp;
+					<a href="{:Addons::AdminPage('create')}&id={$key}">[编辑]</a>
+				</td>
+			<tr/>
+		</volist>
+	</table>
+		<input type="submit" value="修改顺序">&nbsp;&nbsp;
+		<input type="reset">
+	</form>
+</div>	

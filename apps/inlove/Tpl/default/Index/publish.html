@@ -1,0 +1,24 @@
+<li class="lineD_btm"  id="list_li_{$data.weibo_id}">
+  <div class="userPic">
+    <neq name="data.users" value="1"><img src="../Public/icon/tucao.png" />
+      <else />
+      <img src="../Public/icon/inlove.png" /></neq>
+  </div>
+  <div class="feed_c">
+    <div class="msgCnt">
+      <if condition="$show eq 'detail'">
+        <p style="vertical-align:top;display:inline">{$data.content|format=true}</p>
+        <else />
+        <php>$detail_more = get_str_length($data['content'], true) > 140 ? ' <a href="' . U('home/space/detail',array('id'=>$vo['weibo_id'])) . '" target="_blank">查看更多&raquo;</a>' : '';</php>
+        <p style="vertical-align:top;display:inline">{$data.content|getShort=###,140,'...'|format=true}{$detail_more}</p>
+      </if>
+    </div>
+    {$data.expend}
+    <div class="feed_c_btm"> <span class="right"> <a href="{:U('home/space/detail',array('id'=>$data['weibo_id']))}"  target="_blank">查看
+      <neq name="data.users" value="1">原文<else />告白</neq>>></a> </span> <cite  style="font-size:10px; color:#888">
+      <neq name="data.users" value="1">吐槽<else />告白</neq>时间：{$data.ctime|friendlyDate}</cite> </div>
+  </div>
+</li>
+<script>
+	var lastId = '{$data.weibo_id}';
+</script>

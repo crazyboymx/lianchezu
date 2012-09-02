@@ -1,0 +1,98 @@
+<include file="__THEME__/header" />
+<script  type="text/javascript" src="../Public/pict.js" ></script>
+<link  href="../Public/share.css" rel="stylesheet" type="text/css"/>
+
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+<include file="../Public/_mainNav2" />
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox">
+    
+    <div class="mainbox_appR" style="background:#f3f3f3;">
+         <div class="list" style=" width:200px; padding:10px 15px; background:#fff; margin-bottom:10px; ">
+           <li>
+              <a href="{:U('share/Index/shareDetail',array('gid'=>$share['id']))}">
+              <img src="{:SITE_URL}/thumb.php?url={$share['logo']}&w=210&h=150&t=c" />
+              </a>
+              <span>
+              <a style="background:#000; color:#fff" href="{:U('share/Index/shareDetail',array('gid'=>$share['id']))}">{$share.name}</a>
+              </span>
+           </li>
+      </div>
+    <div class="c"></div>
+    <volist name="samepicts" id="vo">
+       <div class="newshare">
+         <dd>
+           <a href="{:U('share/Index/pictDetail',array('gid'=>$_GET['gid'],'id'=>$vo['id']))}">
+           <img src="{:SITE_URL}/thumb.php?url={$vo.cover}&w=70&h=50" /></a>
+           <a href="{:U('share/Index/pictDetail',array('gid'=>$_GET['gid'],'id'=>$vo['id']))}">{$vo['title']|getBlogShort}</a>
+           <span>时间：{$vo.cTime|friendlyDate}</span>
+         </dd><div class="c"></div>
+       </div>
+    </volist>    
+    </div>
+    
+      <div class="mainbox_appC backg">
+        <div class="page_titles"> <!-- page_title begin -->
+          <h2>
+          <a href="{:U('share/Index/shareDetail',array('gid'=>$_GET['gid']))}">{$share.name}</a>
+          <span class="right fn f12px">
+               <a href="javascript:like({$pict.id},2);" id="like" >+喜欢</a>  ┊ 
+              <php>if($admin){</php>
+               <a href="{:U('share/Index/editPict',array('gid'=>$_GET['gid'],'id'=>$pict['id']))}">修改</a>
+               ┊ <a href="javascript:deletePict({$pict.id})">删除</a>
+              
+            <php> }
+              $tpl_data = urlencode(serialize(array(
+              'title'=>$pict['title'],
+              'url'=>U('share/Index/pictDetail',array('id'=>$pict['id'])),
+              )));
+             </php>
+            {:W('Weibo',array('tpl_name'=>'pict_add_weibo','button_title'=>'分享'))}
+            <input type="button" value="分享" class="BtnShare" 
+                   onclick="_widget_weibo_start('', '{$tpl_data}');" id="BtnShare_{$id}"/>
+         </span>
+       </h2>
+     </div><!-- page_title end -->
+
+           <div class="plist">
+                  <ul class="borde">
+                    <php>if(!empty($pict['cover'])){</php>
+                    <img src="{$pict.cover}" width="{$pict.width}" height="{$pict.height}" />
+                    <php>}</php>
+                  </ul>
+                  
+                  <ul style="min-height:200px;">
+                    <li><php>if(!empty($pict['price'])){</php>
+                      宝贝价格：{$pict.price}元
+                      <php>}</php>
+                    </li>
+                    <li><php>if(!empty($pict['link'])){</php>
+                      宝贝链接：<a href="{$pict.link}" >去看看</a><php>}</php>
+                    </li>
+                    <li>
+                      <table width="350" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td width="85" align="left" valign="top"><h2>单页简况：</h2></td>
+                          <td width="265" align="left" valign="top"><h2>{$pict.title}</h2></td>
+                        </tr>
+                      </table>
+                    </li>
+                    <li>发行时间：{$pict.cTime|friendlyDate}</li>
+                  </ul>
+           </div>
+                
+            
+            <div id="pict" class="lineS_top pt10 cont"> {$pict.content|stripslashes} </div>
+            <div class="c"></div>
+            
+            <div class="coments"> {:W('Comment',array('type'=>'pict','appid'=>$pict['id'],'author_uid'=>$pict['uid'],'title'=>$pict['title'],'url'=>U('share/Index/pictDetail',array('gid'=>$share['id'],'id'=>$pict['id'])),'table'=>'pict','id_field'=>'id','comment_count_field'=>'commentCount'))} </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />

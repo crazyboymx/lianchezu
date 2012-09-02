@@ -1,0 +1,82 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/common.js"></script>
+<link  href="../Public/share.css" rel="stylesheet" type="text/css"/>
+
+<include file="../Public/xnav" />
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox">
+    <div class="mainbox_appR" style="background:#fff; margin-top:15px;">
+    <volist name="newshare" id="vo">
+       <div class="newshare">
+         <dd>
+           <a href="{:U('share/Index/shareDetail',array('gid'=>$vo['id']))}">
+           <img src="{:SITE_URL}/thumb.php?url={$vo.logo}&w=70&h=50" /></a>
+           <a href="{:U('share/Index/shareDetail',array('gid'=>$vo['id']))}"> {$vo['name']}</a>
+           <span>{$vo['intro']|getBlogShort}</span>
+         </dd>
+       </div>
+    </volist>
+    </div>
+    <div class="mainbox_appC">
+        <div class="boxL"><!--  begin  -->
+          <ul class="search">
+          
+          <php>if(empty($share)){</php>
+          <div style="width:100%; margin:20px auto; text-align:center; font-size:16px; font-weight:bold; color:#000; ">你还有创建任何专辑噢，赶紧去<a href="{:U('share/Index/add')}" >创建专辑</a>吧！
+          </div>
+          <php>}else{</php>
+
+            <volist name="share" id="share">
+              <li style="margin-top:15px;">
+                <div class="left" style="width: 70px;">
+                	<span class="share_pic">
+                          <img src="{$share['uid']|getuserface}"/>
+                	</span>
+                </div>
+                <php>if($uid==$mid){</php>
+                <div class="right rmenu" style="width: 250px;">
+	                  <a href="{:U('share/Index/addPict',array('gid'=>$share['id']))}">发行专辑单页</a>　|　
+                      <a href="{:U('share/Index/add',array('gid'=>$share['id']))}">编辑专辑</a>　｜　
+                      <a href="{:U('share/Index/deletes',array('gid'=>$share['id']))}">删除专辑</a>
+                </div>
+                <php>}</php>
+                <div style="margin: 0px 70px 0px 75px;">
+                  <h3><a href="{:U('share/Index/shareDetail',array('gid'=>$share['id']))}">{$share['name']}</a></h3>
+                  <p>创建：{$share['ctime']|friendlyDate}</p>
+                </div>
+                <div class="c" style="height:10px;"></div>
+                <table width="700" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td>
+                       <a href="{:U('share/Index/shareDetail',array('gid'=>$share['id']))}">
+                        <img src="{$share['logo']}" width="530" height="250"/>
+                       </a>
+                    </td>
+                    <td align="right" valign="top">
+                      <php>$gid=$share['id']; for($i=0;$i<3;$i++){ if($myshar[$gid][$i]['cover']){</php>
+                      <a href="{:U('share/Index/pictDetail',array('gid'=>$share['id'],'id'=>$myshar[$gid][$i]['id']))}" >
+                      <img src="{$myshar[$gid][$i]['cover']}"
+                           width="150" height="80" style="float:right; margin-bottom:3px;" />
+                      <php>}}</php>
+                    </td>
+                  </tr>
+                </table>
+                
+                
+                
+              </li>
+            </volist><php>}</php>
+          </ul>
+          <div class="page">{$sharelist['html']}</div>
+        </div>
+        <div class="c"></div>
+      </div>
+    </div>
+  </div>
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />

@@ -1,0 +1,38 @@
+<include file="_header" />
+<div class="so_main">
+<include file="_tab" />
+<div class="list">
+
+<div class="form">
+<form method="post" name="form1" action="{:U('share/Admin/editType')}">
+<dl class="lineD">
+	<dt>分类名称：</dt>
+	<dd><input type="text" name="type" value="">
+        <input type="submit" name="addtype" class="btn_b" style="cursor:pointer;" value="添加" />
+    </dd>
+</dl>
+</form>
+</div>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th class="line_l">分类ID</th>
+		<th class="line_l">分类名称</th>
+		<th class="line_l">操作</th>
+	</tr>
+  <volist name="type" id="vo">
+  <form method="post" name="form2" action="{:U('share/Admin/editType')}">
+	<tr>
+		<td><input type="text" name="cid" style=" width:50px;"  value="{$vo.id}" /></td>
+		<td><input type="text" name="type"  value="{$vo.name}" /></td>
+		<td><input type="submit" name="edit" class="btn_b" style="cursor:pointer;" value="修改" />
+            <input type="submit" name="del" class="btn_b" style="cursor:pointer;" value="删除" />
+        </td>
+	</tr>
+  </form>
+  </volist>
+</table>
+    </div>
+</div>
+</body>
+</html>

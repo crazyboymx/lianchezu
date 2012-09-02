@@ -1,0 +1,102 @@
+<include file="_header" />
+
+<script>
+//鼠标移动表格效果
+$(document).ready(function(){
+    $("tr[overstyle='on']").hover(
+      function () {
+        $(this).addClass("bg_hover");
+      },
+      function () {
+        $(this).removeClass("bg_hover");
+      }
+    );
+});
+
+$(function(){
+    $( "select[name='sorder']" ).val("{$sorder}");
+    $( "select[name='eorder']" ).val("{$eorder}");
+    $( "select[name='limit']" ).val("{$limit}");
+});
+
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+        ids.push( $(n).val() );
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+
+
+</script>
+
+<div class="so_main">
+    <div class="page_tit">{$ts['app']['app_alias']}</div>
+    <include file="_tab" />
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$res.html}</div>
+    </div>
+  
+    <div class="list">
+        <table id="blog_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+		    <th style="width:30px;">
+		        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+		        <label for="checkbox"></label>
+		    </th>
+		    <th class="line_l">订单编号</th>
+		    <th class="line_l">商品名称</th>
+		    <th class="line_l">价格</th>
+            <th class="line_l">数量</th>
+            <th class="line_l">状态</th>
+            <th class="line_l">下单时间</th>
+            <th class="line_l">操作</th>
+        </tr>
+        <volist id="vo" name="res.data">
+		<tr overstyle='on' id="blog_{$vo.id}">
+		  <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+		  <td>{$vo.id}</td>
+		  <td>{$vo.gname}</td>
+		  <td>{$vo.price2}</td>
+          <td>{$vo.number}</td>
+          <td>{$vo.state|getOrderStateName=###}</td>
+          <td>{$vo.time2}</td>
+		  <td><a href="javascript:" onclick="orderxx('{$vo.id}')">详细</a></td>
+        </tr>
+		</volist>
+        </table>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$res.html}</div>
+       
+    </div>
+</div>
+<script type="text/javascript">
+var c = new ctrl('id[]');
+
+function orderxx(orid) {
+		ui.box.load("__URL__&act=orderdo&id="+orid, {title:'订单详细'});
+}
+
+</script>
+<include file="_footer" />

@@ -1,0 +1,54 @@
+<include file="_header" />
+<div class="so_main">
+<include file="_tab" />
+<div class="page_tit"> [ <a href="javascript:void(0)"  onclick="shown()" >搜索专辑</a> ]</div>
+<div id="ttt" class="form2" style=" display:block;">
+<form action="{:U('share/Admin/index')}" method="post">
+	<dl class="lineD">
+		<dt>{$ts['app']['app_alias']}名称：</dt>
+		<dd><input type="text" name="name" class="txt" value="" />
+        <input type="submit" name="search" class="btn_b" value="搜索" />
+		</dd>
+	</dl>
+</form>
+</div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+    </div>
+
+    <div class="list">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th class="line_l">ID</th>
+		<th class="line_l">创建者</th>
+		<th class="line_l">名称</th>
+		<th class="line_l">操作</th>
+	</tr>
+  <volist name="data" id="vo">
+	<tr id="list_{$vo.id}">
+		<td>{$vo['id']}</td>
+		<td>{$vo.uid|getUserName}</td>
+		<td><a href="{:U('share/Index/shareDetail', array('gid'=>$vo['id']))}"
+			target="_blank">{$vo.name}</a></td>
+		<td>
+            <a href="{:U('share/Admin/remove',array('id'=>$vo['id']))}">删除</a>
+            <php>if($vo['status']!=2){</php>
+            <a href="{:U('share/Admin/tui',array('id'=>$vo['id']))}">推荐</a>
+            <php>}else{echo '已推荐';}</php>
+        </td>
+	</tr>
+	</volist>
+</table>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+function shown(){
+document.getElementById('ttt').style.display = (document.getElementById('ttt').style.display=="block") ? "none" : "block";}
+</script>
+</html>

@@ -1,0 +1,13 @@
+
+
+
+伪时光轴使用方法
+
+把timeline文件夹放到apps目录下，后台--应用----安装
+
+OK,基本功能可以开始使用。但要能编辑和删除日志，
+
+还要修改一点点blog应用的程序：1、把timeline/apps/blog/Tpl/default/Index下的eblog.html剪贴到blog应用对应目录下，即apps/blog/Tpl/default/Index/；
+
+2、需要在.\apps\blog\Lib\Action\IndexAction.class.php里面添加两个方法。
+   这俩方法在timeline\apps\blog\Lib\Action\IndexAction.class.php里面。

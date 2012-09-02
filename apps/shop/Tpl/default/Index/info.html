@@ -1,0 +1,159 @@
+<include file="__THEME__/header" />
+
+<link rel="stylesheet" href="../Public/blog.css" type="text/css" media="screen" charset="utf-8" />
+
+<div class="content_holder">
+<div class="content no_bg">
+  <include file="../Public/_blog_header" />
+  <div class="main no_l">
+    <div class="mainbox">
+    
+      <include file="../Public/_right" />
+      
+      <div class="mainbox_appC">
+        
+        <div class="goodsinfo">
+        	<h2> {$goods.name}</h2>
+            <table width="660" border="0">
+  <tr>
+    <td width="318" align="left"><strong>价格：</strong>{$goods.price2}</td>
+    <td width="272" rowspan="5"><img src="{$goods.pic}"  width="248" height="248" style="padding:1px; border:1px #CCCCCC solid"/></td>
+  </tr>
+
+  <tr>
+    <td><strong>数量：</strong>{$goods.num}</td>
+    </tr>
+  <tr>
+    <td><strong>剩余：</strong>{$goods.sy}</td>
+    </tr>
+      <tr>
+    <td><strong>限制：</strong>微博：<font color= "<gt name="goods.x_w" value="$follow[weibo]">#CC3300</gt>">{$goods.x_w} </font>  粉丝：<font color= "<gt name="goods.x_f" value="$follow[follower]">#CC3300</gt>">{$goods.x_f}</font>  收听：<font color= "<gt name="goods.x_s" value="$follow[following]">#CC3300</gt>">{$goods.x_s}</font>     </td>
+    </tr>
+  <tr>
+    <td height="100"><a href="javascript:" onclick="show_dh()"><img src="../Public/images/dh.jpg" /></a></td>
+    </tr>
+</table>
+
+<div class="lq_dh" style="width:640px; background:#F7F7F7; display:none;border:1px solid #CCCCCC;  padding:10px; margin-top:10px; margin-bottom:10px;">
+	
+<form id="form1" name="form1" method="post" action="__URL__&act=dh&id={$goods.id}">
+
+<h2>确认兑换</h2>
+<table width="600" height="" border="0">
+	<tr>
+    <td width="91" align="right">兑换数量：</td>
+    <td width="499">1</td>
+  	</tr>
+    
+    <tr>
+    <td width="91" align="right">需要消耗：</td>
+    <td width="499">{$goods.price2}</td>
+  	</tr>
+</table>
+<h2>联系地址设置<span style=" margin-left:10px"><a target="_blank" style="font-size:12px; text-decoration:none; font-weight:normal; color:#CCCCCC" href="__ROOT__/index.php?app=home&mod=Account&act=index#contact">点击这里修改以后就能默认填写</a></span></h2>
+	<table width="600" height="213" border="0">
+  <tr>
+    <td width="91" align="right">联系人姓名：</td>
+    <td width="499"><input type="text" class="text" value="{$userAdr.name}" name="name">
+
+    </td>
+  </tr>
+  <tr>
+    <td align="right">联系地址：</td>
+    <td><input type="text" class="text" value="{$userAdr.address}" name="address" style="width:300px" /> </td>
+  </tr>
+  <tr>
+    <td align="right">邮编：</td>
+    <td><input type="text" class="text" value="{$userAdr.postcode}" name="postcode" /></td>
+  </tr>
+  <tr>
+    <td align="right">电话：</td>
+    <td><input type="text" class="text" value="{$userAdr.telphone}" name="telphone" /></td>
+  </tr>
+  <tr>
+    <td align="right">手机：</td>
+    <td><input type="text" class="text" value="{$userAdr.mobile}" name="mobile" /></td>
+  </tr>
+  
+    <tr>
+    <td align="right">qq：</td>
+    <td><input type="text" class="text" value="{$userAdr.qq}" name="qq" /></td>
+  </tr>
+      <tr>
+    <td align="right"></td>
+    <td><input type="submit" value="兑换" class="btn_b"></td>
+  </tr>
+</table>
+
+
+    </form>
+</div>
+            <div class="tab-menu">
+            <ul>
+              <li>
+                <a href="javascript:" class="on"   id="S_Menu_11" onclick="ShowSub('1','1')">
+                    <span>介绍</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:" id="S_Menu_12" onclick="ShowSub('1','2')">
+                    <span>兑换记录</span>
+                </a>
+              </li>
+            </ul>
+            </div>
+            
+            <div id="S_Cont_11" style="padding:10px; line-height:20px">{$goods.description}</div>
+            <div id="S_Cont_12" style="display:none">
+            
+            
+            <div class="my_dd">
+            <table width="600" border="0">
+  <tr bgcolor="">
+    <td height="37" align="left"><strong>订单ID</strong></td>
+    <td><strong>用户名</strong></td>
+    <td><strong>价格</strong></td>
+    <td><strong>下单时间</strong></td>
+    <td><strong>状态</strong></td>
+  </tr>
+ <volist name="list" id="o">
+    <tr height="30">
+    <td align="left">{$o.id}</td>
+    <td>{$o.username}</td>
+    <td>{$o.price2}</td>
+    <td>{$o.time2}</td>
+    <td>{$o.state|getOrderStateName=###}</td>
+  </tr>
+  </volist>
+</table>
+</div>
+            
+            
+            
+            </div>
+
+
+
+
+        </div>
+        <div class="c"></div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+var showdh = '0'
+	function show_dh(){
+		if(showdh == '0'){
+			showdh='1';
+			$(".lq_dh").slideDown("slow");
+		}else{
+			$(".lq_dh").slideUp("slow");
+			showdh = '0';
+		}
+		
+	}
+</script>
+<include file="../Public/_footer" />

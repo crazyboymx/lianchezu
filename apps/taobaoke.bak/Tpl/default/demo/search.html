@@ -1,0 +1,188 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/miniblog.js"></script>
+
+<div class="content"><!-- 内容 begin  --> 
+  <include file="__THEME__/apps" />
+  <div class="main">
+    <div class="mainbox">
+      <div class="mainbox_R">
+        <div class="right_box">
+          <h2><a href="#">1小时话题榜</a></h2>
+          <ul class="topic_list">
+            <li><span class="ol_sz">1</span><a href="#" title="银行收费">银行收费(467)</a></li>
+            <li><span class="ol_sz">2</span><a href="#" title="ipad香港上市">ipad香港上市(15660)</a></li>
+            <li><span class="ol_sz">3</span><a href="#" title="唐山大地震">唐山大地震(7149)</a></li>
+            <li><span class="ol_sz">4</span><a href="#" title="小时候唱过的歌">小时候唱过的歌(27281)</a></li>
+            <li><span class="ol_sz">5</span><a href="#" title="世博">世博(32831)</a></li>
+            <li><span class="ol_sz">6</span><a href="#" title="新手上路">新手上路(16982)</a></li>
+          </ul>
+        </div>
+        <div class="right_box">
+          <h2><a href="#">人气关注榜 TOP10</a></h2>
+          <ul class="topic_list">
+            <li><span class="ol_sz">1</span><a href="#" title="银行收费">银行收费(467)</a></li>
+            <li><span class="ol_sz">2</span><a href="#" title="ipad香港上市">ipad香港上市(15660)</a></li>
+            <li><span class="ol_sz">3</span><a href="#" title="唐山大地震">唐山大地震(7149)</a></li>
+            <li><span class="ol_sz">4</span><a href="#" title="小时候唱过的歌">小时候唱过的歌(27281)</a></li>
+            <li><span class="ol_sz">5</span><a href="#" title="世博">世博(32831)</a></li>
+            <li><span class="ol_sz">6</span><a href="#" title="新手上路">新手上路(16982)</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mainbox_C"> 
+        <div class="tab-menu"><!-- 切换标签 begin  -->
+          <div class="right">
+            <input name="" class="btn_b" value="发微博" type="button" />
+          </div>
+          <ul>
+            <li><a class="on feed_item" href="{:U('home/user/search',array('k'=>$key))}"><span>搜微博({$list.count})</span></a></li>
+            <li><a class="feed_item" href="{:U('home/user/searchuser',array('k'=>$key))}"><span>搜人</span></a></li>
+          </ul>
+        </div>
+        <div class="MenuSub"> <a href="#">全部</a>| <a href="#">同城</a>| <a href="#">关注</a>| <a href="#">原创</a>| <a href="#">文字</a>| <a href="#">图片</a>| <a href="#">视频</a>| <a href="#">高级搜索</a></div>
+        <form action="{:U('home/user/search')}" method="post" >
+		<div>
+          <div>
+            <input type="text" name="k" class="Text mr5" style="width:400px;" value="{$key}"/>
+            <input class="btn_b" type="submit" value="搜索" />
+          </div>
+          <div class="lh35 lineD_btm">以下是关于"<span class="cRed">{$key}</span>"的微博{$list.count}条</div>
+        </div>
+		</form>
+		
+        <div class="feedBox">
+<php>if($list['data']){</php>        	
+          <ul class="feed_list">
+           <volist id="vo" name="list['data']">
+            <li class="lineD_btm" id="list_li_{$vo.id}">
+              <div class="userPic"><a title="" href="{:U('home/space/index',array('uid'=>$vo['uid']))}" rel="{$vo.uid|getUserName}"><img src="{$vo.uid|getUserFace}" card="1"></a></div>
+              <div class="feed_c">
+                <div class="msgCnt"><a title="{$vo.uid|getUserName}" href="{:U('home/space/index',array('uid'=>$vo['uid']))}"><strong>{$vo.uid|getUserName}</strong></a>：{$vo.content|format}</div>
+				<php>if( $vo['transpondid'] ){</php>
+				<div class="feed_quote"> <img class="q_ico_arrow" src="__THEME__/images/zw_img.gif" />
+                  <div class="q_tit"><img class="q_tit_l" src="__THEME__/images/zw_img.gif" /></div>
+                  <div class="q_con"> 
+                  <a href="{:U('home/space/index',array('uid'=>$vo['expend']['uid']))}">@{$vo.expend.uid|getUserName}</a>：{$vo.expend.content|format}  <a href="{:U('home/space/detail',array('id'=>$vo['expend']['id']))}">原文转发({$vo.expend.transpond}</a>)&nbsp;|&nbsp;<a href="{:U('home/space/detail',array('id'=>$vo['expend']['id']))}">原文评论({$vo.expend.comment})</a>
+                  {$vo.expend.expend}
+                  </div>
+                  
+                  <div class="q_btm"><img class="q_btm_l" src="__THEME__/images/zw_img.gif" /></div>
+                  
+                </div>
+                <php>}else{</php>
+                	{$vo.expend|format}
+                <php>}</php>
+			    <div class="feed_c_btm"> 
+					<span class="right">
+						<php>if( $vo['uid'] == $mid ){</php><a href="javascript:void(0)" onclick="deleteMini({$vo.id})">删除</a>&nbsp;&nbsp;|&nbsp;&nbsp;<php>}</php>
+						<a href="javascript:void(0)" onclick="transpond({$vo.id})">转发({$vo.transpond})</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+						<a href="javascript:void(0)" onclick="stowMini({$vo.id},this)">收藏</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+						<a href="javascript:void(0)" rel="comment" minid="{$vo.id}" >评论({$vo.comment})</a>
+					</span>
+					 <cite>
+					<a href="{:U('home/space/detail',array('id'=>$vo['id']))}">{$vo.cTime|friendlyDate='mohu'}</a></cite> 来自 <cite><a href="#">网站</a></cite> 
+				</div>
+                <div id="comment_list_{$vo.id}" style=""></div>
+              </div>
+            </li>
+          </volist>
+          </ul>
+<php>}else{</php>
+	<ul class="feed_list"><li>未搜索到相关的话题</li></ul>
+<php>}</php>
+        </div>
+        <!-- ========== 搜话题 end ============= --> 
+		
+<!--      搜人
+        <div class="tab-menu">
+          <div class="right">
+            <input name="" class="btn_b" value="发微博" type="button" />
+          </div>
+          <ul>
+            <li><a class="feed_item" href="###"><span>搜微博(268965)</span></a></li>
+            <li><a class="on feed_item" href="###"><span>搜人</span></a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="cGray2 lh30">输入朋友的名称或昵称，如：小新</div>
+          <div>
+            <input type="text"  class="Text mr5" style="width:400px;"/>
+            <input class="btn_b" type="button" value="搜索" />
+          </div>
+          <div class="lh35 lineD_btm"> 搜索"世锦赛~男篮~易建联~王治郅~孙悦~出线"找到 291  位相关用户 </div>
+        </div>
+        <div class="feedBox">
+          <ul class="feed_list">
+            <li class="lineD_btm">
+              <div class="userPic"><a title="" href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=5"><img src="/sociax_2_0/data/uploads/avatar/1/small.jpg" card="1"></a></div>
+              <div style="margin-left: 75px;" class="feed_c">
+                <div style="padding-bottom: 0pt;" class="msgCnt">
+                  <div id="follow_list_1" class="right pr10">
+                    <div class="btn_relation btn_relation2"><span>互相关注&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="javascript:void(0);">取消</a></div>
+                  </div>
+                  <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1"><strong>兽汰姆</strong></a></div>
+                <div style="padding-top: 5px;" class="feed_c_btm lh18">
+                  <div>最近微博 1天前 <a href="###">来自网站</a></div>
+                  <div><a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=332">按时大上大//@兽汰姆 : 转发时同时评论好像还不行</a></div>
+                  <div class="pt5">他在河北石家庄 <span class="pl10"> <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=follow&amp;type=following&amp;uid=1">关注<strong>2</strong>人</a></span><span class="pl10"><a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=follow&amp;type=follower&amp;uid=1">粉丝<strong>2</strong>人</a></span></div>
+                </div>
+              </div>
+            </li>
+            <li class="lineD_btm">
+              <div class="userPic"><a title="" href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=5"><img src="/sociax_2_0/data/uploads/avatar/1/small.jpg" card="1"></a></div>
+              <div style="margin-left: 75px;" class="feed_c">
+                <div style="padding-bottom: 0pt;" class="msgCnt">
+                  <div id="follow_list_1" class="right pr10">
+                    <div class="btn_relation btn_relation2"><span>互相关注&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="javascript:void(0);">取消</a></div>
+                  </div>
+                  <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1"><strong>兽汰姆</strong></a></div>
+                <div style="padding-top: 5px;" class="feed_c_btm lh18">
+                  <div>最近微博 1天前 <a href="###">来自网站</a></div>
+                  <div><a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=332">按时大上大//@兽汰姆 : 转发时同时评论好像还不行</a></div>
+                  <div class="pt5">他在河北石家庄 <span class="pl10"> <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=follow&amp;type=following&amp;uid=1">关注<strong>2</strong>人</a></span><span class="pl10"><a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=follow&amp;type=follower&amp;uid=1">粉丝<strong>2</strong>人</a></span></div>
+                </div>
+              </div>
+            </li>
+            <li class="lineD_btm">
+              <div class="userPic"><a title="" href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=5"><img src="/sociax_2_0/data/uploads/avatar/1/small.jpg" card="1"></a></div>
+              <div style="margin-left: 75px;" class="feed_c">
+                <div style="padding-bottom: 0pt;" class="msgCnt">
+                  <div id="follow_list_1" class="right pr10">
+                    <div class="btn_relation btn_relation2"><span>互相关注&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="javascript:void(0);">取消</a></div>
+                  </div>
+                  <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1"><strong>兽汰姆</strong></a></div>
+                <div style="padding-top: 5px;" class="feed_c_btm lh18">
+                  <div>最近微博 1天前 <a href="###">来自网站</a></div>
+                  <div><a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=332">按时大上大//@兽汰姆 : 转发时同时评论好像还不行</a></div>
+                  <div class="pt5">他在河北石家庄 <span class="pl10"> <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=follow&amp;type=following&amp;uid=1">关注<strong>2</strong>人</a></span><span class="pl10"><a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=follow&amp;type=follower&amp;uid=1">粉丝<strong>2</strong>人</a></span></div>
+                </div>
+              </div>
+            </li>
+            <li class="lineD_btm">
+              <div class="userPic"><a title="" href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=5"><img src="/sociax_2_0/data/uploads/avatar/1/small.jpg" card="1"></a></div>
+              <div style="margin-left: 75px;" class="feed_c">
+                <div style="padding-bottom: 0pt;" class="msgCnt">
+                  <div id="follow_list_1" class="right pr10">
+                    <div class="btn_relation btn_relation2"><span>互相关注&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="javascript:void(0);">取消</a></div>
+                  </div>
+                  <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1"><strong>兽汰姆</strong></a></div>
+                <div style="padding-top: 5px;" class="feed_c_btm lh18">
+                  <div>最近微博 1天前 <a href="###">来自网站</a></div>
+                  <div><a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=332">按时大上大//@兽汰姆 : 转发时同时评论好像还不行</a></div>
+                  <div class="pt5">他在河北石家庄 <span class="pl10"> <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=follow&amp;type=following&amp;uid=1">关注<strong>2</strong>人</a></span><span class="pl10"><a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=follow&amp;type=follower&amp;uid=1">粉丝<strong>2</strong>人</a></span></div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+ --> 
+        
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<!-- 内容 end --> 
+
+<include file="__THEME__/footer" /> 

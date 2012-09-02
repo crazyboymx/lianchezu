@@ -1,0 +1,415 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.masonry.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.infinitescroll.js"></script>
+<script type="text/javascript" src="{:U('weibo/plugins/init')}"></script>
+
+<style type="text/css">
+<!--
+
+.wrap { margin: auto;width:982px;}
+.loveit .favCount{display:none;}
+a.add_atn {
+    background-image: url("__THEME__/images/share.gif");
+    background-repeat: no-repeat;
+    height: 24px;
+    line-height: 24px;
+	background-position: left top;
+	color: #E71F8D!important;
+    padding-left: 20px;
+    width: 42px;
+	font-weight:normal;
+}
+
+.btn_relation {
+    background-image: url("__THEME__/images/share.gif");
+    background-repeat: no-repeat;
+    height: 24px;
+    line-height: 24px;
+	background-position: left bottom;
+	color: #999999!important;
+    padding-left: 20px;
+    width: 42px;
+	font-weight:normal;
+}
+a.add_atn:hover {
+    background-position: -80px top;
+    color: #E71F8D;
+    text-decoration: none;
+}
+.btn_relation a{color:#999;!important}
+.btn_relation span,.btn_relation2 span { display:none;}
+
+-->
+</style>
+<script type="text/javascript">
+$(function(){
+
+	var sWidth = $("#focus").width(); //获取焦点图的宽度（显示面积）
+	var len = $("#focus ul li").length; //获取焦点图个数
+	var index = 0;
+	var picTimer;
+	
+	//以下代码添加数字按钮和按钮后的半透明条，还有上一页、下一页两个按钮
+	var btn = "<div class='btnBg'></div><div class='btn'>";
+	for(var i=0; i < len; i++) {
+		btn += "<span></span>";
+	}
+	btn += "</div>";
+	$("#focus").append(btn);
+	$("#focus .btnBg").css("opacity",0.5);
+
+	//为小按钮添加鼠标滑入事件，以显示相应的内容
+	$("#focus .btn span").css("opacity",0.4).mouseenter(function() {
+		index = $("#focus .btn span").index(this);
+		showPics(index);
+	}).eq(0).trigger("mouseenter");
+
+	//上一页、下一页按钮透明度处理
+	$("#focus .preNext").css("opacity",0.2).hover(function() {
+		$(this).stop(true,false).animate({"opacity":"0.5"},300);
+	},function() {
+		$(this).stop(true,false).animate({"opacity":"0.2"},300);
+	});
+
+	//上一页按钮
+	$("#focus .pre").click(function() {
+		index -= 1;
+		if(index == -1) {index = len - 1;}
+		showPics(index);
+	});
+
+	//下一页按钮
+	$("#focus .next").click(function() {
+		index += 1;
+		if(index == len) {index = 0;}
+		showPics(index);
+	});
+
+	//本例为左右滚动，即所有li元素都是在同一排向左浮动，所以这里需要计算出外围ul元素的宽度
+	$("#focus ul").css("width",sWidth * (len));
+	
+	//鼠标滑上焦点图时停止自动播放，滑出时开始自动播放
+	$("#focus").hover(function() {
+		clearInterval(picTimer);
+	},function() {
+		picTimer = setInterval(function() {
+			showPics(index);
+			index++;
+			if(index == len) {index = 0;}
+		},4000); //此4000代表自动播放的间隔，单位：毫秒
+	}).trigger("mouseleave");
+	
+	//显示图片函数，根据接收的index值显示相应的内容
+	function showPics(index) { //普通切换
+		var nowLeft = -index*sWidth; //根据index值计算ul元素的left值
+		$("#focus ul").stop(true,false).animate({"left":nowLeft},300); //通过animate()调整ul元素滚动到计算出的position
+		//$("#focus .btn span").removeClass("on").eq(index).addClass("on"); //为当前的按钮切换到选中的效果
+		$("#focus .btn span").stop(true,false).animate({"opacity":"0.4"},300).eq(index).stop(true,false).animate({"opacity":"1"},300); //为当前的按钮切换到选中的效果
+	}
+});
+	 
+</script>
+<include file="../Public/top_reg" />
+
+<div class="wrap nopadding hotbanner"><!-- 内容 begin  -->
+	<div class="main_banner">
+  	<div id="focus">
+	<ul>
+	<volist name="ts['ad']['home']" id="vo">
+			<li>{$vo['content']}</li>
+	</volist>
+	</ul>
+	</div>
+	<div class="description">
+
+
+<volist name="ts['ad']['move_right']" id="vo">
+			{$vo['content']}
+	</volist>
+<ul class="gray png">	
+<li>
+
+<p class="aligncenter"><a target="_blank" class="gray" href="{:U('home/Public/document',array('id'=>3))}">来{$ts['site']['site_name']}，怎么玩？猛击这里！</a></p>
+
+<p class="aligncenter"><a target="_blank" class="gray" href="{:U('home/Caiji/tools')}">安装收集工具，快速分享你喜欢的商品</a></p>
+
+</li>		
+</ul>
+</div>
+</div>
+<div class="bottom"></div>	
+	
+</div>
+<!--
+<div class="likenum">
+<div class="padding-top">
+<span style="padding-top:3px" class="floatright">
+<iframe width="136" height="24" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0" scrolling="no" frameborder="No" border="0" src="http://widget.weibo.com/relationship/followbutton.php?width=136&height=24&uid=2314716822&style=2&btn=red&dpc=1"></iframe>
+<iframe width="150" scrolling="auto" height="27" frameborder="0" marginwidth="0" allowtransparency="" src="http://follow.v.t.qq.com/index.php?c=follow&amp;a=quick&amp;name=zhimeicom&amp;style=4&amp;t=1329905467846&amp;f=1" marginheight="0" id="review"></iframe>
+</span>
+<a target="_blank" class="icon shareme png" href="{:U('home/Caiji/tools')}">分享达人购物经</a>
+<a target="_blank" class="icon addme png" href="{:U('home/Caiji/tools')}">收集喜爱，结交朋友</a>
+<a target="_blank" class="icon likeme png" href="{:U('home/Caiji/tools')}">来{$ts['site']['site_name']}，做聪明生活家！ </a>
+</div>
+</div>
+-->
+<div class="mainbody wrap">
+	<div class="boxnoun clearfix">
+<div class="foreign-rec">
+			
+<h2><span class="greenline size_1"><span class="item-title">今日达人<em>Star</em></span></span></h2>
+<volist name="daren" id="vo">	
+<div class="bigshow">
+
+<a target="_blank" href="{:U('home/Space/index',array('uid'=>$vo['uid']))}" title="{$vo['uid']|getUserName}">			
+<img width="300" src="__UPLOAD__/<php>$title=unserialize($vo['type_data']);echo $title['thumbmiddleurl'];</php>" />
+</a>
+</div>
+<div class="taright">
+<h3 style="line-height: 1" class="ttname"><a class="floatleft" target="_blank" href="{:U('home/Space/index',array('uid'=>$vo['uid']))}"><span style="color:#E71F8D;" class="yahe blue bigtitle">{$vo['uid']|getUserName}{$vo['uid']|getUserVerifiedIcon}{$vo['uid']|getUserGroupIcon}</span></a><span title="{$ts['site']['site_name']}认证达人" class="ctf-icon small-ctf-star-w"></span> 
+
+
+
+
+<session name="userInfo">												
+<div id="follow_list_{$vo.uid}" class="floatleft">
+<php>if($mid!=$vo[uid]){</php>
+                        <script>document.write(followState('{:getFollowState($mid,$vo[uid])}','dolistfollow',{$vo.uid}))</script>
+                        <php>}</php>
+						</div>
+
+<else/>
+<div id="follow_list" class="floatleft">
+                        <a href="{:U('home/Public/login')}" class="add_atn">加关注</a>
+                        						</div>
+</session>	
+
+
+
+</h3>
+<div class="clear"></div>
+<p><a target="_blank" class="gray" href="{:U('home/Space/index',array('uid'=>$vo['uid']))}">
+<php>
+						$userid = $vo['uid'];
+						$userdata = M('user_profile')->where("uid = $userid")->findAll() ;
+						if ($userdata){
+						foreach($userdata as $v){
+							$title=unserialize($v['data']);
+							
+						}
+						echo getShort($title['summary'],40);
+						}
+							 </php> 
+</a></p>
+<h3 style="line-height: 1" class="ttname"><span class="yahe">TA的收集</span></h3>
+<ul class="cf">
+<php>
+$catelog=M('weibo')->where("type in(1,4,5) and  isdel=0 and uid = $userid ")->limit(8)->order('weibo_id DESC')->findAll();
+
+foreach($catelog as $dr){
+							$weibo_id2=$dr['weibo_id'];
+							$transpond_id=$dr['transpond_id'];
+							$type=$dr['type'];
+							if( $transpond_id )
+							{
+								$weibo_id = $transpond_id;
+							}else{  
+						
+								$weibo_id = $weibo_id2;
+							}
+							$mdata = M('weibo')->where("weibo_id=" . $weibo_id . "")->findAll() ;
+							$title = unserialize($mdata[0]['type_data']) ;
+
+							if( $type == 1 ){
+									$st_arr='<li><a class="fengimg" href='.U('home/Space/detail',array('id' =>''. $weibo_id.'')).' target="_blank"><img width="60" height="60" src="__UPLOAD__/'.$title[thumburl].'"></a></li>
+									';
+							}else if( $type == 5 ){
+									$st_arr='<li><a class="fengimg" href='.U('home/Space/detail',array('id' =>''. $weibo_id.'')).' target="_blank"><img width="60" height="60" src="'.$title[small_pic].'" alt="'.$title[g_title].'"></a></li>
+									';
+							}else if( $type == 4 ){
+									$st_arr='<li><a class="fengimg" href='.U('home/Space/detail',array('id' =>''. $weibo_id.'')).' target="_blank"><img width="60" height="60" src="'.$title[logo].'" ></a></li>
+									';
+							}
+							echo $st_arr;
+							</php>
+
+
+<php>}</php>			
+</ul>
+</div>
+</volist>
+</div>
+<div class="site-rec">
+<h2><span class="greenline size_2"><span class="item-title">{$ts['site']['site_name']}达人</span></span></h2>
+<ul>
+<volist id="s" name="star_list">
+<li class=" cf">
+<div class="uhead"><a target="_blank" href="{:U('home/Space/index',array('uid'=>$s['uid']))}" title="{$s['uid']|getUserName}"><img width="50" height="50" src="{$s.uid|getUserface}"></a></div>
+<div class="usay">
+<p><a target="_blank" class="gray" href="{:U('home/Space/index',array('uid'=>$s['uid']))}"><b>{$s.uid|getUserName}</b>：
+					
+						<php>
+						$userid = $s['uid'];
+						$userdata = M('user_profile')->where("uid = $userid")->findAll() ;
+						if ($userdata){
+						foreach($userdata as $v){
+							$title=unserialize($v['data']);
+							
+						}
+						echo getShort($title['summary'],30);
+						}
+							 </php> 
+							
+							
+                    	</a></p>
+<p>
+
+
+
+<session name="userInfo">												
+<div id="follow_list_{$s.uid}">
+<php>if($mid!=$s[uid]){</php>
+                        <script>document.write(followState('{:getFollowState($mid,$s[uid])}','dolistfollow',{$s.uid}))</script>
+                        <php>}</php>
+						</div>
+
+<else/>
+<div id="follow_list">
+                        <a href="{:U('home/Public/login')}" class="add_atn">加关注</a>
+                        						</div>
+</session>	
+</p>
+</div>
+</li>				
+</volist>
+</ul>
+</div>
+</div>
+
+<div class="gather-item cf">
+<h2><span class="greenline size_3"><span class="item-title">达人推荐<em>Gatherings</em></span></span></h2>
+<ul class="cf">
+<volist name="gatherings" id="vo">
+<li>
+<div class="showimg"><a target="_blank" href="{:U('home/Space/detail',array('id'=>$vo['weibo_id']))}">
+<php>
+$title=unserialize($vo['type_data']);
+if( $vo['type'] == 1 ){</php>
+<img class="mycpic" width="140" src="__UPLOAD__/<php>echo $title['thumbhaibaourl'];</php>" />
+<php>}if( $vo['type'] == 5 ){</php>
+<img class="mycpic" width="140" src="{$title[middle_pic]}" alt="{$title[g_title]}" />
+<php>}if( $vo['type'] == 4 ){
+$zhuanji = get_zhuanji($title[logo],2);
+</php>
+<img class="mycpic" height="140" src="{$zhuanji}"/>
+<php>}</php>
+
+</a></div>
+<div class="showsay">
+<p class="summary"><a target="_blank" class="gray" href="{:U('home/Space/detail',array('id'=>$vo['weibo_id']))}">[<span style="font-weight:bold;">{$vo['uid']|getUserName}{$vo['uid']|getUserVerifiedIcon}{$vo['uid']|getUserGroupIcon} </span>推荐]<br><font color="#E71F8D"><php>if( $vo['type'] == 5 ){</php>￥{$title[price]}<php>}</php></font><br><php>if( $vo['type'] == 1 OR $vo['type'] == 4 ){echo getShort($vo[content],20);}if( $vo['type'] == 5 ){echo getShort($title[g_title],20);}</php></a></p>
+<p class="num"><span class="blue">{$vo.favcount}</span> 人喜欢 </p>
+<p>
+
+<session name="userInfo">
+<php>if( $vo['uid'] == $mid ){</php>
+<a href="javascript:void(0)" class="button favourite-btn">喜欢</a>
+<php>} else {
+							if(favisloveno($vo['weibo_id'])=='1'){</php>
+	<a w="f" href="javascript:void(0)" onclick="ui.loveok(this,'1','{$vo.favcount}','{$vo.weibo_id}','{$mid}','{$vo.uid|getUserFace}')" callback="weibo.deletfav('{$vo.weibo_id}')" class="button favourite-btn unfavourite-btn" id="favloe_{$vo.weibo_id}"><span class="favCount" id="fav_{$vo.weibo_id}">取消</span></a><span class="tou" id="favicon_{$vo.weibo_id}"></span>						
+<php>}else{</php>
+<a w="f" href="javascript:void(0)" onclick="ui.loveok(this,'1','{$vo.favcount}','{$vo.weibo_id}','{$mid}','{$vo.uid|getUserFace}')" callback="weibo.deletfav('{$vo.weibo_id}')" class="button favourite-btn" id="favloe_{$vo.weibo_id}"><span class="favCount" id="fav_{$vo.weibo_id}">喜欢</span></a><span class="tou" id="favicon_{$vo.weibo_id}"></span>
+<php>}}</php>
+<else/>
+<a href="{:U('home/Public/login')}" class="button favourite-btn">喜欢</a>
+</session>
+
+
+
+
+</p>
+</div>
+</li>
+</volist>
+			
+</ul>
+</div>
+
+
+
+</div>
+<volist name="ts['ad']['home_middle']" id="vo">
+<div class="ad_header">{$vo['content']}</div>
+</volist>
+<div class="mainbody wrap">
+
+			<volist name="acdisplay"  id="acd">
+					<div class="hot-item">
+					<h2><span class="greenline size_6"><span class="item-title">{$acd.title_other}</span></span></h2>
+					<ul>
+							<php>
+							$ac_id=$acd['ac_id'];
+							$f=M('weibo')->where("bc_id in (select bc_id from ".C('DB_PREFIX')."weibo_bc where ac_id=$ac_id) AND type in(1,4,5) AND transpond_id=0 and isdel=0 AND jiancount=1")->limit(6)->order('ctime DESC')->findAll() ;
+							foreach($f as $vs){
+							$title=unserialize($vs['type_data']);
+							$weibo_id=$vs['weibo_id'];
+							$type=$vs['type'];
+							$content=$vs['content'];
+							</php>
+							<li>
+							<php>
+							if( $type == 1 ){
+									$st_arr='<a class="topimg" href='.U('home/Space/detail',array('id' =>''. $weibo_id.'')).' target="_blank"><img class="mycpic" width="140" src="__UPLOAD__/'.$title[thumbhaibaourl].'"></a>
+									<div class="price"><a target="_blank" href='.U('home/Space/detail',array('id' =>''. $weibo_id.'')).'>'.getShort($content,18).'</a></div>';
+								}else if( $type == 5 ){
+									$st_arr='<a class="topimg" href='.U('home/Space/detail',array('id' =>''. $weibo_id.'')).' target="_blank" title="'.$title[g_title].'"><img class="mycpic" width="140" src="'.$title[middle_pic].'" alt="'.$title[g_title].'"></a>
+									<div class="price cf"><a target="_blank" href='.U('home/Space/detail',array('id' =>''. $weibo_id.'')).'>'.getShort($title[g_title],18).'</a> <span class="blue">￥'.$title[price].'</span></div>';
+								}else if( $type == 4 ){
+									$zhuanji = get_zhuanji($title[logo],2);
+									$st_arr='<a class="topimg" href='.U('home/Space/detail',array('id' =>''. $weibo_id.'')).' target="_blank" title="'.$title[g_title].'"><img class="mycpic" height="140" src="'.$zhuanji.'"></a>';
+								}
+							echo $st_arr;
+							</php>
+							</li>
+							<php>
+							}
+							</php>
+								
+					</ul>
+					</div>
+					<div class="clear"></div>
+			</volist> 
+</div>
+
+
+<div class="padding10"></div>
+<div class="mainbody wrap">
+<div class="goodshop">
+<h2><span class="greenline size_6"><span class="item-title">好店推荐<em>Shops</em></span></span></h2>
+<ul>
+<volist name="bcdata" id="vo">
+<li>
+<a target="_blank" href="{:U('home/Space/board',array('uid'=>$vo['uid'], 'bc_id'=>$vo['bc_id']))}"><php>if(getCcCount($vo['bc_id']) == 0 ){</php>
+				<img src="__THEME__/images/board_thumb.jpg">
+				<php>}else{</php>
+				{$vo.bc_id|getCcpic}
+				<php>}</php></a>
+<div class="price cf"><a target="_blank" href="{:U('home/Space/board',array('uid'=>$vo['uid'], 'bc_id'=>$vo['bc_id']))}"><span class="floatright blue">{$vo.bc_id|getCcCount}</span>{$vo['uid']|getUserName}{$vo['uid']|getUserVerifiedIcon}{$vo['uid']|getUserGroupIcon}</a></div>
+<div class="gray"><a class="gray" href="{:U('home/Space/board',array('uid'=>$vo['uid'], 'bc_id'=>$vo['bc_id']))}">{$vo.title_other|getShort=###, 30, '...'}</a></div>
+</li>
+
+
+</volist>   
+
+
+			
+</ul>
+</div>
+
+</div>
+
+
+<div class="clearfix"></div>
+
+<!-- 内容 end --> 
+<include file="__THEME__/footer" /> 

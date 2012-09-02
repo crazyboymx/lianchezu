@@ -1,0 +1,19 @@
+/**
+ *      ThinkSNS 书签栏采集小工具 插件 v1.0 (C)2012-2099 啊.Qin.
+ *      This is NOT a freeware, use is subject to license terms
+ *	任何人修改代码需要告诉作者，并开源。不得商业出售！
+ *      author  啊.Qin <172376799#qq.com>
+ *
+ *	不明白本插件意思的请百度书签栏采集工具。
+ *
+ *
+ *
+ *
+ *	使用本插件 【请先安装官方的微博类型插件，并开启图片和视频类型】！
+ *
+ *	版本跟新请关注 http://www.songkiss.com	
+ *
+ *	如有疑问请联系啊.Qin <172376799#qq.com> 或者 admin@songkiss.com。
+ *
+ *	谢谢大家的支持！
+ */

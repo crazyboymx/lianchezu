@@ -1,0 +1,10 @@
+ @charset "utf-8";
+.btn_big_disable,.btn_big,.btn_big_after{background: url(../images/btn.gif) no-repeat left top;display: inline-block}
+.btn_big{background-position:0 -54px;height:28px;width:80px;border:0;position:absolute;top:0;right:0}
+.btn_big:hover{background-position:0 -83px}
+.btn_big_disable{background-position:-90px -141px;height:67px;width:80px;border:0;float:right}
+.btn_big_after{background-position:0 -141px;height:67px;width:80px;border:0;float:right}
+.btn_big_after:hover{background-position:-180px -141px;height:67px;width:80px;border:0;float:right}
+
+.talkBox h2 {height:37px;overflow:hidden;margin-bottom:8px}
+.talkBox h2 span{font-size: 18px;line-height: 42px;float:left; display:block}

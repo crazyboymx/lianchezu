@@ -1,0 +1,38 @@
+    <div class="mainboxs" style="width:550px;">
+        <div class=page_title> 
+        </div>
+        <div class="BlogBox">
+		<form name="eBlog" action="{$link}" method="post" onsubmit="return check()">
+            <div class="LogList">
+              <ul class="edit">
+                <li style="padding:0;">
+                  <label>标题: &nbsp;</label>
+                  <div class="c1">
+                    <select name="category" id="select" onchange="javascript:changeCategory($(this))" class="text mr5">
+                      <php> foreach( $blog_category as $value ){ </php>
+                      <option value="{$value['id']}"<eq name="category['id']" value="$value['id']">selected=selected </eq> title="{$value['name']}">{$value['name']|getShort=8}</option>
+                      <php> } </php>
+                      <optgroup id="group">
+                      </optgroup>
+                    </select> 
+                    
+                    <input id="title" name="title" type="text" class="text" style="width:363px;" onBlur="this.className='text'" onFocus="this.className='text2'" maxlength="25" value="{$title}" />
+                  </div>
+                </li>
+                <li style="padding:0;">
+                  <label>内容: &nbsp;</label>
+                  <div class="c1"><textarea id="content" name="content" style="height:350px; width:470px;">{$content}</textarea></div>
+                </li>
+                       
+                <li style="padding:0;">
+                     <div class="c1" style="height:30px;">
+                       <input id="id" name="id" type="hidden" value="{$id}">
+                       <input type="submit" class="btn_b" value="发 表" />
+                     </div>
+                </li>
+              </ul>
+            </div>
+          </form>
+        </div>
+        <div class="c"></div>
+    </div>

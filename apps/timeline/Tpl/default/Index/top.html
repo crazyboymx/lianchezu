@@ -1,0 +1,36 @@
+       <div class="sign" >
+        <li id="signs">
+          <if condition="$userinfo['lsign']['sign'] neq '' ">
+          <img id="picsign" src="{$userinfo['lsign']['sign']}"/>
+          <else/><img id="picsign" src="../Public/images/sign.png"/>
+          </if>
+        </li>
+        <li class="inf">
+          <ul>
+            <space uid="uid" class="nocard">{uavatar=b}</space>
+            <if condition="$uid eq $mid ">
+            <span><a href="{:U('timeline/Index/sign')}">更改封面</a></span>
+            <span style=" width:200px; margin-right:0; color:#eee; background:#000;">
+                 为你时光轴挑一张个性封面吧！
+            </span>
+            </if>
+            <span style="float:left; margin-top:80px; font-size:16px; padding:0 10px; width:auto; height:25px;">{$userinfo['uname']}</span>
+          </ul>
+          <ul class="nv">
+            <li style="float:left; width:350px; ">
+              <table width="300" border="0" align="left" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td height="70" align="left" valign="center"><p>性别：{$userinfo['sex']}</p></td>
+                  <td height="70" align="left" valign="center"><p>来自：{$userinfo['location']}</p></td>
+                </tr>
+              </table>
+            </li>
+            <li><a href="{:U('photo/Upload/flash')}" >传照片</a></li>
+            <li><a href="{:U('blog/Index/addBlog')}">写日志</a></li>
+            <li><a href="{:U('timeline/index/friline',array('uid'=>$userinfo['uid']))}">关注({$userinfo['fcount']})</a></li>
+            <neq name="ACTION_NAME" value="index">
+            <li><a href="{:U('timeline/index/index',array('uid'=>$_GET['uid']))}" >时光轴</a></li>
+            </neq>
+         </ul>
+       </li>
+     </div>

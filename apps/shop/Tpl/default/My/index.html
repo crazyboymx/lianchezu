@@ -1,0 +1,69 @@
+<include file="__THEME__/header" />
+
+<link rel="stylesheet" href="../Public/blog.css" type="text/css" media="screen" charset="utf-8" />
+<link href="__PUBLIC__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../Public/Js/Common.js"></script>
+<div class="content_holder">
+<div class="content no_bg">
+  <include file="../Public/_blog_header" />
+  <div class="main no_l">
+    <div class="mainbox">
+    
+      <include file="../Public/_right" />
+      
+      <div class="mainbox_appC">
+        <div class="tab-menu">
+<ul>
+
+  <li>
+    <a href="__URL__" class="on" >
+        <span>我的订单</span>
+    </a>
+  </li>
+    <li>
+    <a href="__ROOT__/index.php?app=home&mod=Account&act=index#contact">
+        <span>我的地址</span>
+    </a>
+  </li>
+  </ul>
+</div>
+
+
+        <div class="BlogBox">
+        	<div class="my_dd">
+            <table width="600" border="0">
+  <tr bgcolor="">
+    <td height="37" align="left"><strong>商品名称</strong></td>
+    <td><strong>价格</strong></td>
+    <td><strong>下单时间</strong></td>
+    <td><strong>状态</strong></td>
+    <td><strong>操作</strong></td>
+  </tr>
+ <volist name="order.data" id="o">
+    <tr height="30">
+    <td align="left"><a href="{:U('shop/Index/info', array('id'=>$o['gid']))}" target="_blank">{$o.gname}</a></td>
+    <td>{$o.price2}</td>
+    <td>{$o.time2}</td>
+    <td>{$o.state|getOrderStateName=###}</td>
+    <td><a href="javascript:" onclick="ddckxq({$o.id})">详情</a></td>
+  </tr>
+  </volist>
+</table>
+<div class="page">{$order.html}</div>
+            </div>
+        </div>
+        
+        
+        <div class="c"></div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+	function ddckxq(orid){
+				ui.box.load("__URL__&act=orderdo&id="+orid, {title:'订单详细'});
+	}
+</script>
+<include file="../Public/_footer" />

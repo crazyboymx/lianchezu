@@ -1,0 +1,20 @@
+/*icon*/
+.icon_add_tsas{background:url('images/xiami.gif') no-repeat;height:16px; width:16px;  margin:0 2px -4px 0;}
+/* »­²¼ */
+.input_box{width:100%;}
+.input_box .data{width:90%;margin:0 auto;height:20px;color:#CCCCCC;display:none;}
+.input_box .data .num{ float:left;}
+.input_box .data .shitingt{ float:right;}
+.input_box .page a{padding: 5px;}
+.input_box .song_list{ margin:0 auto; line-height:30px;width:90%;}
+.input_box .song_list li{border-bottom:1px dotted #999999; cursor:pointer; position:relative;}
+.input_box .song_list li .play{ position:absolute;right:0px;background: url(images/picon.gif) no-repeat;background-position: -20px 0;width:20px;height:20px; margin-top:5px;}
+.input_box .song_list li .playend{ position:absolute;right:0px;background: url(images/picon.gif) no-repeat;background-position: 0px 0;width:20px;height:20px; margin-top:5px;}
+.input_box #load{ text-align:center;}
+.input_box .loading{background:url('images/loading_post.gif') no-repeat;height:16px; width:16px;  margin:0 2px -4px 0;}
+.input_box .input_search{ text-align:center;}
+.input_box .input_search .t_df{position: absolute;top: 30px;left: 20px;width: 200px;height: 34px;padding: 0 7px;line-height: 34px;font-size: 20px;color: #8B9096;border-radius: 3px;-webkit-border-radius: 3px; z-index:1;}
+.input_box .input_search .input{margin:30px 0;position: relative;width: 295px;height: 34px;line-height: 34px;padding: 0 4px;color: #494949;border: 1px solid #9DADC5;font-size: 20px; background-color:#FFF;outline: none;border-radius: 3px;-webkit-border-radius: 3px;-webkit-transition: -webkit-box-shadow .1s linear;-moz-transition: box-shadow .1s linear;}
+.nosong{text-align:center; margin:10px 0;}
+.vh{visibility:hidden}
+

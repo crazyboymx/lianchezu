@@ -1,0 +1,171 @@
+<style>
+
+.tutor {
+padding: 25px 15px;
+display: inline-block;
+background-color: #FFF9E2;
+width:100%;
+font-size: 18px;
+position: relative;
+margin-bottom: 15px
+}
+.top-move {
+background: 
+#EEE url(images/unfold.gif) 95% center no-repeat;
+padding: 8px 15px;
+border: 1px 
+#EFEFEF solid;
+cursor: pointer;
+overflow: hidden;
+color: 
+#333;
+}
+.top-move h2 {
+font-size: 14px;
+line-height: 25px;
+display: block;
+}
+.setItemsMove {
+border: 1px 
+#EFEFEF solid;
+border-top: 0px none;
+padding: 15px;
+overflow: hidden;
+_zoom: 1;
+}
+.tip-words {
+font-size: 16px;
+font-weight: 400;
+}
+.pin-button {
+border: 1px solid 
+#CCC;
+border-radius: 5px;
+padding: 4px 16px;
+margin-right: 20px;
+position: relative;
+background: url({:SITE_URL}/addons/plugins/SKgoodies/html/btn_bg.gif) repeat-x;
+cursor: move;
+}
+
+.setUnfold h2, .setFold h2 {
+margin: 0;
+padding: 0 0 0 26px;
+line-height:20px;
+background: url({:SITE_URL}/addons/plugins/SKgoodies/html/browser_icons.png) no-repeat 0 0;
+}
+</style>
+<div class="setupBox">
+    <div class="setItems">
+        <div class="top-move">
+          <h2>安装书签栏采集工具</h2>
+        </div>           
+        
+        
+        <div style="display: block;" class="setItemsMove">
+          <div class="data">
+<div class="tutor">
+            
+         <a  class="pin-button" href="{$bookmarkleturl}">收藏到{$ts['site']['site_name']}</a>
+            ← 把这个按钮拖到你的浏览器书签栏
+        </div>
+<div class="tip-words">
+            没有找到书签栏？试试
+            <span class="key-tip">Ctrl + Shift + B</span>
+        </div>
+
+
+            </div> 
+        </div> 
+ 
+ 
+            <div class="setFold setUnfold" rel="chrome" >
+              <h2 style="background-position: 0 -110px;">谷歌浏览器</h2>
+            </div>
+            <div style="display: block;" class="setItemsInfo">
+		      <div class="data">
+              <div class="inner">
+                    	<h3>问：我的浏览器找不到书签栏，怎么办？</h3>
+                    	<p>答：打开菜单"书签"，勾选"显示书签栏"</p>
+                        <img src="{:SITE_URL}/addons/plugins/SKgoodies/html/guide_tab2_05.jpg" height="280px">
+               </div>
+		      </div> 
+            </div> 
+              
+            <div class="setFold setUnfold" rel="ie" >
+              <h2 style="background-position: 0 -22px;">IE浏览器</h2>
+            </div>
+            <div style="display: block;" class="setItemsInfo">
+		      <div class="data">
+              <div class="inner">
+                    	<h3>问：我的浏览器找不到收藏夹栏，怎么办？</h3>
+                        <p>答：打开菜单"查看-工具栏"，勾选"收藏夹栏"</p>
+                        <img src="{:SITE_URL}/addons/plugins/SKgoodies/html/guide_tab2_01.jpg" height="280px">
+                        <h3>问：我是IE用户，我明明已经收藏成功，但我的收藏栏里没有"采集到最旅网"</h3>
+                        <p>
+                        	答：请在保存书签时，保存到<img src="{:SITE_URL}/addons/plugins/SKgoodies/html/textimg_01.jpg">
+                            而不<img src="{:SITE_URL}/addons/plugins/SKgoodies/html/textimg_01-05.jpg">
+                       	</p>
+                        	<img src="{:SITE_URL}/addons/plugins/SKgoodies/html/guide_st2_tab3_001.jpg" height="240px">
+                 	</div>
+              </div> 
+ 			</div>
+            
+            <div class="setFold setUnfold" rel="firefox" >
+              <h2 style="background-position: 0 -88px;">火狐浏览器</h2>
+            </div>
+            <div style="display: block;" class="setItemsInfo">
+		      <div class="data">
+              <div class="inner">
+                    	<h3>问：我的浏览器找不到书签栏，怎么办？</h3>
+                        <p>答：打开菜单"查看-工具栏"，勾选"书签工具栏"</p>
+                        <img src="{:SITE_URL}/addons/plugins/SKgoodies/html/guide_tab2_04.jpg" height="280px">
+                   	</div>
+              </div> 
+ 			</div>   
+              
+            <div class="setFold setUnfold" rel="faq" >
+              <h2 style="background-position: 0 -176px;">反正搞不定</h2>
+            </div>
+            <div style="display: block;" class="setItemsInfo">
+		      <div class="data">
+              <div class="inner">
+                    	<p>亲，把问题反馈给我们，我们来帮你搞定！你可以：</p>
+                        <p>
+                        	1. 和管理员联系，告诉我们遇到的问题
+                       	</p>
+                        <p>
+                        	2. 要不你换个浏览器吧。比如<a href="http://www.google.com/chrome/" target="_blank">Chrome</a>，
+                            <a href="http://firefox.com.cn/" target="_blank">Firefox</a>
+                       	</p>
+                  	</div>
+              </div> 
+       
+    </div>
+</div>             
+<script type="text/javascript">
+	$(document).ready(function(){
+		var hs = document.location.hash;
+		changeModel( hs.replace('#','') );
+		$('.setFold').click(function(){
+			if( $(this).attr('class')=='setFold' ){
+				changeModel( $(this).attr('rel') );
+			}else{
+				$(this).removeClass('setUnfold');
+				$(this).next('.setItemsInfo').hide();
+			}
+			location.href='#'+$(this).attr('rel');
+		})
+	});
+	
+	//切换操作模块
+	function changeModel( type ){
+		var t = type || ('chrome' || 'home');
+		$('.setFold').removeClass('setUnfold');
+		$('.setItemsInfo').hide();
+		var handle = $('div[rel="'+t+'"]');
+		handle.addClass('setUnfold');
+		handle.next('.setItemsInfo').show();
+	}
+ 
+</script>

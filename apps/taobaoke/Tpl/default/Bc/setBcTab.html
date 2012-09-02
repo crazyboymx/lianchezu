@@ -1,0 +1,80 @@
+<div  style="width:500px;padding:20px; background:#f8f8f8" class="alL">
+
+    <div> <if condition="$gid">修改图格：<else />创建图格：</if>
+        <input type="text" name="bcTitle"  value="{$title}" class="text" style="width:300px;"    />
+
+    </div>
+
+    <div style="font-size:14px;line-height:200%;" class="clearfix">
+          
+        图格的分类？<br/>
+		<ul  class="newtuge">
+        <volist name="acdisplay"  id="acd">
+        <li>
+            <input  type="radio"   name="acid"  value="{$acd.ac_id}" <if condition="$acd.ac_id eq $acid">checked<else/> </if>>{$acd.title}<br/>
+       
+       </li>
+        
+        </volist>
+		</ul>
+
+    </div>
+
+    <if condition="$gid"><div class="pt10 pb10"><a href="{:U('taobaoke/Bc/deleteBc',array('gid'=>$gid))}" onclick="if(confirm('确定要删除“{$title}”图格吗？此图格下的所有信息都会被清空。'))return ture;return false;" ><span style="color:#FF0000;">×</span>删除图格</a></div></if>
+     
+     
+    <div align="center" style="margin:20px 0;">
+        <input type="button" onclick="createBc()"    value="确认"  class="N_but" />
+
+        <input type="button" onclick="ui.box.close()" class="btn_w" value="取消" /></div>
+</div>
+
+
+
+<script>
+   
+ 
+    
+    
+function createBc(title,acid){
+	var title = $("input[name='bcTitle']").val();
+        var acid = $(':radio[name="acid"]:checked').val();
+        if(!acid){
+            ui.error('必须选择分类！');
+		return false;
+            
+        } 
+	if(title == ''){
+		ui.error('请输入图格标题！');
+		return false;
+	}else if(title.length>20){
+		ui.error('图格标题不能超过20个汉字');
+		return false; 
+	}
+	var uid = '{$mid}';
+	<if condition="$gid">
+		var gid = '{$gid}';
+		$.post(U('taobaoke/Bc/setBc'),{uid:uid,title:title,acid:acid,gid:gid},function(gid){
+			if(gid == 1){
+				var url = "{:U('taobaoke/Index/index',array('uid'=>$mid))}"; 
+                location.href=url;
+				ui.success('修改成功');
+				ui.box.close();
+			}else{
+				ui.error('此图格已存在');
+			}
+		});
+	<else />
+		$.post(U('taobaoke/Bc/setBc'),{uid:uid,title:title,acid:acid},function(gid){
+			if(gid != 0){
+				 var url = "{:U('taobaoke/Index/index',array('uid'=>$mid))}"; 
+                 //location.href=url;
+				ui.success('新建成功');
+				ui.box.close();
+			}else{
+				ui.error('此图格已存在');
+			}
+		});		
+	</if>
+}
+</script>

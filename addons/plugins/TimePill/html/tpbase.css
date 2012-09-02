@@ -1,0 +1,40 @@
+/* 
+    Document   : timepill
+    Created on : 2012-2-15, 12:46:29
+    Author     : alan QQ:8510001
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.fakesay.com
+*/
+ 
+
+.timepilltool{
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px ;
+    border-radius: 5px;
+padding: 20px;
+background: #fff url(timepills.png) no-repeat 5px 5px;
+margin-bottom:10px; 
+text-align: right;
+ 
+
+}
+.get,.put,.what{width: 400px;height: 400px;padding: 10px;}
+
+.put{text-align: left;}
+.put ul{line-height: 30px;}
+.put .right{text-align: right;margin-right: 20px;margin-top: 10px;}
+.put .right a{display: block;padding-right: 20px;background: #ccc;width: 45px;height: 30px;}
+.putkey{clear: both;border: 1px #ccc dashed;padding: 20px;display: none;}
+
+.get{text-align: left;}
+.getkey{clear: both;border: 1px #ccc dashed;padding: 20px;}
+.getdata{clear: both;border: 1px #ccc dashed;padding: 20px;margin-top: 10px;overflow: hidden;display: none;}
+.get ul{line-height: 25px;clear: both;}
+.get .right{text-align: right;margin-right: 0px;margin-top: 0px;clear: both;}
+.get .red{color:#ff0000;}
+.mygetdata{clear: both;border: 1px #ccc dashed;padding: 20px;margin-top: 10px;overflow-y: scroll;height:100px;}

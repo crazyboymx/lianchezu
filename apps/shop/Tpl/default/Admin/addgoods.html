@@ -1,0 +1,107 @@
+<include file="_header" />
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<include file="__THEME__/editor" />
+<div id="container" class="so_main">
+  <div class="page_tit">{$ts['app']['app_alias']}</div>
+  <include file="_tab" />
+  <form action ="__URL__&act=addGoodsDo" method="post" enctype="multipart/form-data" >
+    <div class="form2 no_line">
+      <dl class="lineD">
+        <dt>
+          名称
+        </dt>
+        <dd>
+          <input name="name" class="txt" value ="{$goods.name}" />
+          <p></p>
+        </dd>
+      </dl>
+            <dl class="lineD">
+        <dt>
+          所属分类：
+        </dt>
+        <dd>
+          	<select name="category">
+            	<volist name="category" id="c">
+          	  <option value="{$c.id}" <eq name="goods.category" value="$c.id">selected="selected"</eq> >{$c.name}</option>
+              </volist>
+       	    </select>
+        </dd>
+      </dl>
+      
+      
+      <dl class="lineD">
+        <dt>
+          领取限制：
+        </dt>
+        <dd>
+          微博：<input name="x_w" class="txt" value ="{$goods.x_w}" style="width:50px" />
+          粉丝： <input name="x_f" class="txt" value ="{$goods.x_f}" style="width:50px" />
+          收听：<input name="x_s" class="txt" value ="{$goods.x_s}" style="width:50px" />
+        </dd>
+      </dl>
+      
+      
+      
+      <dl class="lineD">
+        <dt>
+          兑换积分：
+        </dt>
+        <dd>
+        	<volist name="jftype" id="t">
+          		{$t.alias}：<input name="jf[{$t.name}]" class="txt" value ="{$goods.price3.$t[name]}" style="width:50px" />
+            </volist>
+        </dd>
+      </dl>
+      
+        <dl class="lineD">
+        <dt>
+          数量：
+        </dt>
+        <dd>
+          	<input name="num" class="txt" value ="{$goods.num}"  />
+        </dd>
+      </dl>
+
+              <dl class="lineD">
+        <dt>
+          商品图片：
+        </dt>
+        <dd>
+          	<input name="pic" class="txt" type="file" value =""  />
+            <neq name="Think.get.id" value="">
+      	<input name="pic_url" type="hidden" value="{$goods.pic}" />
+      </neq>
+        </dd>
+      </dl>
+               <dl class="lineD">
+        <dt>
+          介绍：
+        </dt>
+        <dd>
+          	<textarea name="description" id="description" style="width:780px;height:200px">{$goods.description}</textarea>
+        </dd>
+      </dl>     
+      
+    
+      <div class="page_btm">
+      <neq name="Think.get.id" value="">
+      	<input name="id" type="hidden" value="{$Think.get.id}" />
+      </neq>
+        <input type="submit" class="btn_b" value="确定" />
+      </div>
+    </div>
+  </form>
+</div>
+<include file="_footer" />
+<script>
+$(document).ready(function(){
+	setTimeout('loadEditor("description")',100);	//解决2个编辑器问题
+});
+</script>

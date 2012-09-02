@@ -1,0 +1,52 @@
+<include file="__THEME__/header" />
+
+
+<div class="o_login alL">
+  <div style="width: 400px; float: left; margin-left:20px;">
+    <div class="lineD_btm  mb10 pb10"> 
+      <p>你好，<br>
+      欢迎你通过<img src="__THEME__/images/btn_sina.gif">来到thinksns！</p>
+    </div>
+    <div class="lh20">
+    <ul><li>* 完整的产品构架、完善的基础应用、开箱即用。</li>
+   <li> * 内置API接口、后续支持自建平台、核心和应用分离。</li>
+    <li>* 完善的后台管理、可植入独立的应用管理。</li>
+    <li>* 正在完善IM应用，包括独立部署的WebIM和基于Air技术的客户端应用。</li>
+    </ul>
+</div>
+  </div>
+  
+  <div style="margin: 10px; width: 500px;" class="right">
+  <div style="background-color: rgb(239, 239, 239);"><span class="right"><img height="42" width="7" src="__THEME__/images/t_sina_bgr.jpg"></span><img height="42" width="100" src="__THEME__/images/t_sina_logo.jpg"></div>
+  <div style="border: 2px solid rgb(239, 239, 239); padding: 20px 60px;">
+  <h3>第一次来thinksns，点击这里直接登录： </h3>
+  <p><input type="checkbox" checked="checked" value="" name="">
+    我已阅读并接受<a href="/Passport/first_sina_login">《使用协议》
+    </a></p>
+  <p class="btmlineD pb10"><input type="button" value="直接登录" class="btn_green_w121" /> </p>
+  <h3>已经有thinksns帐号？点击这里绑定帐号： </h3>
+  <!-- 判断新浪有无此号 begin -->
+<div style="display: none;" class="msg_tips error_tips">
+			<ul><li>在新浪此id不存在 </li></ul>
+		</div>
+  <!-- 判断新浪有无此号 end -->
+  <form method="post" action="/Passport/bang_sina_login" name="form1">
+      <p>
+        <label class="f_label" for="email">你的 Email 地址：</label>
+        <input type="text" class="f_txt2 text" name="email">
+      </p>
+      <p>
+        <label class="f_label" for="password">密 码：</label>
+        <input type="password" class="f_txt2 text" name="passwd">
+      </p>
+      <p>
+         <label class="f_label" for="password"></label>
+        <input type="button" value="确认绑定" class="btn_b" />
+      </p>
+  <input type="hidden" value="231889230089c2f46233284e6fbeb4e0" name="__hash__"></form>
+  <!--功能操作区end--> 
+  </div>
+  </div>
+  <div class="c"></div>
+  </div>
+<include file="__THEME__/footer" /> 

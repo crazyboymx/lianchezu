@@ -1,0 +1,22 @@
+<div class="xnav">
+    <div class="page_tits">
+     <ul>
+      <space uid="mid" class="nocard">{uavatar=b}</space>
+      <li><a href="{:U('share/Index/find')}" >单页探索</a></li>
+      <li><a href="{:U('share/Index/someOne')}" >我的专辑</a></li>
+      <li><a href="{:U('share/Index/friend')}" >好友专辑</a></li>
+      <li><a href="{:U('share/Index/index')}" >发现专辑</a></li>
+     </ul>
+     <dd>
+       <php> if($mid==$shareinfo['uid']){ </php>
+       <a href="{:U('share/Index/addPict',array('gid'=>$_GET['gid']))}" >发行新专辑单页</a>
+       <php>}else{</php>
+       <a href="{:U('share/Index/add')}" >创建专辑</a>
+       <php>}</php>
+       <a class="yyy" href="{:U('share/Index/myLikes')}">喜欢</a>
+       <a class="yyy" href="{:U('share/Index/recommend')}">推荐</a>
+       <a class="yyy" style="width:77px" href="#">投稿</a>
+     </dd>
+    </div>
+</div>
+<div class="clear"></div>

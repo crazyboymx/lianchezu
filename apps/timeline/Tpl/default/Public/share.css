@@ -1,0 +1,66 @@
+@charset "utf-8";
+.content{ background:#EDF0EB; }
+.mainbox{ background:#EDF0EB url(images/line.png) repeat-y center top; width:980px; clear:left;}
+.content_holder{ background:#EDF0EB;}
+/*封面*/
+.sign { width:100%; float:left; list-style:none; padding: 0; background:#fff; height:450px;}
+.sign li {float:left; background:none; width:100%; overflow:hidden;}
+.sign li img{width:100%; height:350px;}
+.sign li.inf {float:left; width:100%; height:180px; margin-top:-80px; position:relative; overflow:hidden; border-bottom:1px solid #ddd;}
+.sign li.inf ul{height:108px; float:left; width:100%;}
+.sign li.inf ul a img{ float:left; width:100px; height:100px; margin-left:20px; padding:2px; border:2px solid #ddd; background:#fff;}
+.sign li.inf ul li a{ background:#f1f1f1;}
+.sign li.inf ul span{ float:right; width:100px; color:#000; margin-top:30px; background:#fff; height:35px; line-height:35px; text-align:center; margin-right:20px; font-weight:bold;}
+
+.nv{height:68px; float:left; width:100%; background:#fff;}
+.nv li{float:right;  width:131px; height:68px;  margin-right:2px;}
+.nv li a{ height:68px;_height:68px; line-height:68px;_line-height:68px; width:131px; display:block;color:#000; font-weight:bold; font-size:16px; text-align:center;}
+.nv li a:hover{text-decoration:none;background:#E8E8E8; color:#666;}
+.nv li p{ font-size:14px; padding-left:20px;}
+
+.listt { float:left; clear:left; margin-left:10px !important;}
+.listt h2{ font-size:14px; font-weight:bold; padding:5px 10px; text-align:left; }
+/*日志*/
+
+.no_bg{ background:none;}
+.has_bg{ background:#EDF0EB;}
+.bg{ background:#fff !important; margin:10px 10px; width:440px !important; padding:15px;}
+.no_border{ border:none !important;}
+/*更换封面*/
+.chosign{ width:980px; float:left; margin-bottom:20px;}
+.chosign ul{ width:100%;  background:#fff; padding-bottom:20px;}
+.chosign ul li{ float:left; width:231px; height:150px; text-align:center; background:#fff; padding:10px 7px;}
+.chosign ul li img{ width:230px; height:130px; margin:0 auto;}
+.chosign ul li h3{ margin:0 auto; width:230px; height:20px; background:#fff; line-height:20px; font-weight:bold;}
+.chosign ul li a{ text-decoration:none; display:block;}
+/*共同关注的人*/
+.comfri{ width:980px; float:left; margin:25px 0;}
+.comfri ul li{ float:left; width:290px; height:110px; text-align:left; background:#fff; padding:15px 12px; border:1px solid #ddd; margin:0 5px 12px 5px;}
+.comfri ul li img{ width:110px; height:110px; float:left;}
+.comfri ul li span h3{ height:20px; background:#fff; line-height:20px;}
+.comfri ul li a{ text-decoration:none;}
+.comfri ul li span{width:170px; float:left; position:relative; padding:10px 0 0 10px;}
+.comfri ul li span img{width:35px; height:35px; float:left; margin-left:5px;}
+
+/**** 时光轴样式 ****/
+
+.container {width:100%;margin-bottom: 20px;clear: both;}
+.box { margin:10px 0 10px 0; width:490px; background:none;float:left;}
+.box li{ background: #fff; float: left; padding:10px 15px; width:435px;}
+.box h2 {font-size: 14px;font-weight: bold; color:#fff; width:80px; height:25px; line-height:25px; background:#9c0; text-align:center; margin:0 auto;}
+.box li p img{ max-width:430px !important; padding-bottom:5px !important;}
+.box li p{ text-align:left; font-size:14px; color:#222; line-height:23px; font-weight:normal;}
+.box li p strong{ font-size:14px; color:#222; line-height:23px; font-weight:normal;}
+.box li p strong span{ font-size:14px; color:#222; line-height:23px; font-weight:normal;}
+.col6 { width:970px; background:none;; height:25px; margin:10px 0;}
+.box img { max-width: 450px;}
+.rtitle{ float:left; background-image: url(images/title.png); background-repeat:no-repeat; background-position:left 20px; margin-left:-5px; height:50px;}
+.ltitle{background-image: url(images/ltitle.png); background-repeat:no-repeat; background-position:right 5px; float:right; text-align:left; margin-right:-5px; height:50px;}
+.ti_bg{ width:25px;}
+.bord{width:435px; border-bottom:1px solid #ddd; margin-bottom:10px; height:1px;}
+
+.statu{ margin:0px 0 10px 20px;}
+.statu dd{ padding:5px 0; border-bottom:1px solid #ddd; text-align:left; float:left; width:440px; color:#666; line-height:22px;}
+.statu dd h3{ font-size:14px; font-weight:bold; float:left; padding:0; line-height:22px; color:#588C0E;}
+.box li i{ padding:5px 10px;}
+.box li p a{ color:#588C0E;}

@@ -1,0 +1,25 @@
+<div style="width:350px">
+  <form method="post" action="{:Addons::adminPage('doaddlink')}" enctype="multipart/form-data">
+    <dl class="">
+      <dt>*名称：</dt>
+      <dd>
+        <input name="title" type="text" value="{$title}">友情链接的名称<p>
+      </dd>
+    </dl>
+    <dl class="">
+      <dt>*链接地址：</dt>
+      <dd>
+        <input name="url" type="text" value="{$url}" style="width:300px;">url地址<p>
+      </dd>
+    </dl>
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" /> <input type="button" class="btn_w" onclick="cancel()" value="取消" />
+    </div>
+    <input type="hidden" name="id" value="{$id}" />
+  </form>
+</div>
+<script type="text/javascript">
+function cancel() {
+	ui.box.close();
+}
+</script> 

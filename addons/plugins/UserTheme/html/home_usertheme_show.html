@@ -1,0 +1,84 @@
+<style>
+EM {
+	FONT-STYLE: normal;
+	FONT-WEIGHT: normal
+}
+.btn_normal, .btn_normal EM, .btn_notclick, .btn_notclick EM {
+	LINE-HEIGHT: 24px;
+	DISPLAY: inline-block;
+	BACKGROUND: url({:SITE_URL}/addons/plugins/UserTheme/html/new_index_bg.png) no-repeat -400px -100px;
+	HEIGHT: 24px;
+	COLOR: #666;
+	FONT-SIZE: 12px;
+	CURSOR: pointer;
+	FONT-WEIGHT: normal;
+	TEXT-DECORATION: none
+}
+.btn_normal {
+	LINE-HEIGHT: 24px;
+	PADDING-LEFT: 20px;
+	BACKGROUND-POSITION: -400px -100px;
+	HEIGHT: 24px
+}
+.btn_notclick {
+	LINE-HEIGHT: 24px;
+	PADDING-LEFT: 20px;
+	BACKGROUND-POSITION: -400px -196px;
+	HEIGHT: 24px;
+	CURSOR: default
+}
+.btn_normal EM {
+	PADDING-RIGHT: 20px;
+	BACKGROUND-POSITION: right -124px;
+	HEIGHT: 24px
+}
+.btn_notclick EM {
+	PADDING-RIGHT: 20px;
+	DISPLAY: inline-block;
+	BACKGROUND-POSITION: right -220px;
+	HEIGHT: 24px;
+	COLOR: #aaa
+}
+</style>
+<script type="text/javascript">
+	//切换操作
+	function useradd(id,theme_name){
+  	$.post( U('home/Widget/addonsRequest'),{'addon':'UserTheme','hook':'useradd','id':id,'theme_name':theme_name},function(txt){
+      if(txt == 1){
+          ui.success('切换成功');
+		  location.replace("{:U('home/User/index')}");
+      	}else{
+          ui.error('切换失败');
+      }
+   });
+}
+</script>
+<div class="setupBox">
+<div class="setItems">
+  <div class="setFold setUnfold" rel="autstyle" >
+    <h2>选择更适合您的版本</h2>
+  </div>
+  <div style="display: block;" class="setItemsInfo">
+    <div class="data">
+      <ul>
+        <volist name="data" id="vo">
+          <li style="margin-bottom:20px;"><img src="{:SITE_URL}/addons/plugins/UserTheme/icon/{$vo['icon']}" height="110" width="250" style="float:left">
+            <div style="float:left; margin-left:10px; width:320px;">
+              <div class="ver_info">
+                <h2 style="font-size:14px; font-weight:bold">{$vo['title']}</h2>
+                <p>{$vo['info']}</p>
+                <p class="ver_btn">
+                  <eq name="vo['used']" value="1">
+                <P class=ver_btn><A class=btn_notclick  href="javascript:void(0);"><em>你正在使用此版本</em></a></P>
+                <else />
+                <P class=ver_btn><A class=btn_normal  href="javascript:void(0);"  onclick="useradd('{$userinfo['id']}','{$vo['theme_name']}');"><em>马上切换</em></a></P>
+                </eq>
+                </p>
+              </div>
+            </div>
+          </li>
+        </volist>
+      </ul>
+    </div>
+  </div>
+</div>

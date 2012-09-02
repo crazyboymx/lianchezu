@@ -1,0 +1,50 @@
+<include file="_header" />
+<div class="so_main">
+  <include file="_tab" />
+  
+  <div class="form2">
+  	<form method="post" action="{:U('timeline/Admin/add')}" enctype="multipart/form-data">
+    <div>
+    <dl class="">
+      <dt>封面名：</dt>
+      <dd>
+        <input type="text" name="name" value="" />
+      </dd>
+    </dl>
+
+    </div>
+    <dl class="">
+      <dt>封面图片：</dt>
+      <dd>
+        <input name="sign" type="file" /> 建议图片宽度为980px，高度300
+      </dd>
+    </dl>
+    <div class="page_btm">
+      <input type="submit" name="addsign" class="btn_b" style="cursor:pointer;" value="确定" />
+    </div>
+    </form>
+  </div>
+  
+  
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <th>ID</th>
+            <th>名称</th>
+            <th>封面</th>
+            <th>操作</th>
+          </tr>
+          <volist name="signs" id="vo">
+          <tr id="list_{$vo.id}">
+            <td>{$vo.id}</td>
+            <td>{$vo.name}</td>
+            <td><img src="{$vo.sign}" width="70" height="40" /></td>
+            <td><a href="#">更换</a></td>
+          </tr>
+          </volist>
+        </table>
+    </div>
+    
+</div>
+</body>
+</html>

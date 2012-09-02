@@ -1,0 +1,12 @@
+<div class="pop" style="width:400px; height:100px;margin:15px 0 20px 0;">
+  <table  border="0" cellspacing="2" cellpadding="0">
+  <tr>
+    <th>图片标题：</th>
+    <td>
+    <input type="text" style="height:35px; width:250px;" name="name" id="name" value="{$photo.name}" />
+    </td>
+  </tr>
+  </table>
+  <input type="hidden" name="id" id="photoId" value="{$photo.id}" />
+  <input type="button" onclick="do_update_photo()" class="btn_b right" style="margin-right:45px;" value="确定">
+</div>	

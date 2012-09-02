@@ -1,0 +1,36 @@
+<include file="_header" />
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]>
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+<include file="__THEME__/editor" />
+<div id="container" class="so_main">
+  <div class="page_tit">{$ts['app']['app_alias']}</div>
+  <include file="_tab" />
+  <form action ="" method="post" >
+    <div class="form2 no_line">
+      <dl class="lineD">
+        <dt>
+          商城公告：
+        </dt>
+        <dd>
+          <textarea name="gg" id="gg" style="width:780px;height:200px">{$shop.default}</textarea>
+          <p></p>
+        </dd>
+		</dl>
+      <div class="page_btm">
+        <input type="submit" class="btn_b" value="确定" />
+      </div>
+    </div>
+  </form>
+</div>
+<include file="_footer" />
+<script>
+$(document).ready(function(){
+	setTimeout('loadEditor("gg")',100);	//解决2个编辑器问题
+});
+</script>

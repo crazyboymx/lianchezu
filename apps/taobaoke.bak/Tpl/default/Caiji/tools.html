@@ -1,0 +1,228 @@
+<include file="__THEME__/header" />
+<style type="text/css">
+<!--
+.wrap { margin: auto;width:982px;}
+.header-1,.soso { display:none;}
+a.longbutton {
+position: relative;
+cursor: move;
+margin-right: 30px;
+font-size:18px;
+}
+a.iebutton{
+margin-right: 30px;
+font-size:18px;
+color:#B20000;
+text-decoration:underline!important;
+}
+.main { _float:left;}
+.logo_z{ margin:auto 0 0 0 !important;}
+-->
+</style>
+<!--<php>     
+if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0"))       
+echo "Internet Explorer 8.0";     
+else if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 7.0"))       
+echo "Internet Explorer 7.0";       
+else if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 6.0"))       
+echo "Internet Explorer 6.0";       
+else if(strpos($_SERVER["HTTP_USER_AGENT"],"Firefox/3"))       
+echo "Firefox 3";            
+else if(strpos($_SERVER["HTTP_USER_AGENT"],"Chrome"))       
+echo "Google Chrome";       
+else if(strpos($_SERVER["HTTP_USER_AGENT"],"Safari"))       
+echo "Safari";       
+else if(strpos($_SERVER["HTTP_USER_AGENT"],"Opera"))       
+echo "Opera";       
+else echo $_SERVER["HTTP_USER_AGENT"];       
+</php> -->
+
+
+<div class="mainbox wrap"><!-- 内容 begin  --> 
+  <div class="mainbox_L">	
+  <div class="right_list">
+  		<div class="right_list_on"><div><a href="{:U('home/Caiji/tools')}">采集工具</a></div></div>
+		<volist name="list" id="vo">
+		<php>$css_class = $vo['document_id'] == $detail['document_id'] ? 'right_list_on' : 'right_list_def';</php>
+        <div class="right_list_def"><div><a href="{:U('home/Public/document',array('id'=>$vo['document_id']))}">{$vo.title}</a></div></div>
+		</volist>
+  </div>
+  </div>
+  <div class="main mainhbzm"> <!-- 右侧内容 begin  -->
+    <div class="overflowB">
+      <div class="mainbox_C no_r">
+
+	<div class="mainbox_C_C" style="padding-top:20px;">
+	<div class="feedBox">
+	      
+
+		<div class="tutor" onmouseover="this.className='tutor hover'" onmouseout="this.className='tutor'"><a style="text-decoration: none;" href="javascript:void(function(d,a,c,b){a[c]&&typeof a[c].showValidImages=='function'?a[c].showValidImages():(siteDomain='localhost',b=a.createElement('script'),b.id='huaban_script',b.setAttribute('charset','gb2312'),b.src='http://zhimei.okhaoa.com/pinpick.js?'+Math.floor(+new Date/1E7),a.body.appendChild(b))}(window,document,'__36hua'));" 
+		<php>if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE")){ </php>
+		class="iebutton">采集到{$ts['site']['site_name']}</a>← 右键点击链接，选择"添加到收藏夹"
+		
+		 <php>}</php>
+		 <php>if(strpos($_SERVER["HTTP_USER_AGENT"],"Firefox")){ </php>   
+		class="longbutton concern"> 采集到{$ts['site']['site_name']}<span class="drag-arrow"></span></a>← 把这个按钮拖到你的浏览器书签栏  
+		 <php>}</php>
+		 
+		 <php>if(strpos($_SERVER["HTTP_USER_AGENT"],"Chrome")){ </php>  
+		class="longbutton concern"> 采集到{$ts['site']['site_name']}<span class="drag-arrow"></span></a>← 把这个按钮拖到你的浏览器书签栏
+		  <php>}</php>
+		</div>
+		
+		
+		<php>if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE")){ </php>
+	    <div style="margin-top:40px;">
+		<div class="pb10" style="font-size:14px;border-bottom:1px dotted #ccc;">PS：当你浏览网页的时候，点击“采集到{$ts['site']['site_name']}”工具将网页上面的图片保存到{$ts['site']['site_name']}。</div>
+	      <div class="inner pt10">
+		          <h3>问：我的浏览器找不到收藏夹栏，怎么办？</h3>
+		          <p>答：打开菜单“查看-工具栏”，勾选“收藏夹栏”</p>
+		          <img src="__THEME__/images/guide_tab2_01.jpg" height="280px" />
+		          <h3 class="pt10">问：我是IE用户，我明明已经收藏成功，但我的收藏栏里没有“采集到{$ts['site']['site_name']}”</h3>
+		          <p>答：请在保存书签时，保存到<img src="__THEME__/images/textimg_01.jpg" />而不是<img src="__THEME__/images/textimg_01-05.jpg" /></p>
+		          <img src="__THEME__/images/guide_st2_tab3_001.jpg" height="240px" /></div>
+	      </div>
+	    <php>}</php>
+		
+	<php>if(strpos($_SERVER["HTTP_USER_AGENT"],"Firefox")){ </php>      
+	
+	
+	    <div style="margin-top:30px;">
+		<div class="pb10" style="font-size:14px;border-bottom:1px dotted #ccc;">PS：当你浏览网页的时候，点击“采集到{$ts['site']['site_name']}”工具将网页上面的图片保存到{$ts['site']['site_name']}。</div>
+	      <div class="inner pt10">
+	        <h3>问：我的浏览器找不到书签栏，怎么办？</h3>
+	        <p>答：打开菜单“查看-工具栏”，勾选“书签工具栏”</p>
+	        <img src="__THEME__/images/guide_tab2_04.jpg" height="280px" /></div>
+	      </div>
+	    <php>}</php> 
+		
+		
+		
+		
+		 <php>if(strpos($_SERVER["HTTP_USER_AGENT"],"Chrome")){ </php>  
+
+		
+		<div style="font-size:18px;">没有找到书签栏？试试Ctrl + Shift + B</div>
+	    <div style="margin-top:30px;">
+		<div class="pb10" style="font-size:14px;border-bottom:1px dotted #ccc;">PS：当你浏览网页的时候，点击“采集到{$ts['site']['site_name']}”工具将网页上面的图片保存到{$ts['site']['site_name']}。</div>
+	      <div class="inner pt10">
+		          <h3>问：我的浏览器找不到书签栏，怎么办？</h3>
+		          <p>答：打开菜单“书签”，勾选“显示书签栏”</p>
+		          <img src="__THEME__/images/guide_tab2_05.jpg" height="280px" /></div>
+	      </div>
+	    <php>}</php> 
+		
+		
+		
+	</div>
+	</div>
+	
+	
+    <!-- 切换标签 end  -->
+       </div> 
+		
+    </div>
+	<div class="pb10 "></div>
+	 <div class="overflowH clearfix" style="width:100%">
+	<div class="mainbox_C_C">
+    
+		<div class="feedBox">
+          <div class="setItems">
+            <div class="setFold setUnfold" rel="IE" >
+              <h2>IE浏览器</h2>
+             
+            </div>
+            <div style="display: block;" class="setItemsInfo">
+		   
+		      <div>
+		        <div class="inner pt10">
+		          <h3>问：我的浏览器找不到收藏夹栏，怎么办？</h3>
+		          <p>答：打开菜单“查看-工具栏”，勾选“收藏夹栏”</p>
+		          <img src="__THEME__/images/guide_tab2_01.jpg" height="280px" />
+		          <h3 class="pt10">问：我是IE用户，我明明已经收藏成功，但我的收藏栏里没有“采集到{$ts['site']['site_name']}”</h3>
+		          <p>答：请在保存书签时，保存到<img src="__THEME__/images/textimg_01.jpg" />而不是<img src="__THEME__/images/textimg_01-05.jpg" /></p>
+		          <img src="__THEME__/images/guide_st2_tab3_001.jpg" height="240px" /></div>
+	          </div>
+            </div>
+          </div>   
+          <div class="setItems">
+            <div class="setFold setUnfold" rel="Firefox" >
+              <h2>火狐浏览器 Firefox</h2>
+             
+            </div>
+            <div style="display: block;" class="setItemsInfo">
+		   
+		     <div class="inner pt10">
+	        <h3>问：我的浏览器找不到书签栏，怎么办？</h3>
+	        <p>答：打开菜单“查看-工具栏”，勾选“书签工具栏”</p>
+	        <img src="__THEME__/images/guide_tab2_04.jpg" height="280px" /></div>
+          </div>  
+		  
+		  
+		
+          <div class="setItems pb10">
+            <div class="setFold setUnfold" rel="Google" >
+              <h2>谷歌浏览器 Google Chrome</h2>
+             
+            </div>
+            <div style="display: block;" class="setItemsInfo">
+		   
+		      <div>
+		        <div class="inner pt10">
+		          <h3>问：我的浏览器找不到书签栏，怎么办？</h3>
+		          <p>答：打开菜单“书签”，勾选“显示书签栏”</p>
+		          <img src="__THEME__/images/guide_tab2_05.jpg" height="280px" /></div>
+	          </div>
+          </div>  
+		  
+		  
+	      </div>
+		  </div>
+  </div>
+  </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" />
+
+<script>
+	$(document).ready(function(){
+		var hs = document.location.hash;
+		var up_pic_width =50;
+		var up_pic_height =50;
+		
+		changeModel( hs.replace('#','') );
+		$('.setFold').click(function(){
+			if( $(this).attr('class')=='setFold' ){
+				changeModel( $(this).attr('rel') );
+			}else{
+				$(this).removeClass('setUnfold');
+				$(this).next('.setItemsInfo').hide();
+			}
+			location.href='#'+$(this).attr('rel');
+		})
+		
+		//监听 form 表单提交
+	  
+	
+	});
+	
+	
+
+	
+	//切换操作模块
+	function changeModel( type ){
+		var t = type || 'base';
+		$('.setFold').removeClass('setUnfold');
+		$('.setItemsInfo').hide();
+		var handle = $('div[rel="'+t+'"]');
+		handle.addClass('setUnfold');
+		handle.next('.setItemsInfo').show();
+	}
+	
+	
+</script> 
+

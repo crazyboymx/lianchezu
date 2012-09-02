@@ -1,0 +1,85 @@
+  <form method="post" action="{:Addons::adminUrl('saveVerifiedjigou')}" onsubmit="return jiance()">
+  <div class="form2">
+    <dl class="lineD">
+      <dt>用户ID：<span class="cRed pr5">*</span></dt>
+      <dd>
+        <input name="uid" type="text" value=""  onkeyup="isUID=0"> <input type="button" onclick="jianceuname($('input[name=\'uid\']').val())" value="检测" />
+		<p><span  id="jianceuname" style="display:none;">正在检测用户名，请稍后...</span><span id="uname" style="color:#FF0000"></span></p>
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>团体名称：</dt>
+      <dd>
+        <input name="name"  type="text" value=""  disabled="disabled">
+    </dl>
+    <dl class="lineD">
+      <dt>负责人：</dt>
+      <dd>
+        <input name="fuzeren"  type="text" value=""  disabled="disabled">
+    </dl>
+    <dl class="lineD">
+      <dt>联系方式：</dt>
+      <dd>
+        <input name="lianxifangshi"  type="text" value=""  disabled="disabled">
+    </dl>
+    <dl class="lineD">
+      <dt>简介：</dt>
+      <dd>
+       <textarea name="jieshao" id="jieshao" cols="50" rows="5"  disabled="disabled"></textarea>
+	   <p>已过滤HTML代码，url地址将会被自动解析</p>
+    </dl>
+
+    
+	
+    <div class="page_btm">
+      
+     
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+  </div>
+  </form>
+<script>
+var isUID=0;
+
+function jiance(){
+if(isUID==0){
+ alert('请输入UID提交后激活填写项目后才可提交');
+ return false;
+}else{
+var n=$('input[name=\'name\']').val();
+var f=$('input[name=\'fuzeren\']').val();
+var l=$('input[name=\'lianxifangshi\']').val();
+var j=$('#jieshao').val();
+ if(n=='' || f=='' || l=='' || j==''){
+   alert('请输入相应的内容');
+ return false;
+ }else{
+ return true;
+ }
+ }
+}
+function jianceuname(uid){
+ if(uid==''){
+  alert('请输入检测的UID') ;
+
+ }else{
+ $('#jianceuname').show();
+ $.post("{:Addons::createAddonUrl('CopVerified', 'jianceuname')}", {uid:uid},function(txt){
+  txt = eval('('+txt+')');
+  if(txt.uid){
+     $('#jianceuname').html('需要认证的会员为：');
+	 $('#uname').html(txt.uname);
+	 $('input[name=\'name\'],input[name=\'fuzeren\'],input[name=\'lianxifangshi\'],#jieshao').attr('disabled','');
+     isUID=1;
+     
+	 
+  }else{
+     $('#jianceuname').html('没有找到此会员');
+	 $('#uname').html('');
+	 $('input[name=\'name\'],input[name=\'fuzeren\'],input[name=\'lianxifangshi\'],#jieshao').attr('disabled','disabled');
+  }
+ })
+ }
+}
+</script>

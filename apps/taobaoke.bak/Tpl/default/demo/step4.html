@@ -1,0 +1,114 @@
+<include file="__THEME__/header" />
+
+
+<!--日期-->
+<script  type="text/javascript" src="../Pulbic/js/rcalendar.js" ></script>
+<!--表单验证-->
+<script type="text/javascript" src="../Public/js/jquery.validator.reg.js"></script>
+<script type="text/javascript" src="../Public/js/jquery.corners.min.js"></script>
+<link href="__PUBLIC__/js/form_check/type.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="../Public/js/register.js" ></script>
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l">
+    <div class="mainbox">
+    <div class="mainbox_R">
+    	<div class="reg_process">
+        <div class="reg_process_on">1.填写基本信息</div>
+        <div class="reg_process_def">2.看看推荐的人</div>
+        <div class="reg_process_def">3.完成，进入我的首页</div>
+        </div>
+    </div>
+    <div class="mainbox_C">
+    <div class="reg_box">
+        <h2 class="cBlue"><strong>01.完善个人资料、开始微博交流</strong></h2>
+        <p class="cGray lineS_btm lh20" style="padding: 5px 10px 30px;"><span class="cRed">ajie.1017，你已成功注册。</span><br />
+
+完善以下基本信息，我们就能帮你开通微博了。</p>
+        <form action="{:U('home/Public/doRegister')}" method="post" id="regform" name="reg">
+			<php>if(!empty($invite)) {</php>
+            <input type="hidden" name="validationid" value="{$invite['validationid']}">
+            <input type="hidden" name="validationcode" value="{$invite['code']}">
+			<php>}</php>
+          
+            <ul class="form_list">
+                <li class="form_li">
+                    <div class="left alR" style="width:85px;">昵称：</div>
+                    <div class="left" style="width:260px;">
+                      <input type="text" class="text35" style="width:250px;" value="{$invite['touser']}" name="email" require="true" datatype="email|ajax" url="{:U('home/Public/isEmailAvailable')}" />
+                    </div>
+                    <div class="left" style="width:420px;">
+                        <span class="cGray2">不喜欢了可在"设置"中修改</span>
+                    </div>
+                   
+                </li>
+                <li class="form_li">
+                    <div class="left alR" style="width:85px;">所在地：</div>
+                    <div class="left" style="width:260px;">
+                      <input type="password" class="text35" style="width:250px;" name="password" id="password" require="true" value="" datatype="limit"  min="6" max="16" msg="密码由6-16个英文字母、数字或特殊字符组成"/>
+                    </div>
+                    <div class="left" style="width:420px;">
+                        <span class="cGray2">写明所在地,帮你挖到离你最近的博友</span>
+                    </div>
+                </li>
+                <li class="form_li">
+                    <div class="left alR" style="width:85px;">性别：</div>
+                    <div class="left" style="width:260px;">
+                        <label><input name="sex" type="radio" value="1"  require="true" datatype="group" min="1" max="1" msgid="fav" /> 男</label> &nbsp;&nbsp;&nbsp;
+                        <label><input name="sex" type="radio" value="0" require="true" datatype="group" min="1" max="1" msgid="fav"/> 女</label>
+                    </div>
+                    <div class="left" style="width:420px;">
+                    </div>
+                </li>	
+
+                <li class="form_li">
+                    <div class="left alR" style="width:85px;">职务：</div>
+                    <div class="left" style="width:260px;">
+                        <input type="text" class="text35" style="width:250px;" name="position" id="position" require="true"  datatype="limit"  min="1" max="30" msg="请输入您的职务!"/>
+                    </div>
+                    <div class="left" style="width:420px;">
+                        <span class="ico_cue_no"></span><span class="cGray2">请填写内容！！！</span>
+                    </div>
+                </li>
+				
+                <li class="form_li"><div class="left alR" style="width:85px;">部门：</div>
+                    <div class="left" style="width:84%">{:W('SelectDepartment')}</div>
+                </li>		 
+            	<eq name="register_verify_on" value="1">
+                <li class="form_li">
+                    <div class="left alR" style="width:85px;">验证码：</div>
+                    <div class="left" style="width:260px;">
+                        <input type="text" class="text35"  style="width: 60px; margin-right:5px; float:left;" name="verify" require="true" datatype="require|ajax" url="__URL__/checkVerify" msg="验证码不能为空|验证码输入有误，请重输！"/>
+                        <div class="left">
+                            <img src="__URL__/verify" id="verifyimg"/><a href="javascript:void(0);" onclick="changeverify()"><br />看不清 换一张</a>
+                        </div>
+
+                    </div>
+                    <div class="left" style="width:420px;">
+                        <div id="success_verify"  style="display:none;">
+                            <span><img src="../Public/images/fzcg_dh[1].gif" /></span>
+                        </div>
+                        <div class="r error_verify" style="position: relative;display:none;">
+                            <div>
+                                <span><img src="../Public/images/th_ju[1].gif" /></span>
+                                <div class="clue"><p id="error_verify"></p><span class="clue_btm"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                </eq>
+                
+                <li class="form_li">
+                <div class="left alR" style="width:85px;">&nbsp;</div><div class="left" style="width:260px;">
+                    <a href="javascript:void(0)" onclick="$('#regform').submit()" class="btn_reg"><strong>创建帐号</strong></a></div>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <div class="c"></div>
+    </div>
+    </div>
+  <div class="clear"></div>
+</div>
+</div>
+<include file="__THEME__/footer" />

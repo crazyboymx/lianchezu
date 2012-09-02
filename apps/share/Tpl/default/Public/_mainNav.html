@@ -1,0 +1,14 @@
+    <div class="page_tit" style="width:960px;">
+     <ul>
+      <li><a href="{:U('share/Index/find')}" >单页探索</a></li>
+      <li><a href="{:U('share/Index/someOne')}" >我的专辑</a></li>
+      <li><a href="{:U('share/Index/friend')}" >好友专辑</a></li>
+      <li><a href="{:U('share/Index/index')}" >发现专辑</a></li>
+     </ul>
+     <php> if($mid==$shareinfo['uid']){ </php>
+     <dd><a href="{:U('share/Index/addPict',array('gid'=>$_GET['gid']))}" >发行新专辑单页</a></dd>
+     <php>}else{</php>
+     <dd><a href="{:U('share/Index/add')}" >创建专辑</a></dd>
+     <php>}</php>
+    </div>
+    <div class="clear"></div>

@@ -1,0 +1,11 @@
+<link rel="stylesheet" href="../Public/blog.css" type="text/css" media="screen" charset="utf-8" />
+<script src="../Public/shop.js" type="text/javascript" language="javascript"></script>
+
+<div class=page_tit>
+    <h2><img src="{$ts['app']['icon_url']}" />{$ts['app']['app_alias']}</h2>
+    <ul class="tit_tab">
+        <li><a href="{:U('shop/Index/index')}" <eq name="_header_tab_on_my" value="0">class="on"</eq>>商城首页</a></li>
+        <li><a href="{:U('shop/My/index')}" <eq name="_header_tab_on_my" value="1">class="on"</eq>>我的兑换</a></li>
+    </ul>
+    <div class="c"></div>
+</div>

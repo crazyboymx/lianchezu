@@ -1,0 +1,19 @@
+        <volist name="inlove.data" id="vo">
+          <li id="inlove_{$vo.inlove_id}" class="<php>if($vo['from_uid'] == $mid){</php>my_reply<php>} else {</php>reply<php>}</php>">
+            <div class="arr_left"></div><neq name="acname" value="tomy"> <div class="userPic"><space uid="vo.from_uid" target="_blank">{uavatar=m}</space></div><else />
+            <div class="userPic" <php>if($vo['from_uid'] == $mid){</php> style="display:none" <php>}</php>><eq name="acname" value="tomy"><img src="../Public/icon/inlove2.png" /></eq></div>
+            <div class="userPic" <php>if($vo['from_uid'] != $mid){</php> style="display:none" <php>}</php>><space uid="vo.from_uid" target="_blank">{uavatar=m}</space></div></neq>
+            <div class="feed_massage">
+                <div class="msgCnt" style="padding-bottom:0;">
+                    <!--文涛修改-->
+                    <if condition="$vo['from_uid'] eq $mid">
+                    	我:
+                    <else /><eq name="acname" value="tomy">TA:<else />
+                    	<space uid="vo.from_uid" class="fn" target="_blank">{uname}:</space></eq>
+                    </if>
+                    <span>{$vo.content|formatComment=###,true}</span>
+                    <div class="line_massage"><em class="date">{$vo.mtime|date="Y-m-d H:i:s",###}</em></div>
+                </div>
+            </div>
+           </li>
+         </volist>

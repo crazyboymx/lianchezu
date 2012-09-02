@@ -1,0 +1,262 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/js/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.masonry.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.infinitescroll.js"></script>
+<script type="text/javascript" src="{:U('weibo/Plugins/init')}"></script>
+<style type="text/css">
+<!--
+.item {
+  width: 222px;
+  float: left;
+  margin:auto;
+
+}
+
+
+-->
+</style>
+
+
+
+
+
+<script type="text/javascript">
+$(function(){
+         var speed = 1000;
+         $("#container").masonry({
+            singleMode: true,
+            columnWidth: 233,
+            itemSelector: '.item',
+            animate: false,
+            animationOptions: {
+                duration: speed,
+                queue: false
+            }
+		
+        });
+        $("#container").infinitescroll({
+            navSelector : '#page_nav', // selector for the paged navigation
+            nextSelector : '#page_nav a', // selector for the NEXT link (to page 2)
+            itemSelector : '.item', // selector for all items you'll retrieve
+            loadingImg : '__THEME__/images/loader.gif',
+            donetext : '已经到最后一页了',
+            debug: false,
+            errorCallback: function() {
+            // fade out the error message after 2 seconds
+            $('#infscr-loading').animate({opacity: .8},2000).fadeOut('normal');
+            }},
+            // call masonry as a callback.
+            function( newElements ) { $(this).masonry({ appendedContent: $(newElements) }); }
+        );
+
+		$('#boardIntroFilters a').click(function(){
+            var colorClass = '.' + $(this).attr('class');
+
+            if(colorClass=='.all') {
+                // show all hidden boxes
+                $("#container").children('.invis')
+                .toggleClass('invis').fadeIn(speed);
+            } else {
+                // hide visible boxes
+                $("#container").children().not(colorClass).not('.invis')
+                .toggleClass('invis').fadeOut(speed);
+                // show hidden boxes
+                $("#container").children(colorClass+'.invis')
+                .toggleClass('invis').fadeIn(speed);
+            }
+           $("#container").masonry();
+
+
+            return false;
+        });
+        $(".sd_Comment").click(function( event ){
+            //alert("qqq");
+            $(this).parents(".pin").find(".pinComments").append('fhafkjdsahfdsajfkdsahfsd <br /> alkdsafdka ');
+
+            $("#container").masonry();
+            event.preventDefault();
+        });
+         $(".sd_Comment1").click(function( event ){
+            //alert("qqq");
+            $(this).parents(".pin").find(".pinComments").append('fhafkjdsahfdsajfkdsahfsd <br /> alkdsafdka ');
+
+            
+            event.preventDefault();
+        });
+		
+     });
+	 
+</script>
+
+
+<php>if($mid==-1){</php>
+<!-- 快速注册 -->
+<div class="quick_reg mt10">
+<div class="reg_box">
+	<h2 class="cBlue"><span class="right">已有账号？<a href="###">马上登录</a></span><strong>赶快注册XX微博,和我一起随时随地分享生活的新鲜资讯吧!</strong></h2>
+    <ul style=" width:380px;" class="form_list">
+    	<li class="form_li"><div class="left alR" style="width:85px;">电子邮箱：</div><div class="left" style="width:260px;"><input type="text" class="text" style="width:250px;" name="email" require="true"  /></div></li>
+        <li class="form_li"><div class="left alR" style="width:85px;">&nbsp;</div><div class="left" ><a href="###" class="btn_reg"><strong>快速创建我的微博</strong></a></div></li>
+    </ul>
+    <div class="clew_bg left" style="width:605px;">
+    <div class="clew_bg_arrow_l"></div>
+    	<div class="clew_bg_top"><div></div></div>
+        <div class="clew_bg_con" style="height:70px;">为什么要注册、登录？<br />
+XX微博为每一位用户提供不同的服务，登录才能记住你的喜好。</div>
+        <div class="clew_bg_btm"><div></div></div>
+    </div>
+    <div class="c"></div>
+    </div>
+</div>
+<div class="quick_reg mt10">
+<div class="reg_box">
+	<h2 class="cBlue"><span class="right cG">已有账号？<a href="###">马上登录</a></span><strong>赶快注册XX微博,和我一起随时随地分享生活的新鲜资讯吧!</strong></h2>
+    <ul class="form_list">
+    	<li class="form_li"><div class="left alR" style="width:85px;">电子邮箱：</div><div class="left" style="width:260px;"><input type="text" class="text" style="width:250px;" name="email" require="true"  /></div><div class="left"><span class="ico_cue_ok">&nbsp;</span></div></li>
+        <li class="form_li"><div class="left alR" style="width:85px;">电子邮箱：</div><div class="left" style="width:260px;"><input type="password" class="text" style="width:250px;" name="password" id="password" require="true" value="" datatype="limit"  min="6" max="16" /></div><div class="left"><span  class="ico_cue_no"></span>邮箱格式不对</div></li>
+        <li class="form_li"><div class="left alR" style="width:85px;">电子邮箱：</div><div class="left" style="width:260px;"><input type="password" class="text" style="width:250px;" name="repassword" require="true" value="" datatype="repeat|limit"  min="6" max="16" to="password" />
+                    </div><div class="left"><span></span>邮箱格式不对</div></li>
+        <li class="form_li"><div class="left alR" style="width:85px;">验证码：</div><div class="left" style="width:100px;"><input type="text" class="text" style="width:90px;" name="email" require="true"  /></div><div class="left"><span></span>12341</div></li>
+        <li><div class="left alR" style="width:85px;">&nbsp;</div><div class="left" ><a href="###" class="btn_reg"><strong>快速创建我的微博</strong></a></div></li>
+    </ul>
+    <div class="c"></div>
+</div>
+</div>
+<php>}</php>
+<include file="../Public/top_reg" />
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l wrap">
+    <div class="mainbox">
+      <div class="mainbox_R">
+	      <include file="../Space/space_right" />
+		  <div class="ifans">
+		  <div class="labelbox clearfix pb10">
+<h3 class="title">
+<span class="label"><gt name="mid" value="0">
+				   <php>if($mid!=$uid && $mid!=0){</php>TA<php>}else{</php>我<php>}</php><else/>
+				   TA</gt>关注的人</span> <span class="number">(<em class="blue">{$spaceCount.following|intval}</em>)
+</span>
+</h3>
+<ul class="bp">
+ <volist id="vo" name="following.data">
+		 <li>
+		 <a href="{:U('home/Space/index',array('uid'=>$vo['fid']))}" title="{$vo['fid']|getUserName}"><img src="{$vo.fid|getUserface=s}" /></a>	 
+		 </li>
+</volist>
+
+</ul>
+</div>
+
+
+		  <div class="labelbox clear pb10">
+<h3 class="title">
+<span class="label"><gt name="mid" value="0">
+				   <php>if($mid!=$uid && $mid!=0){</php>TA<php>}else{</php>我<php>}</php><else/>
+				   TA</gt>的粉丝</span> <span class="number">(<em class="blue">{$spaceCount.follower|intval}</em>)
+</span>
+</h3>
+<ul class="bp ">
+<volist id="vo" name="follower.data">
+		 <li>
+		 <a href="{:U('home/Space/index',array('uid'=>$vo['fid']))}" title="{$vo['fid']|getUserName}"><img src="{$vo.fid|getUserface=s}" /></a> 
+		  </li>
+</volist>
+
+</ul>
+</div>
+
+ {:W('Visitor', array('id'=>$uid, 'title'=>'这些人也刚刚来过...'))}   
+
+</div>
+      </div>
+      <div class="mainbox_C lh180">
+        
+		<div class="sheet cf">
+				<div class="floatright h_left">
+				
+				<span>
+				
+				
+				{$uid|getBcuidCount}个图格
+				
+				
+				</span>
+				<span class="dot"></span>
+				<span>
+				
+				
+				<a class="blue" href="{:U('home/Space/share',array('uid'=>$uid))}"> {$spaceCount.miniblog|intval}个分享</a>
+				
+				
+				</span>
+				<span class="dot"></span>
+				<span class="like">
+				<php>$fav_num = getfavnum($uid)</php>
+				<?php $faved=M('fav')->where('favuid='.$uid.'')->count();?>
+				<a class="blue" href="{:U('home/Space/share',array('uid'=>$uid,'type'=>'fav'))}">{$fav_num}个喜欢</a>
+				
+				</span>
+								
+				</div>
+				
+				<span id="fix-string05" class="sheetname marginleft">{$uid|getUserName}</span>
+				</div>
+		
+		
+<!--      <div class="tab-menu">
+        <ul>
+          <volist name="space_menu" id="vo">
+          	<li><a id="feed_colleague_item" rel="colleague" class="<if condition="$type eq $key">on</if> feed_item" href="{:U('home/Space/index', array('uid'=>$uid, 'type'=>$key))}"><span>{$vo}</span></a></li>
+          </volist>
+        </ul>
+      </div>
+                -->
+			<div class="myboard" id="container">	
+			<volist id="vo" name="data">	
+			<div class="item">
+				<div class="mbox mt15" onmouseover="this.className='mbox mt15 hover'" onmouseout="this.className='mbox mt15'" ><div class="followlist"><h3 class="mboxTitle"><span class="number floatright">共{$vo.bc_id|getCcCount}张</span><span class="t" title="{$vo.title}">{$vo.title|getShort=###, 10, '...'}</span></h3><div class="list">
+				<a href="{:U('home/Space/board',array('uid'=>$uid, 'bc_id'=>$vo['bc_id']))}">
+				<php>if(getCcCount($vo['bc_id']) == 0 ){</php>
+				<img src="__THEME__/images/board_thumb.jpg">
+				<php>}else{</php>
+				{$vo.bc_id|getCcpic}
+				<php>}</php>
+				</a></div>
+				<div class="follow">
+				<session name="userInfo">
+					<php>if( $vo['uid'] == $mid ){</php><a class="longbutton concern" href="javascript:void(0);" onclick="setBcTab('{$vo.bc_id}')">编辑</a>
+				<php>} else {
+						if(guangzhuisno($vo['bc_id'])=='1'){</php>
+						<a w="t" href="javascript:void(0)" onclick="ui.fengmianok(this,'1','{$vo.fengcount}','{$vo.bc_id}','{$mid}','{$vo.uid|getUserFace}')" callback="weibo.deletfengmian('{$vo.bc_id}')" id="fengmianloe_{$vo.bc_id}" class="longbutton unconcern">已关注(<span class="fengcount" id="fengmian_{$vo.bc_id}">{$vo.fengcount}</span>)</a></span>
+						
+						<php>}else{</php>
+						<a w="t" href="javascript:void(0)" onclick="ui.fengmianok(this,'1','{$vo.fengcount}','{$vo.bc_id}','{$mid}','{$vo.uid|getUserFace}')" callback="weibo.deletfengmian('{$vo.bc_id}')" id="fengmianloe_{$vo.bc_id}" class="longbutton concern">关注(<span class="fengcount" id="fengmian_{$vo.bc_id}">{$vo.fengcount}</span>)</a></span>
+						
+						<php>}</php>
+						<span class="tou" id="fengmianicon_{$vo.bc_id}"></span>
+				<php>}</php>
+				<else/>
+				<a href="{:U('home/Public/login')}" class="longbutton concern">关注({$vo.fengcount})</a>
+				</session>
+				</div>
+				</div>
+				</div>
+				
+			</div>
+           </volist>     
+        
+           </div> 
+        <div class="seemore">
+         <div class="page" id="page_nav">{$html}</div>
+		 </div>
+        
+                
+      
+      <div class="c"></div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" /> 

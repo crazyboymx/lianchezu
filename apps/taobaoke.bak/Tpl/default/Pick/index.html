@@ -1,0 +1,214 @@
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript">
+<!--
+$(function(){
+	var cityChosen = getCookie('citychosen');
+	if(cityChosen!=null && cityChosen!=''){
+		var chosen = $('#bc_id option[value="'+cityChosen+'"]');
+		chosen.attr('selected',true);
+		//$("#output").removeClass().addClass(cityChosen).html("你上次选择了<br />" + chosen.text());
+	}
+	$("#bc_id").change(function(){
+		var selected = $("#bc_id option:selected");		
+		var output = "";
+		if(selected.val() != 0){
+			setCookie('citychosen',selected.val(),365);
+			//output = "你这次选择了<br />" + selected.text();
+		}
+		//$("#output").removeClass().addClass(selected.val()).html(output);
+	});
+});
+//以下是用来处理Cookies的函数
+function setCookie(name,value,days) {
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		var expires = "; expires="+date.toGMTString();
+	}
+	else var expires = "";
+	document.cookie = name+"="+value+expires+"; path=/";
+}
+function getCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+function dropCookie(name) {
+	createCookie(name,"",-1);
+}
+
+//-->
+</script>
+<link href="__THEME__/pick.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+<!--
+#pin_operations a {margin: 0px;}
+-->
+</style>
+<php>
+
+$from_data = get_domain($url);
+$from_me = get_domain('http://zhimei.okhaoa.com');//修改为你的域名
+if($from_data==$from_me){
+</php>
+<div class="form"><div class="pin-done"><h3>你就在{$ts['site']['site_name']}本站呢？不能采集本站图片。</h3><div id="pin_operations">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="close_window" href="javascript:;" onclick="close_wind();">关闭窗口</a></div></div></div>
+<php>}else{</php>
+<div id="view">
+
+
+<div class="form" id="caijiok" style="display:none">
+
+
+<div class="pin-done"><h3>你已经成功采集到{$ts['site']['site_name']}中</h3><div id="pin_operations"><a id="view_pin" href="" target="_blank" >查看这条分享</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="close_window" href="javascript:;" onclick="close_wind();">关闭窗口</a>
+<div style="margin:auto;width:230px; padding-top:20px;padding-bottom:10px;">
+	<div style="float:left;padding-top:10px;font-size:18px">分享到：</div>
+    <div style="float:left;" id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare" data="{'url':'http://zhimei.okhaoa.com'}">
+        <a class="bds_qzone"></a>
+        <a class="bds_tsina"></a>
+        <a class="bds_tqq"></a>
+        <a class="bds_renren"></a>
+    </div>
+<script type="text/javascript" id="bdshare_js" data="type=tools" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+	var bds_config = {
+		'bdText':'{$title}(分享自@{$ts['site']['site_name']}),美图来自',
+		'bdPic':"{$img}",
+		'searchPic':'0',
+		'render':true,	
+		'review':'normal',
+		'snsKey':{'tsina':'<php> echo $sina_wb_akey;</php>','qzone':'212818','tqq':'<php> echo $qq_key;</php>','douban':'<php> echo $douban_key;</php>','renren':'172300'}//qzone和renren修改为你的appkey
+	}
+	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+</script>
+<!-- Baidu Button END -->
+
+</div>
+<div class="clear"></div>
+<p class="gray aligncenter pt10">(<span id="second">3</span>秒后自动关闭)</p></div></div></div>
+
+
+<div class="form" id="caijiok2" style="display:none">
+
+
+<div class="pin-done"><h3>图片上传失败！</h3><div id="pin_operations"><a id="close_window" href="javascript:;" onclick="close_wind();">关闭窗口</a><p class="gray aligncenter pt10">(<span id="second">3</span>秒后自动关闭)</p></div></div></div>
+
+<div id="bookmarklet" style="width: 550px; height: 190px; margin: 40px auto;padding-left:20px;"><div class="form"><div style="display: block; " class="pbt"><div class="ImagePicker"><img src="/img/load2.gif" alt="Loading Indicator" class="load" style="display: none; "><div class="Images pin carousel-container"><div class="carousel-clip"><ul class="carousel-list" style="width: 170px; left: 0px; "><li class="carousel-item"><img src="{$img}" width="170"></li></ul></div></div><div class="Arrows"><a href="#" class="imagePickerNext picker">下一张&nbsp;→<span class="imagePickerNextArrow"></span></a><a href="#" class="imagePickerPrevious picker">←&nbsp;上一张<span class="imagePickerPreviousArrow"></span></a></div></div><div class="pin-form"><div class="BoardListOverlay"></div>
+
+<div style="padding:0 0 10px 0">
+
+          <select name="bc_id" id="bc_id" style="width:122px;font-size:14px;">
+              
+              <option value="0" selected="selected">请选择分类</option>
+              <volist name="bcdisplay"  id="bcd">
+                 
+                  <option value="{$bcd.bc_id}"  <if condition="$bcd.bc_id eq $data['bc_id']">selected="selected"</if>>{$bcd.title}</option>
+                      
+                      
+              </volist> 
+              
+               
+		</select> <input type="text" name="bcTitle"  value="添加新图格" class="text" style="width:120px; color:#888;padding:3px;font-size:14px;" onfocus="if(value=='添加新图格') {value=''}" onblur="if (value=='') {value='添加新图格'}"/>
+
+        <input type="button" onclick="createBc()"  class="btn_b" value="创建" style="padding:2px 5px;font-size:14px"/></h2>
+
+</div>
+
+<div class="InputArea"><ul class="Form FancyForm"><li class="nmb"><textarea rows="4" name="caption"  class="Descriptionurl" style="display:none;">{$url}</textarea><textarea rows="4" name="caption"  class="DescriptionTextarea">{$title}</textarea><label style="display: none; ">描述一下这个采集…</label><span class="fff"></span></li></ul></div><div class="CreateBoardStatus error mainerror"></div><div class="Buttons"><a href="#" onclick="return false;" class="btn btn18 rbtn" id="btnxx"><strong onclick="caixialai(this)" id="btn_txt"> 采下来</strong><span></span></a></div></div></div></div></div>
+
+</div>
+
+
+
+<php>}</php>
+
+
+
+<script>
+function caixialai(obj){
+var bc_id = $("select[name='bc_id']").val();
+   if(bc_id == 0){
+		alert( '请选择图格或创建一个图格！' );
+		return false;
+   }
+   var img="{$img}";
+ $('#btnxx').addClass('disabled');  
+$('#btn_txt').html('采集中..');
+var content=$('.DescriptionTextarea').val();
+var from_data=$('.Descriptionurl').val();
+$.post('index.php?app=weibo&mod=Pick&act=star',{img:img,from_data:from_data,bc_id:bc_id,content:content},function(res){
+
+   if(res != 0){
+   $('#caijiok').show();
+   $('#bookmarklet').remove();
+  
+   $('#view_pin').attr('href','index.php?app=home&mod=Space&act=detail&id='+res);
+   setTimeout(function(){window.close()} , 3000);
+   }else{
+				$('.pbt').remove();
+				$('#caijiok2').show();
+				setTimeout(function(){window.close()} , 3000);
+				
+			}	
+
+
+
+})
+}
+function close_wind(){
+window.close();
+}
+
+
+function createBc(title){
+	var title = $("input[name='bcTitle']").val();
+         
+         if(title == ''){
+		//ui.error('请输入图格标题！');
+		alert( '请输入图格标题！' );
+		return false;
+	}else if(title.length>20){
+		//ui.error('图格标题不能超过20个汉字');
+		alert( '图格标题不能超过20个汉字' );
+		return false; 
+	}
+ 	var uid = '{$mid}';
+		$.post('index.php?app=weibo&mod=Bc&act=setBc',{uid:uid,title:title},function(gid){
+			if(gid != 0){
+                           
+				// var url =   U('home/User/index'); 
+                                //location.href=url;
+				//ui.success('新建成功');
+                                
+                                var mySelect = document.getElementById("bc_id");  
+                                //通过new Option(value,text)函数
+                                var opp = new Option(title,gid); 
+                                    opp.name = "option1"; 
+                                    opp.selected = "ture";
+                                    //将option添加到select标签里面 
+                                    mySelect.add(opp); 
+                                
+                             
+                            // $("#bc_id").html ('<option value="'+gid+'" selected>'+title+'</option>');    
+                                
+				//ui.box.close();
+			}else{
+				//ui.error('此图格已存在');
+				alert( '此图格已存在' );
+			}	
+	 });	
+}
+</script>
+
+
+
+
+
+
+
+

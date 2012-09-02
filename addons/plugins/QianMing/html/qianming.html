@@ -1,0 +1,98 @@
+
+<div id="editableDiv" <php>if( $oky == 1){</php>  onclick="editableObj.attach(this,'editableDiv')" <php> }</php>>
+    <?php if(!$qianming){ echo "写个签名吧！"; }else{ echo $qianming; }?></div>
+
+
+<script type="text/javascript">
+ 
+<!--
+var editableObj={
+    attach:function(obj,id){
+          var url="{:Addons::createAddonUrl('QianMing','qianmingsave')}";
+        var tag = obj.firstChild.tagName;
+        if (typeof(tag) != "undefined" && (tag == "INPUT" || tag == "TEXTAREA")){
+            return;
+        }
+
+        var org = obj.innerHTML;
+        var orglen = org.replace(/[^\x00-\xff]/g,'**').length;
+        // alert(orglen);
+
+        if (obj.offsetHeight <= 22) {
+            // 高度小于22，使用文本框
+            var val = window.ActiveXObject ? obj.innerText : obj.textContent;
+
+            // 创建一个文本框
+            var textBox = document.createElement("INPUT");
+            textBox.value = val;
+            textBox.style.background = "#FFC";
+            textBox.style.width = obj.offsetWidth + "px" ;
+
+            // 清空原有内容并将文本框加入到div中
+            obj.innerHTML = "";
+            obj.appendChild(textBox);
+
+            textBox.focus();
+            textBox.onblur = function(e){
+                obj.innerHTML = textBox.value;
+                
+                var qm =obj.innerHTML;
+                // 这里可以向后台发出Ajax请求
+                 
+    
+            $.post(url,{qianming:qm},function(txt){
+            if(txt == 1){
+             
+                ui.success('修改成功');
+              }  
+               });
+               
+               
+              
+                
+                
+                return false;
+            }
+
+            return false;
+
+
+        }else{
+            // 高度大于22，使用文本区域
+            var content = obj.innerHTML;
+
+            // 创建文本区域
+            var textArea = document.createElement('TEXTAREA');
+            textArea.style.width = obj.offsetWidth + "px";
+            textArea.style.height = obj.offsetHeight + "px";
+
+            // 清空原有内容并将文本区域加入到div中
+            obj.innerHTML = "";
+            textArea.value = content;
+            obj.appendChild(textArea);
+
+            // 文本区域置焦点并设定焦点移开事件
+            textArea.focus();
+            textArea.onblur = function(e){
+                obj.innerHTML = textArea.value;
+                // 这里可以向后台发出Ajax请求
+                
+            var qm =obj.innerHTML;
+          
+    
+            $.post(url,{qianming:qm},function(txt){
+            if(txt == 1){
+             
+                ui.success('修改成功');
+                     }  
+               });
+                
+                
+                return false;
+            }
+            return false;
+        }
+    }
+};
+//-->
+</script>

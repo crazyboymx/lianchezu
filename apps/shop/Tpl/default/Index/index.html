@@ -1,0 +1,33 @@
+<include file="__THEME__/header" />
+
+<link rel="stylesheet" href="../Public/blog.css" type="text/css" media="screen" charset="utf-8" />
+<link href="__PUBLIC__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../Public/Js/Common.js"></script>
+<div class="content_holder">
+<div class="content no_bg">
+  <include file="../Public/_blog_header" />
+  <div class="main no_l">
+    <div class="mainbox">
+    
+      <include file="../Public/_right" />
+      
+      <div class="mainbox_appC">
+        <include file="../Public/_tab" />
+        <div class="BlogBox">
+        	<ul> 
+            <volist name="res.data" id="g">
+            	<li>
+                	<a href="{:U('shop/Index/info', array('id'=>$g['id']))}"><img src="{$g.pic}" width="150" height="150" /></a><p>{$g.name}</p><p class="score">{$g.price2}</p>
+                </li>
+             </volist>
+            </ul>
+            <div class="page">{$res.html}</div>
+        </div>
+        <div class="c"></div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+</div>
+</div>
+<include file="../Public/_footer" />

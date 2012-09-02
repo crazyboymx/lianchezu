@@ -1,0 +1,140 @@
+<include file="_header" />
+<script>
+//鼠标移动表格效果
+$(document).ready(function(){
+    $("tr[overstyle='on']").hover(
+      function () {
+        $(this).addClass("bg_hover");
+      },
+      function () {
+        $(this).removeClass("bg_hover");
+      }
+    );
+});
+
+$(function(){
+    $( "select[name='sorder']" ).val("{$sorder}");
+    $( "select[name='eorder']" ).val("{$eorder}");
+    $( "select[name='limit']" ).val("{$limit}");
+});
+
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+        if($(n).val()>0)ids.push( $(n).val() );
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+var ctrl = function(name){
+    this.elements = document.getElementsByName('id[]');
+    this.length = this.elements.length;
+}
+ctrl.prototype = {
+    reverse:function(){
+    for(i=0;i<this.length;i++){
+        this.elements[i].checked= !this.elements[i].checked;
+    }
+    },
+all:function(){
+for(i=0;i<this.length;i++){
+  this.elements[i].checked = true;
+}
+},
+unAll:function(){
+  for(i=0;i<this.length;i++){
+    this.elements[i].checked = false;
+  }
+},
+toggle:function(obj){
+   this[obj.checked ? 'all' : 'unAll']();
+ },
+del:function(weibo_id,uid){
+	var weibo_id = weibo_id ? weibo_id : getChecked();
+	weibo_id = weibo_id.toString();
+	if(weibo_id=='' || weibo_id==0) return;
+	if( confirm("是否删除微博") ){
+	  $.post( "{:U('weibo/Admin/operate')}",{dotype:'del',weibo_id:weibo_id,uid:uid},function(text ){
+	      if( text == 1 ){
+			  var id_list = weibo_id.split( ',' );   
+			  for (var j=0 ; j< id_list.length ; j++   ){
+				  $('#weibo_list_'+id_list[j]).remove(); 
+			  }
+	    	  ui.success( "删除成功" );
+	      }else{
+	    	  ui.error( "删除失败" );
+	      }
+	  });
+	}
+}
+}
+
+var c = null;
+</script>
+<div class="so_main"> <include file="_tab" />
+  <div class="Toolbar_inbox">
+    <div class="page right">{$list.html}</div>
+    <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除微博</span></a> </div>
+  <div class="list">
+    <table id="blog_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th style="width:30px;"> <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+          <label for="checkbox"></label>
+        </th>
+        <th class="line_l">ID</th>
+        <th class="line_l">用户ID</th>
+        <th class="line_l">用户名</th>
+        <th class="line_l">内容</th>
+        <th class="line_l">转发数/评论数</th>
+        <th class="line_l">发布时间</th>
+        <th class="line_l">类型</th>
+        <th class="line_l">来自</th>
+        <th class="line_l">操作</th>
+      </tr>
+      <volist id="vo" name="list['data']">
+        <tr overstyle='on' id="weibo_list_{$vo.weibo_id}">
+          <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.weibo_id}"></td>
+          <td><a href="{:U('home/space/detail',array('id'=>$vo['weibo_id']))}" target="_blank">{$vo.weibo_id}</a></td>
+          <td>{$vo.uid} </td>
+          <td><space uid="vo.uid" target="_blank">{uname}</space></td>
+          <td style="width:400px;overflow:hidden">{$vo.content}</td>
+          <td>{$vo.transpond} / {$vo.comment}</td>
+          <td>{$vo.ctime|friendLydate}</td>
+          <td><switch name="vo.type">
+              <case value="0"> 纯文字 </case>
+              <case value="1"> 图片 </case>
+              <case value="3"> 视频 </case>
+              <case value="4"> 音乐 </case>
+              <case value="5"> 文件 </case>
+            </switch></td>
+          <td><?php echo getFrom($vo['from'], $vo['from_data']);?></td>
+          <td><a href="javascript:void(0)" onclick="c.del({$vo.weibo_id},{$vo.uid})">删除</a></td>
+        </tr>
+      </volist>
+    </table>
+  </div>
+  <div class="Toolbar_inbox">
+    <div class="page right">{$list.html}</div>
+    <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除微博</span></a> </div>
+</div>
+<script type="text/javascript">
+var c = new ctrl('id[]');
+</script> 
+<include file="_footer" />

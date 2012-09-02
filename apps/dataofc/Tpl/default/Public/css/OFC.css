@@ -1,0 +1,11 @@
+.AI{ border:1px solid #66CCFF; margin-top:15px;}
+.AI .h2{ font-size:20px; margin:20px;}
+.AI .h2 .icon_weibo{background: url(icon.png) no-repeat;background-position: -4px -5px;display: inline-block;width: 25px;height: 26px;vertical-align: middle;margin-right: 9px;}
+.AI .h2 .icon_guanxi{background: url(icon.png) no-repeat;background-position: -4px -45px;display: inline-block;width: 25px;height: 26px;vertical-align: middle;margin-right: 9px;}
+.AI .OFC{background-color:#66CCFF; padding:15px; color:#FFF;font-size:18px;}
+.AI .tips{padding:12px; color:#000000; text-align:center;}
+.AI .tips .color1{color:#fc7715;}
+.AI .color1{color:#fc7715;}
+.AI .weibo_OFC{ border:1px solid #999; width:95%; margin:0 auto;}
+.AI .weibo_OFC .title{float:right;}
+.powered{color:#999999; text-align:center; margin-top:20px;}

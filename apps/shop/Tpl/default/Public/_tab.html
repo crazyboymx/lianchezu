@@ -1,0 +1,20 @@
+<div class="tab-menu">
+<ul>
+
+  <li>
+    <a href="{:U('shop/Index/index')}" <eq name="category" value="">class="on"</eq> >
+        <span>全部商品</span>
+    </a>
+  </li>
+
+<volist name="jftype" id="j">
+
+  
+  <li>
+    <a href="{:U('shop/Index/index&category='.$j[id])}" <eq name="j.id" value="$category">class="on" </eq> >
+        <span>{$j.name}</span>
+    </a>
+  </li>
+</volist>
+</ul>
+</div>

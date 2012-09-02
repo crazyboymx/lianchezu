@@ -1,0 +1,37 @@
+ <link href="{:SITE_URL}/addons/plugins/TimePill/html/tpbase.css" rel="stylesheet" type="text/css" /> 
+<div class="timepilltool">
+    
+    <ul>
+      
+        被禁锢时间胶囊：&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" onclick="put();">添加</a> &nbsp;&nbsp;<a href="javascript:;"  onclick="get();">提取</a> &nbsp;&nbsp;(<a href="javascript:;"  onclick="what();">?</a>)
+        
+    </ul>
+    
+</div>
+ <script type="text/javascript">
+    function put(){  
+         
+         var url="{:Addons::createAddonUrl('TimePill','put')}";
+          
+            ui.box.load(url,{title:'添加时间较难'});
+
+           }
+           
+    function get(){ 
+            
+          var url="{:Addons::createAddonUrl('TimePill','get')}";
+          
+            ui.box.load(url,{title:'提取时间较难'});
+
+
+           }
+     function what(){ 
+            
+          var url="{:Addons::createAddonUrl('TimePill','what')}";
+          
+            ui.box.load(url,{title:'什么是时间较难'});
+
+
+           }
+            
+ </script>

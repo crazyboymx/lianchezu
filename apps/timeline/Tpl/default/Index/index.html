@@ -1,0 +1,90 @@
+<include file="__THEME__/header" />
+<link  href="../Public/share.css" rel="stylesheet" type="text/css"/>   
+
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+  <div class="main no_l"><!-- 画布 begin  -->  
+  <include file="top" />
+    <div class="mainbox">
+    
+      <div class="box">
+        <php> if($uid==$mid){ </php>
+         <div class="ti_bg"></div>
+         <li>
+           <p><a href="{:U(home/Index/index)}">发微薄</a><i>微博是一种心情！</i></p>
+           <p><a href="{:U('blog/Index/addBlog')}">写日志</a><i>我们不是名人，但我们都是有故事的人！</i></p>
+           <p><a href="{:U('photo/Upload/flash')}">传照片</a><i>用图片记录生活的点点滴滴！</i></p>
+         </li>
+         <php> } </php>
+      </div>
+      
+      
+      <div class="box" >
+        <li class="statu">
+          <dd>{$uid|getusername}的最近动态</dd>
+          <volist name="weibo" id="wei" key="ky">
+           <dd <eq name="ky" value="3" > class="no_border" </eq> >
+               <h3>{$uid|getusername}：</h3>{$wei['content']}
+           </dd>
+          </volist>
+        </li>
+      </div>
+      
+      <foreach name="time" item="ti" >
+      <div class="container">
+         <div class="box col6" ><h2>{$ti}</h2></div>
+         <volist name="datas[$ti]" id="vo">
+         <div class="box" id="r{$vo.id}<php>if(!empty($vo['savepath'])){echo 'tu';}else{echo 'bl';}</php>">
+          <div class="ti_bg"></div>
+          <li>
+            <p>{$vo.cTime|friendlyDate}---更新了{$vo.type}
+               【<span id="{$vo.id}<php>if(!empty($vo['savepath'])){echo 'tu';}else{echo 'bl';}</php>">
+                      {$vo.title}
+                </span>
+               】
+            </p>
+            <div class="c"></div>
+            <p class="bord"></p>
+            <p>
+              <php>if(!empty($vo['savepath'])){
+                $size = GetImageSize($vo['savepath']);
+                $Width = $size[0] < 400? $size[0]:430;
+                $scale = $Width/$size[0];
+                $height = (int)($size[1]*$scale);
+              </php>
+             <img src="{$vo.savepath}" width="<php>echo $Width;</php>" height="<php>echo $height;</php>" />
+              <php>}</php>
+            </p>
+            
+               <php>if(!empty($vo['content'])){ </php>
+               <p>{$vo.content}</p>
+               <php>} </php>
+            <div class="c"></div>
+           <php> if($uid==$mid){ </php>
+           <p class="right" style="font-size:14px; margin-top:10px;">
+           <php>if($vo['type'] == '日志'){ </php>
+                <a href="javascript:eblog({$vo.id},{$mid});">编辑</a>　｜　
+                <a href="javascript:deleteBlog({$vo['id']})">删除</a>
+                <php>}else if($vo['type'] == '照片'){ </php>
+                <a href="{$vo.savepath}" target="_blank"><span class="ico_Preview"></span>查看原图</a>
+                <a href="javascript:editphotoTab({$vo.id})"><span class="ico_Modify"></span>修改</a>
+                <span id="divdelphoto"><a href="javascript:delphoto({$vo.id});" class="mr10"><span class="ico_Del"></span>删除</a></span>
+                <php>} </php>
+
+           </p>
+           <php> } </php>
+           </li>
+         </div>
+         </volist>
+      </div> <!-- container -->
+      </foreach>
+
+    </div>    
+  </div>
+  <div class="c"></div>
+</div>
+</div>
+
+<script src="../Public/js/jquery.masonry.min.js"></script>
+<script type="text/javascript" src="../Public/js/common.js"></script>
+<include file="__THEME__/footer" />

@@ -1,0 +1,8 @@
+<div class="footer">
+  <div class="menu"> <a href="{:U('home/Widget/addonsRequest',array('addon'=>'FriendLink','hook'=>'document'))}">更多>></a> </div>
+  <div> 友情链接：
+  <volist id="vo" name="data">
+   <a href="{$vo['url']}" target="_blank">{$vo['title']}</a>&nbsp;&nbsp; 
+  </volist>
+  </div>
+</div>

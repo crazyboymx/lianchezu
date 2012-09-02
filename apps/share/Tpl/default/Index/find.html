@@ -1,0 +1,56 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/common.js"></script>
+<script type="text/javascript" src="../Public/Js/jquery.masonry.min.js"></script> 
+<script type="text/javascript" src="../Public/pict.js"></script>  
+
+<link  href="../Public/share.css" rel="stylesheet" type="text/css"/>    
+<include file="../Public/xnav" />
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox">
+                 
+     <div class="listt">
+        <volist name="data" id="vo">
+           <li>
+           
+              <php>if(!empty($vo['cover'])){</php>
+              <div class="pictimgs">
+              <a href="{:U('share/Index/pictDetail',array('gid'=>$vo['gid'],'id'=>$vo['id']))}">
+              <img src="{:SITE_URL}/thumb.php?url={$vo.cover}&w={$vo['width']}&h={$vo['height']}" width="230" height="{$vo['height']}"/>
+              </a>
+               </div>
+              <php>}</php>
+              <div class="title" style="border:none;">
+                   <p  style="border:none;"><a href="{:U('share/Index/pictDetail',array('gid'=>$vo['gid'],'id'=>$vo['id']))}">{$vo.title}</a></p>
+                   <php>if($vo['content']){</php>
+	              <p>简介:{$vo['content']}</p><php>}</php>
+                   <p style="border:none; text-align:right;">
+                      <a href="javascript:like({$vo.id},2);" id="like" >+喜欢</a>  |  
+                      <a href="{:U('share/Index/pictDetail',array('gid'=>$vo['gid'],'id'=>$vo['id']))}"> 
+                         评论</a>
+                   </p>
+                  <table width="200" border="0" align="center" cellpadding="0" cellspacing="0">
+                    <tr>
+                       <td width="60" rowspan="2" align="left" valign="middle">
+                           <space uid="vo.uid">{uavatar}</space>
+                       </td>
+                       <td valign="bottom"><space uid="vo.uid">{uname}</space>发行</td>
+                    </tr>
+                    <tr>
+                       <td>时间：{$vo.cTime|friendlyDate}</td>
+                    </tr>
+                  </table>
+              </div>
+           </li>
+        </volist>
+      </div>
+        <div id="Pagination" class="page">{$html}</div>
+    </div>
+  </div>
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+  <div class="clear"></div>
+<include file="__THEME__/footer" />

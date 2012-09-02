@@ -1,0 +1,62 @@
+<script type="text/javascript">
+//鼠标移动表格效果
+$(document).ready(function(){
+    $("tr[overstyle='on']").hover(
+      function () {
+        $(this).addClass("bg_hover");
+      },
+      function () {
+        $(this).removeClass("bg_hover");
+      }
+    );
+});
+	//添加包
+    function add() {
+        ui.box.load("{:Addons::adminPage('addtheme')}", {title:'添加包'});
+    }
+    
+    //编辑包
+    function edit(id) {
+        ui.box.load("{:Addons::adminPage('addtheme')}&id="+id, {title:'编辑包'});
+    }
+    
+    //删除包
+    function del(id) {
+		ui.box.load("{:Addons::adminPage('deltheme')}&id="+id, {title:'删除包'});
+    }
+</script>
+  <div class="Toolbar_inbox">
+    <a href="javascript:void(0);" onclick="add();" class="btn_a"><span>添加包</span></a>
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th class="line_l">ID</th>
+    <th class="line_l">图片</th>
+    <th class="line_l">目录名称</th>
+    <th class="line_l">中文名称</th>
+    <th class="line_l">介绍</th>
+    <th class="line_l">操作</th>
+  </tr>
+  
+  <php>if(empty($listtheme)) {</php>
+    <tr><td>暂无</td></tr>
+  <php>}</php>
+  
+  <volist id="vo" name="listtheme">
+      <tr overstyle='on' id="{$vo['id']}">
+        <td>{$vo['id']}</td>
+        <td><img src="{:SITE_URL}/addons/plugins/UserTheme/icon/{$vo['icon']}" height="110" width="250"></td>
+        <td>{$vo['theme_name']}</td>
+        <td>{$vo['title']}</td>
+        <td>{$vo['info']}</td>
+        <td>
+            <a href="javascript:void(0);" onclick="edit({$vo['id']})">编辑</a> | <a href="javascript:void(0);" onclick="del({$vo['id']})">删除</a>
+        </td>
+      </tr>
+  </volist>
+  </table>
+  </div>
+  <div class="Toolbar_inbox">
+    <a href="javascript:void(0);" onclick="add();" class="btn_a"><span>添加包</span></a>
+  </div>

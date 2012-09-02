@@ -1,0 +1,75 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/jquery.masonry.min.js"></script> 
+<script type="text/javascript" src="../Public/pict.js"></script>  
+
+<link  href="../Public/share.css" rel="stylesheet" type="text/css"/>    
+<include file="../Public/xnav" />
+
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox">
+    
+    <div class="mainbox_appR">
+     <div class="cnav"> 
+         <iterate id="re" name="type">
+               <a <php> if($_GET['cid']==$re['id']) echo 'class="on"';  </php> href="{:U('share/Index/index',array('cid' => $re['id']))}" >{$re.name}</a>
+         </iterate>
+      </div>
+      <div class="c"></div>
+        <volist name="newshare" id="vo">
+          <php>if(!empty($vo['logo'])){</php>
+       <div class="newshare" style="background:#fff; border:none; border-top:1px solid #ddd;">
+         <dd>
+           <a href="{:U('share/Index/shareDetail',array('gid'=>$vo['id']))}">
+           <img src="{:SITE_URL}/thumb.php?url={$vo.logo}&w=70&h=50" /></a>
+           <a href="{:U('share/Index/shareDetail',array('gid'=>$vo['id']))}"> {$vo['name']}</a>
+           <span>{$vo['intro']|getBlogShort}</span>
+         </dd>
+       </div>
+          <php>}</php>
+        </volist>
+     </div>
+     
+     
+     <div class="mainbox_appC" style="margin-right:230px;">
+     <div class="listt" style="padding-left:0;">
+        <volist name="data" id="vo">
+          <php>if(!empty($vo['logo'])){</php>
+           <li>
+              <div class="pictimgs">
+              <a href="{:U('share/Index/shareDetail',array('gid'=>$vo['id']))}">
+              <img src="{:SITE_URL}/thumb.php?url={$vo.logo}&w={$vo['width']}&h={$vo['height']}" width="{$vo['width']}" height="{$vo['height']}"/>
+              </a>
+               </div>
+              <div class="title" style="border:none">
+                   <p style="border:none">
+                      <a href="{:U('share/Index/shareDetail',array('gid'=>$vo['id']))}">《{$vo.name}》</a>
+                      {$vo['intro']}
+                   </p>
+                   <p style="border:none; text-align:right;">
+                      <a href="javascript:like({$vo.id},1);" id="like" >+喜欢</a></p>
+                   <p style="border:none;">发行时间：({$vo.ctime|friendlyDate})</p>
+              </div>
+           </li>
+          <php>}</php>
+        </volist>
+      </div>
+        <div class="c"></div>
+        <div id="Pagination" class="page">{$html}</div>
+      </div>
+    </div>
+  </div>
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.listt').masonry({
+        itemSelector:'.listt li',
+        columnWidth:250
+    });
+});
+</script>

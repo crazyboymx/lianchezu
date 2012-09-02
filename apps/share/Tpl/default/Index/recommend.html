@@ -1,0 +1,65 @@
+<include file="__THEME__/header" />
+<link  href="../Public/share.css" rel="stylesheet" type="text/css"/>   
+ <style>
+.page_home{background:#f0f0f0;}
+</style>
+
+
+<include file="../Public/js" />
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+<include file="../Public/_mainNav2" />
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox">
+    
+     <div class="list">
+        <volist name="recom" id="vo" offset="0" length='20'>
+          <php>if(!empty($vo['logo'])){</php>
+           <li>
+              <a href="{:U('share/Index/shareDetail',array('gid'=>$vo['id']))}">
+              <img src="{:SITE_URL}/thumb.php?url={$vo.logo}&w=195&t=f" />
+              </a>
+              <span><a href="{:U('share/Index/shareDetail',array('gid'=>$vo['id']))}">{$vo.name}</a></span>
+           </li>
+          <php>}</php>
+        </volist>
+      </div>
+      <div class="c"></div>
+      
+     <div class="type">
+     <volist name="type" id="ty" key="key">
+     <table width="900" align="center" cellpadding="0" cellspacing="0" style="border:1px solid #ddd;">
+       <tr class="<php> if($key%2==1){echo 'ty_bg';} </php>">
+         <td class="fon" 
+             width="151" height="80" align="center" valign="middle">
+             <a href="{:U('share/Index/index',array('cid' => $ty['id']))}" >{$ty.name}</a>
+         </td>
+        <td width="450" height="80" align="left" valign="middle" 
+            style=" border-right:1px solid #ddd;">
+            <iterate name="red[$ty['id']]" id="pty" offset="0" length='5'>
+            <a class="typic" href="{:U('share/Index/shareDetail',array('gid'=>$pty['id']))}" title="{$pty.name}">
+            <img src="{:SITE_URL}/thumb.php?&w=80&h=70&t=c&url={$pty['logo']}" />
+            </a>
+            </iterate>
+         </td>
+         <td width="289" > <iterate name="red[$ty['id']]" id="pty" offset="0" length='4'>
+            <a href="{:U('share/Index/someOne',array('uid'=>$pty['uid']))}" title="{$pty.uid|getusername}">
+            <img src="{$pty['uid']|getuserface}" />
+            </a>
+            </iterate></td>
+       </tr>
+     </table>
+     </volist>
+     
+     </div>
+    </div>
+  </div>
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+  <div class="clear"></div>
+<include file="__THEME__/footer" />
+<script>
+c = new ctrl();
+</script>

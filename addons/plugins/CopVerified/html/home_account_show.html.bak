@@ -1,0 +1,228 @@
+
+          <div class="setupBox">
+          <div class="setItems">
+            <div class="setFold setUnfold" rel="verified" >
+              <h2>团体用户管理中心</h2>
+            </div>
+            <div style="display: block;" class="setItemsInfo">
+		      <div class="data">
+		            <form action="{:Addons::createAddonUrl('CopVerified', 'home_account_do')}" method="post" class="form_validator">
+		                <ul>
+		               
+		                <li>
+		                    <div class="left alR" style="width: 15%;">团体名称：<span class="cRed pr5">*</span></div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5">
+		                          <input name="sname" type="text" value="{$name}" class="text" style="width:200px;" onfocus="this.className='text2'" onblur="this.className='text'" />
+		                      </div>
+		                    </div>
+		                </li>
+                        <li>
+		                    <div class="left alR" style="width: 15%;">负责人：<span class="cRed pr5">*</span></div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5">
+		                          <input name="sfuzeren" type="text" value="{$fuzeren}" class="text" style="width:200px;" onfocus="this.className='text2'" onblur="this.className='text'" />
+		                      </div>
+		                    </div>
+		                </li>
+                        <li>
+		                    <div class="left alR" style="width: 15%;">联系方式：<span class="cRed pr5">*</span></div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5">
+		                          <input name="slianxifangshi" type="text" value="{$lianxifangshi}" class="text" style="width:200px;" onfocus="this.className='text2'" onblur="this.className='text'" />
+		                      </div>
+		                    </div>
+		                </li>
+                        <li>
+		                    <div class="left alR" style="width: 15%;">介绍：<span class="cRed pr5">*</span></div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5">
+		                          <textarea name="sjieshao" id="jieshao" cols="50" rows="5">{$jieshao}</textarea>
+								  <p>已过滤HTML代码，URL请直接输入ULR地址会被自动解析</p>
+		                      </div>
+		                    </div>
+		                </li>
+						<!-- <li>
+		                    <div class="left alR" style="width: 15%;">展示视频？：<span class="cRed pr5">*</span></div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5">
+		                          <input name="isvideo" type="radio" value="1"<php>if($verified['isvideo']=='1'){</php>checked="checked"<php>}</php>/>展示视频<br />  <input name="isvideo" type="radio" value="0"<php>if($verified['isvideo']=='0'){</php>checked="checked"<php>}</php>/>展示幻灯片<br />
+
+		                      </div>
+		                    </div>
+		                </li>-->
+		               
+		                <li>
+		                	<div class="left alR" style="width: 15%;">&nbsp;</div>
+		                	<div class="left" style="width: 50%;">
+		                		<input type="hidden" name="id" value="{$verified.id}" />
+		                		<input type="submit" id="btn_submit" class="btn_b" value="保存" />
+		                	</div>
+		                	<div class="left" style="width: 20%;">&nbsp;</div>
+		                	<div class="left" style="width: 15%;">&nbsp;</div>
+		                </li>
+		                </ul>
+		            </form>
+		        </div>
+            </div>
+          </div>
+          </div>
+          
+          
+          <!--
+          <div class="setupBox">
+          <div class="setItems">
+            <div class="setFold setUnfold" rel="verified" >
+              <h2>视频管理</h2>
+            </div>
+            <div style="display: block;" class="setItemsInfo">
+		      <div class="data">
+		         
+		                <ul id="flash">
+		               <li>
+		                    <div class="left alR" style="width: 15%;">视频地址：<span class="cRed pr5">*</span></div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5">
+		                          <input name="video" type="text" value="{$verified.video}" class="text" style="width:200px;" onfocus="this.className='text2'" onblur="this.className='text'" /><br />
+		                      
+		                      </div>
+		                    </div>
+		                </li>
+                         
+		                <li>
+		                	<div class="left alR" style="width: 15%;">&nbsp;</div>
+		                	<div class="left" style="width: 50%;">
+		                		
+		                		<input type="button" id="btn_submit" class="btn_b" onclick="do_video()" value="添加" />
+		                	</div>
+		                	<div class="left" style="width: 20%;">&nbsp;</div>
+		                	<div class="left" style="width: 15%;">&nbsp;</div>
+		                </li>
+		                </ul>
+		            <script>
+					function do_video(){
+					var video_url=$('input[name=\'video\']').val();
+					  $.post( U('home/widget/addonsRequest'),{addon:'WeiboType',hook:'paramUrl',url:video_url},function(txt){
+					    	txt = eval('('+txt+')');
+							alert(txt.swf);
+					
+					  })
+					}
+					</script>
+		        </div>
+            </div>
+          </div>
+          </div>
+          
+          -->
+          
+          <div class="setupBox">
+          <div class="setItems">
+            <div class="setFold setUnfold" rel="verified" >
+              <h2>幻灯片管理</h2>
+            </div>
+		
+            <div style="display: block;" class="setItemsInfo">
+				<div style="background-color:#FFFFCC; padding:10px">不填写将不显示</div>
+             <div class="app_manage_list" >
+                           
+             <ul id="sortable_local_default_app">
+             <php>$flash=unserialize($huandengpian);foreach($flash as $k=>$v){</php>
+                                <li class="lineD_btm" id="link_{$k}">
+                 
+                            <span> <a href="{$v.links}">
+                  {$v.wenzi}                 </a> 
+				  <span style="float:right; cursor:pointer;" onclick="dellink('{$k}')">删除{$k}</span></span>
+                                  </li>
+                                   <php>}</php>
+                              </ul>
+              </div>
+            
+		      <div class="data">
+		           
+		                <ul id="flash">
+		               <li>
+		                    <div class="left alR" style="width: 15%;">图片地址：<span class="cRed pr5">*</span></div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5">
+		                          <input name="tupian" type="text" value="" class="text" style="width:200px;" onfocus="this.className='text2'" onblur="this.className='text'" /><br />
+		                          支持网络地址,大小并固定为618x246
+		                      </div>
+		                    </div>
+		                </li>
+                         <li>
+		                    <div class="left alR" style="width: 15%;">文字信息：<span class="cRed pr5">*</span></div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5">
+		                          <input name="wenzi" type="text" value="" class="text" style="width:200px;" onfocus="this.className='text2'" onblur="this.className='text'" />
+		                      </div>
+		                    </div>
+		                </li>
+                          <li>
+		                    <div class="left alR" style="width: 15%;">文字链接：<span class="cRed pr5">*</span></div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5">
+		                          <input name="link" type="text" value="" class="text" style="width:200px;" onfocus="this.className='text2'" onblur="this.className='text'" />
+		                      </div>
+		                    </div>
+		                </li>
+		                <li>
+		                	<div class="left alR" style="width: 15%;">&nbsp;</div>
+		                	<div class="left" style="width: 50%;">
+		                		
+		                		<input type="button" id="btn_submit" class="btn_b" value="添加" onclick="add_flash();"/>
+		                	</div>
+		                	<div class="left" style="width: 20%;">&nbsp;</div>
+		                	<div class="left" style="width: 15%;">&nbsp;</div>
+		                </li>
+		                </ul>
+		  
+		        </div>
+            </div>
+          </div>
+          </div>
+          
+         
+        <div class="c"></div>
+<script>
+function add_flash(){
+	var links=$('input[name=\'link\']').val();
+	var tupian=$('input[name=\'tupian\']').val();
+	var wenzi=$('input[name=\'wenzi\']').val();
+ $.post( U('home/widget/addonsRequest'),{'addon':'CopVerified','hook':'add_flash',wenzi:wenzi,tupian:tupian,links:links},function(res){
+		    html='<li class="lineD_btm"><span><a href="'+links+'">'+wenzi+'</a> </span></li>';																											 
+			$('#sortable_local_default_app').append(html);		   
+	})	
+	
+}
+	$(document).ready(function(){
+		var hs = document.location.hash;
+		changeModel( hs.replace('#','') );
+		$('.setFold').click(function(){
+			if( $(this).attr('class')=='setFold' ){
+				changeModel( $(this).attr('rel') );
+			}else{
+				$(this).removeClass('setUnfold');
+				$(this).next('.setItemsInfo').hide();
+			}
+			location.href='#'+$(this).attr('rel');
+		})
+	});
+	
+	//切换操作模块
+	function changeModel( type ){
+		var t = type || 'verified';
+		$('.setFold').removeClass('setUnfold');
+		$('.setItemsInfo').hide();
+		var handle = $('div[rel="'+t+'"]');
+		handle.addClass('setUnfold');
+		handle.next('.setItemsInfo').show();
+	
+		
+	}
+function dellink(k){
+$.post( U('home/widget/addonsRequest'),{'addon':'CopVerified','hook':'dellink',k:k},function(res){
+   $('#link_'+k).remove();
+})
+}	
+</script>

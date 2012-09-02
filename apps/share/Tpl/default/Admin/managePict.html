@@ -1,0 +1,51 @@
+<include file="_header" />
+<div class="so_main">
+  <include file="_tab" />
+
+    <div class="form2">
+    <form action="__URL__&act=managePict" method="POST">
+        <dl class="lineD">
+          <dt>专辑单页ID：</dt>
+          <dd>
+            <input name="id" class="txt" value="">
+          </dd>
+        </dl>
+        <div class="page_btm">
+          <input type="submit" class="btn_b" value="搜索" />
+        </div>
+    </form>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="#"><span class="searchObject_action"><neq name="isSearch" value="1">搜索{$ts['app']['app_alias']}<else/>搜索完毕</neq></span>
+        </a>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <th>ID</th>
+            <th>标题</th>
+            <th>发起者</th>
+            <th>时间</th>
+            <th>管理</th>
+          </tr>
+          <volist name="data" id="vo">
+          <tr id="list_{$vo.id}">
+            <td>{$vo.id}</td>
+            <td><a href="{:U('share/pict/pictDetail',array('id'=>$vo['id']))}" target="_blank">{$vo.title}</a></td>
+            <td><a href="{:U('home/space/index',array('id'=>$vo['uid']))}" target="_blank">{$vo.uid|getUserName}</a></td>
+            <td>{$vo.cTime|friendlyDate}</td>
+            <td><a href="{:U('share/Admin/deletePict',array('id'=>$vo['id']))}">删除</a></td>
+          </tr>
+          </volist>
+        </table>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+    </div>
+</div>
+</body>
+</html>

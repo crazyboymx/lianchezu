@@ -1,0 +1,54 @@
+<div class="put">
+
+    <ul>主人：{$uid|getUserName} </ul> 
+    <ul>解封：
+        <input name="gettime" type="text" value="{:date( 'Y-m-d H:i:s')}" class="text" id="gettime"   />
+
+    </ul>
+    <ul>我想封存的内容： <textarea name="content" id="content" cols="" rows="" class="contentObj" /></textarea>
+    </ul> 
+
+    <ul class="right"><a href="javascript:;" onclick="save();">封 存</a></ul>
+
+    <div class="putkey"> 
+        解开封印的钥匙：<br/><input id="getkey" name="key" type="text" value="<?php echo date( 'Y-md-Hi-s',time()).rand(1000,10000); ?>" class="text"  onclick="javascript:oCopy(this);"  size="50" />   
+         CTRL+C 
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    function save(){  
+         
+        var url="{:Addons::createAddonUrl('TimePill','save')}";
+        var gettime=$('#gettime').val();  
+        var content=$('#content').val(); 
+        var getkey=$('#getkey').val(); 
+       
+       
+        $.post(url,{content:content,gettime:gettime,key:getkey},function(txt){
+            if(txt == 1){
+                $('.putkey').show();
+                $('.right').html('封存成功，一定要记住下面的钥匙，否则不能打开胶囊！');
+                ui.success('封存成功');
+      
+            }else{
+                //location.reload();
+                ui.error('时光机器出了问题');
+                
+            }
+        });
+       
+       
+        
+    }
+    function oCopy(obj){
+        obj.select();
+        js=obj.createTextRange();
+        js.execCommand('Copy')
+    }
+ 
+  
+           
+   
+</script>

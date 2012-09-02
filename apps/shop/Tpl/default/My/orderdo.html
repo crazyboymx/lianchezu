@@ -1,0 +1,102 @@
+<script>
+	function fh(type){
+		$.post("__URL__&act=orderdo&id={$order.id}", {type:type,fhd:$("#fhd").val()}, function(res){
+			if(res=='1'){
+				ui.box.close();
+				ui.success('操作成功');
+				
+			}else{
+				ui.box.close();
+				ui.error('操作失败');
+			}
+		})
+	}
+</script>
+<table width="600" height="451" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="80" align="right">商品名称：</td>
+    <td width="518" align="left">{$order.gname}</td>
+  </tr>
+  <tr>
+    <td align="right">商品价格：</td>
+    <td align="left">{$order.price2}</td>
+  </tr>
+  <tr>
+    <td align="right">商品数量：</td>
+    <td align="left">1</td>
+  </tr>
+  <tr>
+    <td align="right">下单时间：</td>
+    <td align="left">{$order.time2}</td>
+  </tr>
+  <tr>
+    <td colspan="2" bgcolor="#F5F5F5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right">用户名：</td>
+    <td align="left">{$order.username}</td>
+  </tr>
+  <tr>
+    <td align="right">用户ID：</td>
+    <td align="left">{$order.uid}</td>
+  </tr>
+  <tr>
+    <td align="right">姓名：</td>
+    <td align="left">{$order.name}</td>
+  </tr >
+  <tr>
+    <td align="right">地址：</td>
+    <td align="left">{$order.address}</td>
+  </tr>
+  <tr>
+    <td align="right">电话：</td>
+    <td align="left">{$order.telphone}</td>
+  </tr>
+    <tr>
+    <td align="right">手机：</td>
+    <td align="left">{$order.mobile}</td>
+  </tr>
+    <tr>
+    <td align="right">QQ：</td>
+    <td align="left">{$order.qq}</td>
+  </tr>
+    <tr>
+    <td align="right">邮编：</td>
+    <td align="left">{$order.postcode}</td>
+  </tr>
+  <tr>
+    <td colspan="2" bgcolor="#F5F5F5">&nbsp;</td>
+  </tr>
+        <tr>
+    <td align="right">订单状态：</td>
+    <td align="left"><font color="#FF0000">{$order.state|getOrderStateName=###}</font></td>
+  </tr>
+
+  <tr>
+    <td align="right">发货单号：</td>
+    <td align="left">{$order.fhd} </td>
+  </tr>
+  <tr>
+<eq name="order.state" value="2">
+
+    <td></td>
+    <td align="left"><input class="btn_b" type="submit" value="确认收货" onClick="fh()"> </td>
+    </tr>
+</eq>
+ 
+  
+</table>
+<script>
+	function fh(){
+		$.post("__URL__&act=orderdo&id={$order.id}", {type:1}, function(res){
+			if(res=='1'){
+				ui.box.close();
+				ui.success('操作成功');
+				
+			}else{
+				ui.box.close();
+				ui.error('操作失败');
+			}
+		})
+	}
+</script>

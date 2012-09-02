@@ -1,0 +1,32 @@
+<div  id="show_{$rand}" onclick="$('#music_show_{$rand}').show();$(this).hide();"> 
+	<img src="{$data.album_logo}" width="120px;" style="margin-right:40px;"/><img class="imgicon" style="cursor: pointer;" src="{$path}/html/images/music_s.gif">
+	</div> 
+	
+	
+
+	
+	
+	 <div class="feed_quote" style="width:470px;display:none;" id="music_show_{$rand}"> 
+  <div class="q_tit"> 
+    <img class="q_tit_l" onclick="switchVideo({$rand},'open','{$data.host}','{$data.flashvar}')" src="__THEME__/images/zw_img.gif" /> 
+  </div> 
+  <div class="q_con"> 
+    <p style="margin:0;margin-bottom:5px" class="cGray2"> 
+    <a href="javascript:void(0)" onclick="$('#show_{$rand}').show();$('#music_show_{$rand}').hide();"> 
+      <img class="ico_cls"  src="__THEME__/images/zw_img.gif" />收起</a> 
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    {$data.song_name}   -   {$data.artist_name}
+    </p> 
+    <div id="show_content_{$rand}"> 
+    
+    <div><embed allowscriptaccess="always" pluginspage="http://get.adobe.com/cn/flashplayer/" flashvars="singer={$data.artist_name}&song={$data.song_name}&songurl={$data.mp3}&source=Snnu&logo=http://t.snnu.cc/addons/plugins/Music/html/images/type/{$data.type}.png&source=xiami&autoPlay=true" allowfullscreen="true" width="440" type="application/x-shockwave-flash" wmode="transparent" bgcolor="#ffffff"  height="200" style="visibility:visible;" quality="hight" src="http://music.sina.com.cn/yueku/js/mwp/feedPlayer.swf"></embed>
+<span style="position:absolute; margin: 0px 0 0 -443px"><img src="{$data.album_logo}" width="120px;"/></span>
+</div>
+   </div> 
+  </div> 
+  <div class="q_btm"><img class="q_btm_l" src="__THEME__/images/zw_img.gif" /></div> 
+</div> 
+	
+	
+	
+ 
