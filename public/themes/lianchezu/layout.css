@@ -632,7 +632,7 @@ a.faceicon1:link, a.faceicon1:visited{display:block;float:left;height:17px;margi
 .close a.del{width:17px;display:block;position:absolute;top:3px;right:0}
 
 /* confirm样式 */
-.ts_confirm{clear:left;margin-top:20px;*margin-top:0px;position:absolute;z-index:9;line-height:30px}
+.ts_confirm{clear:left;margin-top:20px;*margin-top:0px;position:absolute;z-index:110;line-height:30px}
 .ts_confirm .del{position:absolute;top:10px;right:0}
 .ts_confirm dl{background-color:#fff;border:#666 solid 1px;border-radius:3px;box-shadow:0 0 3px rgba(0, 0, 0, 0.3);padding:20px;width:160px;margin:7px 0 0 0}
 

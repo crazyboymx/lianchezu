@@ -185,7 +185,7 @@ weibo.prototype = {
 	//----------------------------仿知美二次开发 ---------------------//
 	//删除一条分享
 	deleted:function(weibo_id){
-		$.post(U("weibo/Operate/delete"),{id:weibo_id},function(txt){
+		$.post(U("taotaoke/Operate/delete"),{id:weibo_id},function(txt){
 			if( txt ){
 				$("#list_li_"+weibo_id).slideUp('fast');
 				weibo.downCount('weibo');
@@ -200,7 +200,7 @@ weibo.prototype = {
 	
 	//仿知美二次开发 
 	deleted2:function(weibo_id){
-		$.post(U("weibo/Operate/delete"),{id:weibo_id},function(txt){
+		$.post(U("taobaoke/Operate/delete"),{id:weibo_id},function(txt){
 			if( txt ){
 				$("#list_li_"+weibo_id).slideUp('fast');
 				weibo.downCount('weibo');
@@ -369,13 +369,13 @@ weibo.prototype = {
 	//转发
 	transpond:function(id,upcontent){
 		upcontent = ( upcontent == undefined ) ? 1 : 0;
-		ui.box.load( U("weibo/operate/transpond",["id="+id,"upcontent="+upcontent] ),{title:'转发',closeable:true});
+		ui.box.load( U("taobaoke/operate/transpond",["id="+id,"upcontent="+upcontent] ),{title:'转发',closeable:true});
 	},
 	
 	//仿知美二次开发 编辑功能
 	myedit:function(id,bc_id,upcontent){
 		upcontent = ( upcontent == undefined ) ? 1 : 0;
-		ui.box.load( U("weibo/operate/myedit",["id="+id,"bc_id="+bc_id,"upcontent="+upcontent] ),{title:'编辑',closeable:true});
+		ui.box.load( U("taobaoke/operate/myedit",["id="+id,"bc_id="+bc_id,"upcontent="+upcontent] ),{title:'编辑',closeable:true});
 	},
 	
 	//关注话题

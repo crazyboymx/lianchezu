@@ -228,6 +228,7 @@
     right: 3px;
     text-align: center;
 }
+.item  .item-del-btn{right:30px;}
 .item .hover .hb {
     display: block;
 }
