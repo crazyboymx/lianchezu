@@ -216,7 +216,7 @@
         	$_POST['id'] = explode(',', t($_POST['id']));
         	if ( empty($_POST['id']) )
         		return ;
-        	if(model('GlobalComment')->deleteComment($_POST['id'])){	
+        	if(model('GlobalComment')->deleteComment($_POST['id'])) {
         		//积分处理
 				$setCredit = X('Credit');
 				$setCredit->setUserCredit($this->mid,'delete_comment');

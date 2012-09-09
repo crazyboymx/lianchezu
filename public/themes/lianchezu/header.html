@@ -45,6 +45,8 @@
 <script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
 <script src="__PUBLIC__/js/jquery.jgrow.min.js"></script>
 <script src="__PUBLIC__/js/jquery.isotope.min.js"></script>
+<!-- baidu监控 -->
+<script src="http://app.baidu.com/static/appstore/monitor.st"></script>
 
 <!-- 编辑器样式文件 -->
 <link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
@@ -256,11 +258,11 @@ $(function(){
                     </li> 
                     
                     <li>
-                        <p class="split"><a href="javascript:;" class="libg myalbum">专辑</a></p>
+                    <p class="split"><a href="{:U('taobaoke/Index/zhuanji',array(uid=>$uid))}" class="libg myalbum">专辑</a></p>
                     </li>
                     
                     <li>
-                        <p class="split"><a href="javascript:;" class="libg myfavs">喜欢</a></p>
+                    <p class="split"><a href="{:U('taobaoke/Index/share',array(uid=>$uid,type=>'fav'))}" class="libg myfavs">喜欢</a></p>
                     </li>  
                     
                     <li>

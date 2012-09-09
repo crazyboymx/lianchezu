@@ -185,10 +185,10 @@ weibo.prototype = {
 	//----------------------------仿知美二次开发 ---------------------//
 	//删除一条分享
 	deleted:function(weibo_id){
-		$.post(U("taotaoke/Operate/delete"),{id:weibo_id},function(txt){
+		$.post(U("taobaoke/Operate/delete"),{id:weibo_id},function(txt){
 			if( txt ){
-				$("#list_li_"+weibo_id).slideUp('fast');
-				weibo.downCount('weibo');
+				//$("#list_li_"+weibo_id).slideUp('fast');
+				//weibo.downCount('weibo');
 				location.reload();
 
 			}else{
@@ -218,7 +218,7 @@ weibo.prototype = {
 	//删除喜欢
 	deletfav:function(weibo_id,type){
 		//alert("asdf");
-		$.post(U("weibo/Operate/delfav"),{id:weibo_id},function(txt){
+		$.post(U("taobaoke/Operate/delfav"),{id:weibo_id},function(txt){
 			if( txt ){
 				if(type=='mylove'){
 					$("#list_li_"+weibo_id).slideUp('fast');
@@ -317,7 +317,7 @@ weibo.prototype = {
 		});
 	},
 	
-	//删除关注 图格详细页
+	//删除关注 专辑详细页
 	delettuijiantuge:function(bc_id,type){
 		//alert("asdf");
 		$.post(U("weibo/Operate/delfengmian"),{id:bc_id},function(txt){

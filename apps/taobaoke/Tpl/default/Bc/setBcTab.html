@@ -1,13 +1,13 @@
 <div  style="width:500px;padding:20px; background:#f8f8f8" class="alL">
 
-    <div> <if condition="$gid">修改图格：<else />创建图格：</if>
+    <div> <if condition="$gid">修改专辑：<else />创建专辑：</if>
         <input type="text" name="bcTitle"  value="{$title}" class="text" style="width:300px;"    />
 
     </div>
 
     <div style="font-size:14px;line-height:200%;" class="clearfix">
           
-        图格的分类？<br/>
+        专辑的分类？<br/>
 		<ul  class="newtuge">
         <volist name="acdisplay"  id="acd">
         <li>
@@ -20,7 +20,7 @@
 
     </div>
 
-    <if condition="$gid"><div class="pt10 pb10"><a href="{:U('taobaoke/Bc/deleteBc',array('gid'=>$gid))}" onclick="if(confirm('确定要删除“{$title}”图格吗？此图格下的所有信息都会被清空。'))return ture;return false;" ><span style="color:#FF0000;">×</span>删除图格</a></div></if>
+    <if condition="$gid"><div class="pt10 pb10"><a href="{:U('taobaoke/Bc/deleteBc',array('gid'=>$gid))}" onclick="if(confirm('确定要删除“{$title}”专辑吗？此专辑下的所有信息都会被清空。'))return ture;return false;" ><span style="color:#FF0000;">×</span>删除专辑</a></div></if>
      
      
     <div align="center" style="margin:20px 0;">
@@ -45,10 +45,10 @@ function createBc(title,acid){
             
         } 
 	if(title == ''){
-		ui.error('请输入图格标题！');
+		ui.error('请输入专辑标题！');
 		return false;
 	}else if(title.length>20){
-		ui.error('图格标题不能超过20个汉字');
+		ui.error('专辑标题不能超过20个汉字');
 		return false; 
 	}
 	var uid = '{$mid}';
@@ -61,7 +61,7 @@ function createBc(title,acid){
 				ui.success('修改成功');
 				ui.box.close();
 			}else{
-				ui.error('此图格已存在');
+				ui.error('此专辑已存在');
 			}
 		});
 	<else />
@@ -72,7 +72,7 @@ function createBc(title,acid){
 				ui.success('新建成功');
 				ui.box.close();
 			}else{
-				ui.error('此图格已存在');
+				ui.error('此专辑已存在');
 			}
 		});		
 	</if>

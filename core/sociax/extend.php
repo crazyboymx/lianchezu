@@ -38,6 +38,86 @@ function get_client_ip() {
    return($ip);
 }
 
+//截取网址规则
+function get_domain($url){
+    $pattern = "/[\d\w-\.]+\.(com|net|org|gov|cc|biz|info|cn|ne.jp|jp|la|me)(\.(cn|hk))*/";//仿知美二次开发保留www
+    preg_match($pattern, $url, $matches);
+    if(count($matches) > 0) {
+        return $matches[0];
+    }else{
+        $rs = parse_url($url);
+        $main_url = $rs["host"];
+        if(!strcmp(long2ip(sprintf("%u",ip2long($main_url))),$main_url)) {
+            return $main_url;
+        }else{
+            $arr = explode(".",$main_url);
+            $count=count($arr);
+            $endArr = array("com","net","org","3322");//com.cn  net.cn 等情况
+            if (in_array($arr[$count-2],$endArr)){
+                $domain = $arr[$count-3].".".$arr[$count-2].".".$arr[$count-1];
+            }else{
+                $domain =  $arr[$count-2].".".$arr[$count-1];
+            }
+            return $domain;
+        }// end if(!strcmp...)
+    }// end if(count...)
+}// end function
+
+function get_zhuanji($pic,$size){
+    $zhuanji_m = $pic;
+    $mysize = intval($size);
+    switch ($mysize){
+    case '2':
+        $zhuanji_change = array("_1" => "_2");
+        break;
+    case '3':
+        $zhuanji_change = array("_1" => "_3");
+        break;
+    case '4':
+        $zhuanji_change = array("_1" => "_4");
+        break;
+    case '5':
+        $zhuanji_change = array("_1" => "");
+        break;
+    default:
+        $zhuanji_change = array("_1" => "_2");
+    }
+
+    $zhuanji = strtr($zhuanji_m,$zhuanji_change);
+    return $zhuanji;
+}
+
+//是否喜欢
+function favislove($id){
+
+    $myfav = M('taobaoke_fav')->where("favid=$id AND uid=" . $_SESSION['mid'] . "")->findall() ;
+    if($myfav){
+        return '我';
+    }else{
+        return '已';
+    }
+}
+//是否喜欢
+function favisloveno($id){
+
+    $myfav = M('taobaoke_fav')->where("favid=$id AND uid=" . $_SESSION['mid'] . "")->findall() ;
+    if($myfav){
+        return '1';
+    }else{
+        return '2';
+    }
+}
+
+//是否关注
+function guangzhuisno($id){
+
+  /*$myguanzhu = M('fengmian')->where("fengid =$id AND uid=" . $_SESSION['mid'] . "")->findall() ;
+  if($myguanzhu){
+     return '1';
+  }else{
+  return '2';
+  }*/
+}
 
 /**
  +----------------------------------------------------------
@@ -2744,4 +2824,135 @@ function getCcCount($bc_id) {
         $cccount=M('taobaoke')->where( 'type in(1,3,4,5) and isdel=0 and bc_id=' . $bc_id)->count();
         return $cccount;
     }
+}
+
+//自定义提取微博图片
+function getCcpic($bc_id) {
+    if ($bc_id<>"")
+    {
+        $ccimages=M('taobaoke')->where("type in(1,3,4,5)  and isdel=0 and bc_id='".$bc_id."'")->limit(9)->order('weibo_id DESC')->findall();
+        foreach ($ccimages as $somedata)
+        {
+            $st_arr_bak=unserialize($somedata['type_data']);
+            $st_weibo_id=$somedata['weibo_id'];
+
+
+            $st_transpond_id=$somedata['transpond_id'];
+            if($st_transpond_id <> '0')
+            {
+                $tr_id=M('taobaoke')->where('weibo_id='.$st_transpond_id)->limit(9)->order('weibo_id DESC')->findall();
+                foreach ($tr_id as $tr)
+                {
+                    $trimg =unserialize($tr['type_data']);
+                    $type =$tr['type'];
+                    if($type == 1)
+                    {
+                        $st_arr.='<img  class="smallpic" src="__UPLOAD__/'.$trimg['thumburl'].'">';
+
+                    }else if($type == 5)
+                    {
+                        $st_arr.='<img  class="smallpic" src="'.$trimg['small_pic'].'">'; 
+                    }else if($type == 3)
+                    {
+                        if($trimg[flashimg])
+                        {
+                            $st_arr.='<img  class="smallpic_v" src="'.$trimg['flashimg'].'">'; 
+                        }else{
+                            $st_arr.='<img  class="smallpic_v" src="__THEME__/images/nocontent.png">';
+                        }
+                    }
+                    else if($type == 4)
+                    {
+                        if($trimg[logo])
+                        {
+                            $st_arr.='<img  class="smallpic_music" src="'.$trimg[logo].'">'; 
+                        }else{
+                            $st_arr.='<img  class="smallpic_music" src="__THEME__/images/nomusic.gif">';
+                        }
+                    }
+                }
+            }else{
+                $type=$somedata['type'];
+                if($type == 1)
+                {
+                    $st_arr.='<img class="smallpic" src="__UPLOAD__/'.$st_arr_bak['thumburl'].'">';  
+                }else if($type == 5)
+                {
+                    $st_arr.='<img  class="smallpic" src="'.$st_arr_bak['small_pic'].'">';
+                }else if($type == 3)
+                {
+                    if($st_arr_bak[flashimg])
+                    {
+                        $st_arr.='<img  class="smallpic_v" src="'.$st_arr_bak['flashimg'].'">'; 
+                    }else{
+                        $st_arr.='<img  class="smallpic_v" src="__THEME__/images/nocontent.png">';
+                    }
+                }else if($type == 4)
+                {
+                    if($st_arr_bak[logo])
+                    {
+                        $st_arr.='<img  class="smallpic_music" src="'.$st_arr_bak[logo].'">'; 
+                    }else{
+                        $st_arr.='<img  class="smallpic_music" src="__THEME__/images/nomusic.gif">';
+                    }
+                }
+            }
+        }
+        echo  $st_arr;
+    }
+}
+
+//--------------上/下一张--------------------//
+function getCcpic_updown($bc_id,$weibo_id,$left_right) {
+    if ($bc_id<>"")
+    {
+        switch ($left_right){
+        case '1':
+            $ccimages=M('taobaoke')->where("type in(1,3,4,5)  and isdel=0 and bc_id='".$bc_id."' and weibo_id<'".$weibo_id."'")->limit(1)->order('weibo_id DESC')->findall();
+            $jquery='jquery-righttshow';
+            break;
+        case '2':
+            $ccimages=M('taobaoke')->where("type in(1,3,4,5)  and isdel=0 and bc_id='".$bc_id."' and weibo_id>'".$weibo_id."'")->limit(1)->order('weibo_id ASC')->findall();
+            $jquery='jquery-leftshow';
+            break;
+        default:
+            $ccimages=M('taobaoke')->where("type in(1,3,4,5)  and isdel=0 and bc_id='".$bc_id."' and weibo_id>'".$weibo_id."'")->limit(1)->order('weibo_id ASC')->findall();
+            $jquery='jquery-righttshow';
+        }
+        foreach ($ccimages as $somedata)
+        {
+            $st_arr_bak=unserialize($somedata['type_data']);
+            $st_weibo_id=$somedata['weibo_id'];
+            $st_transpond_id=$somedata['transpond_id'];
+            $type=$somedata['type'];
+            if($type == 1)
+            {
+                $st_arr.='<a id="'.$jquery.'" href="'.U("taobaoke/Index/detail",array("id"=>$st_weibo_id)).'"></a>';  
+            }else if($type == 5)
+            {
+                $st_arr.='<a id="'.$jquery.'" href="'.U("taobaoke/Index/detail",array("id"=>$st_weibo_id)).'"></a>';
+            }else if($type == 3)
+            {
+                $st_arr.='<a id="'.$jquery.'" href="'.U("taobaoke/Index/detail",array("id"=>$st_weibo_id)).'"></a>'; 
+            }else if($type == 4)
+            {
+                $st_arr.='<a id="'.$jquery.'" href="'.U("taobaoke/Index/detail",array("id"=>$st_weibo_id)).'"></a>'; 
+            }
+        }
+        echo  $st_arr;
+    }
+}
+
+function getMiniNum_zhuan($uid){
+    return M('taobaoke')->where('uid='.$uid.' AND isdel=0 AND type<>0')->count();
+}
+
+//获取喜欢数
+function getfavnum($uid){
+    return M('taobaoke_fav')->where('uid='.$uid)->count();
+}
+
+//获取被喜欢数
+function getfavednum($uid){
+    return M('taobaoke_fav')->where('favuid='.$uid)->count();
 }

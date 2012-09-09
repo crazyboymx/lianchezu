@@ -79,3 +79,13 @@ function getCcCount($bc_id) {
         return $cccount;
     }
 }
+
+//获取喜欢数
+function getfavnum($uid){
+    return M('taobaoke_fav')->where('uid='.$uid)->count();
+}
+
+//获取被喜欢数
+function getfavednum($uid){
+    return M('taobaoke_fav')->where('favuid='.$uid)->count();
+}

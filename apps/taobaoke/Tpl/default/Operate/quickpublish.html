@@ -363,7 +363,7 @@ foreach ($label as $l){
 
             </volist> 
 
-        </select> <input type="text" name="bcTitle"  value="添加新图格" class="text" style="width:120px; color:#888;" onfocus="if(value=='添加新图格') {value=''}" onblur="if (value=='') {value='添加新图格'}"/>
+        </select> <input type="text" name="bcTitle"  value="添加新专辑" class="text" style="width:120px; color:#888;" onfocus="if(value=='添加新专辑') {value=''}" onblur="if (value=='') {value='添加新专辑'}"/>
 
         <input type="button" onclick="createBc()"  class="btn_b" value="创建"/></h2>
         <div class="cntBox">
@@ -736,10 +736,10 @@ function createBc(title){
 	var title = $("input[name='bcTitle']").val();
          
          if(title == ''){
-		ui.error('请输入图格标题！');
+		ui.error('请输入专辑标题！');
 		return false;
 	}else if(title.length>20){
-		ui.error('图格标题不能超过20个汉字');
+		ui.error('专辑标题不能超过20个汉字');
 		return false; 
 	}
  	var uid = '{$mid}';
@@ -763,7 +763,7 @@ function createBc(title){
                                 
 				//ui.box.close();
 			}else{
-				ui.error('此图格已存在');
+				ui.error('此专辑已存在');
 			}
 		});		
 	 

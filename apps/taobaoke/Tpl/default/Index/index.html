@@ -51,27 +51,10 @@ $(function(){
  <div class="content no_bg"><!-- 内容 begin  -->
 
 
-<div class="header-1">
-    <div id="header-2" class="header-2 wrap">
-        <div class="topchannel" id="topchannel">
-            <div id="addShareAct" class="fastcreate">
-                <a onclick="taobaoke.quickpublish()" href="javascript:void(0)" id="addShareButton">新分享</a>
-                <a onclick="setBcTab()" href="javascript:void(0)" id="addBoardButton" class="newShowcase">新图格</a>
-            </div>  
-            <div class="channelmenu">
-                <a id="menu-my-followed" href="###">我关注的</a>
-                <span class="dot"></span> 
-                <a href="###">热门</a>
-                <span id="menu-hot" class="dot"></span>
-                <a href="###">最新</a>
-                <span id="menu-hot" class="dot"></span>
-            </div>
-        </div>
-    </div>
-</div>
+     <include file ="nav" />
 
 
-<!-- <php> var_dump(unserialize($list['data'][9]['type_data'])); </php> -->
+
 
   <div class="main no_l wrap">
     <div class="mainbox">
@@ -84,15 +67,15 @@ $(function(){
                      <div class="myli clearfix">
 
                          <php>if ($_GET['order']){</php>
-                         <a href="{:U('home/Mall/index',array('type'=>$_GET['type'],'order'=>$_GET['order']))}" <if condition="$_GET['ac_id'] eq ''">class="current"</if>><em>全部分类</em></a>
+                         <a href="{:U('taobaoke/Index/index',array('type'=>$_GET['type'],'order'=>$_GET['order']))}" <if condition="$_GET['ac_id'] eq ''">class="current"</if>><em>全部分类</em></a>
                          <php>}else{</php>
-                         <a href="{:U('home/Mall/index')}" <if condition="$_GET['ac_id'] eq '' AND $_GET['web'] eq ''">class="current"</if>><em>全部分类</em></a>
+                         <a href="{:U('taobaoke/Index/index')}" <if condition="$_GET['ac_id'] eq '' AND $_GET['web'] eq ''">class="current"</if>><em>全部分类</em></a>
                          <php>}</php>
 
                          <volist name="acdisplay"  id="acd">
 
 
-                         <a <if condition="$_GET['ac_id'] eq $acd['ac_id']">class="current"</if> href="{:U('home/Mall/index', array('type'=>$_GET['type'],'order'=>$_GET['order'],'ac_id'=>$acd['ac_id']))}"><em>{$acd.title}</em></a>
+                         <a <if condition="$_GET['ac_id'] eq $acd['ac_id']">class="current"</if> href="{:U('taobaoke/Index/index', array('type'=>$_GET['type'],'order'=>$_GET['order'],'ac_id'=>$acd['ac_id']))}"><em>{$acd.title}</em></a>
 
 
                          </volist> 
@@ -108,78 +91,8 @@ $(function(){
 	    
          <!--  copy code start  -->
          <volist name ="list['data']" id='vo'>
-         <php>
-            $title = array();
-            if($vo['type_data']){
-                $title = unserialize($vo['type_data']);
-            }
-            if ($vo['transpond_id']){
-                $bcdata = M('taobaoke')->where("weibo_id=" . $vo['transpond_id'] . "")->findAll() ;
-                $title = unserialize($bcdata[0]['type_data']);
-            }
-         </php>
-<!-- item start -->
-<div class="item">
-    <div id='item_{$vo.weibo_id}' data-bcid="{$vo['bc_id']}"  onmouseout="this.className='haibao'" onmouseover="this.className='haibao hover'" class="haibao">
-        <div class="pic">
-            <div class="ipic">
-                <a title="{$vo.content}" target="_blank" href="###"   >
-                    <php> if($vo['type']==1){</php>
-                    <img  width="{$title[mwidth]}" height="{$title[mheight]}" src="__UPLOAD__/{$title[thumbmiddleurl]}"/>
-                    <php>} else { </php>
-                    <img  width="{$title[mwidth]}" height="{$title[mheight]}" src="{$title[middle_pic]}"/>
-                    <php>}  </php>
-                </a>
-            </div>
-                <php> if($title['price']){ </php>
-        <div class="jiage price-label small-label">
-                <span class="leftfold png"></span>
-                <span class="rightfold png">￥{$title.price}</span> 
-        </div>
-                <php>}</php>
-        <div class="hbc">
-            <php> if($vo["uid"] != $uid){</php>
-            <a class="hb comment-btn"  href="javascript:void(0)">评论</a>
-            <php>} else {</php>
-            <a href="javascript:void(0)" class="hb edit-btn"><span></span>编辑</a>
-            <php>}</php>
-
-            <a  class="hb favourite-btn"  href="javascript:void(0)">
-                <span></span>
-                喜欢
-            </a>
-            <span  class="tou"></span>
-        </div>
-        <a class="hb forward-btn"  href="javascript:void(0)"><span></span>转发</a>
-
-            <php> if($vo["uid"] == $uid){</php>
-            <a href="javascript:void(0)" onclick="ui.confirm(this,'确认要删除此分享?')" callback="weibo.deleted({$vo['weibo_id']})" class="hb2 del-btn item-del-btn" title="删除?"><span></span> </a>
-            <php>}</php>
-    </div>
-    <div class="pincontent">
-        <p class="vocontent">
-        {$vo.content}  <php > if($vo['type']==5) { </php> <u class="_tb"></u><php>}</php>
-        </p>
-        转发：{$vo.transpond} 评论：{$vo.comment} 喜欢：{$vo.favcount}
-    </div>
-    <div class="pin_c">
-        <div class="myavatar floatleft">
-            <space uid="vo.uid">{uavatar=s}</space>
-        </div>
-        <div class="msgCnt">
-            <space uid="vo.uid">{uname}</space>
- 
-            <if condition="$vo['transpond_id']"> 转发到 <else/> 分享到 </if>
-
-            <a href="#TODO_{$vo['weibo_id']}">{$vo.weibo_id|getBname}</a>
-
-            <br/>
-            <span class="mydate">{$vo.ctime|friendlyDate}</span></div>
-         </div>
-    </div>
-</div>
-<!-- item end -->
-</volist>
+         <include file="item" />
+         </volist>
 
 <!-- item start -->
 <!-- 
@@ -238,7 +151,7 @@ $(function(){
 	  <div class="clearfix"></div>
 	<div class="seemore">
 
-	    <p class="pager" id="page_nav">{$list.html}</p>
+    <p class="pager" id="page_nav">{$list.html}</p>
        </div>
       <div class="c"></div>
         </div>

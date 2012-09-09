@@ -19,7 +19,7 @@ return array(
     'SECURE_CODE'       =>  'SECURE12482',
 
     // 默认应用
-    'DEFAULT_APPS'		=> array('api', 'admin', 'home', 'myop', 'weibo', 'wap', 'w3g'),
+    'DEFAULT_APPS'		=> array('api', 'admin', 'home', 'myop', 'weibo', 'wap', 'w3g', 'showfee', 'taobaoke'),
 
     // 是否开启URL Rewrite
     'URL_ROUTER_ON'		=> false,

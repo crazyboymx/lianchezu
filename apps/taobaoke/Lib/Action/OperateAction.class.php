@@ -68,11 +68,10 @@ class OperateAction extends Action{
 
     //喜欢
     function love() {
-        if ( $_POST ) {
-            $favtable = M('taobaoke_favorite') ;
+        if ($_POST) {
+            $favtable = M('taobaoke_fav') ;
             $myfav = $favtable->where("favid=$_POST[id] AND uid=" . $this->mid . "")->findall() ;
             $favcount = M('taobaoke')->where("weibo_id=$_POST[id]")->findall() ;
-
             if ( $myfav ) {
                 echo 1 ;
             }
@@ -83,17 +82,16 @@ class OperateAction extends Action{
                     'favuid' => $favcount[0]['uid'] ,
                     'dateline' => time() ,
                 ) ;
-
                 $favtable->add($favstatus) ;
-                D('Taobaoke')->setInc('favcount' , 'weibo_id=' . $_POST['id'] . '') ;
-                echo 0 ;
+                D('Taobaoke')->setInc('favcount' , 'weibo_id=' . $_POST['id'] . '');
+                echo 0;
             }
         }
     }
 
     //删除喜欢
     function delfav(){
-        if ( D('TaobaokeFavorite')->where("favid=$_POST[id] AND uid=".$this->mid."")->delete() )
+        if ( D('TaobaokeFav')->where("favid=$_POST[id] AND uid=".$this->mid."")->delete() )
         {
             D('Taobaoke')->setDec('favcount' , 'weibo_id=' . $_POST['id'] . '') ;
             echo '1' ;
@@ -101,11 +99,7 @@ class OperateAction extends Action{
         {
             echo 0;
         }
-
-
-
     }
-
 
     //推荐
     function tuijian() {
@@ -138,7 +132,7 @@ class OperateAction extends Action{
     //删除推荐
     function deltuijian(){
         if ( D('tuijian')->where("jianid=$_POST[id55] AND uid=".$this->mid."")->delete() )
-        {       
+        {
             D('Weibo')->setDec('jiancount' , 'weibo_id=' . $_POST['id55'] . '') ;
             echo '1' ;
         }else
@@ -169,7 +163,7 @@ class OperateAction extends Action{
                 ) ;
 
                 $favtable->add($favstatus) ;
-                D('Weibo' , 'weibo')->setInc('fengcount' , 'weibo_id=' . $_POST['id'] . '') ;
+                //D('Weibo' , 'weibo')->setInc('fengcount' , 'weibo_id=' . $_POST['id'] . '') ;
                 echo 0 ;
             }
         }
@@ -310,24 +304,24 @@ class OperateAction extends Action{
         $post['weibo_id']         = intval( $_POST['weibo_id'] );           //回复 微博的ID
         $post['content']          = $_POST['comment_content'];         //回复内容
         $post['transpond']        = intval($_POST['transpond']);            //是否同是发布一条微博
-        echo D('Comment')->doaddcomment($this->mid, $post);
+        echo D('TaobaokeComment')->doaddcomment($this->mid, $post);
         if(intval($_POST['transpond_weibo_id'])){//同时评论给原文作者
             unset($post['reply_comment_id']);
             unset($post['transpond']);
             $post['weibo_id'] = intval($_POST['transpond_weibo_id']);
-            D('Comment')->doaddcomment($this->mid, $post, true);
+            D('TaobaokeComment')->doaddcomment($this->mid, $post, true);
         }
     }
 
     //删除评论
     function docomments(){
-        $result = D('Comment')->deleteComments( $_POST['id'] , $this->mid);
+        $result = D('TaobaokeComment')->deleteComments( $_POST['id'] , $this->mid);
         echo json_encode($result);
     }
 
     //批量删除评论
     function deleteMuleComment(){
-        $result = D('Comment')->deleteMuleComments( $_POST['id'] , $this->mid);
+        $result = D('TaobaokeComment')->deleteMuleComments( $_POST['id'] , $this->mid);
         echo json_encode($result);
     }
 
@@ -335,9 +329,12 @@ class OperateAction extends Action{
     function delete(){
         $arrWeiInfo = D('Taobaoke')->where( 'weibo_id='.$_POST['id'] )->field('isdel')->find();
         if( !$arrWeiInfo['isdel'] ){
-            if( D('Operate')->deleteMini( intval($_POST['id']) , $this->mid ) ){
+            if( D('TaobaokeOperate')->deleteMini( intval($_POST['id']) , $this->mid ) ){
                 X('Credit')->setUserCredit($this->mid,'delete_taobaoke');
                 echo '1';
+            }
+            else {
+                echo '0';
             }
         }else{
             echo '1';
