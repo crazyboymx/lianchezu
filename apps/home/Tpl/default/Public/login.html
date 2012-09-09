@@ -15,9 +15,6 @@ $(document).ready(function(){
 <div class="M_login">
 <div class="slogan" style="background:url({$ts['site']['banner_logo']})">
   <php>if (!empty($hot_topic)) {</php>
-  <div class="talking"> <strong>正在热议：</strong>
-    <volist name="hot_topic" id="vo"><a href="{:U('home/User/topics', array('k'=>$vo['name']))}" target="_blank">{$vo.name}</a></volist>
-  </div>
   <php>}</php>
   <div class="login">
     <div id="ppcontid" class="logform">
@@ -107,7 +104,7 @@ $(document).ready(function(){
       <volist name="hot_user" id="vo">
         <li> 
         	<a target="_blank" href="{:U('home/Space/index',array('uid'=>$vo['uid']))}"> 
-        	<i class="num">{$vo.count}</i> 
+       	<i class="num">{$vo.count}</i> 
         	<strong class="nm">{$vo.uid|getUserName}</strong> 
         	<var><php>echo $key + 1;</php></var> 
         	<span class="avt"> <img alt="{$vo.uid|getUserName}" src="{$vo.uid|getUserFace}"> <i class="png"></i> </span> 
