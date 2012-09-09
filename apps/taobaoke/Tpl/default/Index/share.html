@@ -1,0 +1,94 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/js/jquery.masonry.js"></script>
+<script type="text/javascript" src="../Public/js/jquery.infinitescroll.js"></script>
+<script type="text/javascript" src="../Public/taobaoke.js"></script>
+<script src="../Public/weibo.js" type="text/javascript"></script>  
+<script src="../Public/control_1.js" type="text/javascript"></script>  
+<script src="../Public/control_image.js" type="text/javascript"></script>  
+<link rel="stylesheet" href="../Public/taobaoke.css" type="text/css" />
+<style type="text/css">
+<!--
+.item {
+  width: 215px;
+  float: left;
+  margin:auto;
+
+}
+
+-->
+</style>
+
+<script type="text/javascript">
+$(function(){
+         var speed = 1000;
+         $("#container").masonry({
+            singleMode: true,
+            columnWidth: 245,
+            itemSelector: '.item',
+            animate: false,
+            animationOptions: {
+                duration: speed,
+                queue: false
+            }
+		
+        });
+        $("#container").infinitescroll({
+            navSelector : '#page_nav', // selector for the paged navigation
+            nextSelector : '#page_nav a', // selector for the NEXT link (to page 2)
+            itemSelector : '.item', // selector for all items you'll retrieve
+            loadingImg : '../Public/images/loader.gif',
+            donetext : '已经到最后一页了',
+            debug: false,
+            errorCallback: function() {
+            // fade out the error message after 2 seconds
+            $('#infscr-loading').animate({opacity: .8},2000).fadeOut('normal');
+            }},
+            // call masonry as a callback.
+            function( newElements ) { $(this).masonry({ appendedContent: $(newElements) }); }
+        );
+
+     });
+ </script>
+
+
+ 
+<include file="../Public/top_reg" />
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l wrap">
+    <div class="mainbox">
+      
+        <div class="mainbox_C lh180">
+
+            <include file="nav" />
+            <include file="subnav" />
+       
+		
+      <!--<div class="tab-menu">
+        <ul>
+          <volist name="space_menu" id="vo">
+          	<li><a id="feed_colleague_item" rel="colleague" class="<if condition="$type eq $key">on</if> feed_item" href="{:U('home/Space/index', array('uid'=>$uid, 'bc_id'=>$bc_id ))}"><span>{$vo}</span></a></li>
+          </volist>
+        </ul>
+      </div>-->
+      
+	  
+	  <div class="look_qiang" id="container"> 
+	 
+         <volist name ="list['data']" id='vo'>
+         <include file="item" />
+         </volist>
+	  </div>
+	  <div class="clearfix"></div>
+	  <div class="seemore">
+          <p class="pager" id="page_nav">{$list.html}</p>
+       </div>
+      <div class="c"></div>
+	  
+	  
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" /> 

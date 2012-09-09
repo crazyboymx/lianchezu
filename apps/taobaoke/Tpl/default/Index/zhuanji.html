@@ -1,0 +1,421 @@
+<include file="__THEME__/header" />
+<link href="../Public/taobaoke.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../Public/js/jquery.masonry.js"></script>
+<script type="text/javascript" src="../Public/js/jquery.infinitescroll.js"></script>
+<script type="text/javascript" src="../Public/taobaoke.js"></script>
+<script src="../Public/weibo.js" type="text/javascript"></script>  
+<script src="../Public/control_1.js" type="text/javascript"></script>  
+<script src="../Public/control_image.js" type="text/javascript"></script>  
+<link rel="stylesheet" href="../Public/taobaoke.css" type="text/css" />
+<style type="text/css">
+<!--
+.item {
+  width: 222px;
+  float: left;
+  margin:auto;
+
+}
+/* 个人主页 右栏  */
+
+.myname{
+    font-size: 14px;
+    padding: 5px 0 0;
+    text-align: center;
+}
+.user_follow_detail span  a{
+    color:#888888;
+}
+.user_follow_detail span  a:hover{
+    color:#1a8b74;
+}
+.concernbox {
+    height: 52px;
+    padding-top: 16px;
+}
+
+#myinfo .labelbox {
+    padding: 0 16px;
+    clear: both;
+    margin-bottom: 16px;
+}
+
+h3.title {
+    padding-bottom: 6px;
+    text-align:left;
+}
+h3.title .label {
+    font-size: 14px;
+}
+.taport li {
+    background: none repeat scroll 0 0 #F4F4F4;
+    border-bottom: 1px solid #D4D4D4;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 10px;
+    padding: 0 8px;
+    text-align:left;
+}
+.taport li a {
+    display: block;
+    font-size: 14px;
+    height: 30px;
+}
+.blue {
+    color: #ff076a;
+}
+.taport li a span {
+    font-size: 12px;
+}
+.mylocation{padding:10px; text-align:left;}
+h3.title {
+    padding-bottom: 6px;
+}
+h3.title .label {
+    font-size: 14px;
+}
+.labelbox h3.title .number {
+    color: #666666;
+    font-family: Arial;
+}
+.labelbox .bp li {
+    float: left;
+    font-size: 0;
+    height: 30px;
+    line-height: 0;
+    margin: 0 1px 1px 0;
+    overflow: hidden;
+    width: 30px;
+}
+.ifans{
+    width:190px;
+    text-align:left;
+}
+
+.charm .colonright {
+    background: url("../Public/images/icons.gif") no-repeat scroll left -169px transparent;
+    margin-left: 4px;
+}
+.charm .colonleft {
+    background: url("../Public/images/icons.gif") no-repeat scroll left -149px transparent;
+    margin-right: 4px;
+}
+.charm .colonleft, .charm .colonright {
+    display: inline-block;
+    height: 10px;
+    width: 11px;
+}
+
+.concern-ico, .letter, .concerned-ico, .d-concern-ico, .d-letter, .d-concerned-ico {
+    background: url("../Public/images/attention-mail.gif") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    font-size: 14px;
+    height: 36px;
+    line-height: 36px;
+    padding-left: 63px;
+    vertical-align: middle;
+    width: 81px;
+}
+.d-letter {
+    background-position: -327px -132px;
+    padding: 0;
+    width: 44px;
+}
+
+/* 个人主页 右栏 end  */
+
+/* 个人主页 左栏  */
+
+.sheet {
+    background: url("../Public/images/home.png") no-repeat scroll 15px 13px #FFFFFF;
+    border-left: 3px solid #E71F8D;
+    box-shadow: 0 1px 2px rgba(34, 25, 25, 0.2);
+    height: 47px;
+    margin: 0 1px 1px 0;
+    position:relative;
+}
+.floatright {
+    float: right;
+}
+.floatleft {
+    float: left;
+}
+.tleft {
+    text-align: left;
+}
+.sheet div {
+    padding-right: 6px;
+}
+.sheet span.marginleft {
+    margin-left: 32px;
+    _margin-left: 18px;
+}
+
+.sheet span, .sheet a.sheetname {
+    display: block;
+    float: left;
+    font-size: 14px;
+    height: 39px;
+    padding: 14px 6px 0;
+    
+}
+.sheet span.sheetname, .sheet a.sheetname {
+    font-family: Microsoft Yahei;
+    font-size: 20px;
+    height: 39px;
+    padding-top: 14px;
+}
+
+.sheet .dot {
+    background: url("../Public/images/dot.gif") no-repeat scroll center center transparent;
+}
+.sheet span.pointleft {
+    background: url("../Public/images/pointleft.gif") no-repeat scroll center center transparent;
+    width: 3px;
+}
+.myboard{margin-top:20px;margin-bottom:20px;}
+
+.myboard .mbox {
+    background:#FFFFFF;
+    border-bottom: 3px solid #E71F8D;
+    box-shadow: 0 1px 2px rgba(34, 25, 25, 0.2);
+    display: inline-block;
+    float: left;
+    height: 286px;
+    margin: 14px 13px 0 0;
+    overflow: hidden;
+    padding-bottom: 4px;
+    width: 222px;
+    border-top: 1px solid #f5f5f5;
+}
+.myboard .mbox2 {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-bottom: 3px solid #E71F8D;
+    box-shadow: 0 1px 2px rgba(34, 25, 25, 0.2);
+    display: inline-block;
+    margin: 14px 13px 0 0;
+    overflow: hidden;
+    padding-bottom: 4px;
+    width: 222px;
+}
+
+.followlist {
+    border: 3px solid #FFFFFF;
+    padding: 0 0 0 13px;
+}
+.followlist h3 {
+    padding: 10px 0 6px;
+}
+.myboard .mbox h3 .number {
+    display: none;
+    padding-right:13px;
+}
+.myboard .hover h3 .number {
+    color: #AAAAAA;
+    display: block;
+    padding-right:13px;
+}
+.myboard .hover .followlist {
+    border: 3px solid #E71F8D;
+}
+.myboard .hover .followlist img {
+    filter:alpha(opacity=80);
+    opacity: 0.8;
+}
+
+.myboard .mbox h3 .t {
+    display: inline-block;
+    font-size: 14px;
+    position: relative;
+}
+.myboard .mbox2 h3 .t {
+    display: inline-block;
+    font-size: 14px;
+    position: relative;
+}
+
+.followlist .list a{
+    width:200px; 
+    height:190px;
+    display:block;
+    position:absolute;
+    left:0;top:0;
+}
+.followlist2 .list {
+    height: 65px;
+}
+
+.followlist2 .list a{
+    height:60px;
+}
+
+
+.followlist .list .smallpic,.followlist .list .smallpic_v,.followlist .list .smallpic_music {
+    vertical-align: middle;
+    margin:auto 5px 5px auto;
+    width:60px;
+    height:60px;
+    display: inline-block;
+    text-align:center;
+
+}
+
+.followlist .list {
+    background: url("../Public/images/2.png") no-repeat scroll 0 0 transparent;
+    height: 200px;
+    overflow:hidden;
+    position:relative;
+}
+.followlist .follow {
+    padding: 4px 0 12px;
+}
+a.concern {
+    background-position: left top;
+}
+a.longbutton, span.longbutton {
+    background-image: url("../Public/images/option_btn.gif");
+    background-repeat: no-repeat;
+    color: #ff076a;
+    display: inline-block;
+    font-size: 14px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    vertical-align: middle;
+    width: 190px;
+}
+a.concern:hover{
+    background-position: -207px top;
+}
+
+/* 个人主页 左栏 end  */
+
+
+
+-->
+</style>
+
+
+<script type="text/javascript">
+$(function(){
+         var speed = 1000;
+         $("#container").masonry({
+            singleMode: true,
+            columnWidth: 233,
+            itemSelector: '.item',
+            animate: false,
+            animationOptions: {
+                duration: speed,
+                queue: false
+            }
+		
+        });
+        $("#container").infinitescroll({
+            navSelector : '#page_nav', // selector for the paged navigation
+            nextSelector : '#page_nav a', // selector for the NEXT link (to page 2)
+            itemSelector : '.item', // selector for all items you'll retrieve
+            loadingImg : '../Public/images/loader.gif',
+            donetext : '已经到最后一页了',
+            debug: false,
+            errorCallback: function() {
+            // fade out the error message after 2 seconds
+            $('#infscr-loading').animate({opacity: .8},2000).fadeOut('normal');
+            }},
+            // call masonry as a callback.
+            function( newElements ) { $(this).masonry({ appendedContent: $(newElements) }); }
+        );
+
+		$('#boardIntroFilters a').click(function(){
+            var colorClass = '.' + $(this).attr('class');
+
+            if(colorClass=='.all') {
+                // show all hidden boxes
+                $("#container").children('.invis')
+                .toggleClass('invis').fadeIn(speed);
+            } else {
+                // hide visible boxes
+                $("#container").children().not(colorClass).not('.invis')
+                .toggleClass('invis').fadeOut(speed);
+                // show hidden boxes
+                $("#container").children(colorClass+'.invis')
+                .toggleClass('invis').fadeIn(speed);
+            }
+           $("#container").masonry();
+
+
+            return false;
+        });
+        $(".sd_Comment").click(function( event ){
+            //alert("qqq");
+            $(this).parents(".pin").find(".pinComments").append('fhafkjdsahfdsajfkdsahfsd <br /> alkdsafdka ');
+
+            $("#container").masonry();
+            event.preventDefault();
+        });
+         $(".sd_Comment1").click(function( event ){
+            //alert("qqq");
+            $(this).parents(".pin").find(".pinComments").append('fhafkjdsahfdsajfkdsahfsd <br /> alkdsafdka ');
+
+            
+            event.preventDefault();
+        });
+     });
+	 
+</script>
+
+
+
+
+
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l wrap">
+    <div class="mainbox">
+      
+        <div class="mainbox_C lh180">
+
+        <include file="nav" />  
+        <include file="subnav" />  
+
+		
+            <div style="padding-left:22px;background-color:#fff;">
+			<div class="myboard" id="container">
+			<volist id="vo" name="data">
+			<div class="item">
+				<div class="mbox mt15" onmouseover="this.className='mbox mt15 hover'" onmouseout="this.className='mbox mt15'" ><div class="followlist"><h3 class="mboxTitle"><span class="number floatright">共{$vo.bc_id|getCcCount}张</span><span class="t" title="{$vo.title}">{$vo.title|getShort=###, 10, '...'}</span></h3><div class="list">
+				<a href="{:U('taobaoke/Index/index',array('uid'=>$uid, 'bc_id'=>$vo['bc_id']))}">
+				<php>if(getCcCount($vo['bc_id']) == 0 ){</php>
+				<img src="../Public/images/board_thumb.jpg">
+				<php>}else{</php>
+				{$vo.bc_id|getCcpic}
+                <php>}</php>
+                <div class="c clear"></div>
+				</a></div>
+				<div class="follow">
+				<session name="userInfo">
+					<php>if( $vo['uid'] == $mid ){</php><a class="longbutton concern" href="javascript:void(0);" onclick="setBcTab('{$vo.bc_id}')">编辑</a>
+				<php>}  </php>
+				<else/>
+				</session>
+				</div>
+				</div>
+				</div>
+				
+			</div>
+           </volist>     
+        
+           </div> 
+            <div class="c clear"></div>
+           </div> 
+        <div class="seemore">
+         <div class="page" id="page_nav">{$html}</div>
+		 </div>
+        
+                
+      
+      <div class="c"></div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" /> 

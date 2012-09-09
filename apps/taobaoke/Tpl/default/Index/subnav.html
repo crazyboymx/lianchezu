@@ -1,0 +1,81 @@
+<style type="text/css">
+
+.sheet {
+    background: url("../Public/images/home.png") no-repeat scroll 15px 13px #FFFFFF;
+    border-left: 3px solid #E71F8D;
+    box-shadow: 0 1px 2px rgba(34, 25, 25, 0.2);
+    height: 47px;
+    margin: 0 1px 1px 0;
+    position:relative;
+}
+.floatright {
+    float: right;
+}
+.floatleft {
+    float: left;
+}
+.tleft {
+    text-align: left;
+}
+.sheet div {
+    padding-right: 6px;
+}
+.sheet span.marginleft {
+    margin-left: 32px;
+    _margin-left: 18px;
+}
+
+.sheet span, .sheet a.sheetname {
+    display: block;
+    float: left;
+    font-size: 14px;
+    height: 39px;
+    padding: 14px 6px 0;
+    
+}
+.sheet span.sheetname, .sheet a.sheetname {
+    font-family: Microsoft Yahei;
+    font-size: 20px;
+    height: 39px;
+    padding-top: 14px;
+}
+
+.sheet .dot {
+    background: url("../Public/images/dot.gif") no-repeat scroll center center transparent;
+}
+.sheet span.pointleft {
+    background: url("../Public/images/pointleft.gif") no-repeat scroll center center transparent;
+    width: 3px;
+}
+</style>
+<div class="sheet cf">
+    <div class="floatright h_left">
+
+        <span>
+
+
+            <a class="blue" href="{:U('taobaoke/Index/zhuanji',array('uid'=>$uid))}"> {$uid|getBcuidCount}个专辑</a>
+
+
+        </span>
+        <span class="dot"></span>
+        <span>
+
+
+            <a class="blue" href="{:U('taobaoke/Index/share',array('uid'=>$uid))}"> {$spaceCount.miniblog|intval}个分享</a>
+
+
+        </span>
+        <span class="dot"></span>
+        <span class="like">
+            <php>$fav_num = getfavnum($uid)</php>
+            <?php $faved=M('fav')->where('favuid='.$uid.'')->count();?>
+            <a class="blue" href="{:U('taobaoke/Index/share',array('uid'=>$uid,'type'=>'fav'))}">{$fav_num}个喜欢</a>
+
+        </span>
+
+    </div>
+
+    <span id="fix-string05" class="sheetname marginleft">{$uid|getUserName}的购物分享</span>
+</div>
+		
