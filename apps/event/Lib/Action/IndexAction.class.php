@@ -141,7 +141,7 @@ class IndexAction extends Action {
      * @return void
      */
     private function _createLimit($uid){
-		$config = getConfig();
+		$config = getConfig_event();
 
 		if(!$config['canCreate']){
 			$this->error('禁止发起'.$this->appName);
@@ -204,7 +204,7 @@ class IndexAction extends Action {
         list( $opts['province'],$opts['city'],$opts['area'] ) = explode(" ",$_POST['city']);
 
         //得到上传的图片
-        $config     =   getConfig();
+        $config     =   getConfig_event();
  		$options['userId']		=	$this->mid;
 		$options['max_size']    =   $config['photo_max_size'];
 		$options['allow_exts']	=	$config['photo_file_ext'];
@@ -403,7 +403,7 @@ class IndexAction extends Action {
         list( $opts['province'],$opts['city'],$opts['area'] ) = explode( " ",$_POST['city']);;
 
         //得到上传的图片
-        $config     =   getConfig();
+        $config     =   getConfig_event();
  		$options['userId']		=	$this->mid;
 		$options['max_size']    =   $config['photo_max_size'];
 		$options['allow_exts']	=	$config['photo_file_ext'];
@@ -561,7 +561,7 @@ class IndexAction extends Action {
         //检查是否访问者有权限上传图片
         $action = $this->event->hasMember( $this->mid,$eventId );
 
-        switch ( getConfig( 'membel' ) ) {
+        switch ( getConfig_event( 'membel' ) ) {
             case 0:
                 ('attention' == $action['action'] || false == $action || 1 != $action['status']) && $this->error( "只允许{$this->appName}参与者上传照片" );
                 break;
@@ -598,7 +598,7 @@ class IndexAction extends Action {
         //检查是否访问者有权限上传图片
         $action = $this->event->hasMember( $this->mid,$eventId );
 
-        switch ( getConfig( 'membel' ) ) {
+        switch ( getConfig_event( 'membel' ) ) {
             case 0:
                 ('attention' == $action['action'] || false == $action || 1 != $action['status']) && $this->error( "只允许{$this->appName}参与者上传照片" );
                 break;

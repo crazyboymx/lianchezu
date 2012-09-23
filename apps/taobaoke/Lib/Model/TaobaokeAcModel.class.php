@@ -1,14 +1,15 @@
 <?php
-class TaobaokeAcModel extends BaseModel{
+require_once(SITE_PATH.'/apps/taobaoke/Lib/Model/TaobaokeBaseModel.class.php');
+class TaobaokeAcModel extends TaobaokeBaseModel{
     var $tableName = 'taobaoke_ac';
 
     public function getAllAc(){
-        return $this->field('id,name')->findAll();
+        return $this->order("display_order ASC")->findAll();
     }
 
     public function getAllAcName(){
         //先从缓存里面获取
-        $result = $this->field('id,name')->findAll();
+        $result = $this->field('id,name')->order("display_order ASC")->findAll();
 
         $newresult = array();
         foreach ( $result as $value ){

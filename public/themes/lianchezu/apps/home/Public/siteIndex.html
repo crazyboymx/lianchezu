@@ -1,0 +1,240 @@
+<include file="__THEME__/header" />
+<link href="../Public/login.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="../Public/js/jquery.sohu.tw.min.0.0.4.js"></script>
+<script type="text/javascript" src="../Public/js/tw.new.index.min.0.0.10.js"></script>
+<script type="text/javascript" src="../Public/js/slides.min.jquery.js"></script>
+<script>
+$(document).ready(function(){
+	setInterval(function(){
+		if('' != $('#email').val())$('#_login_email_label').hide();
+		if('' != $('#password').val())$('#_login_password_label').hide();
+	}, 100);
+});
+</script>
+
+
+<div class="M_login">
+    <include file="__THEME__/apps/home/Public/loginbar" />
+    <include file="__THEME__/apps/home/Public/weibohot" />
+
+    <div class="login_main" style="height:auto;">
+
+        <div class="colL" style="height:432px;overflow:hidden;">
+            <div class="tit">
+              <div class="opt">成员数</div>
+              <h3>热门家族</h3>
+            </div>
+            <dl class="fans_toplist">
+                <volist name="hot_group_list" id="hot_group">
+                  <php>if($key>2){ $class='no'; }else{ $class='no top'.($key+1); }</php>
+                  <dd>
+                    <span>{$hot_group['membercount']}</span>
+                    <em class="{$class}">{$key+1}</em>
+                    <a href="{:U('group/Group/index', array('gid'=>$hot_group['id']))}">
+                      <img src="__ROOT__/thumb.php?w=25&h=25&t=f&url={$hot_group['logo']|get_photo_url}" class="userPhoto" />
+                    </a>
+                    <a target="_self" class="username" href="{:U('group/Group/index', array('gid'=>$hot_group['id']))}">{$hot_group['name']|getShort=6,'...'} </a>
+                  </dd>
+                </volist>
+            </dl>
+        </div>
+
+        <div class="colC" style="height:432px;overflow:hidden;">
+            <div class="tit" style="border-bottom: 1px solid #EFEFEF;">
+              <div class="opt">总费用</div>
+              <h3>热门晒费用</h3>
+            </div>
+            <ul class="search" style="margin:0px 20px;width:auto;">
+                <volist name="hot_showfee_list" id="vo">
+                    <li class="lineD_btm" style="height:90px;padding-top:5px;">
+
+                    <div class="left" style="width: 90px;">
+                        <span class="pic80">
+                            <a href="{:U('showfee/Index/showfeeDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}">
+                                <img src="{$vo['cover']}" />
+                            </a>
+                        </span>
+                    </div>
+
+                    <div class="right rmenu" style="width: 150px;text-align:right;"><span style='color:red;'>￥</span><b style="font-size:40px;color:red;font-family:Constantia;">{$vo.totalFee}</b>
+                        <php > if($vo['uid'] == $mid) {</php> <a href="{:U('showfee/Index/editShowfee',array('uid'=>$mid,'id'=>$vo['id']))}" style="display:inline;padding-left:0px;margin-left:5px;">编辑</a> <php> } </php>
+                    </div>
+                    <div style="margin:0 70px 0 90px;">
+                        <h3>
+                            <a href="{:U('showfee/Index/showfeeDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}"> {$vo['title']}</a>
+                        </h3>
+                        <p><span class="cGray2" style="display:none;">费用介绍：</span>{$vo['explain']|getShort=16,'...'} </p>
+                        <p>品牌：<a href='{:U('showfee/Index/index',array('cid'=>$vo['carBrandId']))}'>{$vo.carBrandName}</a>,
+                        车型：{$vo.carTypeName},
+                        年代：{$vo.carTime}</p>
+                    </div>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+
+        <div class="colR" style="height:432px;overflow:hidden;">
+            <div class="tit" style="border-bottom: 1px solid #EFEFEF;">
+              <h3>热门自驾游</h3>
+            </div>
+            <ul class="search">
+              <volist name="hot_event_list" id="vo">
+                <li class="lineD_btm" id="event_{$vo['id']}" style="height:90px;padding-top:5px;">
+                  <div class="left" style="width: 90px;"><span class="pic80"><a href="{:U('event/Index/eventDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}"><img src="{$vo['cover']}" /></a></span></div>
+                  <div style="margin:0 0px 0 90px;">
+                    <h3><a href="{:U('event/Index/eventDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}">{$vo['title']|getShort=16,'...'}</a><span class="cGray2 f12px">[{$vo['type']}]</span></h3>
+                    <p><span class="cGray2">活动时间：</span>[{$vo['time']}] </p>
+                    <p><span class="cGray2">活动地点：</span>{$vo['address']} {$vo['area']}</p>
+                    <p><span class="cGray2">发起人：</span><space uid="vo.uid" >{uname}</space></p>
+                    <php> if( false == empty( $vo['users'] ) ){ </php>
+                    <p><span class="cGray2">参与者：</span>
+                      <php> foreach( $vo['users'] as $so ) { </php>
+                      <a href="{:U('home/space/',array('uid'=>$so['uid']))}" >{$so['uid']|getUserName}</a>
+                      <php> } </php>
+                    </p>
+                    <php> } </php>
+                  </div>
+                </li>
+              </volist>
+            </ul>
+        </div>
+        <div class="clear"></div>
+
+    </div>
+   
+    <!-- 晒货 start --> 
+    <style type="text/css">
+        .posterbar{height:auto;}
+        .posterbarinner{margin:10px;margin-top:0px;}
+        .posterbarinner .tit{margin-bottom:10px;}
+        .posterbarinner ul li {float:left;*display:inline;width:49%;margin:4px 0px;}
+    </style>
+    <div class="login_main posterbar">
+        <div class="posterbarinner">
+            <div class="tit">
+              <div class="opt"><a href="{:U('poster/Index/index')}">更多</a></div>
+              <h3>晒货</h3>
+            </div>
+            <ul>
+                <volist name="hot_poster_list" id="p" >
+                    <li> 
+                        [<a href="{:U('poster/Index/index')}&pid={$p.pid}">{$p.type}</a>] 
+                        <a href="{:U('poster/Index/posterDetail')}&id={$p.id}">{$p.title|getShort=28,'...'}({$p.cTime|friendlyDate})</a> 
+                    </li>
+                </volist>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <!-- 晒货 end --> 
+
+    <!-- 购物 start  -->
+    <style type="text/css">
+        .taobaokebar{height:auto;_overflow:hidden;}
+        .taobaokeinner{margin:0px 10px;}
+    </style>
+    <div class="login_main taobaokebar">
+        <div class="taobaokeinner">
+
+<style type="text/css">
+.greenline {
+    border-bottom: 1px solid #cc6699;
+    display: inline-block;
+    height: 41px;
+    line-height: 41px;
+    padding-right: 20px;
+}
+.item-title {
+    color: #333333;
+    display: inline-block;
+    font-family: "Microsoft YaHei","微软雅黑","黑体";
+    font-size: 18px;
+}
+.gather-item li {
+    float: left;
+    height: 160px;
+    overflow: hidden;
+    width: 312px;
+}
+.showimg {
+    float: left;
+    width: 140px;
+    height:140px;
+    overflow:hidden;
+}
+.showsay {
+    display: inline;
+    float: left;
+    margin-left: 10px;
+    width: 124px;
+}
+.showsay .summary {
+    color: #888888;
+    height: 82px;
+}
+.showsay .num {
+    height: 30px;
+}
+
+.showsay p {
+    color: #888888;
+}
+.gather-item h2, .boxnoun h2, .hot-item h2, .goodshop h2 {
+    background: url("../Public/images/line_04.gif") repeat-x scroll left bottom transparent;
+    height: 43px;
+    margin: 0 23px 16px 0;
+}
+</style>
+        <volist name ="hot_taobaoke_list" id="tc">
+        <div class="gather-item cf">
+            <h2><span class="greenline size_3"><span class="item-title">{$tc.ac_title}</span></span></h2>
+            <ul>
+            <volist name="tc.list" id="vo">
+         <php>
+            $title = array();
+            if($vo['type_data']){
+                $title = unserialize($vo['type_data']);
+            }
+            if ($vo['transpond_id']){
+                $bcdata = M('taobaoke')->where("weibo_id=" . $vo['transpond_id'] . "")->findAll() ;
+                $title = unserialize($bcdata[0]['type_data']);
+            }
+         </php>
+                <li>
+                    <div class="showimg">
+                        <a target="_blank" title="{$vo.content}" href="{:U('taobaoke/Index/detail',array(id=>$vo['weibo_id']))}">
+                        <php> if($vo['type']==1){</php>
+                        <img  width="140" class="mycpic" src="__UPLOAD__/{$title[thumbmiddleurl]}"/>
+                        <php>} else { </php>
+                        <img  width="140" class="mycpic" src="{$title[middle_pic]}"/>
+                        <php>}  </php>
+                    </a>
+                    </div>
+                    <div class="showsay">
+                        <p class="summary">
+                            <space uid="vo.uid">{uname}</space>
+                            <font color="#E71F8D">￥{$title.price}</font><br/>
+                            <a target="_blank" class="gray" href="{:U('taobaoke/Index/detail',array(id=>$vo['weibo_id']))}">
+                            {$vo.content} 
+                            </a>
+                        </p>
+                        <p>
+        转发：{$vo.transpond}<br/> 评论：{$vo.comment} <br/>喜欢：{$vo.favcount}
+                        </p>
+                    </div>
+                </li>
+                </volist>
+            </ul>
+            <div class="clear"></div>
+        </volist>
+
+
+
+        </div>
+    </div>
+    <!-- 购物 end  -->
+</div>
+<include file="__THEME__/footer" />
+ 

@@ -62,6 +62,7 @@ return array (
    'login_success' => '登录成功',
    'login_error' => '登录失败',
    'login' => '登录',
+   'siteIndex' => '首页',
    'not_authorised' => '授权失败',
    'user_information_filed' => '获取用户信息失败',
    'third_party_account_login' => '第三方账号登录',

@@ -138,3 +138,22 @@ VALUES
     ('', 'add_taobaoke', '添加购物记录', 'showfee', '{action}{sign}了{score}{typecn}', '10', '10'),
     ('', 'delete_taobaoke', '删除购物记录', 'showfee', '{action}{sign}了{score}{typecn}', '-10', '-10');
 
+# 增加默认插件
+INSERT INTO `ts_taobaoke_plugin` (`plugin_id`, `plugin_name`, `icon_pic`, `plugin_path`) VALUES
+(1, '图片', '', 'image'),
+(3, '视频', '', 'video'),
+(4, '音乐', '', 'music'),
+(5, '商品', '', 'goods'),
+(6, '群组宝贝', '', 'groupgoods'),
+(7, '群组图片', '', 'groupimage'),
+(8, '搭配', '', 'dapei'),
+(9, '晒货', '', 'shaihuo');
+
+# 增加初始购物AC类别
+INSERT INTO `ts_taobaoke_ac` (`ac_id`, `title`, `ctime`, `display_order`, `title_other`, `is_active`) VALUES
+(1, '内饰', 1348370554, 1, '内饰', 1),
+(2, '外饰', 1348370554, 2, '外饰', 1),
+(3, '清洁', 1348370554, 3, '清洁', 1),
+(4, '电器', 1348370554, 4, '电器', 1),
+(5, '专车专用', 1348370554, 5, '专车专用', 1),
+(6, '品牌', 1348370554, 6, '品牌', 1);

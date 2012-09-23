@@ -88,7 +88,7 @@ class AdminAction extends AdministratorAction {
     public function addBrand() {
         $map['name'] = t($_REQUEST['name']);
         //得到上传的图片
-        $config = getConfig();
+        $config = getConfig_sf();
         $options['userId'] = $this->mid;
         $options['max_size'] = $config['photo_max_size'];
         $options['allow_exts'] = $config['photo_file_ext'];
@@ -107,7 +107,7 @@ class AdminAction extends AdministratorAction {
         $map['name'] = t($_REQUEST['name']);
         $map['id'] = intval(t($_REQUEST['id']));
         //得到上传的图片
-        $config = getConfig();
+        $config = getConfig_sf();
         $options['userId'] = $this->mid;
         $options['max_size'] = $config['photo_max_size'];
         $options['allow_exts'] = $config['photo_file_ext'];
@@ -152,7 +152,7 @@ class AdminAction extends AdministratorAction {
         $map['name'] = t($_REQUEST['name']);
         $map['brandId'] = intval(t($_REQUEST['brandId']));
         //得到上传的图片
-        $config = getConfig();
+        $config = getConfig_sf();
         $options['userId'] = $this->mid;
         $options['max_size'] = $config['photo_max_size'];
         $options['allow_exts'] = $config['photo_file_ext'];
@@ -172,7 +172,7 @@ class AdminAction extends AdministratorAction {
         $map['brandId'] = intval(t($_REQUEST['brandId']));
         $map['id'] = intval(t($_REQUEST['id']));
         //得到上传的图片
-        $config = getConfig();
+        $config = getConfig_sf();
         $options['userId'] = $this->mid;
         $options['max_size'] = $config['photo_max_size'];
         $options['allow_exts'] = $config['photo_file_ext'];
@@ -232,6 +232,18 @@ class AdminAction extends AdministratorAction {
             }
         }else {
             echo $result;
+        }
+    }
+
+    //推荐操作
+    public function doChangeIsHot(){
+        $showfee['id'] = array('in', $_REQUEST['id']); //要推荐的id.
+        $act  = $_REQUEST['type'];  //推荐动作
+        $result  = $this->showfee->setIsHot($showfee,$act);
+        if( false != $result){
+            echo 1;     //推荐成功
+        }else{
+            echo -1;    //推荐失败
         }
     }
 }

@@ -5,7 +5,7 @@
 
     <div class="left" style="width: 90px;">
         <span class="pic80">
-            <a href="{:U('event/Index/showfeeDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}">
+            <a href="{:U('showfee/Index/showfeeDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}">
                 <img src="{$vo['cover']}" />
             </a>
         </span>
@@ -16,10 +16,10 @@
     </div>
     <div style="margin:0 70px 0 90px;">
         <h3>
-            <a href="{:U('//showfeeDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}"> {$vo['title']}</a>
+            <a href="{:U('showfee/Index/showfeeDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}"> {$vo['title']}</a>
         </h3>
         <p><span class="cGray2" style="display:none;">费用介绍：</span>{$vo['explain']} </p>
-        <p>品牌：<a href='{:U('//index',array('cid'=>$vo['carBrandId']))}'>{$vo.carBrandName}</a>,
+        <p>品牌：<a href='{:U('showfee/Index/index',array('cid'=>$vo['carBrandId']))}'>{$vo.carBrandName}</a>,
         车型：{$vo.carTypeName},
         年代：{$vo.carTime}</p>
     </div>

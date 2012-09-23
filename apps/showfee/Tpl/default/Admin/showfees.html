@@ -70,6 +70,17 @@ ctrl.prototype = {
             }
             $("#formedit").submit();
         });
+    },
+    doChangeIsHot:function(id,isHot){
+        var act={"0":"recommend","1":"cancel"}[isHot];
+        $.post('__URL__&act=doChangeIsHot',{id:id,type:act},function( text ){
+              if( text == 1 ){
+              ui.success( "操作成功" );
+              window.location.reload();
+           }else{alert(text);
+              ui.error( "设置失败" );
+           }
+        });
     }
 }
 var c = null;
@@ -181,6 +192,15 @@ logo上传:<br/>
             <td> {$row.carTime}  </td>
             <td>
                 <a href="javascript:void(0);" style="display:none;" onclick="c.edit({$row.id})">编辑</a>
+                <php >
+                    if($row['isHot']=="1"){
+                        echo "<a href='javascript:;' onclick='c.doChangeIsHot(".$row["id"].",".$row["isHot"].")' >取消推荐</a>";
+                    }else{
+                        echo "<a href='javascript:;' onclick='c.doChangeIsHot(".$row["id"].",".$row["isHot"].")' >推荐</a>";
+                    }
+                </php>
+                &nbsp;
+                &nbsp;
                 <a href="javascript:void(0);" onclick="c.del({$row.id})">删除</a>
             </td>
           </tr>

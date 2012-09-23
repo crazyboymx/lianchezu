@@ -4,7 +4,7 @@
         <ul class="navi_list fl">
             <li class="" style="padding-right:2px;">
             	<a href="{:U('home')}" style="margin:0px;">&nbsp;</a>
-            	<a href="{:U('home')}" class="import "  style="margin:0px;">首页</a>
+            	<a href="{:U('home/Public/siteIndex')}" class="import "  style="margin:0px;">首页</a>
                 <a href="{:U('home')}"  style="margin:0px;">&nbsp;</a>
             </li>
             <li class="split">
@@ -18,12 +18,13 @@
             
             <li class="split">
                 <a href="{:U('taobaoke/Index/index')}" class="import" >购物</a>
-                <a href="{:U('home')}" >内饰</a>
-                <a href="{:U('home')}">外饰</a>
-                <a href="{:U('home')}">清洁</a>
-                <a href="{:U('home')}">电器</a>
-                <a href="{:U('home')}">专车专用</a>
-                <a href="{:U('home')}">品牌</a>
+                <php >
+                    $taobaokeac = D("TaobaokeAc","taobaoke");
+                    $acList = $taobaokeac->getAllAc();
+                </php>
+                <volist name="acList" id="ac" >
+                    <a href="{:U('taobaoke/Index/index')}&ac_id={$ac.ac_id}" >{$ac.title}</a>
+                </volist>
             </li>
                                 
             <li id="top_search_form" class="top_search">

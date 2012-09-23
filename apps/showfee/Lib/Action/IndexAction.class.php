@@ -83,7 +83,7 @@ class IndexAction extends Action {
     }
 
     private function _createLimit($uid){
-        $config = getConfig();
+        $config = getConfig_sf();
 
         if(!$config['canCreate']){
             $this->error('禁止发起'.$this->appName);

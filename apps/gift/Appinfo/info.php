@@ -39,11 +39,11 @@ return array(
 	'SIDEBAR_SUPPORT_SUBMENU'	=> '0',
 
 	// 作者名 [必填]
-	'AUTHOR_NAME'				=> 'sam',
+	'AUTHOR_NAME'				=> 'lianchezu',
 	// 作者Email [必填]
-	'AUTHOR_EMAIL'				=> 'haixia@thinksns.com',
+	'AUTHOR_EMAIL'				=> 'lechezu@163.com',
 	// 作者主页 [选填]
-	'AUTHOR_HOMEPAGE_URL'		=> '',
+	'AUTHOR_HOMEPAGE_URL'		=> 'www.lianchezu.com',
 	// 贡献者姓名 [选填]
-	'CONTRIBUTOR_NAMES'			=> '赵杰，陈伟川，杨德升',
+	'CONTRIBUTOR_NAMES'			=> 'lianchezu',
 );

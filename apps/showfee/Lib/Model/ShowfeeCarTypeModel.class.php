@@ -1,5 +1,7 @@
 <?php
-class ShowfeeCarTypeModel extends BaseModel{
+require_once(SITE_PATH.'/apps/showfee/Lib/Model/ShowfeeBaseModel.class.php');
+
+class ShowfeeCarTypeModel extends ShowfeeBaseModel{
     public function getAllCarType(){
         //先从缓存里面获取
         $result = $this->field('id,name,brandId,coverId')->findAll();
@@ -25,7 +27,7 @@ class ShowfeeCarTypeModel extends BaseModel{
     public function getCarTypesByBrand($brandId){
         /*$result = $this->where(" brandId ='".$brandId."'")->field("id,name,coverId")->find();
         foreach ( $result as $value ){
-            $value['cover'] = getCover($value["coverId"]);
+            $value['cover'] = getCover($value["coverId"], 'showfee');
         }
         return $result;*/
         //return $this->getList(array("brandId"=>$brandid),"id",9999);
@@ -64,7 +66,7 @@ class ShowfeeCarTypeModel extends BaseModel{
         if( empty( $map ) )
             throw new ThinkException( "不能是空条件删除" );
         //如果这个分类下有内容，就不允许删除
-        $id   = D( 'Showfee' )->field( 'distinct(carType)' )->findAll();
+        $id   = D('Showfee', 'showfee')->field( 'distinct(carType)' )->findAll();
         $temp = array();
 
         foreach ( $id as $value ){
@@ -110,11 +112,11 @@ class ShowfeeCarTypeModel extends BaseModel{
     }
 
     public function appendContent($data) {
-        $carBrandM = D('ShowfeeCarBrand');
+        $carBrandM = D('ShowfeeCarBrand', 'showfee');
         $brand = $carBrandM->getCarBrand($data['brandId']);
         $data['brandName'] = isset($brand['name']) ? $brand['name'] : '';
         $data['brandCover'] = $brand['cover'];
-        $data['cover'] = getCover($data['coverId']);
+        $data['cover'] = getCover($data['coverId'], 'showfee');
         return $data;
     }
 

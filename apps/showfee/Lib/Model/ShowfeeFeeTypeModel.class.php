@@ -1,5 +1,7 @@
 <?php 
-class ShowfeeFeeTypeModel extends BaseModel{
+require_once(SITE_PATH.'/apps/showfee/Lib/Model/ShowfeeBaseModel.class.php');
+
+class ShowfeeFeeTypeModel extends ShowfeeBaseModel{
     public function getAllFeeType(){
         //先从缓存里面获取
         $result = $this->field('id,name')->findAll();
@@ -24,7 +26,7 @@ class ShowfeeFeeTypeModel extends BaseModel{
         if( empty( $map ) )
             throw new ThinkException( "不能是空条件删除" );
         //如果这个分类下有内容，就不允许删除
-        $id   = D( 'Event' )->field( 'distinct(FeeType)' )->findAll();
+        $id   = D('Showfee', 'showfee')->field( 'distinct(FeeType)' )->findAll();
         $temp = array();
 
         foreach ( $id as $value ){

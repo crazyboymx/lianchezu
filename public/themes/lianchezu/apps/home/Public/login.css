@@ -37,7 +37,7 @@
 .slogan {height:301px;padding:4px 0 0;margin:0 auto;*zoom:1;position:relative;z-index:9; text-align:left; width:960px;background:url(images/slogan_bg.jpg) no-repeat 0 0; border:1px solid #D0D0D0; border-bottom:0 none}
 .slobgs {overflow:hidden;width:960px;margin:0 auto -350px;height:350px; }
 
-.login {height:326px;background:url(images/login.png) no-repeat 0 -326px;_background:url(images/login.gif) no-repeat left -326px;width:253px; position:absolute; left:10px; top:-12px}
+.login {height:326px;background:url(images/login.png) no-repeat 0 -326px;_background:url(images/login.gif) no-repeat left -326px;width:253px; position:absolute; left:28px; top:-12px}
 .regbtn {margin:27px auto 14px;width:226px;position:relative}
 .regbtn a {display:block;background-image:url(images/141_ie.png);background-repeat:no-repeat;width:226px;height:62px;text-indent:-999em}
 .regbtn a:hover {background-position:0 -64px;text-decoration:none}
@@ -120,7 +120,7 @@ background-repeat:no-repeat;}
 .colC .twis {margin:0 20px;height:450px;overflow:hidden}
 .colC .twis .list_weibo{border-top:#eee solid 1px;padding:10px 0}
 .colC .twis .list_weibo dd img{vertical-align:top}
-.colC .mask {height:50px;background:url(images/148.png) repeat-x left bottom;position:absolute;left:0;bottom:0;width:100%;z-index:100}
+.colC .mask {height:50px;position:absolute;left:0;bottom:0;width:100%;z-index:100}
 
 
 .ugc,.ps,.pgc,.uri,.url,.nm a,.nm b,.atfake,.drop3 li,.twit,.twic {word-wrap:break-word;word-break:break-all}
@@ -134,13 +134,12 @@ background-repeat:no-repeat;}
 .tpl li {height:45px;padding:0 3px; overflow:hidden; float:left; width:211px;border-top:#eee solid 1px}
 .tpl li a {display:block;height:44px}
 .tpl li a:hover {text-decoration:none;background:#f8f8f8}
-.tpl li.hover {background:#f8f8f8 url(images/hr_dt_b0.gif) repeat-x 0 bottom}
 .tpl li .num {display:block;width:56px;float:right;color:#999;text-align:right;padding-top:11px}
 .tpl li var {display:block;width:32px;height:32px;margin:0 0 -32px -32px;position:relative;background:url(images/147.png) no-repeat;left:32px;top:6px;font-size:20px;font-family:Tahoma;text-align:center;line-height:32px;color:#b1b0b0}
 .tpl li a:hover var {background-position:0 -32px;color:#fff}
 .tpl li .avt {margin:6px 0 6px 37px;width:32px;height:32px;display:block}
 .tpl li .avt img {width:32px;height:32px}
-.tpl li .avt .png {z-index:0;width:32px;height:32px;background:url(images/146.png) no-repeat;_background:url(images/146_ie.png) no-repeat;margin:-32px 0 0}
+.tpl li .avt .png {z-index:0;width:32px;height:32px;margin:-32px 0 0}
 .tpl li .nm {display:block;float:right;width:6em;text-align:left;padding-top:11px;overflow:hidden}
 .tpl li em {margin:0 95px -43px 40px}
 

@@ -251,7 +251,7 @@ class GroupModel extends Model {
 		// 成员数权值系数、统计
 		$gid_map = $_gids ? ' AND id IN (' . implode(',', $_gids) . ') ' : '';
     	$factor['membercount'] = 3;
-    	$count['membercount'] = $hot_list = $this->field('id,id AS gid,name,logo,membercount,ctime')
+    	$count['membercount'] = $hot_list = $this->field('id,id AS gid,name,intro,logo,membercount,ctime')
     					 ->where('status=1 AND is_del=0 ' . $gid_map)
     					 ->findAll();
 

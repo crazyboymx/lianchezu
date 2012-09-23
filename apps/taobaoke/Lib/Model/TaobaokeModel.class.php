@@ -1,5 +1,6 @@
 <?php
-class TaobaokeModel extends BaseModel{
+require_once(SITE_PATH.'/apps/taobaoke/Lib/Model/TaobaokeBaseModel.class.php');
+class TaobaokeModel extends TaobaokeBaseModel{
     var $tableName = 'taobaoke';
 
     /**
@@ -366,5 +367,25 @@ class TaobaokeModel extends BaseModel{
         D('User', 'home')->setUserObjectCache($ids['uid']);
 
         return true;
+    }
+
+    public function getHotList($ac_id, $limit = 6) {
+        $time_range = model('Xdata')->get('square:comment');
+        if(!is_numeric($time_range) || $time_range<1)
+            $time_range = 30;
+        $now = time();
+        $yesterday  = mktime(0,0,0,date("m"),date("d"),date("Y"))-$time_range*24*3600;
+        $ac_id = intval($ac_id);
+        $dalei=D('TaobaokeBc', 'taobaoke')->field('bc_id')->where(array('ac_id'=>$ac_id))->findAll();
+        foreach ($dalei as $dl)
+        {
+            $dl_arr=$dl['bc_id'].',';
+            $dl_a.=$dl_arr;
+        }
+        $dl_as = substr($dl_a,0,strlen($dl_a)-1);
+        $map = "bc_id in ($dl_as) AND isdel=0 AND ctime>{$yesterday} AND ctime<{$now}";
+        $order = "favcount DESC";
+        $limit = intval($limit);
+        return $this->where($map)->limit($limit)->order($order)->findAll();
     }
 }

@@ -116,7 +116,7 @@ class TaobaokeOperateModel extends TaobaokeModel{
             $arr_MaskHotTopic = explode('|', $maskHotTopic);
             foreach($arr_MaskHotTopic as $v){
                 $map .= " AND content NOT LIKE '%#{$v}#%' ";
-            }	
+            }
         }
 
         $list = $this->where($map)->order($order)->findPage(20);
@@ -425,7 +425,7 @@ class TaobaokeOperateModel extends TaobaokeModel{
 
         foreach($list as $k=>$v){
             $result[$k] = $this->getOneApi('', $v);
-        }	
+        }
 
         return $result;
     }

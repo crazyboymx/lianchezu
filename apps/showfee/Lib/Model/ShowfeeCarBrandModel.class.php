@@ -1,5 +1,7 @@
 <?php
-class ShowfeeCarBrandModel extends BaseModel{
+require_once(SITE_PATH.'/apps/showfee/Lib/Model/ShowfeeBaseModel.class.php');
+
+class ShowfeeCarBrandModel extends ShowfeeBaseModel{
     public function getAllCarBrand(){
         //先从缓存里面获取
         $result = $this->field('id,name,coverId')->findAll();
@@ -36,8 +38,8 @@ class ShowfeeCarBrandModel extends BaseModel{
         if( empty( $map ) )
             throw new ThinkException( "不能是空条件删除" );
         //如果这个车标下有内容或者有车型，就不允许删除
-        $id   = D( 'Showfee' )->field( 'distinct(carBrand)' )->findAll();
-        $tid  = D( 'ShowfeeCarType' )->field( 'distinct(brandId)' )->findAll();
+        $id   = D('Showfee', 'showfee')->field( 'distinct(carBrand)' )->findAll();
+        $tid  = D('ShowfeeCarType', 'showfee')->field( 'distinct(brandId)' )->findAll();
         $temp = array();
         foreach ( $id as $value ){
             $temp[] = $value['carBrand'];
@@ -85,7 +87,7 @@ class ShowfeeCarBrandModel extends BaseModel{
     }
 
     private function appendContent($data) {
-        $data['cover'] = getCover($data['coverId'], 32, 32);
+        $data['cover'] = getCover($data['coverId'], 'showfee', 32, 32);
         return $data;
     }
 

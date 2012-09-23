@@ -1,5 +1,6 @@
 <?php
-class TaobaokeBcModel extends BaseModel {
+require_once(SITE_PATH.'/apps/taobaoke/Lib/Model/TaobaokeBaseModel.class.php');
+class TaobaokeBcModel extends TaobaokeBaseModel {
     var $tableName = 'taobaoke_bc';
 
     // 获取指定用户所有的关注的分组

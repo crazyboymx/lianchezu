@@ -1,6 +1,6 @@
 <?php
 //获取应用配置
-function getConfig($key=NULL){
+function getConfig_sf($key=NULL){
 	$config = model('Xdata')->lget('showfee');
 	$config['limitpage']    || $config['limitpage'] =10;
 	$config['canCreate']===0 || $config['canCreat']=1;
@@ -14,32 +14,4 @@ function getConfig($key=NULL){
 		return $config;
 	}
 }
-//获取活动封面存储地址
-function getCover($coverId,$width=80,$height=80){
-	$cover = D('Attach')->field('savepath,savename')->find($coverId);
-	if($cover){
-		$cover	=	SITE_URL."/thumb.php?w=$width&h=$height&url=".get_photo_url($cover['savepath'].$cover['savename']);
-	}else{
-		$cover	=	SITE_URL."/thumb.php?w=$width&h=$height&url=./apps/event/Tpl/default/Public/images/hdpic1.gif";
-	}
-	return $cover;
-}
-//根据存储路径，获取图片真实URL
-function get_photo_url($savepath) {
-	return './data/uploads/'.$savepath;
-}
 
-/**
- * getBlogShort 
- * 去除标签，截取blog的长度
- * @param mixed $content 
- * @param mixed $length 
- * @access public
- * @return void
- */
-function getBlogShort($content,$length = 40) {
-	$content	=	stripslashes($content);
-	$content	=	strip_tags($content);
-	$content	=	getShort($content,$length);
-	return $content;
-}

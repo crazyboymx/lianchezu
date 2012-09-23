@@ -39,12 +39,12 @@ return array(
 	'SIDEBAR_SUPPORT_SUBMENU'	=> '0',
 
 	// 作者名 [必填]
-	'AUTHOR_NAME'				=> 'Satan',
+	'AUTHOR_NAME'				=> 'lianchezu',
 	// 作者Email [必填]
-	'AUTHOR_EMAIL'				=> 'wangzuo0714@gmail.com',
+	'AUTHOR_EMAIL'				=> 'lechezu@163.com',
 	// 作者主页 [选填]
 	'AUTHOR_HOMEPAGE_URL'		=> '',
 	// 贡献者姓名 [选填]
-	'CONTRIBUTOR_NAMES'			=> '杨德升, 赵杰',
+	'CONTRIBUTOR_NAMES'			=> 'lianchezu',
 );
 ?>

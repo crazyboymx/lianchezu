@@ -30,6 +30,10 @@ return array(
 		'group/Index/index'		=> true, // 群组首页
 		'group/Index/newIndex'		=> true, // 群组首页
 		'group/Index/search'		=> true, // 分类列表
-		'group/Group/index'			=> true, // 单群首页
+        'group/Group/index'			=> true, // 单群首页
+        'taobaoke/Index/index'              => true, // 
+        'showfee/Index/index'              => true, // 
+        'event/Index/index'              => true, // 
+        'poster/Index/index'              => true, // 
 	)
 );

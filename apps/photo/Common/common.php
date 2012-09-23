@@ -35,10 +35,6 @@ function get_album_cover($albumId,$album='',$width=140,$height=140) {
 	}
 	return $cover;
 }
-//根据存储路径，获取图片真实URL
-function get_photo_url($savepath) {
-	return SITE_URL . '/data/uploads/' . $savepath;
-}
 
 //获取照隐私
 function get_privacy($privacy) {

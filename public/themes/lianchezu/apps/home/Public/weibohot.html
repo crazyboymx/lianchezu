@@ -1,0 +1,136 @@
+<div class="login_main" style="height:385px;">
+  <div class="colL" style="height:365px;">
+    <div class="tit">
+      <h3>图片微博</h3>
+    </div>
+    <div class="imgrot" id="tw_img_scroll">
+      <div id="slides">
+		<div class="imgb">
+		<volist name="pic_weibo" id="vo">
+			<div class="imgInt">
+				<a href="{:U('home/Space/detail',array('id'=>$vo['weibo_id']))}" target="_blank">
+                  <php>$img_src = SITE_URL . '/thumb.php?w=234&h=221&url=./data/uploads/' . $vo['type_data']['picurl'];</php>
+				  <img src="{$img_src}" width="234" height="221">
+				</a>
+				<div class="imgfnt" style="bottom:0">
+					<p>{$vo.uid|getUserName}：{$vo.content|getShort=10}</p>
+				</div>
+			</div>
+		</volist>
+		</div>
+	  </div>
+    </div>
+   
+    <!--<dl class="mobi">
+      <dt>用手机上微博</dt>
+      <dd><a href="http://www.thinksns.com/iPhone.html" target="_blank"><img src="../Public/images/apple.gif" /></a><a href="http://www.thinksns.com/Android.html " target="_blank"><img src="../Public/images/android.gif" /></a><a href="{:U('w3g')}" target="_blank"><img src="../Public/images/3G.gif" /></a><a href="{:U('wap')}" target="_blank"><img src="../Public/images/wap.gif" /></a></dd>
+    </dl>-->
+  </div>
+  <div class="colC">
+    <div class="tit">
+      <h3>正在发生</h3>
+    </div>
+    <!--微博列表-->
+    <div class="twis" id="tw_content" style="height:325px;">
+    <volist name="lastest_weibo" id="vo">
+      <dl class="list_weibo">
+        <dt class="userPic"><space uid="vo['uid']" target="_blank">{uavatar=m}</space></dt>
+        <dd style="margin-left:70px;">
+        <div style="min-height: 33px; _height:33px; _overflow:visible;">
+            <strong style="vertical-align:top"><space uid="vo['uid']" target="_blank">{uname}</space>: </strong>
+            <span class="ugc" style="vertical-align:top;display:inline">{$vo.content|getShort=60|login_emot_format}</span>
+        </div>
+        <div class="mt10"><em title="{$vo.ctime|date='Y-m-d H:i',###}">{$vo.ctime|friendlyDate}</em></div>
+        </dd>
+      </dl>
+    </volist>
+    </div>
+    <!--/微博列表-->
+    <div class="mask"></div>
+  </div>
+  <div class="colR">
+    <div class="tit">
+      <div class="opt">粉丝数</div>
+      <h3>人气推荐</h3>
+    </div>
+    <ul class="tpl" style="height:321px;">
+      <volist name="hot_user" id="vo">
+        <li> 
+        	<a target="_blank" href="{:U('home/Space/index',array('uid'=>$vo['uid']))}"> 
+        	<i class="num">{$vo.count}</i> 
+        	<strong class="nm">{$vo.uid|getUserName}</strong> 
+        	<var><php>echo $key + 1;</php></var> 
+        	<span class="avt"> <img alt="{$vo.uid|getUserName}" src="{$vo.uid|getUserFace}"> <i class="png"></i> </span> 
+        	</a> 
+        </li>
+      </volist>
+    </ul>
+  </div>
+</div>
+
+ 
+<script type="text/javascript">
+var since_id = "{$since_id}";
+
+$(function(){
+	init();
+});
+
+function init() {
+	$("ul.tpl").find("li").hover(function(){
+		$(this).addClass("hover");
+	},function(){
+		$(this).removeClass("hover");
+	});
+	
+	$('#slides').slides({
+		preload: true,
+		preloadImage: '../Public/images/loading.gif',
+		play: 5000,
+		pause: 2500,
+		hoverPause: true,
+		container: "imgb",
+		animationStart: function(current){
+			$('.caption').animate({
+				bottom:-35
+			},100);
+		},
+		animationComplete: function(current){
+			$('.caption').animate({
+				bottom:0
+			},200);
+		},
+		slidesLoaded: function() {
+			$('.caption').animate({
+				bottom:0
+			},200);
+		}
+	});
+}
+
+setInterval("showRecent()",60000);
+
+function changeverify() {
+    var date = new Date();
+    var ttime = date.getTime();
+    var url = "{:U('home/Public/verify')}";
+    $('#verifyimg').attr('src',url+'&'+ttime);
+}
+
+function showRecent() {
+	$.post("{:U('home/Public/fetchNew')}", {since_id:since_id}, function(txt){
+		if (txt != 0) {
+			var obj = eval('(' + txt + ')');
+			var html = '';
+			html += '<div class="lineD_btm pm10 mt10 pb5" id="weibo_'+obj.weibo_id+'">';
+	        html += '<div class="userPic">'+obj.user_pic+'</div>';
+	        html += '<div style="margin-left:70px"><div style="min-height: 33px;_height:33px; _overflow:visible;"><strong>'+obj.uname+': </strong><span class="ugc">'+obj.content+'</span></div>';
+	        html += '<div class="mt10">';
+	        html += '<em title="'+obj.friendly_date+'" class="tm">'+obj.friendly_date+'</em>';
+	        html += '</div>';
+	        $('#tw_content').prepend(html);
+	        since_id = obj.weibo_id;
+		}
+	});
+}
+</script>

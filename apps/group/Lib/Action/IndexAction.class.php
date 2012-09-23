@@ -258,7 +258,7 @@ class IndexAction extends BaseAction
         $data['reTags']  = D('GroupTag', 'group')->getHotTags('recommend');
 		$this->assign($data);
 
-        $this->setTitle("发现群组");
+        $this->setTitle("发现家族");
         $this->display();
     }
 

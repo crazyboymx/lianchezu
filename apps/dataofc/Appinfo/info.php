@@ -5,7 +5,7 @@ return array(
 	// 应用名称 [必填]
 	'NAME'						=> '数据分析',
 	// 应用简介 [必填]
-	'DESCRIPTION'				=> '支持千万级别的强大数据分析系统，ThinkSAAS出品',
+	'DESCRIPTION'				=> '数据分析系统',
 	// 托管类型 [必填]（0:本地应用，1:远程应用）
 	'HOST_TYPE'					=> '0',
 	// 前台入口 [必填]（格式：Action/act）
@@ -35,12 +35,12 @@ return array(
 	'SIDEBAR_SUPPORT_SUBMENU'	=> '0',
 
 	// 作者名 [必填]
-	'AUTHOR_NAME'				=> '韭菜饺子',
+	'AUTHOR_NAME'				=> 'lianchezu',
 	// 作者Email [必填]
-	'AUTHOR_EMAIL'				=> 'jiucaijiaozi@thinksaas.com',
+	'AUTHOR_EMAIL'				=> 'lechezu@163.com',
 	// 作者主页 [选填]
-	'AUTHOR_HOMEPAGE_URL'		=> 'http://www.thinksaas.cn',
+	'AUTHOR_HOMEPAGE_URL'		=> 'http://www.lianchezu.com',
 	// 贡献者姓名 [选填]
-	'CONTRIBUTOR_NAMES'			=> '韭菜饺子，ThinkSAAS',
+	'CONTRIBUTOR_NAMES'			=> 'lianchezu',
 );
 ?>

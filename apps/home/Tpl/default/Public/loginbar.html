@@ -1,0 +1,32 @@
+<!-- login bar start -->
+<div class="slogan" style="background:url({$ts['site']['banner_logo']})">
+  <div class="login">
+    <div id="ppcontid" class="logform">
+        <form action="{:U('home/Public/doLogin')}" method="post">
+           <div class="regbtn2"  style="height:46px;*height:auto; position:relative"><a href="{:U('home/Public/register')}" title="立即注册"> &nbsp;</a></div>
+	        <div class="frm" style="height:29px;*height:auto; position:relative">
+	        	<label id="_login_email_label" class="form_label" style="display:block;" onclick="$(this).hide();$('#email').focus();">邮箱</label>
+	        	<input type="text" id="email" name="email" class="text" title="邮箱" autocomplete="off" value="" onblur="if($(this).val()=='') $('#_login_email_label').show();" onfocus="$('#_login_email_label').hide();" />
+      </div>
+	        <div class="frm" style="height:29px;*height:auto; position:relative">
+        	  <label id="_login_password_label" class="form_label" style="display:block;" onclick="$(this).hide();$('#password').focus();" >密码</label>
+	        	<input type="password" title="密码" value="" id="password" name="password" class="text" style="display: inline;" onblur="if($(this).val()=='') $('#_login_password_label').show();" onfocus="$('#_login_password_label').hide();" />
+	        </div>
+            <eq name="login_verify_on" value="1">
+            <div class="frm" style="height:29px;*height:auto;"><input name="verify" type="text" class="text alM" title="验证码" id="verify" style="width:50px;height:22px;padding:0 3px;" value="" />
+              &nbsp;<a href="javascript:void(0);" onclick="changeverify()"><img src="{:U('home/Public/verify')}" id="verifyimg" alt="换一张" class="alM" /></a></div>
+            </eq>
+          <div class="frm">
+	          <label>
+	            <input name="remember" type="checkbox" value="1" />
+	            记住登录状态</label>
+	          <a class="fuc0" href="{:U('home/Public/sendPassword')}">忘记密码？</a>
+          </div>
+	        
+	        <div class="frm" style="margin:0px auto; padding:0px; width:85px"><input type="submit" value="登 录" class="logbtn hand" /> </div>
+        </form>
+        {:Addons::hook('login_input_footer',array('regInfo'=>$regInfo))}
+    </div>
+  </div>
+</div>
+<!-- login bar ends -->

@@ -2,19 +2,22 @@
 /**
  * EventModel
  * 活动主数据库模型
- * @uses BaseModel
+ * @uses EventBaseModel
  * @package
  * @version $id$
  * @copyright 2009-2011 SamPeng
  * @author SamPeng <sampeng87@gmail.com>
  * @license PHP Version 5.2 {@link www.sampeng.cn}
  */
-class EventModel extends BaseModel{
+
+require_once(SITE_PATH.'/apps/event/Lib/Model/EventBaseModel.class.php');
+
+class EventModel extends EventBaseModel{
 	var $mid;
 
 	public function getEventList($map='',$order='id DESC',$mid){
 		$this->mid = $mid;
-        $result  = $this->where($map)->order($order)->findPage(getConfig('limitpage'));
+        $result  = $this->where($map)->order($order)->findPage(getConfig_event('limitpage'));
 		//追加必须的信息
         if( !empty( $result['data'] )){
 			$user = self::factoryModel( 'user' );
@@ -28,7 +31,7 @@ class EventModel extends BaseModel{
                 //追加参与者
                 $map['eventId'] = $value['id'];
                 $value['users'] = $user->where( $map )->findAll();
-                $value['cover'] = getCover($value['coverId']);
+                $value['cover'] = getCover($value['coverId'], 'event');
                 //计算待审核人数
 	            if( $value['opts']['allow'] && $this->mid == $value['uid'] ){
 	               $value['verifyCount'] = $user->where( "status = 0 AND action='joinIn' AND eventId =".$value['id'] )->count();
@@ -201,7 +204,7 @@ class EventModel extends BaseModel{
 		$result['lc'] = 5000000 < $result['limitCount'] ? "无限制":$result['limitCount'];
 		$result = $this->appendContent( $result );
 		//TODO
-        $result['cover']     = getCover($result['coverId'],200,200);
+        $result['cover']     = getCover($result['coverId'],'event', 200,200);
 		return $result;
 	}
 
@@ -234,7 +237,7 @@ class EventModel extends BaseModel{
 	 * @return void
 	 */
 	public static function factoryModel( $name ){
-		return D("Event".ucfirst( $name ));
+		return D("Event".ucfirst( $name ), 'event');
 	}
 
 	/**
@@ -556,8 +559,8 @@ class EventModel extends BaseModel{
     	foreach($event_ids as &$v){
     		$v['type']    = $typeDao->getTypeName($v['type']);
             $v['address'] = getShort($v['address'],6);
-            $v['coverId'] = getCover($v['coverId'],66,71);
-    	}
+            $v['cover'] = getCover($v['coverId'],'event',66,71);
+        }
     	return $event_ids;
     }
 

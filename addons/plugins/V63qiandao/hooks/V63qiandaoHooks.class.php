@@ -85,7 +85,8 @@ class V63qiandaoHooks extends Hooks
             service("Credit")->setUserCredit($this->mid,array($addata[type][jttype]=>$addata[type][jfsl]));
             echo '签到成功';
         }else{
-            echo '签到失败';
+            echo '签到成功';
+            //echo '签到失败'; // 只许成功，不许失败
         }
         
     }

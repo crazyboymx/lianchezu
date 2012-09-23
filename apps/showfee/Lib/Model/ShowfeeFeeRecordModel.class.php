@@ -1,5 +1,7 @@
 <?php
-class ShowfeeFeeRecordModel extends BaseModel {
+require_once(SITE_PATH.'/apps/showfee/Lib/Model/ShowfeeBaseModel.class.php');
+
+class ShowfeeFeeRecordModel extends ShowfeeBaseModel {
     public function getFeeRecord($showfeeId) {
         $map['showfeeId'] = intval($showfeeId);
         $result = $this->where($map)->findAll();
@@ -32,7 +34,7 @@ class ShowfeeFeeRecordModel extends BaseModel {
     }
 
     public function appendContent($data) {
-        $data['feeTypeName'] = D('ShowfeeFeeType')->getFeeTypeName($data['feeTypeId']);
+        $data['feeTypeName'] = D('ShowfeeFeeType', 'showfee')->getFeeTypeName($data['feeTypeId']);
         return $data;
     }
 }

@@ -62,7 +62,7 @@
  
             <if condition="$vo['transpond_id']"> 转发到 <else/> 分享到 </if>
 
-            <a href="#TODO_{$vo['weibo_id']}">{$vo.weibo_id|getBname}</a>
+            <a href="{:U("taobaoke/Index/index")}&bc_id={$vo['bc_id']}">{$vo.weibo_id|getBname}</a>
 
             <br/>
             <span class="mydate">{$vo.ctime|friendlyDate}</span></div>

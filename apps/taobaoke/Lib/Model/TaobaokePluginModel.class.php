@@ -1,5 +1,6 @@
 <?php
-class TaobaokePluginModel extends BaseModel {
+require_once(SITE_PATH.'/apps/taobaoke/Lib/Model/TaobaokeBaseModel.class.php');
+class TaobaokePluginModel extends TaobaokeBaseModel {
     protected $tableName = 'taobaoke_plugin';
 
     public function getPluginInfoById($id) {

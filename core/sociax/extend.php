@@ -2956,3 +2956,37 @@ function getfavnum($uid){
 function getfavednum($uid){
     return M('taobaoke_fav')->where('favuid='.$uid)->count();
 }
+
+//获取活动封面存储地址
+function getCover($coverId,$app,$width=80,$height=80){
+    $cover = D('Attach')->field('savepath,savename')->find($coverId);
+	if($cover){
+		$cover	=	SITE_URL."/thumb.php?w=$width&h=$height&url=".get_photo_url($cover['savepath'].$cover['savename']);
+	}else{
+		$cover	=	SITE_URL."/thumb.php?w=$width&h=$height&url=./apps/$app/Tpl/default/Public/images/hdpic1.gif";
+	}
+	return $cover;
+}
+
+//根据存储路径，获取图片真实URL
+function get_photo_url($savepath) {
+    $path = './data/uploads/' . $savepath;
+    if(!file_exists($path))
+        $path = './apps/group/Tpl/default/Public/images/group_pic.gif';
+    return $path;
+}
+
+/**
+ * getBlogShort 
+ * 去除标签，截取blog的长度
+ * @param mixed $content 
+ * @param mixed $length 
+ * @access public
+ * @return void
+ */
+function getBlogShort($content,$length = 40) {
+	$content	=	stripslashes($content);
+	$content	=	strip_tags($content);
+	$content	=	getShort($content,$length);
+	return $content;
+}

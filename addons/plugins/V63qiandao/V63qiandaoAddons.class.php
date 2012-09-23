@@ -38,7 +38,7 @@ class V63qiandaoAddons extends NormalAddons
         $data[type][jfsl] ='10';
         model('AddonData')->lput('v63qiandao', $data)?true:false;
 		$db_prefix = C('DB_PREFIX');
-		$sql = "CREATE TABLE IF NOT EXISTS `ts_v63qiandao` (
+		$sql = "CREATE TABLE IF NOT EXISTS `{$db_prefix}` (
                     `id` int(12) NOT NULL auto_increment,
                     `uid` int(12) NOT NULL,
                     `username` varchar(50) NOT NULL,

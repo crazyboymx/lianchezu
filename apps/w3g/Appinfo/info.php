@@ -37,12 +37,12 @@ return array(
 	'SIDEBAR_SUPPORT_SUBMENU'	=> '0',
 	
 	// 作者名 [必填]
-	'AUTHOR_NAME'				=> 'King',
+	'AUTHOR_NAME'				=> 'lianchezu',
 	// 作者Email [必填]
-	'AUTHOR_EMAIL'				=> 'liuxiaoqing@zhishisoft.com',
+	'AUTHOR_EMAIL'				=> 'lechezu@163.com',
 	// 作者主页 [选填]
-	'AUTHOR_HOMEPAGE_URL'		=> '',
+	'AUTHOR_HOMEPAGE_URL'		=> 'www.lianchezu.com',
 	// 贡献者姓名 [选填]
-	'CONTRIBUTOR_NAMES'			=> '刘晓庆、韦新红、范翠娥、曹莹、程丹华',
+	'CONTRIBUTOR_NAMES'			=> 'lianchezu',
 );
 ?>

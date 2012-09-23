@@ -25,7 +25,7 @@ function qddo(){
 	}else{
 		$.post("{:SITE_URL}/index.php?app=home&mod=Widget&act=addonsRequest&addon=V63qiandao&hook=qddo",{"say":say,'xq':xq},function(result){
     			if(result =="签到成功"){
-				var	ci = parseInt("{$num}")+parseInt('1');
+				var	ci = (parseInt("{$num}")||0)+parseInt('1');
 					$("#qqq1").html("签到"+ci+"次");
 					$(".qd2").show();
 					$(".qd").hide();

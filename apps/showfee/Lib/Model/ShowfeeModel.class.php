@@ -1,11 +1,13 @@
 <?php
 
-class ShowfeeModel extends BaseModel{
+require_once(SITE_PATH.'/apps/showfee/Lib/Model/ShowfeeBaseModel.class.php');
+
+class ShowfeeModel extends ShowfeeBaseModel {
     var $mid;
 
     public function getShowfeeList($map='', $order='id DESC', $mid) {
         $this->mid = $mid;
-        $result  = $this->where($map)->order($order)->findPage(getConfig('limitpage'));
+        $result  = $this->where($map)->order($order)->findPage(getConfig_sf('limitpage'));
         //追加必须的信息
         if( !empty( $result['data'] )){
             foreach( $result['data'] as &$value ){
@@ -40,7 +42,7 @@ class ShowfeeModel extends BaseModel{
         if ($addId) {
             foreach ($feeRecord as &$fr) {
                 $fr['showfeeId'] = $addId;
-                D('ShowfeeFeeRecord')->addFeeRecord($fr);
+                D('ShowfeeFeeRecord', 'showfee')->addFeeRecord($fr);
             }
             //发布到微薄
             $_SESSION['new_event']=1;
@@ -62,7 +64,7 @@ class ShowfeeModel extends BaseModel{
         }
 
         $result = $this->appendContent($result);
-        $result['feeRecord'] = D('ShowfeeFeeRecord')->getFeeRecord($showfeeId);
+        $result['feeRecord'] = D('ShowfeeFeeRecord', 'showfee')->getFeeRecord($showfeeId);
         return $result;
     }
 
@@ -71,7 +73,7 @@ class ShowfeeModel extends BaseModel{
         $addId = $this->where('id ='.$showfeeId)->save($map);
         if ($addId) {
             //删除旧费用记录
-            $frm = D('ShowfeeFeeRecord');
+            $frm = D('ShowfeeFeeRecord', 'showfee');
             $frm->where('showfeeId=' . $showfeeId)->delete();
             foreach ($feeRecord as &$fr) {
                 $fr['showfeeId'] = $map["id"];
@@ -87,7 +89,7 @@ class ShowfeeModel extends BaseModel{
     }
 
     public static function factoryModel( $name ){
-        return D("Showfee".ucfirst( $name ));
+        return D("Showfee".ucfirst( $name ), 'showfee');
     }
 
     /**
@@ -116,7 +118,7 @@ class ShowfeeModel extends BaseModel{
         }
 
         //取出费用记录ID
-        $feeRecordM = D('ShowfeeFeeRecord');
+        $feeRecordM = D('ShowfeeFeeRecord', 'showfee');
         $temp = $feeRecordM->field('id')->where(array('showfeeId' => $showfeeId['id']))->findAll();
         $feeRecordIds = array();
         foreach ($temp as $fid) {
@@ -143,15 +145,18 @@ class ShowfeeModel extends BaseModel{
         }
 
         $data = array();
+        $result = -1;
         switch($act) {
         case "recommend":   //推荐
             $data['isHot'] = 1;
+            $result = $this->where($map)->save($data);
             break;
         case "cancel":   //取消推荐
             $data['isHot'] = 0;
+            $result = $this->where($map)->save($data);
             break;
         }
-        return $this->where($map)->save($data);
+        return $result;
     }
 
     public function getHotList() {

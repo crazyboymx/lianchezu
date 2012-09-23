@@ -25,14 +25,6 @@ function group_id_to_url($group_id)
 	return U('group/Group/index', array('gid'=>$group_id));
 }
 
-//根据存储路径，获取照片真实URL
-function get_photo_url($savepath) {
-	$path	=	'./data/uploads/' . $savepath;
-	if(!file_exists($path))
-	   $path = './apps/group/Tpl/default/Public/images/group_pic.gif';
-	return $path;
-}
-
 //获取相册封面
 function get_album_cover($albumId,$albumInfo='') {
 
@@ -256,7 +248,7 @@ function stripGroupName($title,$appid=0){
 
 //ubb过滤
 //TODO 每一个应用可以应用一套表情
-/*function ubb($content){
+function ubb_group($content){
 
 	if(empty($content)) return '';
      $path = __PUBLIC__."/images/biaoqing/mini/";//路径
@@ -268,7 +260,7 @@ function stripGroupName($title,$appid=0){
           $content = str_replace( $value['emotion'],$img,$content );
      }
     return $content;
-}*/
+}
 
 
 function replaceSpecialChar($code){

@@ -1,21 +1,6 @@
 <?php
 
 /**
- * getBlogShort 
- * 去除标签，截取blog的长度
- * @param mixed $content 
- * @param mixed $length 
- * @access public
- * @return void
- */
-function getBlogShort($content,$length = 60) {
-	$content	=	stripslashes($content);
-	$content	=	strip_tags($content);
-	$content	=	getShort($content,$length);
-	return $content;
-}
-
-/**
  * 获取完整的地区
  *
  * @param unknown_type $area   '23,45,64' 字串形式传入
