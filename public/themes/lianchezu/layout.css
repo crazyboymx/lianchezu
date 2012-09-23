@@ -50,7 +50,7 @@
 .navi_list a:link,.navi_list a:visited {
     color: #fff;
     line-height: 16px;
-    margin: 0 2px;
+    margin: 0 5px;
 	font-size:14px;
 }
 .navi_list .import {

@@ -478,7 +478,7 @@ class PublicAction extends Action{
 
     public function logout() {
         service('Passport')->logoutLocal();
-        $this->assign('jumpUrl',U('home/index'));
+        $this->assign('jumpUrl',U('home/Public/siteIndex'));
         $this->success(L('exit_success'). ( (UC_SYNC)?uc_user_synlogout():'' ) );
     }
 

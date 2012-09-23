@@ -581,7 +581,7 @@ class App
 
             // 是否开启游客访问
             if (APP_NAME == 'home' && MODULE_NAME == 'Space' && !$ts['site']['site_anonymous'])
-                redirect(U('home/Public/login'));
+                redirect(U('home/Public/siteIndex'));
 
             // 匿名访问控制
             if (!canAccess()) {
@@ -590,7 +590,7 @@ class App
                 } else {
                     // 记录登录前的url地址
                     $_SESSION['refer_url'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-                    redirect(U('home/Public/login'));
+                    redirect(U('home/Public/siteIndex'));
                 }
             }
         } else { // 已登录

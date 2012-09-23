@@ -1,17 +1,15 @@
 <?php
-    /**
-     * BaseModel 
-     * 心情的base类
-     *
-     * @uses Model
-     * @package Model::Mini
-     * @version $id$
-     * @copyright 2009-2011 SamPeng 
-     * @author SamPeng <sampeng87@gmail.com> 
-     * @license PHP Version 5.2 {@link www.sampeng.cn}
-     */
-require_once(SITE_PATH.'/apps/showfee/Common/common.php');
-
+/**
+ * BaseModel 
+ * 心情的base类
+ *
+ * @uses Model
+ * @package Model::Mini
+ * @version $id$
+ * @copyright 2009-2011 SamPeng 
+ * @author SamPeng <sampeng87@gmail.com> 
+ * @license PHP Version 5.2 {@link www.sampeng.cn}
+ */
 class ShowfeeBaseModel extends Model{
     /**
      * mid 

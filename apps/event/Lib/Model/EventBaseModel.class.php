@@ -10,8 +10,6 @@
  * @author SamPeng <sampeng87@gmail.com> 
  * @license PHP Version 5.2 {@link www.sampeng.cn}
  */
-require_once(SITE_PATH.'/apps/event/Common/common.php');
-
 class EventBaseModel extends Model{
     /**
      * mid 
